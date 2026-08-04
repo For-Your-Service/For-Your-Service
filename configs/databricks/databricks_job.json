@@ -1,0 +1,53 @@
+﻿{
+  "_comment_pipeline": "FYS_Analytics_Pipeline: Orchestrates vector transformations, tensor dot-product matching, and Delta Lake exporting using a dedicated ephemeral job cluster.",
+  "name": "FYS_Analytics_Pipeline",
+  "email_notifications": {
+    "_comment": "Configures alert hooks for job failure, success, or timeouts."
+  },
+  "tasks": [
+    {
+      "task_key": "vector_transformation",
+      "_comment_purpose": "Phase 1: Executes raw vector normalization and preprocessing notebook.",
+      "notebook_task": {
+        "notebook_path": "src/analytics/01_vector_transformation",
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "analytics_cluster"
+    },
+    {
+      "task_key": "tensor_matching",
+      "_comment_purpose": "Phase 2: Performs high-performance tensor dot-product matching operations.",
+      "depends_on": [
+        { "task_key": "vector_transformation" }
+      ],
+      "notebook_task": {
+        "notebook_path": "src/analytics/02_tensor_dot_product",
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "analytics_cluster"
+    },
+    {
+      "task_key": "delta_exporter",
+      "_comment_purpose": "Phase 3: Writes processed analytical outputs back into the Delta Lake storage layer.",
+      "depends_on": [
+        { "task_key": "tensor_matching" }
+      ],
+      "notebook_task": {
+        "notebook_path": "src/analytics/03_delta_exporter",
+        "source": "WORKSPACE"
+      },
+      "job_cluster_key": "analytics_cluster"
+    }
+  ],
+  "job_clusters": [
+    {
+      "job_cluster_key": "analytics_cluster",
+      "_comment_cluster": "Ephemeral compute cluster spun up exclusively for this workflow run.",
+      "new_cluster": {
+        "spark_version": "13.3.x-scala2.12",
+        "node_type_id": "Standard_DS3_v2",
+        "num_workers": 2
+      }
+    }
+  ]
+}
