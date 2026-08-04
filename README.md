@@ -39,3 +39,39 @@ Designed for integration with veteran placement partners like **Seven Eagles**, 
 │ - STATUS.md 2hr Popups  │      │ - Open Blueprint / Case   │      │ - Counselor Action Dashboard│
 │ - State Sync Engine     │      │   Studies on LinkedIn     │      │ - Skill Gap Identifiers     │
 └─────────────────────────┘      └───────────────────────────┘      └─────────────────────────────┘
+
+## 📁 Expanded Repository Structure
+
+```text
+for-your-service/
+├── config/                              # Configuration, Schemas & Templates
+│   ├── intake_schema.json               # JSON schema defining candidate vector rules & validation
+│   ├── gcp_env.template.env             # Environment configuration template for GCP Cloud Functions
+│   └── databricks_config.yaml           # Cluster runtime, delta table paths, & Spark parameters
+│
+├── docs/                                # Architecture & Operational Documentation
+│   ├── architecture_blueprint.md        # Deep dive into event flow, GCP triggers, & Databricks setup
+│   ├── tensor_mapping_design.md         # Mathematical definitions for the 5D candidate vector engine
+│   ├── risk_matrix.md                   # Threat modeling, zero-PII vault protocols, & security risk mitigation
+│   └── partner_onboarding_guide.md      # Integration manual for veteran counseling partners (e.g., Seven Eagles)
+│
+├── local_ops/                           # Windows Automation & Session Persistence
+│   ├── Show-Status.ps1                  # PowerShell script executing 2-hour status popups from STATUS.md
+│   ├── Register-TaskDaemon.ps1          # Automation script to register/update Windows Task Scheduler tasks
+│   └── sync_state.ps1                   # Local directory state checker & Git branch hygiene guard
+│
+├── src/                                 # Production Application Code
+│   ├── ingestion/                       # Cloud Ingestion & Edge Security
+│   │   ├── main.py                      # GCP Cloud Function entry point for HTTP payload intake
+│   │   ├── anonymizer.py                # Zero-PII transformation module (replaces identifiers with UUIDs)
+│   │   ├── validator.py                 # Schema enforcement & bad-payload quarantine logic
+│   │   └── requirements.txt             # Python dependencies for the GCP ingestion runtime
+│   │
+│   └── analytics/                       # Databricks Big Data & Tensor Matching
+│       ├── 01_vector_transformation.py  # PySpark script converting raw JSON payloads into vector formats
+│       ├── 02_tensor_dot_product.py     # PySpark job computing candidate-to-job matching probabilities
+│       ├── 03_delta_exporter.py         # Delta Lake writer outputting top match sets for counselor views
+│       └── utils_spark.py               # Shared PySpark session wrappers & metric helpers
+│
+├── STATUS.md                            # Operational memory log, session history, & current sprint context
+└── README.md                            # Primary repository entry point & system documentation
