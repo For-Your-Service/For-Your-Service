@@ -83,7 +83,7 @@ gs://fys-veteran-intake-raw/
 
 ---
 
-### 4. **Cloud Function Deployment** 🔄 IN PROGRESS
+### 4. **Cloud Function Deployment** ✅ COMPLETE
 - **Function Name:** `veteran-intake-processor`
 - **Runtime:** Python 3.11
 - **Trigger:** HTTP (publicly accessible endpoint)
@@ -104,13 +104,28 @@ gs://fys-veteran-intake-raw/
 **Environment Variables:**
 - `GCS_BUCKET=fys-veteran-intake-raw`
 
-**Status:** Ready to deploy (code cloned, deployment command ready)
+**Status:** ✅ DEPLOYED AND ACTIVE
+
+**Function URL:**
+```
+https://us-central1-for-your-service-2026.cloudfunctions.net/veteran-intake-processor
+```
+
+**Deployed:** August 5, 2026 at 18:45 UTC
+
+**Console URL:**
+https://console.cloud.google.com/functions/details/us-central1/veteran-intake-processor?project=for-your-service-2026
 
 ---
 
-## 🔄 Currently In Progress
+## ✅ Cloud Function Deployed!
 
-### Cloud Function Deployment Command
+### Deployment Complete
+The Cloud Function has been successfully deployed!
+
+**Function URL:** `https://us-central1-for-your-service-2026.cloudfunctions.net/veteran-intake-processor`
+
+**Original deployment command:**
 ```bash
 gcloud functions deploy veteran-intake-processor \
   --gen2 \
@@ -125,7 +140,7 @@ gcloud functions deploy veteran-intake-processor \
   --set-env-vars=GCS_BUCKET=fys-veteran-intake-raw
 ```
 
-This deployment typically takes 2-3 minutes.
+Deployment completed successfully in ~8 minutes.
 
 ---
 
@@ -296,8 +311,8 @@ All veteran profiles use JSON format:
 - [x] Create GCS bucket (`fys-veteran-intake-raw`)
 - [x] Apply 30-day lifecycle policy to bucket
 - [x] Clone GitHub repo to Cloud Shell
-- [ ] Deploy Cloud Function (`veteran-intake-processor`)
-- [ ] Get and save Function URL
+- [x] Deploy Cloud Function (`veteran-intake-processor`)
+- [x] Get and save Function URL
 - [ ] Test with sample veteran profile
 - [ ] Verify file in GCS bucket
 - [ ] Create GCP service account for Databricks
