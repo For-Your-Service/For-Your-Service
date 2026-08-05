@@ -1,3 +1,21 @@
+# For Your Service - Veteran Job Placement Platform
+
+## 🚀 **START HERE: [Deployment Progress Log](./DEPLOYMENT_LOG.md)**
+
+**👉 New to the project?** Read the [DEPLOYMENT_LOG.md](./DEPLOYMENT_LOG.md) first!
+
+It contains:
+- ✅ **What we've built so far** - Complete work summary
+- 🔄 **Current deployment status** - What's live, what's in progress
+- 📋 **Next steps** - Detailed checklist
+- 🏗️ **Simple architecture explanation** - How everything works
+- 🔐 **Privacy & security details** - How we protect veteran data
+- 🛠️ **Troubleshooting guide** - Common issues and fixes
+
+**Last Updated:** August 5, 2026
+
+---
+
 # 🎖️ For Your Service - Veteran Job Placement Platform
 
 ## Mission
