@@ -644,7 +644,7 @@ After completing basic testing:
    - Set up monitoring and alerts
    - Configure error notification (email/Slack)
    - Create operational runbook
-   - Train Seven Eagles team on intake process
+   - Train 7 Eagle Group team on intake process
 
 ---
 

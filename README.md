@@ -40,7 +40,7 @@ Before storing any veteran data, our system automatically removes names, emails,
 ## Mission
 For Your Service (FYS) is an AI-powered platform that matches transitioning military veterans with civilian job opportunities using multi-dimensional tensor analysis and machine learning.
 
-**Partner:** Seven Eagles (Veteran Placement Organization)
+**Partner:** 7 Eagle Group (Veteran Placement Organization)
 
 ---
 
@@ -219,4 +219,4 @@ Proprietary - For Your Service Organization
 For questions or partnership inquiries:
 - **Email:** whall4.wh@gmail.com
 - **Organization:** For Your Service
-- **Partner:** Seven Eagles
+- **Partner:** 7 Eagle Group

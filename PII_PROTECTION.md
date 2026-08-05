@@ -21,14 +21,14 @@
 ## Simple Explanation
 
 **The Problem:**
-When veterans apply for jobs through Seven Eagles counselors, they share personal information like their name, phone number, email, and address. This information is private and sensitive.
+When veterans apply for jobs through 7 Eagle Group counselors, they share personal information like their name, phone number, email, and address. This information is private and sensitive.
 
 **Our Solution:**
 Before we store ANY data, our system automatically removes all personal identifying information. We replace it with a random ID number. This means:
 - ✅ We can still match veterans to jobs based on their skills and preferences
 - ✅ The veteran's identity remains completely private
 - ✅ Even if someone accessed our database, they couldn't identify who the veteran is
-- ✅ Only the original Seven Eagles counselor knows the veteran's real identity
+- ✅ Only the original 7 Eagle Group counselor knows the veteran's real identity
 
 **Think of it like this:**
 Imagine filling out a job application, but instead of writing your name, you get a ticket number (like at a deli counter). The system uses your ticket number to match you with jobs, but never knows your actual name.
@@ -115,7 +115,7 @@ We remove PII **immediately** when data first enters our system, before it's eve
 
 ### Code Structure
 
-**Input (from Seven Eagles intake form):**
+**Input (from 7 Eagle Group intake form):**
 ```json
 {
   "intake_id": "INTAKE_12345",
@@ -188,7 +188,7 @@ We remove PII **immediately** when data first enters our system, before it's eve
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ 1. INTAKE FORM                                                  │
-│    Seven Eagles counselor enters veteran data                   │
+│    7 Eagle Group counselor enters veteran data                   │
 │    Contains: Name, Email, Phone, SSN, Address, Skills, etc.    │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
@@ -240,7 +240,7 @@ We remove PII **immediately** when data first enters our system, before it's eve
 │    Output: veteran_id → matched jobs                            │
 │                                                                  │
 │    To connect back to veteran:                                  │
-│    - Seven Eagles counselor has veteran_id                      │
+│    - 7 Eagle Group counselor has veteran_id                      │
 │    - Counselor contacts veteran with recommendations            │
 │    - System never knows veteran's real identity                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -367,7 +367,7 @@ Any file in `gs://fys-veteran-intake-raw/intake/` older than 30 days is automati
 
 ❌ **We cannot re-identify veterans**
 - By design, we don't have the mapping
-- Only Seven Eagles counselors have this
+- Only 7 Eagle Group counselors have this
 
 ❌ **We cannot prevent ALL re-identification**
 - If a veteran has extremely unique characteristics (e.g., only Navy SEAL in San Diego with PhD in Astrophysics), they might be identifiable
@@ -436,14 +436,14 @@ gsutil cat gs://fys-veteran-intake-raw/intake/<file>.json
 
 ### Q: Can we ever get the veteran's name back?
 
-**A:** No. Once the Cloud Function discards the original data, there's no way to retrieve it from our system. Only the Seven Eagles counselor who submitted the data knows the veteran's identity and has the mapping to `veteran_id`.
+**A:** No. Once the Cloud Function discards the original data, there's no way to retrieve it from our system. Only the 7 Eagle Group counselor who submitted the data knows the veteran's identity and has the mapping to `veteran_id`.
 
 ### Q: What if we need to contact a veteran?
 
 **A:** We don't contact veterans directly. The workflow is:
 1. Our system generates job matches for `veteran_id`
-2. We send matches back to Seven Eagles with `veteran_id`
-3. Seven Eagles counselor looks up which veteran has that ID
+2. We send matches back to 7 Eagle Group with `veteran_id`
+3. 7 Eagle Group counselor looks up which veteran has that ID
 4. Counselor contacts the veteran
 
 ### Q: Is this really anonymous, or just pseudonymous?
@@ -453,7 +453,7 @@ gsutil cat gs://fys-veteran-intake-raw/intake/<file>.json
 - Avoid duplicate profiles
 - Send results back to the correct veteran
 
-However, because **we** don't have the mapping (Seven Eagles does), it's effectively anonymous from our system's perspective.
+However, because **we** don't have the mapping (7 Eagle Group does), it's effectively anonymous from our system's perspective.
 
 ### Q: What about k-anonymity or differential privacy?
 
