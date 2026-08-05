@@ -8,7 +8,7 @@ This document tracks all deployment work done on the For Your Service veteran jo
 ## 📅 Today's Work Summary
 
 ### Project Context
-**For Your Service** is a veteran job placement platform built for Seven Eagles organization. The platform:
+**For Your Service** is a veteran job placement platform built for 7 Eagle Group organization. The platform:
 - Takes veteran intake data (military background, skills, preferences)
 - Anonymizes all personally identifiable information (PII)
 - Stores data in Google Cloud Storage
@@ -188,7 +188,7 @@ Deployment completed successfully in ~8 minutes.
 ```
 Veteran Intake Form
        ↓
-  Seven Eagles Counselor enters data
+  7 Eagle Group Counselor enters data
        ↓
   HTTP POST to Cloud Function
        ↓
@@ -296,7 +296,7 @@ All veteran profiles use JSON format:
 - Josh.shalack@gmail.com  
 - leroy@ironin.com
 
-### Seven Eagles Partnership
+### 7 Eagle Group Partnership
 - Organization partner for veteran intake
 - Will use Cloud Function URL in their intake wizard
 
@@ -369,7 +369,7 @@ The deployment is successful when:
 5. ✅ Databricks can read from GCS bucket
 6. ✅ Bronze layer ingests data successfully
 7. ✅ Team members have GitHub access
-8. ✅ Seven Eagles has the intake endpoint URL
+8. ✅ 7 Eagle Group has the intake endpoint URL
 
 ---
 

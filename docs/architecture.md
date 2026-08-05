@@ -6,7 +6,7 @@
 - **Interface:** Wizard-based web form
 - **Data:** Veteran profile (15 sections)
 - **Output:** JSON payload
-- **Partner:** Seven Eagles counselor network
+- **Partner:** 7 Eagle Group counselor network
 
 ### 2. GCP Ingestion Layer
 - **Component:** Cloud Function (Gen2)
@@ -87,7 +87,7 @@
 
 ## Integration Points
 
-### Seven Eagles Integration
+### 7 Eagle Group Integration
 - Counselor intake wizard submits to Cloud Function
 - Counselor dashboard reads from Gold layer
 - Action items and notifications via API
