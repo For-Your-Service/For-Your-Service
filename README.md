@@ -1,77 +1,185 @@
-<div align="center">
+# 🎖️ For Your Service - Veteran Job Placement Platform
 
-# 🎖️ FOR YOUR SERVICE (FYS)
-### *Event-Driven Transition Intelligence & Tensor Matching Engine*
+## Mission
+For Your Service (FYS) is an AI-powered platform that matches transitioning military veterans with civilian job opportunities using multi-dimensional tensor analysis and machine learning.
 
-[![Pipeline Status](https://img.shields.io/badge/Pipeline-Active-brightgreen.svg?style=for-the-badge&logo=github-actions)]()
-[![Cloud Platform](https://img.shields.io/badge/GCP-Storage%20%26%20Functions-blue.svg?style=for-the-badge&logo=googlecloud)]()
-[![Analytics Engine](https://img.shields.io/badge/Databricks-PySpark%20%26%20Delta-red.svg?style=for-the-badge&logo=databricks)]()
-[![License](https://img.shields.io/badge/License-MIT-orange.svg?style=for-the-badge)]()
-
-*Bridging the gap between military service and civilian careers using multi-variable candidate vector matching, automated cloud pipelines, and transparent data architectures.*
+**Partner:** Seven Eagles (Veteran Placement Organization)
 
 ---
 
-</div>
+## Architecture Overview
 
-## 🚀 Mission Overview
-
-Transitioning out of the military is often hindered by fragmented skill translation, dynamic timeline constraints, and manual job matching. **For Your Service (FYS)** solves this by converting qualitative intake data into dynamic, multi-dimensional **tensors** that compute real-time placement probability matrices against active job postings.
-
-Designed for integration with veteran placement partners like **Seven Eagles**, this platform provides counselors with a streamlined intake interface while maintaining rigid data validation, PII anonymization, and decoupled cloud processing.
+```
+Counselor Intake Wizard
+        ↓
+    JSON Payload (Veteran Profile)
+        ↓
+GCP Cloud Function (PII Anonymization)
+        ↓
+GCS Raw Bucket (gs://fys-veteran-intake-raw)
+        ↓
+Databricks Bronze Layer (Raw Anonymized Data)
+        ↓
+Databricks Silver Layer (Feature Engineering)
+        ↓
+Databricks Gold Layer (Tensor Engine - Vector Dot Products)
+        ↓
+Placement Probability Matrix
+        ↓
+Counselor Dashboard + Ranked Job Matches
+```
 
 ---
 
-## ⚡ System Architecture
+## Repository Structure
 
-```text
-┌─────────────────────────┐      ┌───────────────────────────┐      ┌─────────────────────────────┐
-│ 1. COUNSELOR INTAKE     │      │ 2. GCP INGESTION          │      │ 3. DATABRICKS TENSOR ENGINE │
-│ - Wizard Interface      │ ---> │ - Raw Payload Bucket      │ ---> │ - Feature Vector Extraction │
-│ - Schema Validation     │      │ - PII Anonymization Guard │      │ - PySpark Vector Dot Product│
-│ - Direct JSON Delivery  │      │ - Event-Driven Trigger    │      │ - Placement Probability     │
-└─────────────────────────┘      └───────────────────────────┘      └─────────────────────────────┘
-                                                                                   │
-                                                                                   ▼
-┌─────────────────────────┐      ┌───────────────────────────┐      ┌─────────────────────────────┐
-│ 6. LOCAL OPS & CONTEXT  │      │ 5. PUBLIC BRANDING        │      │ 4. ACTIONABLE OUTPUTS       │
-│ - Windows Task Scheduler│ <--- │ - Technical Articles      │ <--- │ - Ranked Job Match Lists    │
-│ - STATUS.md 2hr Popups  │      │ - Open Blueprint / Case   │      │ - Counselor Action Dashboard│
-│ - State Sync Engine     │      │   Studies on LinkedIn     │      │ - Skill Gap Identifiers     │
-└─────────────────────────┘      └───────────────────────────┘      └─────────────────────────────┘
+### `/cloud-functions/`
+GCP Cloud Functions for intake processing
+- `veteran-intake/` - PII anonymization and GCS storage
 
-## 📁 Expanded Repository Structure
+### `/databricks/`
+Databricks notebooks for data pipeline
+- `01_intake_schema_definition.py` - Veteran profile schema
+- `03_bronze_ingestion.py` - Raw data ingestion from GCS
+- `04_silver_feature_engineering.py` - MOS-to-skill mapping, feature extraction
+- `05_gold_tensor_engine.py` - Tensor computations for job matching
 
-```text
-for-your-service/
-├── config/                              # Configuration, Schemas & Templates
-│   ├── intake_schema.json               # JSON schema defining candidate vector rules & validation
-│   ├── gcp_env.template.env             # Environment configuration template for GCP Cloud Functions
-│   └── databricks_config.yaml           # Cluster runtime, delta table paths, & Spark parameters
-│
-├── docs/                                # Architecture & Operational Documentation
-│   ├── architecture_blueprint.md        # Deep dive into event flow, GCP triggers, & Databricks setup
-│   ├── tensor_mapping_design.md         # Mathematical definitions for the 5D candidate vector engine
-│   ├── risk_matrix.md                   # Threat modeling, zero-PII vault protocols, & security risk mitigation
-│   └── partner_onboarding_guide.md      # Integration manual for veteran counseling partners (e.g., Seven Eagles)
-│
-├── local_ops/                           # Windows Automation & Session Persistence
-│   ├── Show-Status.ps1                  # PowerShell script executing 2-hour status popups from STATUS.md
-│   ├── Register-TaskDaemon.ps1          # Automation script to register/update Windows Task Scheduler tasks
-│   └── sync_state.ps1                   # Local directory state checker & Git branch hygiene guard
-│
-├── src/                                 # Production Application Code
-│   ├── ingestion/                       # Cloud Ingestion & Edge Security
-│   │   ├── main.py                      # GCP Cloud Function entry point for HTTP payload intake
-│   │   ├── anonymizer.py                # Zero-PII transformation module (replaces identifiers with UUIDs)
-│   │   ├── validator.py                 # Schema enforcement & bad-payload quarantine logic
-│   │   └── requirements.txt             # Python dependencies for the GCP ingestion runtime
-│   │
-│   └── analytics/                       # Databricks Big Data & Tensor Matching
-│       ├── 01_vector_transformation.py  # PySpark script converting raw JSON payloads into vector formats
-│       ├── 02_tensor_dot_product.py     # PySpark job computing candidate-to-job matching probabilities
-│       ├── 03_delta_exporter.py         # Delta Lake writer outputting top match sets for counselor views
-│       └── utils_spark.py               # Shared PySpark session wrappers & metric helpers
-│
-├── STATUS.md                            # Operational memory log, session history, & current sprint context
-└── README.md                            # Primary repository entry point & system documentation
+### `/docs/`
+Architecture and technical documentation
+
+### `/terraform/`
+(Future) Infrastructure as Code for GCP resources
+
+### `/scripts/`
+(Future) Deployment and utility scripts
+
+---
+
+## Quick Start
+
+### 1. Deploy GCP Infrastructure
+
+```bash
+# Create GCS bucket
+gsutil mb -p uap-scraper-lab-2026 -c STANDARD -l us-central1 gs://fys-veteran-intake-raw
+
+# Deploy Cloud Function
+cd cloud-functions/veteran-intake
+gcloud functions deploy veteran-intake-processor \
+  --gen2 \
+  --runtime=python311 \
+  --region=us-central1 \
+  --source=. \
+  --entry-point=veteran_intake \
+  --trigger-http \
+  --allow-unauthenticated \
+  --memory=1GB \
+  --timeout=60s
+```
+
+### 2. Configure Databricks
+
+1. Import notebooks from `/databricks/` to your Databricks workspace
+2. Configure GCS access in cluster settings:
+   ```
+   spark.hadoop.google.cloud.auth.service.account.json.keyfile /path/to/keyfile.json
+   ```
+3. Create Unity Catalog schemas:
+   ```sql
+   CREATE SCHEMA IF NOT EXISTS main.fys_bronze;
+   CREATE SCHEMA IF NOT EXISTS main.fys_silver;
+   CREATE SCHEMA IF NOT EXISTS main.fys_gold;
+   ```
+
+### 3. Run Pipeline
+
+1. Test Cloud Function with sample veteran profile
+2. Run Bronze ingestion notebook
+3. Run Silver feature engineering
+4. Run Gold tensor engine
+
+---
+
+## Data Privacy & Security
+
+### PII Protection
+- All personally identifiable information (PII) is anonymized before storage
+- Anonymous `veteran_id` generated for tracking
+- Only aggregated location data (ZIP3) retained
+- Email hashed for deduplication only
+
+### Anonymized Data
+
+✅ **Kept:**
+- Military service data (MOS, rank, branch, deployments)
+- Skills, certifications, education
+- Job preferences (roles, industries, salary range)
+- General location (city, state, ZIP3)
+- Birth year (for age-based matching)
+
+❌ **Removed:**
+- Full name
+- Email address
+- Phone number
+- Full date of birth
+- SSN/Last 4
+- Street address
+
+---
+
+## Technology Stack
+
+- **GCP Cloud Functions** - Serverless intake processing
+- **Google Cloud Storage** - Raw data lake
+- **Databricks** - Data engineering and ML platform
+- **Delta Lake** - ACID transactions and time travel
+- **PySpark** - Distributed data processing
+- **Unity Catalog** - Data governance
+
+---
+
+## Roadmap
+
+### Phase 1: Core Pipeline (In Progress)
+- [x] Intake schema definition
+- [x] PII anonymization Cloud Function
+- [x] Bronze layer ingestion
+- [ ] Silver layer feature engineering
+- [ ] Gold layer tensor engine
+
+### Phase 2: Job Matching
+- [ ] Job posting data ingestion
+- [ ] MOS-to-civilian skill mapping
+- [ ] Real-time probability matrix computation
+- [ ] Counselor dashboard
+
+### Phase 3: Operations
+- [ ] Counselor intake wizard UI
+- [ ] Local task scheduler
+- [ ] Status sync system
+- [ ] Public branding and case studies
+
+---
+
+## Contributing
+
+This project is in active development. Contributors:
+- Will Hall (whall4.wh@gmail.com)
+- Donavan Marcus (Donavanmarcus@gmail.com)
+- Josh Shalack (Josh.shalack@gmail.com)
+- Leroy (leroy@ironin.com)
+
+---
+
+## License
+
+Proprietary - For Your Service Organization
+
+---
+
+## Contact
+
+For questions or partnership inquiries:
+- **Email:** whall4.wh@gmail.com
+- **Organization:** For Your Service
+- **Partner:** Seven Eagles
