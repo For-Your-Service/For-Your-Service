@@ -16,6 +16,25 @@ It contains:
 
 ---
 
+## 🔐 **Privacy & PII Protection**
+
+We take veteran privacy seriously. Read our comprehensive documentation:
+
+### 👉 [PII Protection Documentation](./PII_PROTECTION.md)
+
+**What you'll learn:**
+- ✅ How we remove ALL personal identifying information
+- ✅ Simple explanation for non-technical readers
+- ✅ Technical implementation details
+- ✅ Complete data flow showing where PII is removed
+- ✅ What data we keep vs. remove
+- ✅ Security guarantees and compliance (GDPR, CCPA, HIPAA)
+
+**Quick Summary:**
+Before storing any veteran data, our system automatically removes names, emails, phone numbers, addresses, SSNs, and birthdates. We replace them with anonymous IDs. This means veteran identities are protected even if our database is compromised.
+
+---
+
 # 🎖️ For Your Service - Veteran Job Placement Platform
 
 ## Mission
