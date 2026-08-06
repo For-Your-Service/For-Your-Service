@@ -1383,3 +1383,77 @@ You'll have REAL job market data flowing into your matching engine!
 
 # COMMAND ----------
 
+# DBTITLE 1,🔄 Quick Git Commit Helper (Run this often!)
+import subprocess
+from datetime import datetime
+
+print("="*70)
+print("🔄 QUICK GIT COMMIT")
+print("="*70)
+
+# Quick commit function you can run anytime
+def quick_commit(message=None):
+    """
+    Quick commit current changes to GitHub.
+    Run this cell frequently throughout the day!
+    """
+    
+    if message is None:
+        # Auto-generate timestamp-based message
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        message = f"Work in progress - {timestamp}"
+    
+    print(f"\n📝 Commit message: {message}")
+    print("\n⏳ Committing...\n")
+    
+    # This will be done via runGit tool in practice
+    print("""
+    To commit via Databricks Assistant:
+    1. Ask: "Commit my changes with message: <your message>"
+    2. Or ask: "Quick commit" for auto-timestamped commit
+    3. Or just say: "commit" and I'll handle it!
+    """)
+
+print("""
+💡 COMMIT WORKFLOW:
+
+🔹 MICRO-COMMITS (Every 30-60 minutes):
+   • "commit my work" → Auto-commits with timestamp
+   • Shows continuous progress throughout the day
+   
+🔹 FEATURE-COMPLETE COMMITS (After each major task):
+   • "commit: Added scraper for Adzuna API"
+   • "commit: Completed Bronze layer ingestion"
+   • Descriptive message showing what you accomplished
+   
+🔹 END-OF-DAY COMMIT:
+   • "commit: End of day - completed job market data collection setup"
+   • Summary of the day's work
+
+---
+
+🎯 TODAY'S COMMIT SCHEDULE:
+
+✅ Morning (9-10 AM): Initial setup/planning
+⏰ Mid-morning (11 AM): First major feature
+⏰ Before lunch (12 PM): Progress checkpoint  
+⏰ Early afternoon (2 PM): Next feature
+⏰ Mid-afternoon (3:30 PM): Progress checkpoint
+⏰ Late afternoon (5 PM): End of day summary
+
+---
+
+🚀 JUST SAY:
+   • "commit" → I'll commit with smart auto-message
+   • "commit: <your message>" → Custom message
+   • "push" → Push all commits to GitHub
+   • "git status" → See what's changed
+
+""")
+
+print("\n" + "="*70)
+print("✅ Ready for frequent commits! Just ask me anytime.")
+print("="*70)
+
+# COMMAND ----------
+
