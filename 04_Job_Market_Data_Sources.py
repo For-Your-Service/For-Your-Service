@@ -1457,3 +1457,984 @@ print("="*70)
 
 # COMMAND ----------
 
+
+
+# COMMAND ----------
+
+# DBTITLE 1,🏗️ BRONZE LAYER - Unity Catalog Setup
+# MAGIC %md
+# MAGIC # 🏗️ Bronze Layer - Unity Catalog Ingestion Pipeline
+# MAGIC
+# MAGIC ## Architecture: Medallion Pattern
+# MAGIC
+# MAGIC ```
+# MAGIC 🥉 BRONZE (Raw)        → 🥈 SILVER (Cleaned)     → 🥇 GOLD (Features)
+# MAGIC ─────────────────────────────────────────────────────────────────
+# MAGIC Raw job JSON           Clean, normalized         384-dim vectors
+# MAGIC Partitioned by date    Feature extraction        Tensor-ready
+# MAGIC No transformations     Skill standardization     For ML matching
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## What We're Building
+# MAGIC
+# MAGIC **Bronze Table:** `main.fys_bronze.job_postings`
+# MAGIC * **Purpose:** Store raw job data exactly as scraped
+# MAGIC * **Schema:** JSON structure + metadata (source, scrape_date)
+# MAGIC * **Partitioning:** By `scrape_date` for efficient querying
+# MAGIC * **Updates:** Append-only (never delete, track history)
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Benefits of Bronze Layer
+# MAGIC
+# MAGIC ✅ **Auditability:** Keep raw data forever, can replay transformations  
+# MAGIC ✅ **Debugging:** When Silver has issues, go back to Bronze source  
+# MAGIC ✅ **Reprocessing:** Change feature logic? Re-run from Bronze  
+# MAGIC ✅ **Data lineage:** Clear path from API → Bronze → Silver → Gold  
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Next Cells:
+# MAGIC 1. Create catalog & schema
+# MAGIC 2. Define Bronze table schema
+# MAGIC 3. Ingest scraped JSON data
+# MAGIC 4. Query and validate
+
+# COMMAND ----------
+
+# DBTITLE 1,Create Unity Catalog Schema
+# Create Unity Catalog schema for Bronze layer
+
+print("="*70)
+print("🏗️ Setting Up Unity Catalog for For Your Service")
+print("="*70)
+
+# Use 'workspace' catalog (available in this workspace)
+catalog_name = "workspace"
+schema_name = "fys_bronze"
+
+print(f"\n📦 Catalog: {catalog_name}")
+print(f"📂 Schema: {schema_name}")
+print(f"\n🎯 Full path: {catalog_name}.{schema_name}")
+
+# Create schema if it doesn't exist
+spark.sql(f"""
+    CREATE SCHEMA IF NOT EXISTS {catalog_name}.{schema_name}
+    COMMENT 'For Your Service - Bronze layer: Raw job market data from APIs'
+""")
+
+print(f"\n✅ Schema created: {catalog_name}.{schema_name}")
+
+# Verify schema exists
+schemas = spark.sql(f"SHOW SCHEMAS IN {catalog_name}").collect()
+schema_list = [row.databaseName for row in schemas]
+
+if schema_name in schema_list:
+    print(f"✅ Verified: {schema_name} exists in {catalog_name}")
+else:
+    print(f"❌ ERROR: Schema {schema_name} not found!")
+
+print("\n" + "="*70)
+print("🎯 Ready to create Bronze tables!")
+print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Create Bronze Table - Job Postings
+# Create Bronze table for raw job postings
+
+print("="*70)
+print("📊 Creating Bronze Table: job_postings")
+print("="*70)
+
+table_name = f"{catalog_name}.{schema_name}.job_postings"
+
+print(f"\n🎯 Table: {table_name}")
+print(f"\n📋 Schema Design:")
+print("   • job_id: STRING (unique identifier)")
+print("   • title: STRING (job title)")
+print("   • company: STRING (company name)")
+print("   • source: STRING (api source: adzuna, usajobs)")
+print("   • location: STRUCT (city, state, display, latitude, longitude)")
+print("   • salary: STRUCT (min, max, currency, is_predicted)")
+print("   • description: STRING (job description)")
+print("   • requirements: STRING (requirements text)")
+print("   • posted_date: TIMESTAMP (when job was posted)")
+print("   • url: STRING (application URL)")
+print("   • raw_json: STRING (full original JSON for auditability)")
+print("   • scrape_date: DATE (when we scraped it - PARTITION KEY)")
+print("   • scrape_timestamp: TIMESTAMP (exact scrape time)")
+
+# Create table with explicit schema
+spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS {table_name} (
+        job_id STRING COMMENT 'Unique job identifier from source API',
+        title STRING COMMENT 'Job title',
+        company STRING COMMENT 'Company name',
+        source STRING COMMENT 'Data source: adzuna, usajobs, indeed, etc.',
+        
+        location STRUCT<
+            city: STRING COMMENT 'City',
+            state: STRING COMMENT 'State code',
+            display: STRING COMMENT 'Full formatted location',
+            latitude: DOUBLE COMMENT 'Latitude for distance calculations',
+            longitude: DOUBLE COMMENT 'Longitude for distance calculations'
+        > COMMENT 'Job location details',
+        
+        salary STRUCT<
+            min: DOUBLE COMMENT 'Minimum salary',
+            max: DOUBLE COMMENT 'Maximum salary',
+            currency: STRING COMMENT 'Currency code (USD)',
+            is_predicted: BOOLEAN COMMENT 'Whether salary is predicted by source'
+        > COMMENT 'Salary information',
+        
+        description STRING COMMENT 'Job description text',
+        requirements STRING COMMENT 'Job requirements text',
+        posted_date TIMESTAMP COMMENT 'Date job was originally posted',
+        url STRING COMMENT 'Application URL',
+        
+        raw_json STRING COMMENT 'Full original JSON from API for auditability',
+        
+        scrape_date DATE COMMENT 'Date we scraped this job (partition key)',
+        scrape_timestamp TIMESTAMP COMMENT 'Exact timestamp of scrape'
+    )
+    USING DELTA
+    PARTITIONED BY (scrape_date)
+    COMMENT 'Bronze layer: Raw job postings from multiple APIs'
+""")
+
+print(f"\n✅ Table created: {table_name}")
+print(f"\n📁 Partitioned by: scrape_date (for efficient date-range queries)")
+print(f"🗄️ Format: Delta Lake (ACID transactions, time travel, optimized)")
+
+# Show table details
+print(f"\n{'='*70}")
+print(f"📋 Table Schema:")
+print(f"{'='*70}")
+spark.sql(f"DESCRIBE {table_name}").show(50, truncate=False)
+
+print(f"\n{'='*70}")
+print("✅ Bronze table ready for ingestion!")
+print(f"{'='*70}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Load and Transform Scraped Data to Bronze
+# Load scraped JSON and insert directly into Bronze table
+
+import json
+from pyspark.sql.types import *
+from pyspark.sql.functions import col, lit, struct, to_json, current_timestamp
+from datetime import date, datetime
+
+print("="*70)
+print("Bronze Layer Ingestion - Real Scraped Data")
+print("="*70)
+
+# Load the scraped JSON file
+scraped_file = "scraped_jobs_20260806_133502.json"
+with open(scraped_file, 'r') as f:
+    jobs_data = json.load(f)
+
+print(f"\nLoaded {len(jobs_data)} REAL jobs from file")
+
+# Define explicit schema for Bronze table
+schema = StructType([
+    StructField("job_id", StringType(), True),
+    StructField("title", StringType(), True),
+    StructField("company", StringType(), True),
+    StructField("source", StringType(), True),
+    StructField("location", StructType([
+        StructField("city", StringType(), True),
+        StructField("state", StringType(), True),
+        StructField("display", StringType(), True),
+        StructField("latitude", DoubleType(), True),
+        StructField("longitude", DoubleType(), True)
+    ]), True),
+    StructField("salary", StructType([
+        StructField("min", StringType(), True),  # APIs return as string
+        StructField("max", StringType(), True),  # APIs return as string
+        StructField("currency", StringType(), True),
+        StructField("is_predicted", StringType(), True)
+    ]), True),
+    StructField("description", StringType(), True),
+    StructField("requirements", StringType(), True),
+    StructField("posted_date", StringType(), True),
+    StructField("url", StringType(), True)
+])
+
+# Create DataFrame from Python list with explicit schema
+jobs_df = spark.createDataFrame(jobs_data, schema=schema)
+
+# Add scrape metadata and prepare for Bronze table
+scrape_date_val = date(2026, 8, 6)  # From filename
+scrape_timestamp_val = datetime(2026, 8, 6, 13, 35, 2)  # From filename
+
+bronze_df = jobs_df.select(
+    col("job_id"),
+    col("title"),
+    col("company"),
+    col("source"),
+    col("location"),
+    # Cast salary strings to doubles for Bronze table
+    struct(
+        col("salary.min").cast("double").alias("min"),
+        col("salary.max").cast("double").alias("max"),
+        col("salary.currency").alias("currency"),
+        col("salary.is_predicted").cast("boolean").alias("is_predicted")
+    ).alias("salary"),
+    col("description"),
+    col("requirements"),
+    col("posted_date").cast("timestamp"),
+    col("url"),
+    to_json(struct("*")).alias("raw_json"),
+    lit(scrape_date_val).alias("scrape_date"),
+    lit(scrape_timestamp_val).cast("timestamp").alias("scrape_timestamp")
+)
+
+print(f"\nTransformed {bronze_df.count()} rows for Bronze table")
+print("\nInserting into workspace.fys_bronze.job_postings...")
+
+# Insert into Bronze table
+table_name = "workspace.fys_bronze.job_postings"
+bronze_df.write \
+    .format("delta") \
+    .mode("append") \
+    .partitionBy("scrape_date") \
+    .saveAsTable(table_name)
+
+print(f"\nSUCCESS: Inserted {bronze_df.count()} jobs into Bronze table!")
+
+# Verify
+row_count = spark.sql(f"SELECT COUNT(*) as count FROM {table_name}").collect()[0]["count"]
+print(f"Total rows in Bronze table: {row_count}")
+
+print("\n" + "="*70)
+print("Bronze Layer Complete")
+print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Validate Bronze Table Data
+# Query and validate the Bronze table
+
+table_name = "workspace.fys_bronze.job_postings"
+
+print("="*70)
+print("Bronze Table Validation")
+print("="*70)
+
+# Basic statistics
+stats = spark.sql(f"""
+    SELECT 
+        COUNT(*) as total_jobs,
+        COUNT(DISTINCT job_id) as unique_jobs,
+        COUNT(DISTINCT company) as unique_companies,
+        COUNT(DISTINCT title) as unique_titles,
+        COUNT(DISTINCT source) as sources,
+        COUNT(DISTINCT location.state) as states,
+        COUNT(DISTINCT location.city) as cities,
+        MIN(scrape_date) as earliest_scrape,
+        MAX(scrape_date) as latest_scrape
+    FROM {table_name}
+""").collect()[0]
+
+print(f"\nTotal Jobs: {stats['total_jobs']:,}")
+print(f"Unique Jobs: {stats['unique_jobs']:,}")
+print(f"Companies: {stats['unique_companies']:,}")
+print(f"Job Titles: {stats['unique_titles']:,}")
+print(f"Data Sources: {stats['sources']}")
+print(f"States: {stats['states']}")
+print(f"Cities: {stats['cities']}")
+print(f"Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
+
+# Jobs by source
+print(f"\n\nJobs by Source:")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        source,
+        COUNT(*) as job_count,
+        COUNT(DISTINCT company) as companies,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY source
+    ORDER BY job_count DESC
+""").show()
+
+# Top locations
+print(f"\nTop 10 Locations:")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        location.city,
+        location.state,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY location.city, location.state
+    ORDER BY job_count DESC
+    LIMIT 10
+""").show()
+
+# Salary distribution
+print(f"\nSalary Distribution:")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        CASE 
+            WHEN salary.max < 50000 THEN '< $50K'
+            WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
+            WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
+            WHEN salary.max BETWEEN 100000 AND 150000 THEN '$100K-$150K'
+            WHEN salary.max >= 150000 THEN '$150K+'
+        END as salary_range,
+        COUNT(*) as job_count
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY salary_range
+    ORDER BY MIN(salary.max)
+""").show()
+
+# Sample top-paying jobs
+print(f"\nTop 5 Highest-Paying Jobs:")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        title,
+        company,
+        CONCAT(location.city, ', ', location.state) as location,
+        CONCAT('$', CAST(salary.min AS INT), ' - $', CAST(salary.max AS INT)) as salary,
+        source
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    ORDER BY salary.max DESC
+    LIMIT 5
+""").show(truncate=False)
+
+print("\n" + "="*70)
+print("Bronze Layer Validation Complete")
+print("="*70)
+print(f"\nNext Steps:")
+print(f"  1. Bronze layer: {stats['total_jobs']} jobs")
+print(f"  2. Build Silver layer (feature engineering)")
+print(f"  3. Build Gold layer (tensor preparation)")
+print(f"  4. Train neural network matching model")
+
+# COMMAND ----------
+
+# DBTITLE 1,🎖️ FUTURE ENHANCEMENT - ClearanceJobs API Integration
+# MAGIC %md
+# MAGIC # 🎖️ FUTURE ENHANCEMENT - ClearanceJobs API Integration
+# MAGIC
+# MAGIC ## Why ClearanceJobs is Critical for Veterans
+# MAGIC
+# MAGIC **Massive Competitive Advantage:**
+# MAGIC * **80%+ of veterans already hold security clearances** from military service (Secret, Top Secret, TS/SCI)
+# MAGIC * Security clearances cost employers **$3,000-$15,000+ and 6-18 months** to obtain
+# MAGIC * Veterans with **active clearances are immediately hirable** for high-paying defense contractor roles
+# MAGIC * Jobs pay **20-40% salary premium** for cleared candidates
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Market Intelligence
+# MAGIC
+# MAGIC **Job Volume:**
+# MAGIC * **~150,000 cleared job postings** at any time
+# MAGIC * Major employers: Lockheed Martin, Northrop Grumman, Raytheon, BAE Systems, SAIC, Booz Allen Hamilton
+# MAGIC * Many positions are **veteran-preferred or veteran-only**
+# MAGIC
+# MAGIC **Data Quality:**
+# MAGIC * Clearance level required (Confidential, Secret, Top Secret, TS/SCI)
+# MAGIC * Polygraph requirements (Counter-Intel, Full Scope, None)
+# MAGIC * U.S. citizenship requirements (explicitly stated)
+# MAGIC * Veteran preference indicators
+# MAGIC * Military experience equivalents
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Integration Strategy
+# MAGIC
+# MAGIC **API Access Options:**
+# MAGIC 1. **ClearanceJobs Partner API** (historically free for non-profits/research)
+# MAGIC    * Direct API access to job postings
+# MAGIC    * Real-time updates
+# MAGIC    * Rich metadata (clearance type, polygraph, etc.)
+# MAGIC
+# MAGIC 2. **Web Scraping Alternative** (if API unavailable)
+# MAGIC    * ClearanceJobs permits research-based scraping
+# MAGIC    * Job board structure is stable
+# MAGIC    * Can extract: clearance level, salary, location, requirements
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Neural Network Impact
+# MAGIC
+# MAGIC **Why This Data Matters:**
+# MAGIC
+# MAGIC 🎯 **Better Veteran Matching:**
+# MAGIC * Match veterans TO their existing clearances (major value add)
+# MAGIC * Prioritize jobs that leverage military credentials
+# MAGIC * Filter by clearance level in feature vectors
+# MAGIC
+# MAGIC 💰 **Salary Optimization:**
+# MAGIC * Cleared jobs pay 20-40% more
+# MAGIC * Better ROI on veteran placements
+# MAGIC * Higher satisfaction (veterans maximize existing credentials)
+# MAGIC
+# MAGIC 🔐 **Clearance-Aware Features:**
+# MAGIC ```python
+# MAGIC # Feature engineering for Gold layer
+# MAGIC veteran_features = {
+# MAGIC     'has_active_clearance': True,
+# MAGIC     'clearance_level': 'TS/SCI',
+# MAGIC     'clearance_expiry': '2028-01-15',
+# MAGIC     'polygraph_type': 'CI',
+# MAGIC }
+# MAGIC
+# MAGIC job_features = {
+# MAGIC     'requires_clearance': 'TS/SCI',
+# MAGIC     'accepts_interim': True,
+# MAGIC     'salary_premium': 1.35,  # 35% premium for clearance
+# MAGIC }
+# MAGIC
+# MAGIC # Neural network can learn:
+# MAGIC # "This veteran's TS/SCI + Network Engineering MOS → High match for
+# MAGIC #  Lockheed Martin Sr. Network Architect ($145K, requires TS/SCI)"
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Implementation Roadmap
+# MAGIC
+# MAGIC **Phase 1: Validate Bronze Pipeline (CURRENT)** ✅
+# MAGIC * Prove ingestion works with Adzuna + USAJobs
+# MAGIC * Establish data quality checks
+# MAGIC * Build Silver/Gold layers
+# MAGIC
+# MAGIC **Phase 2: Add ClearanceJobs (NEXT PRIORITY)** 🎯
+# MAGIC * Register for ClearanceJobs API (or build scraper)
+# MAGIC * Extend Bronze schema for clearance fields
+# MAGIC * Add clearance_level to feature vectors
+# MAGIC * Update neural network to weight clearance matches
+# MAGIC
+# MAGIC **Phase 3: Optimize Veteran Clearance Matching** 🚀
+# MAGIC * Build clearance expiry tracking
+# MAGIC * Alert veterans when clearances need renewal
+# MAGIC * Suggest clearance upgrade paths (Secret → TS)
+# MAGIC * Partner with clearance renewal services
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Technical Notes
+# MAGIC
+# MAGIC **Schema Extension for ClearanceJobs:**
+# MAGIC ```sql
+# MAGIC ALTER TABLE workspace.fys_bronze.job_postings ADD COLUMNS (
+# MAGIC     clearance_required STRING COMMENT 'Required clearance level: None, Confidential, Secret, TS, TS/SCI',
+# MAGIC     polygraph_required STRING COMMENT 'Polygraph type: None, CI, FS',
+# MAGIC     citizenship_required BOOLEAN COMMENT 'US citizenship required',
+# MAGIC     interim_clearance_accepted BOOLEAN COMMENT 'Will accept interim clearance',
+# MAGIC     clearance_salary_premium DOUBLE COMMENT 'Estimated salary premium for clearance'
+# MAGIC );
+# MAGIC ```
+# MAGIC
+# MAGIC **Data Sources to Compare:**
+# MAGIC | Source | Job Volume | Clearance Data | Veteran-Specific |
+# MAGIC |--------|-----------|----------------|------------------|
+# MAGIC | ClearanceJobs | ~150K | ✅ Excellent | ✅ Yes |
+# MAGIC | USAJobs | ~20K | ✅ Yes | ✅ Yes |
+# MAGIC | Adzuna | ~1M+ | ⚠️ Mixed | ❌ No |
+# MAGIC | Indeed | ~10M+ | ❌ No | ❌ No |
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Why We're NOT Chasing Indeed
+# MAGIC
+# MAGIC **Indeed's Business Model:**
+# MAGIC * **Paywall-first approach** - API access is expensive/restrictive
+# MAGIC * **Combative toward non-profits** - blocks research/academic use
+# MAGIC * **Low clearance data quality** - most cleared jobs posted elsewhere
+# MAGIC * **Generic job aggregator** - not veteran-focused
+# MAGIC
+# MAGIC **Better ROI:**
+# MAGIC * **ClearanceJobs** = 150K veteran-relevant, high-paying, cleared jobs
+# MAGIC * **Indeed** = 10M generic jobs, mostly duplicates, no clearance data
+# MAGIC
+# MAGIC **For Your Service focuses on QUALITY matches, not quantity.**
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Action Items
+# MAGIC
+# MAGIC - [ ] Complete Bronze/Silver/Gold pipeline with current data (Adzuna + USAJobs)
+# MAGIC - [ ] Register for ClearanceJobs API or build scraper
+# MAGIC - [ ] Extend Bronze schema for clearance fields  
+# MAGIC - [ ] Add clearance matching logic to neural network
+# MAGIC - [ ] Build veteran clearance profile tracking
+# MAGIC - [ ] Test end-to-end: Veteran with TS/SCI → Matched cleared jobs
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC 💡 **Key Insight:**  
+# MAGIC Indeed wants to MONETIZE job seekers.  
+# MAGIC ClearanceJobs wants to PLACE veterans.  
+# MAGIC
+# MAGIC We align with ClearanceJobs' mission. ✅
+
+# COMMAND ----------
+
+# DBTITLE 1,Load Scraped JSON Data
+# Load the scraped JSON file into a DataFrame
+
+import json
+from pyspark.sql.types import *
+from pyspark.sql.functions import *
+from datetime import datetime, date
+
+print("="*70)
+print("💾 Loading Scraped Job Data")
+print("="*70)
+
+# File path to your scraped data (absolute path)
+scraped_file = "/Workspace/Users/whall4.wh@gmail.com/For-Your-Service/scraped_jobs_20260806_133502.json"
+
+print(f"\n📂 Loading: {scraped_file}")
+
+# Read JSON file
+with open(scraped_file, 'r') as f:
+    jobs_data = json.load(f)
+
+print(f"✅ Loaded {len(jobs_data)} jobs from JSON")
+
+# Show sample of raw data
+print(f"\n🔍 Sample job (first record):")
+print("="*70)
+print(json.dumps(jobs_data[0], indent=2)[:500] + "...")
+
+# Convert to Spark DataFrame using multiLine JSON
+jobs_df = spark.read.option("multiLine", "true").json(scraped_file)
+
+print(f"\n📊 DataFrame created with {jobs_df.count()} rows")
+print(f"\n📋 Inferred schema:")
+jobs_df.printSchema()
+
+print(f"\n{'='*70}")
+print("✅ Data loaded successfully!")
+print(f"{'='*70}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Transform & Insert into Bronze Table
+# Transform scraped data to match Bronze table schema and insert
+
+from pyspark.sql.functions import col, lit, struct, to_json, current_timestamp, to_timestamp, when
+from datetime import date
+
+print("="*70)
+print("⛏️ Transforming Data for Bronze Table")
+print("="*70)
+
+# Current scrape date (from the file we just loaded)
+scrape_date = date(2026, 8, 6)  # From scraped_jobs_20260806_133502.json
+scrape_timestamp = datetime.now()
+
+print(f"\n📅 Scrape Date: {scrape_date}")
+print(f"⏱️ Scrape Timestamp: {scrape_timestamp}")
+
+# Transform DataFrame to match Bronze table schema
+# Note: salary.min/max are strings in the source, need to cast to double
+# Note: salary.is_predicted is string, need to cast to boolean
+bronze_df = jobs_df.select(
+    col("job_id"),
+    col("title"),
+    col("company"),
+    col("source"),
+    
+    # Location struct - keep as is
+    col("location"),
+    
+    # Salary struct - cast types to match Bronze schema
+    struct(
+        col("salary.min").cast("double").alias("min"),
+        col("salary.max").cast("double").alias("max"),
+        lit("USD").alias("currency"),
+        when(col("salary.is_predicted") == "1", True).otherwise(False).alias("is_predicted")
+    ).alias("salary"),
+    
+    col("description"),
+    col("description").alias("requirements"),  # Use description for requirements (source has no separate field)
+    to_timestamp(col("posted_date")).alias("posted_date"),
+    col("url"),
+    
+    # Store original JSON for auditability
+    to_json(struct("*")).alias("raw_json"),
+    
+    # Add scrape metadata
+    lit(scrape_date).alias("scrape_date"),
+    lit(scrape_timestamp).cast("timestamp").alias("scrape_timestamp")
+)
+
+print(f"\n🔍 Transformed schema:")
+bronze_df.printSchema()
+
+print(f"\n📊 Total rows to insert: {bronze_df.count()}")
+
+# Insert into Bronze table
+print(f"\n🚀 Inserting into {table_name}...")
+
+bronze_df.write \
+    .format("delta") \
+    .mode("append") \
+    .partitionBy("scrape_date") \
+    .saveAsTable(table_name)
+
+print(f"\n✅ Successfully inserted {bronze_df.count()} jobs into Bronze table!")
+
+# Verify insertion
+row_count = spark.sql(f"SELECT COUNT(*) as count FROM {table_name}").collect()[0]["count"]
+print(f"\n📊 Total rows in Bronze table: {row_count}")
+
+print(f"\n{'='*70}")
+print("✅ Bronze layer ingestion complete!")
+print(f"{'='*70}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Query & Validate Bronze Data
+# Query and validate the Bronze table data
+
+print("="*70)
+print("🔍 Querying Bronze Table")
+print("="*70)
+
+# Basic statistics
+print(f"\n📊 BRONZE TABLE STATISTICS")
+print("="*70)
+
+stats = spark.sql(f"""
+    SELECT 
+        COUNT(*) as total_jobs,
+        COUNT(DISTINCT job_id) as unique_jobs,
+        COUNT(DISTINCT company) as unique_companies,
+        COUNT(DISTINCT title) as unique_titles,
+        COUNT(DISTINCT source) as sources,
+        COUNT(DISTINCT location.state) as states,
+        COUNT(DISTINCT location.city) as cities,
+        MIN(scrape_date) as earliest_scrape,
+        MAX(scrape_date) as latest_scrape
+    FROM {table_name}
+""").collect()[0]
+
+print(f"\n   Total Jobs: {stats['total_jobs']:,}")
+print(f"   Unique Jobs: {stats['unique_jobs']:,}")
+print(f"   Companies: {stats['unique_companies']:,}")
+print(f"   Job Titles: {stats['unique_titles']:,}")
+print(f"   Data Sources: {stats['sources']}")
+print(f"   States: {stats['states']}")
+print(f"   Cities: {stats['cities']}")
+print(f"   Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
+
+# Jobs by source
+print(f"\n\n📊 JOBS BY SOURCE")
+print("="*70)
+display(spark.sql(f"""
+    SELECT 
+        source,
+        COUNT(*) as job_count,
+        COUNT(DISTINCT company) as companies,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY source
+    ORDER BY job_count DESC
+"""))
+
+# Top locations
+print(f"\n📍 TOP 10 LOCATIONS")
+print("="*70)
+display(spark.sql(f"""
+    SELECT 
+        location.city,
+        location.state,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY location.city, location.state
+    ORDER BY job_count DESC
+    LIMIT 10
+"""))
+
+# Top companies
+print(f"\n🏢 TOP 10 COMPANIES")
+print("="*70)
+display(spark.sql(f"""
+    SELECT 
+        company,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE company IS NOT NULL AND salary.max IS NOT NULL
+    GROUP BY company
+    ORDER BY job_count DESC
+    LIMIT 10
+"""))
+
+# Salary distribution
+print(f"\n💰 SALARY DISTRIBUTION")
+print("="*70)
+display(spark.sql(f"""
+    SELECT 
+        CASE 
+            WHEN salary.max < 50000 THEN '< $50K'
+            WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
+            WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
+            WHEN salary.max BETWEEN 100000 AND 150000 THEN '$100K-$150K'
+            WHEN salary.max >= 150000 THEN '$150K+'
+        END as salary_range,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.min), 0) as avg_min,
+        ROUND(AVG(salary.max), 0) as avg_max
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY salary_range
+    ORDER BY avg_max
+"""))
+
+# Sample jobs
+print(f"\n🔍 SAMPLE JOBS (Top 5 by salary)")
+print("="*70)
+display(spark.sql(f"""
+    SELECT 
+        title,
+        company,
+        CONCAT(location.city, ', ', location.state) as location,
+        CONCAT('$', CAST(salary.min AS INT), ' - $', CAST(salary.max AS INT)) as salary,
+        source
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    ORDER BY salary.max DESC
+    LIMIT 5
+"""))
+
+print(f"\n{'='*70}")
+print("✅ Bronze Layer Validation Complete!")
+print(f"{'='*70}")
+print(f"\n🎯 Next Steps:")
+print(f"   1. ✅ Bronze layer built with {stats['total_jobs']} jobs")
+print(f"   2. ⏳ Build Silver layer (feature engineering)")
+print(f"   3. ⏳ Build Gold layer (tensor preparation)")
+print(f"   4. ⏳ Train neural network matching model")
+
+# COMMAND ----------
+
+# DBTITLE 1,Transform & Insert into Bronze Table
+# Transform scraped data to match Bronze table schema and insert
+
+from pyspark.sql.functions import col, lit, struct, to_json, current_timestamp, to_date
+from datetime import date
+
+print("="*70)
+print("⛏️ Transforming Data for Bronze Table")
+print("="*70)
+
+# Current scrape date (from the file we just loaded)
+scrape_date = date(2026, 8, 6)  # From scraped_jobs_20260806_133502.json
+scrape_timestamp = datetime.now()
+
+print(f"\n📅 Scrape Date: {scrape_date}")
+print(f"⏱️ Scrape Timestamp: {scrape_timestamp}")
+
+# Transform DataFrame to match Bronze table schema
+bronze_df = jobs_df.select(
+    col("job_id"),
+    col("title"),
+    col("company"),
+    col("source"),
+    
+    # Location struct
+    struct(
+        col("location.city").alias("city"),
+        col("location.state").alias("state"),
+        col("location.display").alias("display"),
+        col("location.latitude").alias("latitude"),
+        col("location.longitude").alias("longitude")
+    ).alias("location"),
+    
+    # Salary struct
+    struct(
+        col("salary.min").alias("min"),
+        col("salary.max").alias("max"),
+        col("salary.currency").alias("currency"),
+        col("salary.is_predicted").alias("is_predicted")
+    ).alias("salary"),
+    
+    col("description"),
+    col("requirements"),
+    col("posted_date").cast("timestamp"),
+    col("url"),
+    
+    # Store original JSON for auditability
+    to_json(struct("*")).alias("raw_json"),
+    
+    # Add scrape metadata
+    lit(scrape_date).alias("scrape_date"),
+    lit(scrape_timestamp).cast("timestamp").alias("scrape_timestamp")
+)
+
+print(f"\n🔍 Transformed schema:")
+bronze_df.printSchema()
+
+print(f"\n📊 Total rows to insert: {bronze_df.count()}")
+
+# Insert into Bronze table
+print(f"\n🚀 Inserting into {table_name}...")
+
+bronze_df.write \
+    .format("delta") \
+    .mode("append") \
+    .partitionBy("scrape_date") \
+    .saveAsTable(table_name)
+
+print(f"\n✅ Successfully inserted {bronze_df.count()} jobs into Bronze table!")
+
+# Verify insertion
+row_count = spark.sql(f"SELECT COUNT(*) as count FROM {table_name}").collect()[0]["count"]
+print(f"\n📊 Total rows in Bronze table: {row_count}")
+
+print(f"\n{'='*70}")
+print("✅ Bronze layer ingestion complete!")
+print(f"{'='*70}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Query & Validate Bronze Data
+# Query and validate the Bronze table data
+
+print("="*70)
+print("🔍 Querying Bronze Table")
+print("="*70)
+
+# Basic statistics
+print(f"\n📊 BRONZE TABLE STATISTICS")
+print("="*70)
+
+stats = spark.sql(f"""
+    SELECT 
+        COUNT(*) as total_jobs,
+        COUNT(DISTINCT job_id) as unique_jobs,
+        COUNT(DISTINCT company) as unique_companies,
+        COUNT(DISTINCT title) as unique_titles,
+        COUNT(DISTINCT source) as sources,
+        COUNT(DISTINCT location.state) as states,
+        COUNT(DISTINCT location.city) as cities,
+        MIN(scrape_date) as earliest_scrape,
+        MAX(scrape_date) as latest_scrape
+    FROM {table_name}
+""").collect()[0]
+
+print(f"\n   Total Jobs: {stats['total_jobs']:,}")
+print(f"   Unique Jobs: {stats['unique_jobs']:,}")
+print(f"   Companies: {stats['unique_companies']:,}")
+print(f"   Job Titles: {stats['unique_titles']:,}")
+print(f"   Data Sources: {stats['sources']}")
+print(f"   States: {stats['states']}")
+print(f"   Cities: {stats['cities']}")
+print(f"   Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
+
+# Jobs by source
+print(f"\n\n📊 JOBS BY SOURCE")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        source,
+        COUNT(*) as job_count,
+        COUNT(DISTINCT company) as companies,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY source
+    ORDER BY job_count DESC
+""").show()
+
+# Top locations
+print(f"\n📍 TOP 10 LOCATIONS")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        location.city,
+        location.state,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY location.city, location.state
+    ORDER BY job_count DESC
+    LIMIT 10
+""").show()
+
+# Top companies
+print(f"\n🏢 TOP 10 COMPANIES")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        company,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.max), 0) as avg_max_salary
+    FROM {table_name}
+    WHERE company IS NOT NULL AND salary.max IS NOT NULL
+    GROUP BY company
+    ORDER BY job_count DESC
+    LIMIT 10
+""").show(truncate=False)
+
+# Salary distribution
+print(f"\n💰 SALARY DISTRIBUTION")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        CASE 
+            WHEN salary.max < 50000 THEN '< $50K'
+            WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
+            WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
+            WHEN salary.max BETWEEN 100000 AND 150000 THEN '$100K-$150K'
+            WHEN salary.max >= 150000 THEN '$150K+'
+        END as salary_range,
+        COUNT(*) as job_count,
+        ROUND(AVG(salary.min), 0) as avg_min,
+        ROUND(AVG(salary.max), 0) as avg_max
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    GROUP BY salary_range
+    ORDER BY avg_max
+""").show()
+
+# Sample jobs
+print(f"\n🔍 SAMPLE JOBS (First 5)")
+print("="*70)
+spark.sql(f"""
+    SELECT 
+        title,
+        company,
+        CONCAT(location.city, ', ', location.state) as location,
+        CONCAT('$', CAST(salary.min AS INT), ' - $', CAST(salary.max AS INT)) as salary,
+        source
+    FROM {table_name}
+    WHERE salary.max IS NOT NULL
+    ORDER BY salary.max DESC
+    LIMIT 5
+""").show(truncate=False)
+
+print(f"\n{'='*70}")
+print("✅ Bronze Layer Validation Complete!")
+print(f"{'='*70}")
+print(f"\n🎯 Next Steps:")
+print(f"   1. ✅ Bronze layer built with {stats['total_jobs']} jobs")
+print(f"   2. ⏳ Build Silver layer (feature engineering)")
+print(f"   3. ⏳ Build Gold layer (tensor preparation)")
+print(f"   4. ⏳ Train neural network matching model")
