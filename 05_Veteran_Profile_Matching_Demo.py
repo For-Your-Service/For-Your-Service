@@ -82,7 +82,7 @@
 
 # COMMAND ----------
 
-# DBTITLE 1,Define Veteran Profile - Free Hall
+# DBTITLE 1,Define Veteran Profile - William Free Hall (Enhanced)
 # Parse Free Hall's resume into structured veteran profile
 
 print("="*70)
@@ -92,8 +92,10 @@ print("="*70)
 veteran_profile = {
     "name": "William Free Hall",
     "location": {
-        "city": "Niceville",
-        "state": "FL",
+        "current_city": "Niceville",
+        "current_state": "FL",
+        "target_city": "Greenville",
+        "target_state": "SC",
         "willing_to_relocate": True,
         "remote_preference": True
     },
@@ -104,7 +106,8 @@ veteran_profile = {
         "rank": "Team Sergeant",
         "years_served": 18,
         "service_dates": "1999-2017",
-        "clearance": "Top Secret/SCI (inferred from Special Forces)"
+        "clearance": "Former TS/SCI (1999-2017, expired - no longer active)",
+        "clearance_notes": "18 years handling classified material, security-first mindset remains"
     },
     
     "target_roles": [
