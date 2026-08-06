@@ -18,7 +18,7 @@
 
 Transitioning out of the military is often hindered by fragmented skill translation, dynamic timeline constraints, and manual job matching. **For Your Service (FYS)** solves this by converting qualitative intake data into dynamic, multi-dimensional **tensors** that compute real-time placement probability matrices against active job postings.
 
-Designed for integration with veteran placement partners like **Seven Eagles**, this platform provides counselors with a streamlined intake interface while maintaining rigid data validation, PII anonymization, and decoupled cloud processing.
+Designed for integration with veteran placement partners like **7 Eagle Group**, this platform provides counselors with a streamlined intake interface while maintaining rigid data validation, PII anonymization, and decoupled cloud processing.
 
 ---
 
@@ -53,7 +53,7 @@ for-your-service/
 │   ├── architecture_blueprint.md        # Deep dive into event flow, GCP triggers, & Databricks setup
 │   ├── tensor_mapping_design.md         # Mathematical definitions for the 5D candidate vector engine
 │   ├── risk_matrix.md                   # Threat modeling, zero-PII vault protocols, & security risk mitigation
-│   └── partner_onboarding_guide.md      # Integration manual for veteran counseling partners (e.g., Seven Eagles)
+│   └── partner_onboarding_guide.md      # Integration manual for veteran counseling partners (e.g., 7 Eagle Group)
 │
 ├── local_ops/                           # Windows Automation & Session Persistence
 │   ├── Show-Status.ps1                  # PowerShell script executing 2-hour status popups from STATUS.md
