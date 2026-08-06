@@ -12,7 +12,21 @@ It contains:
 - 🔐 **Privacy & security details** - How we protect veteran data
 - 🛠️ **Troubleshooting guide** - Common issues and fixes
 
-**Last Updated:** August 5, 2026
+**Last Updated:** August 6, 2026
+
+---
+
+## 🔄 Development Transparency
+
+**We commit often!** Our development process emphasizes transparency through frequent, granular commits. We target **100+ commits per day** to provide:
+- ✅ Real-time visibility into work in progress
+- ✅ Detailed project evolution history  
+- ✅ Easy rollback and debugging
+- ✅ Stakeholder confidence through continuous progress
+
+📊 **Commit Strategy:** Micro-commits every 5-10 minutes (setup, docs, features, fixes, tests, data, refactoring)  
+📋 **Daily Tracker:** See [COMMIT_TRACKER.md](./COMMIT_TRACKER.md) for today's progress  
+📖 **Workflow Guide:** [COMMIT_WORKFLOW.md](./COMMIT_WORKFLOW.md) for our commit practices
 
 ---
 
