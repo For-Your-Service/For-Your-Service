@@ -3,7 +3,7 @@
 **Project:** For Your Service - Veteran Job Matching Platform  
 **Organization:** 7 Eagle Group  
 **Session Date:** August 5, 2026  
-**Developer:** Wade Hall (whall4.wh@gmail.com)  
+**Developer:** Free Hall (whall4.wh@gmail.com)  
 **GitHub Repository:** https://github.com/7EagleGroup/foryourservice-ml-matching
 
 ---
@@ -380,7 +380,7 @@ foryourservice-ml-matching/
 ## Sign-off
 
 **Date:** August 5, 2026  
-**Developer:** Wade Hall  
+**Developer:** Free Hall  
 **Status:** ✅ Complete and ready for GitHub push  
 **Next Action:** Extract code from notebook cells and push to GitHub
 
