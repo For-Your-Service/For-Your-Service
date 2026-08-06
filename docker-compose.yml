@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=production
+      - LOG_LEVEL=INFO
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  ingestion:
+    build: .
+    command: python -m src.ingestion.scheduler
+    environment:
+      - ENV=production
+      - LOG_LEVEL=INFO
+    env_file:
+      - .env
+    depends_on:
+      - api
+    restart: unless-stopped
