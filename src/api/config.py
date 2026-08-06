@@ -22,8 +22,9 @@ class APIConfig:
     ADZUNA_APP_ID: str = os.getenv("ADZUNA_APP_ID", "")
     ADZUNA_API_KEY: str = os.getenv("ADZUNA_API_KEY", "")
     
-    # O*NET API (No key required - use email as username)
+    # O*NET API (https://services.onetcenter.org/)
     ONET_USERNAME: str = os.getenv("ONET_USERNAME", "whall4.wh@gmail.com")
+    ONET_API_KEY: str = os.getenv("ONET_API_KEY", "1bI5R-GtQp9-JdxaL-bTiqM")
     
     # CareerOneStop API (https://www.careeronestop.org/Developers/)
     CAREERONESTOP_USER_ID: str = os.getenv("CAREERONESTOP_USER_ID", "")
@@ -36,7 +37,7 @@ class APIConfig:
             "usajobs": bool(cls.USAJOBS_API_KEY),
             "bls": bool(cls.BLS_API_KEY),
             "adzuna": bool(cls.ADZUNA_APP_ID and cls.ADZUNA_API_KEY),
-            "onet": bool(cls.ONET_USERNAME),
+            "onet": bool(cls.ONET_API_KEY),
             "careeronestop": bool(cls.CAREERONESTOP_USER_ID and cls.CAREERONESTOP_TOKEN)
         }
     
