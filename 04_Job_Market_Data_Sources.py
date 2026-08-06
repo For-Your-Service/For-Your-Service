@@ -1036,12 +1036,12 @@ print("="*70)
 # 🔑 YOUR API CREDENTIALS (UPDATE THESE!)
 # ==========================================
 
-# Adzuna API (https://developer.adzuna.com/)
-ADZUNA_APP_ID = "YOUR_APP_ID_HERE"  # Replace with your Adzuna App ID
-ADZUNA_API_KEY = "YOUR_API_KEY_HERE"  # Replace with your Adzuna API Key
+# Adzuna API (https://developer.adzuna.com/) ✅ CONFIGURED
+ADZUNA_APP_ID = "ea966e18"  # Your Adzuna App ID
+ADZUNA_API_KEY = "d59477241791ac51feb5df5b2b676654"  # Your Adzuna API Key
 
-# USAJobs API (https://developer.usajobs.gov/)
-USAJOBS_API_KEY = "YOUR_API_KEY_HERE"  # Replace with your USAJobs Authorization Key
+# USAJobs API (https://developer.usajobs.gov/) ✅ CONFIGURED
+USAJOBS_API_KEY = "Sy03OfX4/5qL70b+vVT42P7bTysIjAUT//nkUe4tEHU="  # Your USAJobs Authorization Key
 USAJOBS_USER_AGENT = "whall4.wh@gmail.com"  # Your email
 
 # ==========================================
