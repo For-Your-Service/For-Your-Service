@@ -1050,9 +1050,7 @@ USAJOBS_USER_AGENT = "whall4.wh@gmail.com"  # Your email
 
 # Target locations for veteran job matching
 TARGET_LOCATIONS = [
-    {"city": "San Diego", "state": "CA"},
-    {"city": "Virginia Beach", "state": "VA"},
-    {"city": "San Antonio", "state": "TX"},
+    {"city": "Greenville", "state": "SC"},  # Free Hall's target location
 ]
 
 # Keywords based on common veteran skill transfers
@@ -1082,7 +1080,7 @@ def scrape_adzuna_jobs(location, keyword, max_results=50):
     params = {
         "app_id": ADZUNA_APP_ID,
         "app_key": ADZUNA_API_KEY,
-        "results_per_page": min(max_results, 50),
+        "results_per_page": max_results if max_results < 50 else 50,
         "what": keyword,
         "where": f"{location['city']}, {location['state']}",
         "distance": 50,  # 50 mile radius
@@ -1164,7 +1162,7 @@ def scrape_usajobs(location, keyword, max_results=100):
     params = {
         "Keyword": keyword,
         "LocationName": location["city"],
-        "ResultsPerPage": min(max_results, 500),
+        "ResultsPerPage": max_results if max_results < 500 else 500,
         "Page": 1
     }
     
@@ -1634,7 +1632,7 @@ print("Bronze Layer Ingestion - Real Scraped Data")
 print("="*70)
 
 # Load the scraped JSON file
-scraped_file = "scraped_jobs_20260806_133502.json"
+scraped_file = "scraped_jobs_20260806_154016.json"  # Greenville, SC jobs
 with open(scraped_file, 'r') as f:
     jobs_data = json.load(f)
 
@@ -1670,7 +1668,7 @@ jobs_df = spark.createDataFrame(jobs_data, schema=schema)
 
 # Add scrape metadata and prepare for Bronze table
 scrape_date_val = date(2026, 8, 6)  # From filename
-scrape_timestamp_val = datetime(2026, 8, 6, 13, 35, 2)  # From filename
+scrape_timestamp_val = datetime(2026, 8, 6, 15, 40, 16)  # From filename (Greenville SC scrape)
 
 bronze_df = jobs_df.select(
     col("job_id"),
