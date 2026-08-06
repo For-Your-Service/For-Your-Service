@@ -16,18 +16,14 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-PIPFILE.lock
 
-# Virtual Environments
+# Virtual environments
 venv/
 ENV/
 env/
-.venv
 
 # IDE
 .vscode/
@@ -35,47 +31,20 @@ env/
 *.swp
 *.swo
 *~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment
+.env
+.env.local
+
+# OS
 .DS_Store
+Thumbs.db
 
 # Databricks
 .databricks/
-*.dbc
-
-# GCP Credentials (NEVER COMMIT)
-*.json
-service-account*.json
-keyfile.json
-*-key.json
-
-# Environment Variables
-.env
-.env.local
-*.env
-
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.backup
-.terraform.lock.hcl
-
-# Logs
-*.log
-logs/
-
-# Data Files (use GCS/Databricks instead)
-*.csv
-*.parquet
-*.json.gz
-data/
-raw/
-processed/
-
-# Secrets
-secrets/
-*.pem
-*.key
-*.crt
-
-# OS
-Thumbs.db
-.DS_Store
