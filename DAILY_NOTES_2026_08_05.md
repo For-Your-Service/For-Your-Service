@@ -4,7 +4,7 @@
 **Organization:** 7 Eagle Group  
 **Session Date:** August 5, 2026  
 **Developer:** Free Hall (whall4.wh@gmail.com)  
-**GitHub Repository:** https://github.com/7EagleGroup/foryourservice-ml-matching
+**GitHub Repository:** https://github.com/For-Your-Service/For-Your-Service
 
 ---
 
