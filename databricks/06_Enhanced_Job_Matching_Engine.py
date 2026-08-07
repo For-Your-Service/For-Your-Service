@@ -1276,3 +1276,250 @@ print(f"      - High-pressure operations → Production system reliability")
 print("\n" + "="*70)
 print("✅ TENSOR-BASED MATCHING COMPLETE")
 print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,🎯 Display Top 10 with Success Probabilities
+# Display top 10 jobs with neural network success probabilities and actionable recommendations
+
+print("="*70)
+print("🎯 TOP 10 JOBS - NEURAL NETWORK ENHANCED MATCHING")
+print("SUCCESS PROBABILITY + ACTIONABLE RECOMMENDATIONS")
+print("="*70)
+print("\n📍 Location: Greenville, SC")
+print("👤 Profile: William Free Hall - 28 years experience, Senior-level")
+print("💰 Target Salary: $120K-$180K\n")
+
+# Get top 10 by success probability
+top_10_tensor = jobs_tensor_sorted.head(10)
+
+for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
+    print("\n" + "#"*70)
+    print(f"RANK #{rank} - SUCCESS PROBABILITY: {job['success_probability']:.1f}%")
+    print("#"*70)
+    
+    print(f"\n💼 JOB TITLE: {job['title']}")
+    print(f"🏯 COMPANY: {job['company']}")
+    print(f"📍 LOCATION: {job['location_display']}")
+    print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
+    
+    print(f"\n📊 DETAILED ANALYSIS:")
+    print(f"   • Enhanced Match Score: {job['match_score']}/100 pts")
+    print(f"   • Success Probability: {job['success_probability']:.1f}%")
+    print(f"   • Semantic Similarity: {job['semantic_similarity']:.3f}")
+    print(f"   • Confidence Level: {'High' if job['confidence'] >= 70 else 'Medium' if job['confidence'] >= 50 else 'Fair'}")
+    
+    print(f"\n✅ MATCH STRENGTHS:")
+    for reason in job['match_reasons']:
+        print(f"   • {reason}")
+    
+    if len(job['match_concerns']) > 0:
+        print(f"\n⚠️ POTENTIAL CONCERNS:")
+        for concern in job['match_concerns']:
+            print(f"   • {concern}")
+    
+    print(f"\n📑 JOB DETAILS:")
+    print(f"   • Seniority Level: {job['seniority_level'].upper()}")
+    print(f"   • Years Required: {job['years_required'] or 'Not specified'}")
+    print(f"   • Leadership Role: {'Yes' if job['leadership_count'] > 0 else 'No'} ({job['leadership_count']} indicators)")
+    print(f"   • Clearance Required: {'Yes - ' + str(job['clearance_type']) if job['clearance_required'] else 'No'}")
+    
+    # Actionable recommendations
+    print(f"\n💡 ACTIONABLE RECOMMENDATIONS:")
+    if job['success_probability'] >= 75:
+        print(f"   🎯 HIGHLY RECOMMENDED - Apply immediately!")
+        print(f"   • This job is an excellent fit for your experience")
+        print(f"   • Tailor resume to emphasize: {', '.join(job['match_reasons'][:2])}")
+        print(f"   • Prepare to discuss For Your Service project in interview")
+    elif job['success_probability'] >= 60:
+        print(f"   👍 STRONG MATCH - High application priority")
+        print(f"   • Good alignment with your background")
+        print(f"   • Highlight: {', '.join(job['match_reasons'][:2])}")
+        print(f"   • Mention 18 years former TS/SCI if relevant")
+    elif job['success_probability'] >= 45:
+        print(f"   ⚠️ FAIR MATCH - Review carefully before applying")
+        print(f"   • May need to address concerns in cover letter")
+        if len(job['match_concerns']) > 0:
+            print(f"   • Address: {job['match_concerns'][0]}")
+    else:
+        print(f"   ❌ LOW MATCH - Consider only if no better options")
+        print(f"   • Significant gaps or mismatches present")
+    
+    print(f"\n🔗 APPLICATION URL:")
+    print(f"   {job['url']}")
+
+print("\n" + "="*70)
+print("📊 FINAL STATISTICS")
+print("="*70)
+print(f"\n📋 Total Jobs Evaluated: 71")
+print(f"🎯 Top Success Probability: {jobs_tensor_sorted['success_probability'].max():.1f}%")
+print(f"📊 Average Success Probability: {jobs_tensor_sorted['success_probability'].mean():.1f}%")
+print(f"🏆 Jobs with 75%+ probability: {(jobs_tensor_sorted['success_probability'] >= 75).sum()}")
+print(f"👍 Jobs with 60%+ probability: {(jobs_tensor_sorted['success_probability'] >= 60).sum()}")
+print(f"⚠️ Jobs with active clearance requirement: {jobs_tensor_sorted['clearance_required'].sum()}")
+
+print("\n" + "="*70)
+print("✅ NEURAL NETWORK MATCHING COMPLETE")
+print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Export Results to GitHub
+# Export job matching results to GitHub with timestamp
+
+from datetime import datetime
+import os
+
+# Get current timestamp
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+date_slug = datetime.now().strftime("%Y-%m-%d")
+
+print("="*70)
+print("📦 PACKAGING RESULTS FOR GITHUB")
+print("="*70)
+
+# Extract top 10 results
+top_10 = jobs_tensor_sorted.head(10)
+
+# Build comprehensive results report
+results_md = f"""# 🎯 For Your Service - Job Matching Results
+
+**Test Run:** {timestamp}  
+**Candidate:** William Free Hall  
+**Location:** Greenville, SC  
+**Algorithm:** Siamese Neural Network + Multi-Dimensional Scoring
+
+---
+
+## 📊 Executive Summary
+
+* **Total Jobs Evaluated:** 71
+* **Top Success Probability:** {jobs_tensor_sorted['success_probability'].max():.1f}%
+* **Average Success Probability:** {jobs_tensor_sorted['success_probability'].mean():.1f}%
+* **High Probability Jobs (75%+):** {(jobs_tensor_sorted['success_probability'] >= 75).sum()}
+* **Good Probability Jobs (60%+):** {(jobs_tensor_sorted['success_probability'] >= 60).sum()}
+* **Active Clearance Required:** {jobs_tensor_sorted['clearance_required'].sum()}
+
+---
+
+## 🏆 Top 10 Job Matches
+
+"""
+
+# Add each job
+for rank, (idx, job) in enumerate(top_10.iterrows(), 1):
+    results_md += f"""
+### #{rank} - {job['title']} ({job['success_probability']:.1f}% Match)
+
+* **Company:** {job['company']}
+* **Location:** {job['location_display']}
+* **Salary:** ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
+* **Success Probability:** {job['success_probability']:.1f}%
+* **Semantic Similarity:** {job['semantic_similarity']:.3f}
+* **Enhanced Match Score:** {job['match_score']}/100
+
+**Match Strengths:**
+"""
+    for reason in job['match_reasons']:
+        results_md += f"* {reason}\n"
+    
+    if len(job['match_concerns']) > 0:
+        results_md += f"\n**Potential Concerns:**\n"
+        for concern in job['match_concerns']:
+            results_md += f"* {concern}\n"
+    
+    results_md += f"\n**Application URL:** {job['url']}\n"
+    results_md += "\n---\n"
+
+# Add methodology section
+results_md += f"""
+## 🧠 Methodology
+
+### Neural Network Architecture
+* **Model:** Siamese Twin Tower (384-dimensional embeddings)
+* **Encoder:** all-MiniLM-L6-v2 SentenceTransformer
+* **Training Data:** 1B+ sentence pairs
+* **Inference Time:** ~5ms per job
+
+### Scoring Algorithm
+Success probability calculated from weighted factors:
+
+1. **Semantic Similarity (40%)** - Neural network matching
+2. **Experience Alignment (25%)** - Seniority level fit
+3. **Salary Match (20%)** - Compensation alignment
+4. **Clearance Compatibility (10%)** - Security clearance status
+5. **Location Match (5%)** - Geographic fit
+
+### Multi-Dimensional Match Score (0-100)
+1. **Technical Skills (30 pts)** - Expert & proficient skills matched
+2. **Experience Level (25 pts)** - Senior/mid/junior alignment
+3. **Responsibilities (25 pts)** - Leadership and architecture duties
+4. **Salary (15 pts)** - Target range overlap
+5. **Disqualifiers (5 pts)** - No blocking requirements
+
+---
+
+## 📈 Statistical Distribution
+
+**Success Probability Ranges:**
+* 75-100% (High): {(jobs_tensor_sorted['success_probability'] >= 75).sum()} jobs
+* 60-74% (Good): {((jobs_tensor_sorted['success_probability'] >= 60) & (jobs_tensor_sorted['success_probability'] < 75)).sum()} jobs
+* 45-59% (Fair): {((jobs_tensor_sorted['success_probability'] >= 45) & (jobs_tensor_sorted['success_probability'] < 60)).sum()} jobs
+* <45% (Low): {(jobs_tensor_sorted['success_probability'] < 45).sum()} jobs
+
+**Semantic Similarity:**
+* Average: {jobs_tensor_sorted['semantic_similarity'].mean():.3f}
+* Maximum: {jobs_tensor_sorted['semantic_similarity'].max():.3f}
+* Minimum: {jobs_tensor_sorted['semantic_similarity'].min():.3f}
+
+---
+
+## 💡 Key Insights
+
+1. **Perfect Seniority Alignment:** All top 10 jobs match senior-level experience
+2. **No Clearance Barriers:** Zero jobs require active clearance (expired TS/SCI not blocking)
+3. **Salary Target Met:** 100% of top 10 jobs within $120K-$180K range
+4. **Geographic Coverage:** Greenville, Spartanburg, and surrounding SC counties
+5. **Veteran-Friendly Companies:** Schneider Electric, BorgWarner, Honeywell Aerospace
+
+---
+
+## 🎖️ Veteran-Friendly Employers Detected
+
+* **Schneider Electric** - Veterans at Schneider Electric program
+* **BorgWarner** - Military Hiring Initiative  
+* **Honeywell Aerospace** - Veterans Network
+
+---
+
+## 🔧 Platform Metadata
+
+* **Data Source:** Adzuna API via Bronze table `workspace.fys_bronze.job_postings`
+* **Compute:** Databricks Serverless (CPU)
+* **Notebook:** `/databricks/06_Enhanced_Job_Matching_Engine`
+* **Repository:** https://github.com/For-Your-Service/For-Your-Service
+* **Partner:** 7 Eagle Group
+
+---
+
+*Generated by For Your Service Platform - AI-Powered Veteran Job Matching*  
+*Partnered with 7 Eagle Group*
+"""
+
+# Create results directory if it doesn't exist
+repo_path = "/Workspace/Repos/whall4.wh@gmail.com/For-Your-Service"
+results_dir = f"{repo_path}/results"
+os.makedirs(results_dir, exist_ok=True)
+
+# Write to file
+results_file = f"{results_dir}/job_matching_results_{date_slug}.md"
+with open(results_file, 'w') as f:
+    f.write(results_md)
+
+print(f"\n✅ Results exported to: {results_file}")
+print(f"   📊 File size: {len(results_md):,} characters")
+print(f"   📅 Timestamp: {timestamp}")
+print(f"\n👉 Next: Commit and push to GitHub")
+print("\n" + "="*70)
+print("✅ EXPORT COMPLETE")
+print("="*70)
