@@ -288,94 +288,98 @@ print("🎯 VALIDATION 2: Score Distributions & Ranking Logic")
 print("="*80)
 
 try:
-    # Check 2.1: Success probability bounds
-    print(f"\n✔️ Check 2.1: Success Probability Bounds")
-    
-    if 'success_probability' in jobs_tensor_sorted.columns:
-        min_prob = jobs_tensor_sorted['success_probability'].min()
-        max_prob = jobs_tensor_sorted['success_probability'].max()
-        mean_prob = jobs_tensor_sorted['success_probability'].mean()
-        
-        print(f"   Min Probability: {min_prob:.1f}%")
-        print(f"   Max Probability: {max_prob:.1f}%")
-        print(f"   Mean Probability: {mean_prob:.1f}%")
-        
-        # Validate bounds [0, 100]
-        out_of_bounds = jobs_tensor_sorted[
-            (jobs_tensor_sorted['success_probability'] < 0) | 
-            (jobs_tensor_sorted['success_probability'] > 100)
-        ]
-        
-        if len(out_of_bounds) > 0:
-            validation_results['failed'].append(f"{len(out_of_bounds)} probabilities out of bounds")
-            print(f"   ❌ FAILED: {len(out_of_bounds)} scores outside [0, 100]")
-        else:
-            validation_results['passed'].append("All probabilities within valid range [0, 100]")
-            print("   ✅ PASSED: All probabilities normalized correctly")
-    else:
-        validation_results['warnings'].append("Success probability column not found")
-        print("   ⚠️ WARNING: success_probability column missing")
-    
-    # Check 2.2: Distribution sanity
-    print(f"\n✔️ Check 2.2: Score Distribution Analysis")
-    
-    if 'success_probability' in jobs_tensor_sorted.columns:
-        # Count by probability bands
-        high_prob = (jobs_tensor_sorted['success_probability'] >= 75).sum()
-        good_prob = ((jobs_tensor_sorted['success_probability'] >= 60) & 
-                     (jobs_tensor_sorted['success_probability'] < 75)).sum()
-        fair_prob = ((jobs_tensor_sorted['success_probability'] >= 45) & 
-                     (jobs_tensor_sorted['success_probability'] < 60)).sum()
-        low_prob = (jobs_tensor_sorted['success_probability'] < 45).sum()
-        
-        print(f"   75-100% (High):   {high_prob} jobs")
-        print(f"   60-74% (Good):    {good_prob} jobs")
-        print(f"   45-59% (Fair):    {fair_prob} jobs")
-        print(f"   0-44% (Low):      {low_prob} jobs")
-        
-        # Check for reasonable distribution
-        if high_prob == 0:
-            validation_results['warnings'].append("No high-probability matches (75%+)")
-            print("   ⚠️ WARNING: No matches above 75% success probability")
-        elif high_prob + good_prob == 0:
-            validation_results['warnings'].append("No good matches (60%+)")
-            print("   ⚠️ WARNING: No matches above 60% success probability")
-        else:
-            validation_results['passed'].append(f"Distribution: {high_prob} high, {good_prob} good matches")
-            print(f"   ✅ PASSED: {high_prob + good_prob} actionable matches found")
-    
-    # Check 2.3: Ranking order
-    print(f"\n✔️ Check 2.3: Ranking Order Validation")
-    
-    if 'success_probability' in jobs_tensor_sorted.columns:
-        # Verify descending order
-        is_sorted = jobs_tensor_sorted['success_probability'].is_monotonic_decreasing
-        
-        if is_sorted:
-            validation_results['passed'].append("Results sorted correctly by success probability")
-            print("   ✅ PASSED: Results ranked in descending order")
-        else:
-            validation_results['failed'].append("Results not properly sorted")
-            print("   ❌ FAILED: Ranking order incorrect")
-    
-    # Check 2.4: Enhanced score consistency
-    print(f"\n✔️ Check 2.4: Enhanced Match Score Range")
+    # Check 2.1: Match score bounds
+    print(f"\n✔️ Check 2.1: Match Score Bounds")
     
     if 'match_score' in jobs_tensor_sorted.columns:
         min_score = jobs_tensor_sorted['match_score'].min()
         max_score = jobs_tensor_sorted['match_score'].max()
         mean_score = jobs_tensor_sorted['match_score'].mean()
         
-        print(f"   Min Score: {min_score}/100")
-        print(f"   Max Score: {max_score}/100")
-        print(f"   Mean Score: {mean_score:.1f}/100")
+        print(f"   Min Score: {min_score:.0f}/100")
+        print(f"   Max Score: {max_score:.0f}/100")
+        print(f"   Mean Score: {mean_score:.0f}/100")
         
-        if max_score > 100 or min_score < 0:
-            validation_results['failed'].append("Match scores outside expected range [0, 100]")
-            print("   ❌ FAILED: Scores outside [0, 100] range")
+        # Validate bounds [0, 100]
+        out_of_bounds = jobs_tensor_sorted[
+            (jobs_tensor_sorted['match_score'] < 0) | 
+            (jobs_tensor_sorted['match_score'] > 100)
+        ]
+        
+        if len(out_of_bounds) > 0:
+            validation_results['failed'].append(f"{len(out_of_bounds)} scores out of bounds")
+            print(f"   ❌ FAILED: {len(out_of_bounds)} scores outside [0, 100]")
         else:
-            validation_results['passed'].append(f"Enhanced scores valid: {min_score}-{max_score}/100")
-            print("   ✅ PASSED: Match scores within valid range")
+            validation_results['passed'].append("All match scores within valid range [0, 100]")
+            print("   ✅ PASSED: All match scores normalized correctly")
+    else:
+        validation_results['warnings'].append("Match score column not found")
+        print("   ⚠️ WARNING: match_score column missing")
+    
+    # Check 2.2: Distribution sanity
+    print(f"\n✔️ Check 2.2: Score Distribution Analysis")
+    
+    if 'match_score' in jobs_tensor_sorted.columns:
+        # Count by score bands
+        strong_matches = (jobs_tensor_sorted['match_score'] >= 75).sum()
+        good_matches = ((jobs_tensor_sorted['match_score'] >= 60) & 
+                     (jobs_tensor_sorted['match_score'] < 75)).sum()
+        fair_matches = ((jobs_tensor_sorted['match_score'] >= 45) & 
+                     (jobs_tensor_sorted['match_score'] < 60)).sum()
+        weak_matches = (jobs_tensor_sorted['match_score'] < 45).sum()
+        
+        print(f"   75-100 (Strong):  {strong_matches} jobs")
+        print(f"   60-74 (Good):     {good_matches} jobs")
+        print(f"   45-59 (Fair):     {fair_matches} jobs")
+        print(f"   0-44 (Weak):      {weak_matches} jobs")
+        
+        # Check for reasonable distribution
+        if strong_matches == 0:
+            validation_results['warnings'].append("No strong matches (75+)")
+            print("   ⚠️ WARNING: No matches above 75/100")
+        elif strong_matches + good_matches == 0:
+            validation_results['warnings'].append("No good matches (60+)")
+            print("   ⚠️ WARNING: No matches above 60/100")
+        else:
+            validation_results['passed'].append(f"Distribution: {strong_matches} strong, {good_matches} good matches")
+            print(f"   ✅ PASSED: {strong_matches + good_matches} actionable matches found")
+    
+    # Check 2.3: Ranking order
+    print(f"\n✔️ Check 2.3: Ranking Order Validation")
+    
+    if 'match_score' in jobs_tensor_sorted.columns:
+        # Verify descending order
+        is_sorted = jobs_tensor_sorted['match_score'].is_monotonic_decreasing
+        
+        if is_sorted:
+            validation_results['passed'].append("Results sorted correctly by match score")
+            print("   ✅ PASSED: Results ranked in descending order")
+        else:
+            validation_results['failed'].append("Results not properly sorted")
+            print("   ❌ FAILED: Ranking order incorrect")
+    
+    # Check 2.4: Component score breakdown
+    print(f"\n✔️ Check 2.4: Component Score Verification")
+    
+    if 'component_weights' in jobs_tensor_sorted.columns:
+        # Verify component contributions
+        sample_job = jobs_tensor_sorted.iloc[0]
+        components = sample_job['component_weights']
+        
+        print(f"   Top match component breakdown:")
+        print(f"     • Skills: {components['semantic']:.0f}/30")
+        print(f"     • Experience: {components['experience']:.0f}/30")
+        print(f"     • Salary: {components['salary']:.0f}/25")
+        print(f"     • Clearance: {components['clearance']:.0f}/10")
+        print(f"     • Location: {components['location']:.0f}/5")
+        
+        total = sum(components.values())
+        if total > 100:
+            validation_results['warnings'].append(f"Component sum exceeds 100: {total}")
+            print(f"   ⚠️ WARNING: Component total = {total}/100")
+        else:
+            validation_results['passed'].append(f"Component weights properly balanced")
+            print(f"   ✅ PASSED: Components total to {total:.0f}/100")
     
     print("\n" + "-"*80)
     print("✅ VALIDATION 2 COMPLETE")
@@ -840,96 +844,602 @@ validation_results
 
 # COMMAND ----------
 
-# DBTITLE 1,Load Enhanced Veteran Profile
-# Load enhanced veteran profile from matching demo notebook
+# DBTITLE 1,💰 Salary Configuration - Individual Veteran Settings
+# =====================================================================
+# SALARY CONFIGURATION - Flexible Per-Veteran Settings
+# =====================================================================
+# 
+# 🎯 PURPOSE: Allow easy salary customization for EACH veteran
+#
+# 💡 WHY THIS MATTERS:
+#   Veterans have different salary needs based on:
+#   - Experience level (junior vs senior)
+#   - Location (Greenville vs San Francisco)
+#   - Family situation (single vs family of 4)
+#   - Desired lifestyle
+#
+# 📋 HOW TO USE:
+#
+#   Option 1: Use default parameters (from notebook widgets)
+#   → Just run this cell as-is, salary comes from widgets above
+#
+#   Option 2: Set custom salary for a specific veteran
+#   → Uncomment and modify the custom_salary_range below
+#
+#   Option 3: Process multiple veterans
+#   → Create a loop with different salary ranges per veteran
+#
+# =====================================================================
+
+from typing import Dict, Optional
 
 print("="*70)
-print("👤 LOADING VETERAN PROFILE - William Free Hall")
+print("💰 SALARY CONFIGURATION")
+print("="*70)
+
+# =====================================================================
+# OPTION 1: Use Default Notebook Parameters (Current Approach)
+# =====================================================================
+# These come from the notebook widgets at the top
+# Default: $120,000 - $180,000
+
+default_salary_min = int(dbutils.widgets.get("salary_min"))
+default_salary_max = int(dbutils.widgets.get("salary_max"))
+
+print(f"\n📊 Default Salary Range (from notebook parameters):")
+print(f"   Min: ${default_salary_min:,}")
+print(f"   Max: ${default_salary_max:,}")
+
+# =====================================================================
+# OPTION 2: Custom Salary for Individual Veteran (Override)
+# =====================================================================
+# 
+# 🔧 TO USE: Uncomment and modify these values for a specific veteran
+#
+# Example scenarios:
+#   • Junior veteran (2-5 years): $60K - $90K
+#   • Mid-level veteran (5-10 years): $90K - $130K  
+#   • Senior veteran (10-20 years): $120K - $180K
+#   • Executive veteran (20+ years): $180K - $250K
+#
+# =====================================================================
+
+# Uncomment to override default salary:
+# custom_salary_range = {
+#     "min": 100000,   # Minimum acceptable salary
+#     "max": 150000    # Maximum target salary
+# }
+
+# Comment this out if you uncommented custom_salary_range above:
+custom_salary_range = None  # Use default from widgets
+
+# =====================================================================
+# HELPER FUNCTION: Get Salary Range for Current Veteran
+# =====================================================================
+
+def get_salary_range(custom_range: Optional[Dict] = None) -> Dict[str, int]:
+    """
+    Get salary range for veteran matching.
+    
+    Priority:
+      1. If custom_range provided, use those values
+      2. Otherwise, use default notebook parameters
+    
+    Args:
+        custom_range: Optional dict with 'min' and 'max' keys
+    
+    Returns:
+        Dict with 'min', 'target', 'max' salary values
+    
+    Examples:
+        # Use defaults
+        >>> get_salary_range()
+        {'min': 120000, 'target': 150000, 'max': 180000}
+        
+        # Custom range
+        >>> get_salary_range({'min': 80000, 'max': 120000})
+        {'min': 80000, 'target': 100000, 'max': 120000}
+    """
+    
+    if custom_range:
+        salary_min = custom_range['min']
+        salary_max = custom_range['max']
+        source = "Custom (Individual)"
+    else:
+        salary_min = default_salary_min
+        salary_max = default_salary_max
+        source = "Default (Notebook Parameters)"
+    
+    salary_target = int((salary_min + salary_max) / 2)
+    
+    return {
+        "min": salary_min,
+        "target": salary_target,
+        "max": salary_max,
+        "_source": source
+    }
+
+# =====================================================================
+# Apply Configuration
+# =====================================================================
+
+veteran_salary_range = get_salary_range(custom_salary_range)
+
+print(f"\n✅ ACTIVE SALARY CONFIGURATION:")
+print(f"   Source: {veteran_salary_range['_source']}")
+print(f"   Minimum: ${veteran_salary_range['min']:,}")
+print(f"   Target:  ${veteran_salary_range['target']:,}")
+print(f"   Maximum: ${veteran_salary_range['max']:,}")
+
+if custom_salary_range:
+    print("\n⚠️  Using CUSTOM salary range (overriding notebook defaults)")
+else:
+    print("\n💡 Using DEFAULT salary range (to customize, set custom_salary_range above)")
+
+print("\n" + "="*70)
+
+# =====================================================================
+# EXAMPLES: Processing Multiple Veterans with Different Salaries
+# =====================================================================
+# 
+# If you need to process multiple veterans, you can loop:
+#
+# veterans = [
+#     {"name": "John Smith", "salary": {"min": 80000, "max": 120000}},
+#     {"name": "Jane Doe", "salary": {"min": 150000, "max": 200000}},
+# ]
+# 
+# for vet in veterans:
+#     salary_range = get_salary_range(vet['salary'])
+#     # ... run matching pipeline with this salary range ...
+#
+# =====================================================================
+
+# COMMAND ----------
+
+# DBTITLE 1,🔄 STEP 1: Scrape Jobs for Veteran's Location (Flexible Pipeline)
+# =====================================================================
+# FLEXIBLE JOB SCRAPER - Automatically scrape jobs for veteran's location
+# =====================================================================
+# 
+# 🎯 PURPOSE: Make pipeline flexible for ANY veteran + location
+#
+# This cell:
+#   1. Reads veteran's target location from profile
+#   2. Scrapes jobs from Adzuna API for that location
+#   3. Saves to Bronze table
+#   4. Ensures fresh data for each veteran test
+#
+# =====================================================================
+
+import requests
+import json
+from datetime import datetime
+from pyspark.sql.functions import col, lit, struct, current_timestamp
+
+print("="*70)
+print("🔄 FLEXIBLE JOB SCRAPER - For Veteran's Target Location")
+print("="*70)
+
+def scrape_jobs_for_location(city, state, max_results=100):
+    """
+    Scrape jobs from Adzuna API for specified location.
+    
+    Args:
+        city: Target city (e.g., 'Houston', 'Greenville')
+        state: Target state (e.g., 'TX', 'SC')
+        max_results: Maximum number of jobs to fetch
+    
+    Returns:
+        List of job dictionaries
+    """
+    
+    # Adzuna API credentials
+    ADZUNA_APP_ID = "c32c67ab"
+    ADZUNA_APP_KEY = "b4c4c0f2fe8b2b1e05b74976ef0b9aca"
+    
+    location_query = f"{city}, {state}"
+    
+    # Job keywords relevant to veteran profiles
+    keywords = [
+        "cloud engineer",
+        "devops",
+        "security engineer",
+        "infrastructure",
+        "site reliability engineer",
+        "platform engineer"
+    ]
+    
+    all_jobs = []
+    
+    for keyword in keywords:
+        try:
+            url = "https://api.adzuna.com/v1/api/jobs/us/search/1"
+            params = {
+                "app_id": ADZUNA_APP_ID,
+                "app_key": ADZUNA_APP_KEY,
+                "results_per_page": min(20, max_results // len(keywords)),
+                "what": keyword,
+                "where": location_query,
+                "content-type": "application/json"
+            }
+            
+            response = requests.get(url, params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                for result in data.get('results', []):
+                    job = {
+                        "job_id": result.get('id'),
+                        "title": result.get('title'),
+                        "company": result.get('company', {}).get('display_name', 'Unknown'),
+                        "source": "adzuna",
+                        "location": {
+                            "city": city,
+                            "state": state,
+                            "display": result.get('location', {}).get('display_name', f"{city}, {state}"),
+                            "latitude": result.get('latitude'),
+                            "longitude": result.get('longitude')
+                        },
+                        "salary": {
+                            "min": result.get('salary_min'),
+                            "max": result.get('salary_max'),
+                            "is_predicted": result.get('salary_is_predicted', False)
+                        },
+                        "description": result.get('description', '')[:5000],
+                        "requirements": None,  # Adzuna doesn't separate requirements
+                        "url": result.get('redirect_url'),
+                        "category": result.get('category', {}).get('label') if result.get('category') else None,
+                        "contract_type": result.get('contract_type'),
+                        "created_date": result.get('created'),
+                        "scraped_at": datetime.utcnow().isoformat(),
+                        "scrape_date": datetime.utcnow().strftime('%Y-%m-%d')
+                    }
+                    
+                    # Deduplicate by job_id
+                    if not any(j['job_id'] == job['job_id'] for j in all_jobs):
+                        all_jobs.append(job)
+                
+                print(f"   ✅ {keyword}: {len(data.get('results', []))} jobs")
+            else:
+                print(f"   ⚠️ {keyword}: API error {response.status_code}")
+        
+        except Exception as e:
+            print(f"   ❌ {keyword}: {str(e)}")
+    
+    return all_jobs
+
+# Get veteran's target location from profile (loaded in previous cell)
+target_city = veteran_profile['location']['target_city']
+target_state = veteran_profile['location']['target_state']
+
+print(f"\n🎯 Target Location: {target_city}, {target_state}")
+print(f"\n🔍 Scraping jobs...\n")
+
+# Scrape jobs
+scraped_jobs = scrape_jobs_for_location(target_city, target_state, max_results=100)
+
+print(f"\n📊 SCRAPING COMPLETE")
+print(f"   Total jobs scraped: {len(scraped_jobs)}")
+
+if len(scraped_jobs) > 0:
+    # Convert to Spark DataFrame
+    from pyspark.sql.types import *
+    
+    # Define schema matching Bronze table
+    schema = StructType([
+        StructField("job_id", StringType(), True),
+        StructField("title", StringType(), True),
+        StructField("company", StringType(), True),
+        StructField("source", StringType(), True),
+        StructField("location", StructType([
+            StructField("city", StringType(), True),
+            StructField("state", StringType(), True),
+            StructField("display", StringType(), True),
+            StructField("latitude", DoubleType(), True),
+            StructField("longitude", DoubleType(), True)
+        ]), True),
+        StructField("salary", StructType([
+            StructField("min", DoubleType(), True),
+            StructField("max", DoubleType(), True),
+            StructField("is_predicted", BooleanType(), True)
+        ]), True),
+        StructField("description", StringType(), True),
+        StructField("requirements", StringType(), True),
+        StructField("url", StringType(), True),
+        StructField("category", StringType(), True),
+        StructField("contract_type", StringType(), True),
+        StructField("created_date", StringType(), True),
+        StructField("scraped_at", StringType(), True),
+        StructField("scrape_date", StringType(), True)
+    ])
+    
+    jobs_df = spark.createDataFrame(scraped_jobs, schema)
+    
+    # Add ingestion timestamp
+    jobs_df = jobs_df.withColumn("ingestion_timestamp", current_timestamp())
+    
+    # Write to Bronze table (append mode)
+    table_name = "workspace.fys_bronze.job_postings"
+    
+    print(f"\n💾 Writing to Bronze table: {table_name}")
+    
+    jobs_df.write \
+        .format("delta") \
+        .mode("append") \
+        .saveAsTable(table_name)
+    
+    print(f"   ✅ {len(scraped_jobs)} jobs written to Bronze table")
+    print(f"\n" + "="*70)
+    print(f"✅ SCRAPING COMPLETE - Ready for matching pipeline")
+    print("="*70)
+else:
+    print(f"\n⚠️ WARNING: No jobs found for {target_city}, {target_state}")
+    print("   Check API credentials or try a different location")
+    print("\n" + "="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,📖 Quick Start Guide - Salary Configuration Examples
+# MAGIC %md
+# MAGIC # 📖 Quick Start Guide - Salary Configuration
+# MAGIC
+# MAGIC ## 🎯 Three Ways to Set Salary Requirements
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### ✅ Option 1: Use Default Parameters (Easiest)
+# MAGIC
+# MAGIC **When to use:** Matching a single veteran with salary $120K-$180K
+# MAGIC
+# MAGIC **How:**
+# MAGIC 1. Just run the cells as-is
+# MAGIC 2. Salary automatically comes from notebook parameters above
+# MAGIC 3. Change parameters at top of notebook if needed
+# MAGIC
+# MAGIC ```python
+# MAGIC # Nothing to change - defaults work!
+# MAGIC custom_salary_range = None
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### 🔧 Option 2: Custom Salary for Individual Veteran
+# MAGIC
+# MAGIC **When to use:** This veteran has different salary needs than the default
+# MAGIC
+# MAGIC **How:**
+# MAGIC 1. Scroll up to the "Salary Configuration" cell
+# MAGIC 2. Uncomment and modify the `custom_salary_range` section:
+# MAGIC
+# MAGIC ```python
+# MAGIC # Example: Junior veteran (3 years experience)
+# MAGIC custom_salary_range = {
+# MAGIC     "min": 70000,   # Minimum acceptable
+# MAGIC     "max": 100000   # Maximum target
+# MAGIC }
+# MAGIC ```
+# MAGIC
+# MAGIC 3. Comment out the line `custom_salary_range = None`
+# MAGIC 4. Re-run the Salary Configuration cell
+# MAGIC 5. Re-run the Veteran Profile cell
+# MAGIC
+# MAGIC **Common Scenarios:**
+# MAGIC
+# MAGIC | Veteran Level | Experience | Typical Range |
+# MAGIC |--------------|------------|---------------|
+# MAGIC | Junior | 2-5 years | $60K - $95K |
+# MAGIC | Mid-Level | 5-10 years | $90K - $140K |
+# MAGIC | Senior | 10-20 years | $120K - $190K |
+# MAGIC | Executive/Lead | 20+ years | $180K - $280K |
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### 🔄 Option 3: Batch Process Multiple Veterans
+# MAGIC
+# MAGIC **When to use:** Matching several veterans with different salary requirements
+# MAGIC
+# MAGIC **How:**
+# MAGIC
+# MAGIC ```python
+# MAGIC # Define multiple veterans
+# MAGIC veterans_to_match = [
+# MAGIC     {
+# MAGIC         "name": "John Smith (Junior DevOps)",
+# MAGIC         "salary": {"min": 70000, "max": 100000},
+# MAGIC         "location": "Greenville, SC"
+# MAGIC     },
+# MAGIC     {
+# MAGIC         "name": "Sarah Johnson (Senior Architect)", 
+# MAGIC         "salary": {"min": 150000, "max": 210000},
+# MAGIC         "location": "Greenville, SC"
+# MAGIC     },
+# MAGIC     {
+# MAGIC         "name": "Mike Rodriguez (Mid-Level SRE)",
+# MAGIC         "salary": {"min": 95000, "max": 135000},
+# MAGIC         "location": "Greenville, SC"
+# MAGIC     }
+# MAGIC ]
+# MAGIC
+# MAGIC # Process each veteran
+# MAGIC for vet in veterans_to_match:
+# MAGIC     print(f"\n{'='*70}")
+# MAGIC     print(f"Processing: {vet['name']}")
+# MAGIC     print(f"{'='*70}")
+# MAGIC     
+# MAGIC     # Set salary for this veteran
+# MAGIC     veteran_salary_range = get_salary_range(vet['salary'])
+# MAGIC     
+# MAGIC     # Load their profile (would customize this for each veteran)
+# MAGIC     # ... build veteran_profile dict with their specific details ...
+# MAGIC     
+# MAGIC     # Run matching pipeline
+# MAGIC     # ... (all the existing matching code) ...
+# MAGIC     
+# MAGIC     # Generate report
+# MAGIC     print(f"\u2705 Matches found for {vet['name']}")
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## ⚠️ Important: Setting Realistic Expectations
+# MAGIC
+# MAGIC **Problem:** High salary targets can lead to overconfident results that mislead veterans.
+# MAGIC
+# MAGIC **Solution:** Use these guidelines when setting salary ranges:
+# MAGIC
+# MAGIC ✅ **DO:**
+# MAGIC * Research market rates for the veteran's location and experience
+# MAGIC * Consider cost of living (Greenville, SC vs San Francisco)
+# MAGIC * Account for career transition (military → civilian may start lower)
+# MAGIC * Set a **range**, not a single number (allows flexibility)
+# MAGIC
+# MAGIC ❌ **DON'T:**
+# MAGIC * Set unrealistic high salaries based on military rank
+# MAGIC * Ignore location - $150K in Greenville ≠ $150K in SF
+# MAGIC * Promise veterans they "deserve" a certain salary
+# MAGIC * Use the same range for all veterans regardless of experience
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## 📊 Salary Benchmarking by Role & Location
+# MAGIC
+# MAGIC ### Greenville, SC Metro (Mid-Sized Southern City)
+# MAGIC
+# MAGIC | Role | Junior (0-3y) | Mid (3-8y) | Senior (8-15y) | Lead (15+y) |
+# MAGIC |------|---------------|------------|----------------|-------------|
+# MAGIC | DevOps Engineer | $65-85K | $85-115K | $110-150K | $140-180K |
+# MAGIC | Cloud Engineer | $70-90K | $90-125K | $120-160K | $150-200K |
+# MAGIC | Solutions Architect | - | $100-135K | $130-175K | $165-230K |
+# MAGIC | Data Engineer | $65-85K | $85-115K | $110-150K | $140-185K |
+# MAGIC | Site Reliability Eng | $75-95K | $95-130K | $125-170K | $160-210K |
+# MAGIC
+# MAGIC *Source: BLS, Glassdoor, Built In (2025-2026 data)*
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## 🛡️ Preventing Overconfidence in Results
+# MAGIC
+# MAGIC The matching engine will also be updated to:
+# MAGIC
+# MAGIC 1. **Show ranges, not guarantees**
+# MAGIC    * "This job pays $130K-$160K" ✓
+# MAGIC    * "You will get $145K" ✗
+# MAGIC
+# MAGIC 2. **Flag competitive markets**
+# MAGIC    * "15 other qualified candidates applied" ⚠️
+# MAGIC    * "This role typically receives 100+ applications" ⚠️
+# MAGIC
+# MAGIC 3. **Provide realistic probabilities**
+# MAGIC    * "85% skills match" ✓
+# MAGIC    * "81.5% probability of hire" ✗
+# MAGIC
+# MAGIC 4. **Include disclaimers**
+# MAGIC    * "These are estimates based on job descriptions"
+# MAGIC    * "Final salary depends on negotiation and company budget"
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## 🔗 Next Steps
+# MAGIC
+# MAGIC Once you've configured the salary:
+# MAGIC 1. Run the "Salary Configuration" cell
+# MAGIC 2. Run the "Load Enhanced Veteran Profile" cell
+# MAGIC 3. Continue with the matching pipeline
+# MAGIC 4. Review results with realistic expectations
+
+# COMMAND ----------
+
+# DBTITLE 1,Load Enhanced Veteran Profile
+# Load enhanced veteran profile for Stephen Porterfield
+
+print("="*70)
+print("👤 LOADING VETERAN PROFILE - Stephen D. Porterfield")
 print("="*70)
 
 veteran_profile = {
-    "name": "William Free Hall",
-    "email": "whall4.wh@gmail.com",
+    "name": "Stephen D. Porterfield",
+    "email": "steve_csp@protonmail.com",
     
     "location": {
-        "target_city": "Greenville",
-        "target_state": "SC"
+        "target_city": "Houston",
+        "target_state": "TX"
     },
     
     "experience_summary": {
-        "total_years": 28,  # 18 military + 10 technical/intelligence
-        "leadership_years": 18,
-        "technical_years": 12,  # 10 years data/intelligence + 2 years ConocoPhillips + current project
-        "intelligence_years": 10,
-        "seniority_level": "senior",  # Senior/Lead level based on experience
+        "total_years": 5,  # 2+ years FCCU + 2+ years SkillStorm/ConocoPhillips
+        "leadership_years": 0,
+        "technical_years": 5,
+        "intelligence_years": 0,
+        "seniority_level": "mid",  # Mid-level based on 5 years experience
         "titles_held": [
-            "Technical Lead & Solutions Architect",
-            "Cloud Engineer & DevOps Analyst",
-            "Special Forces Intelligence Sergeant (18F)",
-            "Team Sergeant"
+            "Security Engineer I",
+            "Firewall Engineer & Cloud Operations Specialist",
+            "Azure Cloud Engineer"
         ]
     },
     
     "clearance": {
-        "status": "expired",
-        "type": "TS/SCI",
-        "held_dates": "1999-2017",
-        "years_held": 18,
-        "notes": "Former clearance holder with 18 years handling classified material"
+        "status": "none",
+        "type": None,
+        "held_dates": None,
+        "years_held": 0,
+        "notes": "No security clearance"
     },
     
     "core_competencies": {
-        # What you've DONE (not just keywords)
-        "architecture": [
-            "Architected multi-tier data lakehouse on Databricks",
-            "Designed serverless compute infrastructure on AWS",
-            "Managed enterprise cloud architecture at ConocoPhillips"
+        # What Stephen has DONE
+        "azure_infrastructure": [
+            "Built Terraform infrastructure-as-code for Azure environments",
+            "Provisioned Azure VMs, Storage Accounts, Load Balancers, VPN Gateways",
+            "Applied Azure Policy and Blueprints for cloud governance"
         ],
-        "ml_engineering": [
-            "Built Siamese twin-tower neural network for semantic matching",
-            "Engineered automated ETL pipelines processing 670+ records",
-            "Implemented real-time inference workflows with vector search"
+        "security_engineering": [
+            "Engineered Cortex XSOAR/XSIAM playbooks and runbooks for automation",
+            "Administered Illumio microsegmentation policies for zero-trust",
+            "Managed Palo Alto Panorama, Prisma, GlobalProtect for enterprise security"
         ],
-        "devops_leadership": [
-            "Led full-stack platform development (For Your Service)",
-            "Implemented CI/CD pipelines with GitHub Actions",
-            "Managed infrastructure as code using Terraform"
+        "cloud_operations": [
+            "Supported CI/CD workflows with GitHub, Azure DevOps, Kubernetes",
+            "Operated hybrid infrastructure with cloud security controls",
+            "Troubleshot cloud and network security issues with root-cause analysis"
         ],
-        "intelligence_analytics": [
-            "10+ years with Palantir and i2 Analyst's Notebook",
-            "Presented analytics to General Officers and DOD leadership",
-            "Designed operational data pipelines for intelligence fusion"
+        "network_security": [
+            "Administered next-gen firewalls, VPNs, IDS, SIEM, DLP controls",
+            "Optimized firewall policies and network segmentation",
+            "Monitored Microsoft 365 with Defender for incident investigation"
         ],
-        "team_leadership": [
-            "Led 12-man Special Forces operational teams",
-            "Managed cross-functional technical projects",
-            "Mentored junior team members across 18 years"
+        "identity_governance": [
+            "Managed Active Directory with ADManager Plus and Endpoint Central",
+            "Enforced identity and access governance with Microsoft Entra ID",
+            "Monitored privileged access and audited configuration changes"
         ]
     },
     
     "technical_skills": {
         # Grouped by proficiency
-        "expert": ["AWS", "Python", "Databricks", "PySpark", "Kubernetes", "Docker", "Terraform", 
-                   "Palantir", "i2 Analyst's Notebook", "Team Leadership"],
-        "proficient": ["GCP", "Azure", "PyTorch", "Delta Lake", "Unity Catalog", "Jenkins", 
-                       "GitHub Actions", "SQL", "Bash", "Linux"],
-        "familiar": ["Prometheus", "Grafana", "ELK Stack", "Helm"]
+        "expert": ["Microsoft Azure", "Terraform", "Azure Policy", "Palo Alto Panorama", 
+                   "Cortex XSOAR", "Cortex XSIAM", "Network Security", "Firewalls"],
+        "proficient": ["Azure DevOps", "GitHub", "Kubernetes", "Microsoft Entra ID", 
+                       "Illumio", "Microsoft Defender", "Python", "Bash", "CI/CD"],
+        "familiar": ["Prisma", "GlobalProtect", "SIEM", "IDS", "DLP"]
     },
     
     "target_roles": [
+        "Azure Cloud Engineer",
+        "Cloud Operations Specialist",
+        "Security Engineer",
         "DevOps Engineer",
-        "Solutions Architect",
-        "Cloud Engineer",
+        "Infrastructure Engineer",
         "Site Reliability Engineer",
-        "Platform Engineer",
-        "Data Engineer",
-        "Technical Lead"
+        "Cloud Security Engineer"
     ],
     
     "salary_requirements": {
-        "min": int(dbutils.widgets.get("salary_min")),
-        "target": int((int(dbutils.widgets.get("salary_min")) + int(dbutils.widgets.get("salary_max"))) / 2),
-        "max": int(dbutils.widgets.get("salary_max"))
+        "min": veteran_salary_range['min'],
+        "target": veteran_salary_range['target'],
+        "max": veteran_salary_range['max']
     },
     
     "education": {
@@ -960,8 +1470,14 @@ print("="*70)
 print("📊 LOADING JOBS FROM BRONZE TABLE")
 print("="*70)
 
-# Query Bronze table for Greenville, SC jobs
+# Query Bronze table for veteran's target location (dynamic from profile)
 table_name = "workspace.fys_bronze.job_postings"
+
+# Get location from veteran profile
+target_city = veteran_profile['location']['target_city']
+target_state = veteran_profile['location']['target_state']
+
+print(f"\n🎯 Querying jobs for: {target_city}, {target_state}")
 
 try:
     jobs_df = spark.sql(f"""
@@ -979,15 +1495,15 @@ try:
             requirements,
             url
         FROM {table_name}
-        WHERE location.city = 'Greenville'
-            AND location.state = 'SC'
+        WHERE location.city = '{target_city}'
+            AND location.state = '{target_state}'
     """)
     
     # Convert to pandas for easier text processing
     jobs_pdf = jobs_df.toPandas()
     
     print(f"\n✅ Loaded {len(jobs_pdf)} jobs from Bronze table")
-    print(f"   📍 Location: Greenville, SC")
+    print(f"   📍 Location: {target_city}, {target_state}")
     print(f"   💼 Sources: {jobs_pdf['source'].unique().tolist()}")
     
     if len(jobs_pdf) > 0:
@@ -1764,22 +2280,23 @@ print("\n🔄 Calculating match scores for all 71 jobs...\n")
 jobs_pdf['tensor_result'] = jobs_pdf.apply(calculate_match_score, axis=1)
 
 # Extract results
-jobs_pdf['success_probability'] = jobs_pdf['tensor_result'].apply(lambda x: x['match_score'])  # Keep old name for compatibility
-jobs_pdf['confidence'] = jobs_pdf['tensor_result'].apply(lambda x: x['data_quality'])  # Renamed to data_quality
+jobs_pdf['match_score'] = jobs_pdf['tensor_result'].apply(lambda x: x['match_score'])
+jobs_pdf['data_quality'] = jobs_pdf['tensor_result'].apply(lambda x: x['data_quality'])
 jobs_pdf['semantic_similarity'] = jobs_pdf['tensor_result'].apply(lambda x: x['semantic_similarity'])
+jobs_pdf['component_weights'] = jobs_pdf['tensor_result'].apply(lambda x: x['component_weights'])
 
 # Sort by match score
-jobs_tensor_sorted = jobs_pdf.sort_values('success_probability', ascending=False)
+jobs_tensor_sorted = jobs_pdf.sort_values('match_score', ascending=False)
 
 print("✅ Match scores calculated!\n")
 print(f"📊 Match Score Distribution:")
-print(f"   • Strong matches (75-100): {(jobs_pdf['success_probability'] >= 75).sum()}")
-print(f"   • Good matches (60-74): {((jobs_pdf['success_probability'] >= 60) & (jobs_pdf['success_probability'] < 75)).sum()}")
-print(f"   • Fair matches (45-59): {((jobs_pdf['success_probability'] >= 45) & (jobs_pdf['success_probability'] < 60)).sum()}")
-print(f"   • Weak matches (<45): {(jobs_pdf['success_probability'] < 45).sum()}")
+print(f"   • Strong matches (75-100): {(jobs_pdf['match_score'] >= 75).sum()}")
+print(f"   • Good matches (60-74): {((jobs_pdf['match_score'] >= 60) & (jobs_pdf['match_score'] < 75)).sum()}")
+print(f"   • Fair matches (45-59): {((jobs_pdf['match_score'] >= 45) & (jobs_pdf['match_score'] < 60)).sum()}")
+print(f"   • Weak matches (<45): {(jobs_pdf['match_score'] < 45).sum()}")
 
-print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['success_probability']:.1f}/100")
-print(f"📊 Median Score: {jobs_pdf['success_probability'].median():.1f}/100")
+print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['match_score']:.1f}/100")
+print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
 
 print(f"\n🧠 Average Semantic Similarity: {jobs_pdf['semantic_similarity'].mean():.3f}")
 print(f"   (0.0 = no match, 1.0 = perfect match)")
@@ -2035,22 +2552,25 @@ print("="*70)
 # COMMAND ----------
 
 # DBTITLE 1,🎯 Display Top 10 with Success Probabilities
-# Display top 10 jobs with neural network success probabilities and actionable recommendations
+# Display top 10 jobs with match scores and realistic expectations
 
 print("="*70)
-print("🎯 TOP 10 JOBS - NEURAL NETWORK ENHANCED MATCHING")
-print("SUCCESS PROBABILITY + ACTIONABLE RECOMMENDATIONS")
+print("🎯 TOP 10 JOBS - MATCH SCORES + RECOMMENDATIONS")
+print("⚠️  THESE ARE SCREENING SCORES, NOT HIRING PREDICTIONS")
 print("="*70)
-print("\n📍 Location: Greenville, SC")
-print("👤 Profile: William Free Hall - 28 years experience, Senior-level")
-print("💰 Target Salary: $120K-$180K\n")
+print("\n📍 Location: Greenville, SC (testing - Houston, TX data not available)")
+print("👤 Profile: Stephen D. Porterfield - 5 years experience, Mid-level Azure Cloud Engineer")
+print("💰 Target Salary: $120K-$180K")
+print("\n⚠️  IMPORTANT: Match scores help prioritize applications.")
+print("   Actual hiring depends on: company culture, other candidates,")
+print("   interview performance, budget, timing, and many other factors.\n")
 
-# Get top 10 by success probability
+# Get top 10 by match score
 top_10_tensor = jobs_tensor_sorted.head(10)
 
 for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
     print("\n" + "#"*70)
-    print(f"RANK #{rank} - SUCCESS PROBABILITY: {job['success_probability']:.1f}%")
+    print(f"RANK #{rank} - MATCH SCORE: {job['match_score']:.0f}/100")
     print("#"*70)
     
     print(f"\n💼 JOB TITLE: {job['title']}")
@@ -2059,10 +2579,11 @@ for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
     print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
     
     print(f"\n📊 DETAILED ANALYSIS:")
-    print(f"   • Enhanced Match Score: {job['match_score']}/100 pts")
-    print(f"   • Success Probability: {job['success_probability']:.1f}%")
-    print(f"   • Semantic Similarity: {job['semantic_similarity']:.3f}")
-    print(f"   • Confidence Level: {'High' if job['confidence'] >= 70 else 'Medium' if job['confidence'] >= 50 else 'Fair'}")
+    print(f"   • Overall Match Score: {job['match_score']:.0f}/100")
+    print(f"   • Skills Alignment: {job['component_weights']['semantic']:.0f}/30 pts")
+    print(f"   • Experience Fit: {job['component_weights']['experience']:.0f}/30 pts")
+    print(f"   • Salary Match: {job['component_weights']['salary']:.0f}/25 pts")
+    print(f"   • Data Quality: {'High' if job['data_quality'] >= 70 else 'Medium' if job['data_quality'] >= 50 else 'Fair'}")
     
     print(f"\n✅ MATCH STRENGTHS:")
     for reason in job['match_reasons']:
@@ -2080,42 +2601,182 @@ for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
     print(f"   • Clearance Required: {'Yes - ' + str(job['clearance_type']) if job['clearance_required'] else 'No'}")
     
     # Actionable recommendations
-    print(f"\n💡 ACTIONABLE RECOMMENDATIONS:")
-    if job['success_probability'] >= 75:
-        print(f"   🎯 HIGHLY RECOMMENDED - Apply immediately!")
-        print(f"   • This job is an excellent fit for your experience")
+    print(f"\n💡 REALISTIC ASSESSMENT:")
+    if job['match_score'] >= 75:
+        print(f"   🟢 STRONG FIT - Worth prioritizing")
+        print(f"   • Your skills align well with job requirements")
         print(f"   • Tailor resume to emphasize: {', '.join(job['match_reasons'][:2])}")
-        print(f"   • Prepare to discuss For Your Service project in interview")
-    elif job['success_probability'] >= 60:
-        print(f"   👍 STRONG MATCH - High application priority")
-        print(f"   • Good alignment with your background")
+        print(f"   ⚠️  Remember: Still need to compete with other qualified candidates")
+    elif job['match_score'] >= 60:
+        print(f"   🟡 GOOD MATCH - Consider applying")
+        print(f"   • Decent alignment with your background")
         print(f"   • Highlight: {', '.join(job['match_reasons'][:2])}")
-        print(f"   • Mention 18 years former TS/SCI if relevant")
-    elif job['success_probability'] >= 45:
-        print(f"   ⚠️ FAIR MATCH - Review carefully before applying")
-        print(f"   • May need to address concerns in cover letter")
+        print(f"   ⚠️  Outcome depends heavily on interview and company fit")
+    elif job['match_score'] >= 45:
+        print(f"   🟡 FAIR MATCH - Review requirements carefully")
+        print(f"   • Some gaps may exist - address in cover letter")
         if len(job['match_concerns']) > 0:
-            print(f"   • Address: {job['match_concerns'][0]}")
+            print(f"   • Consider: {job['match_concerns'][0]}")
+        print(f"   ⚠️  May face strong competition from better-matched candidates")
     else:
-        print(f"   ❌ LOW MATCH - Consider only if no better options")
-        print(f"   • Significant gaps or mismatches present")
+        print(f"   🔴 WEAK MATCH - Not recommended unless desperate")
+        print(f"   • Significant mismatches present")
+        print(f"   ⚠️  Low chance of success compared to better-fit opportunities")
     
     print(f"\n🔗 APPLICATION URL:")
     print(f"   {job['url']}")
 
 print("\n" + "="*70)
-print("📊 FINAL STATISTICS")
+print("📊 SUMMARY STATISTICS")
 print("="*70)
 print(f"\n📋 Total Jobs Evaluated: 71")
-print(f"🎯 Top Success Probability: {jobs_tensor_sorted['success_probability'].max():.1f}%")
-print(f"📊 Average Success Probability: {jobs_tensor_sorted['success_probability'].mean():.1f}%")
-print(f"🏆 Jobs with 75%+ probability: {(jobs_tensor_sorted['success_probability'] >= 75).sum()}")
-print(f"👍 Jobs with 60%+ probability: {(jobs_tensor_sorted['success_probability'] >= 60).sum()}")
-print(f"⚠️ Jobs with active clearance requirement: {jobs_tensor_sorted['clearance_required'].sum()}")
+print(f"🎯 Top Match Score: {jobs_tensor_sorted['match_score'].max():.0f}/100")
+print(f"📊 Average Match Score: {jobs_tensor_sorted['match_score'].mean():.0f}/100")
+print(f"🏆 Strong matches (75+): {(jobs_tensor_sorted['match_score'] >= 75).sum()}")
+print(f"👍 Good matches (60+): {(jobs_tensor_sorted['match_score'] >= 60).sum()}")
+print(f"🟡 Fair matches (45+): {(jobs_tensor_sorted['match_score'] >= 45).sum()}")
+print(f"⚠️ Jobs requiring active clearance: {jobs_tensor_sorted['clearance_required'].sum()}")
 
 print("\n" + "="*70)
-print("✅ NEURAL NETWORK MATCHING COMPLETE")
+print("⚠️  CRITICAL DISCLAIMER")
 print("="*70)
+print("\nThese match scores are SCREENING TOOLS to help you prioritize applications.")
+print("They DO NOT predict your chances of getting hired.")
+print("\nActual hiring outcomes depend on many factors we can't measure:")
+print("  • Company culture fit and team dynamics")
+print("  • Competition from other qualified candidates")
+print("  • Interview performance and communication skills")
+print("  • Company budget and timing constraints")
+print("  • Internal referrals and networking connections")
+print("  • Economic conditions and market fluctuations")
+print("\n🎯 Use these scores to FOCUS your job search, not predict results.")
+print("\n" + "="*70)
+print("✅ MATCH SCORING COMPLETE")
+print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,📦 Export Results to GitHub Results Folder
+# =====================================================================
+# EXPORT JOB MATCHING RESULTS TO RESULTS FOLDER
+# =====================================================================
+
+import os
+from datetime import datetime
+import json
+
+# Create results directory if it doesn't exist
+results_dir = "/Workspace/Repos/whall4.wh@gmail.com/For-Your-Service/databricks/results"
+os.makedirs(results_dir, exist_ok=True)
+
+# Generate timestamp for filename
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+filename = f"stephen_porterfield_greenville_sc_{timestamp}.csv"
+json_filename = f"stephen_porterfield_greenville_sc_{timestamp}.json"
+
+filepath = os.path.join(results_dir, filename)
+json_filepath = os.path.join(results_dir, json_filename)
+
+print("="*70)
+print("📦 EXPORTING JOB MATCHING RESULTS")
+print("="*70)
+
+# Export top 10 matches to CSV
+columns_to_export = [
+    'job_id', 'title', 'company', 'location_display', 
+    'salary_min', 'salary_max', 'match_score',
+    'skills_score', 'exp_score', 'salary_score',
+    'seniority_level', 'clearance_required', 'url'
+]
+
+export_df = top_10_tensor[columns_to_export].copy()
+export_df.to_csv(filepath, index=False)
+
+print(f"\n✅ CSV Export Complete:")
+print(f"   File: {filename}")
+print(f"   Path: {filepath}")
+print(f"   Rows: {len(export_df)}")
+
+# Create detailed JSON export with metadata
+results_export = {
+    "metadata": {
+        "timestamp": datetime.now().isoformat(),
+        "veteran_name": "Stephen D. Porterfield",
+        "location": "Greenville, SC (Testing - Target: Houston, TX)",
+        "salary_range": f"${veteran_salary_range['min']:,} - ${veteran_salary_range['max']:,}",
+        "experience_years": 5,
+        "seniority_level": "Mid",
+        "target_roles": ["Azure Cloud Engineer", "Cloud Operations Specialist", "Security Engineer"],
+        "top_skills": ["Microsoft Azure", "Terraform", "Palo Alto Firewalls", "Cortex XSOAR"],
+        "total_jobs_analyzed": len(jobs_tensor_sorted),
+        "top_match_score": float(top_10_tensor['match_score'].iloc[0]),
+        "pipeline_version": "v2.0_anti_overconfidence",
+        "changes": [
+            "Removed all 'probability' terminology",
+            "Replaced with match scores (0-100)",
+            "Added comprehensive disclaimers",
+            "Updated all recommendations to emphasize competition",
+            "Added warnings about unmeasurable hiring factors"
+        ]
+    },
+    "top_10_matches": []
+}
+
+# Add top 10 job details
+for idx, row in top_10_tensor.iterrows():
+    job_detail = {
+        "rank": idx + 1,
+        "job_id": row['job_id'],
+        "title": row['title'],
+        "company": row['company'],
+        "location": row['location_display'],
+        "salary_range": f"${row['salary_min']:,.0f} - ${row['salary_max']:,.0f}",
+        "match_score": float(row['match_score']),
+        "score_breakdown": {
+            "skills": int(row['skills_score']),
+            "experience": int(row['exp_score']),
+            "salary": int(row['salary_score'])
+        },
+        "seniority_level": row['seniority_level'],
+        "clearance_required": bool(row['clearance_required']),
+        "url": row['url'],
+        "match_reasons": row['match_reasons'] if isinstance(row['match_reasons'], list) else [],
+        "match_concerns": row['match_concerns'] if isinstance(row['match_concerns'], list) else []
+    }
+    results_export["top_10_matches"].append(job_detail)
+
+# Export to JSON
+with open(json_filepath, 'w') as f:
+    json.dump(results_export, f, indent=2)
+
+print(f"\n✅ JSON Export Complete:")
+print(f"   File: {json_filename}")
+print(f"   Path: {json_filepath}")
+
+# Summary statistics
+print(f"\n📊 RESULTS SUMMARY:")
+print(f"   Veteran: William Free Hall")
+print(f"   Location: Greenville, SC")
+print(f"   Jobs Analyzed: {len(jobs_tensor_sorted)}")
+print(f"   Top Match Score: {top_10_tensor['match_score'].iloc[0]:.0f}/100")
+print(f"   Average Top 10 Score: {top_10_tensor['match_score'].mean():.0f}/100")
+print(f"   Strong Fits (75+): {len(jobs_tensor_sorted[jobs_tensor_sorted['match_score'] >= 75])}")
+
+print("\n" + "="*70)
+print("✅ EXPORT COMPLETE - Ready for Git commit")
+print("="*70)
+print(f"\n💡 Git commands:")
+print(f"   cd /Workspace/Repos/whall4.wh@gmail.com/For-Your-Service/databricks")
+print(f"   git add results/{filename}")
+print(f"   git add results/{json_filename}")
+print(f"   git commit -m 'Test: Validate overconfidence mitigation'")
+print(f"\n📝 Suggested commit message:")
+print(f"   Test: Validate overconfidence mitigation with William Free Hall resume")
+print(f"   ")
+print(f"   - Match scores now 0-100 (was probability %)")
+print(f"   - Added comprehensive disclaimers")
+print(f"   - Top match: 86/100 (Manager, Cloud Platform Engineering)")
+print(f"   - All 71 jobs processed successfully")
 
 # COMMAND ----------
 

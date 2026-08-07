@@ -984,6 +984,545 @@ print("="*70)
 
 # COMMAND ----------
 
+# DBTITLE 1,🌆 EXPANDED DATA SOURCES - City Intelligence & Company Growth
+# MAGIC %md
+# MAGIC # 🌆 Expanded Data Sources - City Intelligence & Company Growth
+# MAGIC
+# MAGIC ## Why This Matters for Veterans
+# MAGIC
+# MAGIC Matching veterans to jobs is only **half the picture**. They also need to know:
+# MAGIC * 📊 **Is this city growing?** (population, economy, job market)
+# MAGIC * 💰 **Can I afford to live here?** (cost of living, median income)
+# MAGIC * 🏢 **Is this company stable?** (growth trajectory, employee satisfaction)
+# MAGIC * 🎯 **What's the job market health?** (unemployment, industry growth, competition)
+# MAGIC
+# MAGIC This expansion transforms job matching from **"here's a job"** to **"here's a career opportunity in a thriving market"**.
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## NEW DATA LAYER 1: City Demographics & Economics
+# MAGIC
+# MAGIC ### U.S. Census Bureau API (FREE, Unlimited)
+# MAGIC
+# MAGIC ✅ **What You Get:**
+# MAGIC * Population by age, education, veteran status
+# MAGIC * Median household income
+# MAGIC * Poverty rates
+# MAGIC * Housing costs and homeownership
+# MAGIC * Commute times and transportation
+# MAGIC * Industry employment by metro area
+# MAGIC
+# MAGIC 🔑 **API Registration:** https://api.census.gov/data/key_signup.html  
+# MAGIC 📚 **Docs:** https://www.census.gov/data/developers/data-sets.html  
+# MAGIC ⚡ **Rate Limit:** Unlimited (reasonable use)
+# MAGIC
+# MAGIC **Key Endpoints:**
+# MAGIC ```python
+# MAGIC # American Community Survey (ACS) - Most detailed demographics
+# MAGIC base_url = "https://api.census.gov/data/2022/acs/acs5"
+# MAGIC
+# MAGIC # Example: Get Greenville, SC metro area demographics
+# MAGIC params = {
+# MAGIC     "get": "NAME,B01001_001E,B19013_001E,B15003_022E,B23025_005E",
+# MAGIC     "for": "metropolitan statistical area/micropolitan statistical area:24860",
+# MAGIC     "key": "YOUR_API_KEY"
+# MAGIC }
+# MAGIC # Returns: Population, Median Income, Education Level, Unemployment
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## NEW DATA LAYER 2: Job Market Analytics
+# MAGIC
+# MAGIC ### BLS API - Metro-Level Employment Stats (Already have API access!)
+# MAGIC
+# MAGIC ✅ **What You Get:**
+# MAGIC * Employment by industry and occupation (metro level)
+# MAGIC * Wage trends over time
+# MAGIC * Job growth rates by sector
+# MAGIC * Unemployment rates (city/county level)
+# MAGIC * Occupational employment projections
+# MAGIC
+# MAGIC 📚 **Docs:** https://www.bls.gov/developers/api_signature_v2.shtml  
+# MAGIC ⚡ **Rate Limit:** 500 queries/day (FREE)
+# MAGIC
+# MAGIC **Key Series IDs for Greenville-Anderson-Mauldin, SC Metro:**
+# MAGIC ```python
+# MAGIC # Greenville MSA codes
+# MAGIC msa_code = "24860"  # Greenville-Anderson-Mauldin, SC
+# MAGIC
+# MAGIC # Series IDs
+# MAGIC series_ids = [
+# MAGIC     f"LAUMT{msa_code}0000000003",  # Unemployment rate
+# MAGIC     f"SMU45{msa_code}0000000001a",  # Total nonfarm employment
+# MAGIC     f"SMU45{msa_code}0510000001a",  # Tech sector employment
+# MAGIC ]
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## NEW DATA LAYER 3: City Growth Metrics
+# MAGIC
+# MAGIC ### Bureau of Economic Analysis (BEA) API (FREE, Unlimited)
+# MAGIC
+# MAGIC ✅ **What You Get:**
+# MAGIC * GDP by metro area (economic growth)
+# MAGIC * Per capita income growth
+# MAGIC * Industry contribution to regional GDP
+# MAGIC * Regional price parities (cost of living index)
+# MAGIC
+# MAGIC 🔑 **API Registration:** https://apps.bea.gov/API/signup/  
+# MAGIC 📚 **Docs:** https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf  
+# MAGIC ⚡ **Rate Limit:** Unlimited (reasonable use)
+# MAGIC
+# MAGIC **Key Datasets:**
+# MAGIC ```python
+# MAGIC base_url = "https://apps.bea.gov/api/data"
+# MAGIC
+# MAGIC # GDP by Metro Area
+# MAGIC params = {
+# MAGIC     "UserID": "YOUR_BEA_KEY",
+# MAGIC     "method": "GetData",
+# MAGIC     "DataSetName": "Regional",
+# MAGIC     "TableName": "CAGDP2",  # GDP by metro area
+# MAGIC     "GeoFips": "24860",  # Greenville MSA
+# MAGIC     "Year": "2020,2021,2022,2023"
+# MAGIC }
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## NEW DATA LAYER 4: Company Intelligence
+# MAGIC
+# MAGIC ### ⚠️ Challenge: Most company data APIs are PAID
+# MAGIC
+# MAGIC Company growth data (funding, employee count, glassdoor ratings) typically requires paid APIs:
+# MAGIC * **Crunchbase API:** $99-$299/month
+# MAGIC * **Clearbit API:** $99+/month
+# MAGIC * **ZoomInfo:** Enterprise pricing
+# MAGIC
+# MAGIC ### FREE/Low-Cost Alternatives:
+# MAGIC
+# MAGIC #### Option 1: Clearbit Company API (LIMITED FREE)
+# MAGIC ✅ **What You Get:**
+# MAGIC * Company name, domain, description
+# MAGIC * Employee count estimate
+# MAGIC * Founded year
+# MAGIC * Industry/sector
+# MAGIC * Tech stack
+# MAGIC
+# MAGIC 🔑 **API:** https://clearbit.com/enrichment  
+# MAGIC 💰 **Cost:** 50 free lookups/month, then $99/mo  
+# MAGIC 📚 **Docs:** https://dashboard.clearbit.com/docs
+# MAGIC
+# MAGIC #### Option 2: Web Scraping (Glassdoor, LinkedIn)
+# MAGIC ⚠️ **Risks:**
+# MAGIC * Terms of Service violations
+# MAGIC * Rate limiting / IP bans
+# MAGIC * Legal gray area
+# MAGIC
+# MAGIC ✅ **Better Approach:** Scrape public company websites
+# MAGIC * Company "About" pages
+# MAGIC * Career pages (# of open positions = growth signal)
+# MAGIC * Press releases (funding announcements)
+# MAGIC
+# MAGIC #### Option 3: Manual Curation + Community Data
+# MAGIC * Build a **company database** from public sources
+# MAGIC * Crowdsource veteran reviews of companies
+# MAGIC * Track veteran hiring initiatives
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Recommended Implementation Priority
+# MAGIC
+# MAGIC ### Phase 1: City Demographics (HIGHEST VALUE, FREE)
+# MAGIC ✅ **Why:** Veterans need to know if they can afford to live there  
+# MAGIC ✅ **APIs:** Census Bureau ACS  
+# MAGIC ✅ **Complexity:** Low  
+# MAGIC ✅ **Cost:** $0/month
+# MAGIC
+# MAGIC **Data to Collect:**
+# MAGIC * Median household income by city
+# MAGIC * Cost of living index
+# MAGIC * Veteran population (support network)
+# MAGIC * Education levels (job market competitiveness)
+# MAGIC * Unemployment rate
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### Phase 2: Job Market Analytics (HIGH VALUE, FREE)
+# MAGIC ✅ **Why:** Is the local tech market growing or shrinking?  
+# MAGIC ✅ **APIs:** BLS metro-level stats  
+# MAGIC ✅ **Complexity:** Medium  
+# MAGIC ✅ **Cost:** $0/month
+# MAGIC
+# MAGIC **Data to Collect:**
+# MAGIC * Tech sector employment trends (growing/shrinking?)
+# MAGIC * Average wages for target occupations
+# MAGIC * Job openings by industry
+# MAGIC * Unemployment trends (stable vs volatile market)
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### Phase 3: City Growth Metrics (MEDIUM VALUE, FREE)
+# MAGIC ✅ **Why:** Growing cities = more opportunities  
+# MAGIC ✅ **APIs:** BEA Regional GDP, Census migration data  
+# MAGIC ✅ **Complexity:** Medium  
+# MAGIC ✅ **Cost:** $0/month
+# MAGIC
+# MAGIC **Data to Collect:**
+# MAGIC * GDP growth rate by metro area
+# MAGIC * Population growth trends
+# MAGIC * Business formation rates
+# MAGIC * Migration patterns (people moving in/out)
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ### Phase 4: Company Intelligence (LOWER PRIORITY, PAID)
+# MAGIC ⚠️ **Why Lower Priority:** Most APIs are expensive  
+# MAGIC ⚠️ **Alternative:** Start with public data, add paid APIs later
+# MAGIC
+# MAGIC **FREE Data Collection:**
+# MAGIC * Company website scraping (careers pages)
+# MAGIC * Job posting counts (growth proxy)
+# MAGIC * Press releases (funding news)
+# MAGIC * Veteran hiring initiatives
+# MAGIC
+# MAGIC **PAID Upgrade Path (if budget allows):**
+# MAGIC * Clearbit API: $99/mo (company fundamentals)
+# MAGIC * Crunchbase: $299/mo (funding, growth)
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Updated Medallion Architecture
+# MAGIC
+# MAGIC ```
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  BRONZE LAYER: Raw API Data                                │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • jobs_bronze (Adzuna, USAJobs) ✅ DONE                    │
+# MAGIC │  • city_demographics_bronze (Census ACS) 🆕                 │
+# MAGIC │  • job_market_stats_bronze (BLS metro data) 🆕              │
+# MAGIC │  • city_growth_bronze (BEA GDP, Census migration) 🆕        │
+# MAGIC │  • company_intel_bronze (Clearbit, web scraping) 🆕         │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC                            ↓
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  SILVER LAYER: Cleaned & Enriched                          │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • jobs_silver (parsed, standardized) ✅ DONE               │
+# MAGIC │  • city_profiles_silver (demographics + economics) 🆕       │
+# MAGIC │  • job_market_health_silver (growth trends) 🆕              │
+# MAGIC │  • company_profiles_silver (enriched company data) 🆕       │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC                            ↓
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  GOLD LAYER: Analytics & Matching                          │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • veteran_job_matches_gold ✅ DONE                         │
+# MAGIC │  • city_opportunity_scores_gold 🆕                          │
+# MAGIC │  • market_competitiveness_gold 🆕                           │
+# MAGIC │  • total_opportunity_index_gold 🆕                          │
+# MAGIC │    (job fit + city health + market trends)                  │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Next Steps
+# MAGIC
+# MAGIC 1. **Register for FREE APIs** (15 minutes)
+# MAGIC    * Census Bureau API key
+# MAGIC    * BEA API key (if not already registered)
+# MAGIC
+# MAGIC 2. **Build City Demographics Scraper** (2-3 hours)
+# MAGIC    * Target: Greenville, SC and top 20 veteran-friendly cities
+# MAGIC    * Collect: income, education, veteran population, unemployment
+# MAGIC
+# MAGIC 3. **Enhance Job Market Analytics** (2-3 hours)
+# MAGIC    * Expand BLS integration for metro-level trends
+# MAGIC    * Track tech sector growth in target cities
+# MAGIC
+# MAGIC 4. **Prototype City Growth Tracker** (3-4 hours)
+# MAGIC    * BEA GDP growth by metro
+# MAGIC    * Census migration data
+# MAGIC
+# MAGIC 5. **Design Company Intelligence Strategy** (1-2 hours)
+# MAGIC    * Evaluate: FREE web scraping vs PAID APIs
+# MAGIC    * Start with public data, upgrade later if ROI justifies
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Cost Analysis
+# MAGIC
+# MAGIC | Data Source | Monthly Cost | Value to Veterans |
+# MAGIC |-------------|--------------|-------------------|
+# MAGIC | Census Bureau API | **$0** | 🌟🌟🌟🌟🌟 (Cost of living) |
+# MAGIC | BLS Job Market Stats | **$0** | 🌟🌟🌟🌟 (Market health) |
+# MAGIC | BEA City Growth | **$0** | 🌟🌟🌟 (Opportunity growth) |
+# MAGIC | Clearbit Company API | **$0-99** | 🌟🌟 (Company fundamentals) |
+# MAGIC | Crunchbase (optional) | **$299** | 🌟 (Deep company intel) |
+# MAGIC | **TOTAL (FREE tier)** | **$0/mo** | |
+# MAGIC | **TOTAL (with company data)** | **$99-299/mo** | |
+# MAGIC
+# MAGIC **Recommendation:** Start with 100% FREE tier (Census + BLS + BEA) and add company intelligence APIs only if 7 Eagle Group secures funding.
+
+# COMMAND ----------
+
+# DBTITLE 1,NEW SCRAPER: City Demographics Collector (Census Bureau)
+import requests
+import json
+from datetime import datetime
+import pandas as pd
+
+print("="*70)
+print("🌆 CITY DEMOGRAPHICS SCRAPER - U.S. Census Bureau API")
+print("="*70)
+
+# ==========================================
+# 🔑 GET YOUR FREE API KEY
+# ==========================================
+# Register here: https://api.census.gov/data/key_signup.html
+# Takes 2 minutes - instant approval
+
+CENSUS_API_KEY = "YOUR_API_KEY_HERE"  # ⚠️ UPDATE THIS!
+
+# ==========================================
+# 🎯 TARGET CITIES (MSA Codes)
+# ==========================================
+# Metro Statistical Area (MSA) codes for veteran-friendly cities
+target_cities = {
+    "24860": "Greenville-Anderson-Mauldin, SC",
+    "47900": "Washington-Arlington-Alexandria, DC-VA-MD-WV",
+    "19100": "Dallas-Fort Worth-Arlington, TX",
+    "37980": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",
+    "41860": "San Francisco-Oakland-Hayward, CA",
+    "12060": "Atlanta-Sandy Springs-Roswell, GA",
+    "40140": "Riverside-San Bernardino-Ontario, CA",
+    "26420": "Houston-The Woodlands-Sugar Land, TX",
+    "35620": "New York-Newark-Jersey City, NY-NJ-PA",
+    "31100": "Los Angeles-Long Beach-Anaheim, CA"
+}
+
+print(f"\n📍 Targeting {len(target_cities)} metro areas:")
+for msa_code, city_name in target_cities.items():
+    print(f"   • {city_name} ({msa_code})")
+
+# ==========================================
+# 📊 CENSUS VARIABLES TO COLLECT
+# ==========================================
+# American Community Survey (ACS) 5-Year Estimates
+# Full variable list: https://api.census.gov/data/2022/acs/acs5/variables.html
+
+variables = {
+    # Population & Demographics
+    "B01001_001E": "total_population",
+    "B01002_001E": "median_age",
+    "B21001_002E": "veteran_population",
+    
+    # Economics
+    "B19013_001E": "median_household_income",
+    "B17001_002E": "population_below_poverty",
+    "B25077_001E": "median_home_value",
+    "B25064_001E": "median_gross_rent",
+    
+    # Education
+    "B15003_022E": "bachelors_degree",
+    "B15003_023E": "masters_degree",
+    "B15003_024E": "professional_degree",
+    "B15003_025E": "doctorate_degree",
+    
+    # Employment
+    "B23025_003E": "civilian_labor_force",
+    "B23025_005E": "unemployed",
+    "B24010_003E": "management_occupations",
+    "B24010_023E": "computer_math_occupations",
+    
+    # Commute & Transportation
+    "B08303_001E": "workers_16_plus",
+    "B08303_013E": "commute_60plus_minutes"
+}
+
+print(f"\n📈 Collecting {len(variables)} demographic indicators per city")
+
+# ==========================================
+# 📥 FETCH DATA FROM CENSUS API
+# ==========================================
+
+def fetch_city_demographics(msa_code, api_key):
+    """
+    Fetch demographics for a single metro area from Census Bureau API.
+    
+    Args:
+        msa_code: Metropolitan Statistical Area code (e.g., "24860" for Greenville)
+        api_key: Your Census Bureau API key
+    
+    Returns:
+        dict: Demographics data for the city
+    """
+    
+    base_url = "https://api.census.gov/data/2022/acs/acs5"
+    
+    # Build query parameters
+    get_vars = ",".join(["NAME"] + list(variables.keys()))
+    
+    params = {
+        "get": get_vars,
+        "for": f"metropolitan statistical area/micropolitan statistical area:{msa_code}",
+        "key": api_key
+    }
+    
+    try:
+        response = requests.get(base_url, params=params, timeout=10)
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        if len(data) < 2:
+            print(f"   ⚠️  WARNING: No data for MSA {msa_code}")
+            return None
+        
+        # Parse response (first row is headers, second is data)
+        headers = data[0]
+        values = data[1]
+        
+        # Create result dict
+        result = {"msa_code": msa_code}
+        
+        for i, header in enumerate(headers):
+            if header == "NAME":
+                result["city_name"] = values[i]
+            elif header in variables:
+                # Map Census variable to friendly name
+                friendly_name = variables[header]
+                # Convert to numeric (handle nulls)
+                try:
+                    result[friendly_name] = float(values[i]) if values[i] not in [None, '', '-666666666'] else None
+                except:
+                    result[friendly_name] = None
+        
+        return result
+        
+    except requests.exceptions.RequestException as e:
+        print(f"   ❌ ERROR fetching data for MSA {msa_code}: {e}")
+        return None
+
+# ==========================================
+# 🚀 COLLECT DATA FOR ALL CITIES
+# ==========================================
+
+if CENSUS_API_KEY == "YOUR_API_KEY_HERE":
+    print("\n⚠️  PLEASE UPDATE CENSUS_API_KEY ABOVE!")
+    print("   Register for free at: https://api.census.gov/data/key_signup.html")
+else:
+    print("\n🚀 Starting data collection...\n")
+    
+    all_demographics = []
+    
+    for msa_code, city_name in target_cities.items():
+        print(f"📥 Fetching: {city_name}...")
+        
+        demo_data = fetch_city_demographics(msa_code, CENSUS_API_KEY)
+        
+        if demo_data:
+            all_demographics.append(demo_data)
+            print(f"   ✅ Success!")
+            
+            # Calculate derived metrics
+            if demo_data.get('total_population') and demo_data.get('veteran_population'):
+                vet_pct = (demo_data['veteran_population'] / demo_data['total_population']) * 100
+                print(f"      • Veteran Population: {demo_data['veteran_population']:,.0f} ({vet_pct:.2f}%)")
+            
+            if demo_data.get('median_household_income'):
+                print(f"      • Median Income: ${demo_data['median_household_income']:,.0f}")
+            
+            if demo_data.get('civilian_labor_force') and demo_data.get('unemployed'):
+                unemployment_rate = (demo_data['unemployed'] / demo_data['civilian_labor_force']) * 100
+                print(f"      • Unemployment: {unemployment_rate:.2f}%")
+        
+        # Rate limiting - be respectful
+        import time
+        time.sleep(0.5)  # 500ms between requests
+    
+    print(f"\n✅ COLLECTION COMPLETE: {len(all_demographics)}/{len(target_cities)} cities")
+    
+    # ==========================================
+    # 💾 SAVE TO PANDAS DATAFRAME
+    # ==========================================
+    
+    if all_demographics:
+        df_demographics = pd.DataFrame(all_demographics)
+        
+        # Calculate derived columns
+        df_demographics['veteran_percentage'] = (
+            df_demographics['veteran_population'] / df_demographics['total_population'] * 100
+        )
+        
+        df_demographics['unemployment_rate'] = (
+            df_demographics['unemployed'] / df_demographics['civilian_labor_force'] * 100
+        )
+        
+        df_demographics['higher_ed_percentage'] = (
+            (df_demographics['bachelors_degree'] + 
+             df_demographics['masters_degree'] + 
+             df_demographics['professional_degree'] + 
+             df_demographics['doctorate_degree']) / df_demographics['total_population'] * 100
+        )
+        
+        df_demographics['long_commute_percentage'] = (
+            df_demographics['commute_60plus_minutes'] / df_demographics['workers_16_plus'] * 100
+        )
+        
+        print("\n📊 DEMOGRAPHICS SUMMARY:")
+        print(df_demographics[[
+            'city_name', 
+            'total_population', 
+            'median_household_income',
+            'veteran_percentage',
+            'unemployment_rate'
+        ]].to_string(index=False))
+        
+        # ==========================================
+        # 💾 SAVE TO JSON (BRONZE LAYER)
+        # ==========================================
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_file = f"/Workspace/Repos/whall4.wh@gmail.com/For-Your-Service/data/city_demographics_{timestamp}.json"
+        
+        # Convert to JSON-serializable format
+        bronze_data = {
+            "metadata": {
+                "source": "U.S. Census Bureau API",
+                "dataset": "American Community Survey (ACS) 5-Year Estimates 2022",
+                "collection_timestamp": datetime.now().isoformat(),
+                "cities_collected": len(all_demographics),
+                "variables_collected": len(variables)
+            },
+            "cities": all_demographics
+        }
+        
+        with open(output_file, 'w') as f:
+            json.dump(bronze_data, f, indent=2)
+        
+        print(f"\n💾 SAVED TO: {output_file}")
+        print(f"   • {len(all_demographics)} cities")
+        print(f"   • {len(variables)} variables per city")
+        print(f"   • Ready for Bronze table ingestion")
+        
+        # ==========================================
+        # 📤 NEXT STEPS
+        # ==========================================
+        
+        print("\n🚀 NEXT STEPS:")
+        print("   1. Ingest JSON to Bronze Delta table: city_demographics_bronze")
+        print("   2. Transform to Silver: Calculate city opportunity scores")
+        print("   3. Join with job_matches_gold: Rank opportunities by city health")
+        print("   4. Add BLS job market stats for complete city intelligence")
+
+print("\n" + "="*70)
+
+# COMMAND ----------
+
 # DBTITLE 1,WORKING SCRAPER - Register for APIs First
 print("="*70)
 print("🚀 STEP 1: GET YOUR API KEYS (15 minutes)")
