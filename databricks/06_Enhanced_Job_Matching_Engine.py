@@ -192,46 +192,79 @@ AZURE CLOUD ENGINEER | INFRASTRUCTURE AS CODE | CLOUD OPERATIONS
 Kingwood, TX 77339 | (832) 597-4724 | steve_csp@protonmail.com | linkedin.com/in/stephen-porterfield
 
 PROFESSIONAL SUMMARY
-Azure-focused cloud and infrastructure engineer with hands-on experience provisioning and operating virtual machines, storage, load balancing, VPN gateways, and virtual networks. Applies Terraform, Azure DevOps, GitHub, Kubernetes, and CI/CD automation to build scalable, secure cloud infrastructure. Strong background in Infrastructure as Code, cloud operations, and DevOps practices with Azure platform expertise.
+Azure-focused cloud and infrastructure engineer with hands-on experience provisioning and operating virtual
+machines, storage, load balancing, VPN gateways, and virtual networks. Applies Terraform, Azure DevOps, GitHub,
+Kubernetes, CI/CD automation, Azure Policy, and Microsoft Entra ID to standardize deployments, address
+configuration drift, and strengthen cloud governance. Enterprise networking and cybersecurity background brings
+a security-first approach to reliability, identity, segmentation, and incident response.
 
-CORE COMPETENCIES
-• Azure Cloud Platform (Virtual Machines, Storage, Networking, VPN Gateways, Load Balancers, Virtual Networks)
-• Infrastructure as Code (Terraform, Azure Resource Manager)
-• Container Orchestration (Kubernetes, Docker)
-• CI/CD Pipelines (Azure DevOps, GitHub Actions)
-• Cloud Operations & Monitoring
-• DevOps Practices & Automation
-• Network Security & Architecture
-• Linux/Windows System Administration
-
-TECHNICAL SKILLS
-Cloud Platforms: Azure (VM, Storage, Networking, Security, Identity)
-IaC Tools: Terraform, ARM Templates
-Containers: Kubernetes, Docker, AKS
-CI/CD: Azure DevOps, GitHub, Jenkins
-Scripting: Python, Bash, PowerShell
-Networking: VPN, Load Balancers, Virtual Networks, Firewalls
-Monitoring: Azure Monitor, Log Analytics
+CORE TECHNICAL SKILLS
+Cloud Platforms & Services: Microsoft Azure; Virtual Machines; Storage Accounts; Virtual Networks; Load
+Balancer; VPN Gateway; Microsoft Entra ID; Azure Policy; Azure Blueprints
+Infrastructure & DevOps: Terraform; Azure DevOps; GitHub; Kubernetes; CI/CD; Infrastructure as Code;
+automation; runbooks; playbooks
+Cloud Operations & Networking: TCP/IP; DNS; routing; VPN; firewalls; network segmentation; root-cause analysis;
+configuration drift remediation
+Security & Governance: Palo Alto Panorama; Prisma; Cortex XSIAM/XSOAR; Cortex Cloud; Illumio; Microsoft
+Defender; Zero Trust; NIST; ISO 27001; CIS Controls
 
 PROFESSIONAL EXPERIENCE
 
-Cloud Engineer
-Houston, TX Area | Present
-• Provision and manage Azure virtual machines, storage accounts, and networking components
-• Build Infrastructure as Code solutions using Terraform for automated resource deployment
-• Implement CI/CD pipelines with Azure DevOps for application and infrastructure delivery
-• Configure and operate Kubernetes clusters for containerized workloads
-• Design and implement VPN gateways and virtual network architectures
-• Maintain load balancers and traffic management solutions
-• Apply security best practices and Azure policies for cloud governance
-• Automate operational tasks using PowerShell and Bash scripting
+First Community Credit Union - Security Engineer I | Houston, TX
+May 2026 - Present
+• Engineer, maintain, and secure hybrid infrastructure and cloud controls using Palo Alto Cortex
+XSOAR/XSIAM and Cortex Cloud, developing automated playbooks and runbooks to streamline
+operations and incident response.
+• Administer enterprise network and security services, including next-generation firewalls, VPNs, IDS,
+SIEM, DLP, and cloud security controls, supporting availability and a layered defense strategy.
+• Manage Active Directory environments with ADManager Plus, ADAudit Plus, and Endpoint Central,
+monitoring privileged access, auditing changes, and remediating configuration and compliance issues.
+• Administer Illumio microsegmentation policies to enforce zero-trust segmentation, reduce lateral-
+movement risk, and protect enterprise workloads.
+• Monitor Microsoft 365 with Microsoft Defender and perform cross-platform incident investigation,
+event correlation, threat hunting, and forensic analysis with business and technical teams.
+
+SkillStorm (ConocoPhillips) - Firewall Engineer & Cloud Operations Specialist
+Houston, TX
+Sep 2023 - Dec 2025
+• Built and deployed Terraform infrastructure-as-code solutions for Azure environments, improving
+deployment consistency and reducing configuration drift.
+• Provisioned and maintained Azure Virtual Machines, Storage Accounts, Load Balancers, VPN Gateways,
+and virtual networking services.
+• Applied Azure Policy, Azure Blueprints, and Microsoft Entra ID controls to enforce cloud governance,
+identity, and compliance requirements.
+• Supported CI/CD workflows using GitHub, Azure DevOps, and Kubernetes, integrating security into
+delivery processes.
+• Operated Palo Alto Panorama, Prisma, and GlobalProtect services; optimized policies, supported
+secure remote access, and enforced zero-trust controls for corporate and BYOD devices.
+• Troubleshot cloud and network security issues, performed root-cause analysis, and partnered across
+teams to restore service and improve system reliability.
 
 EDUCATION & CERTIFICATIONS
-Bachelor of Science - Technology/Computer Science
-Relevant cloud and infrastructure certifications
+Western Governors University - B.S., Cybersecurity & Information Assurance
+May 2023
 
-LOCATION
-Houston, TX (Kingwood area) - Open to local opportunities
+Cloud & DevOps: Azure Administrator Associate; DevOps Engineer Expert; Terraform Associate; ITIL 4
+Security & Infrastructure: ISC2 SSCP; CompTIA A+, Network+, Security+, CySA+, PenTest+, Project+; Cisco
+Cybersecurity Pathway: CNSP, CSAP, CIOS, CSIS, CNVP
+Application Platform: Appian Associate Developer
+
+SELECTED PROJECTS
+
+Azure Governance & Configuration Drift Remediation
+• Audited and remediated noncompliant Azure resources with Azure Policy across virtual machine,
+storage, and networking services.
+• Implemented automated policy enforcement aligned with NIST and ISO controls to support consistent
+governance and address configuration drift.
+• Strengthened identity and access governance with Microsoft Entra ID.
+
+Palo Alto Firewall Policy Audit & Optimization
+• Audited Palo Alto firewall rules to identify unused, redundant, and overly permissive policies within
+Panorama-managed environments.
+• Tightened rules and improved network segmentation to reduce security risk and support zero-trust
+architecture.
+• Aligned firewall configurations with security and compliance practices while improving policy clarity
+and maintainability.
 """
 
 # =====================================================================
