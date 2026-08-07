@@ -3240,86 +3240,157 @@ print("="*70)
 
 # DBTITLE 1,✅ Dynamic Tensor Generation - Summary
 # =====================================================================
-# ✅ DYNAMIC TENSOR GENERATION - SUMMARY
+# USER-FRIENDLY JOB MATCHING RESULTS
 # =====================================================================
 
-print("="*80)
-print("🎉 DYNAMIC TENSOR GENERATION - COMPLETE!")
+print("\n" + "="*80)
+print("                    YOUR JOB MATCHING RESULTS")
 print("="*80)
 
-print(f"\n👤 APPLICANT PROFILE (Dynamically Generated):")
+# Applicant Summary
+print(f"\n📋 YOUR PROFILE")
 print(f"   Name: {veteran_profile['name']}")
-print(f"   ID: {veteran_profile['applicant_id']}")
-print(f"   Experience: {veteran_profile['experience_summary']['total_years']} years")
-print(f"   Seniority: {veteran_profile['experience_summary']['seniority_level']}")
+print(f"   Experience: {veteran_profile['experience_summary']['total_years']} years ({veteran_profile['experience_summary']['seniority_level']}-level)")
 print(f"   Location: {veteran_profile['location']['target_city']}, {veteran_profile['location']['target_state']}")
-print(f"   Salary: ${veteran_profile['salary_requirements']['min']:,} - ${veteran_profile['salary_requirements']['max']:,}")
-print(f"   Resume Provided: {'Yes' if veteran_profile.get('resume_text') else 'No (auto-generated from params)'}")
+print(f"   Target Salary: ${veteran_profile['salary_requirements']['min']:,} - ${veteran_profile['salary_requirements']['max']:,}")
 
-print(f"\n📊 MATCHING RESULTS:")
-print(f"   Total Jobs Analyzed: {len(jobs_tensor_sorted)}")
-print(f"   Top Match Score: {jobs_tensor_sorted.iloc[0]['match_score']:.1f}/100")
-print(f"   Median Score: {jobs_tensor_sorted['match_score'].median():.1f}/100")
-print(f"   Avg Semantic Similarity: {jobs_tensor_sorted['semantic_similarity'].mean():.3f}")
+# Overall Statistics
+print(f"\n📊 SEARCH SUMMARY")
+print(f"   We analyzed {len(jobs_tensor_sorted)} jobs in your area")
+print(f"   Your best match scored {jobs_tensor_sorted.iloc[0]['match_score']:.0f} out of 100")
+print(f"   Average match score: {jobs_tensor_sorted['match_score'].median():.0f}/100")
 
-print(f"\n🏆 TOP 5 MATCHES:")
+# Categorize matches
+strong_matches = (jobs_tensor_sorted['match_score'] >= 70).sum()
+good_matches = ((jobs_tensor_sorted['match_score'] >= 60) & (jobs_tensor_sorted['match_score'] < 70)).sum()
+fair_matches = ((jobs_tensor_sorted['match_score'] >= 50) & (jobs_tensor_sorted['match_score'] < 60)).sum()
+
+print(f"\n   Match Quality Breakdown:")
+if strong_matches > 0:
+    print(f"   ✅ {strong_matches} Strong Matches (70-100) - Apply to these first!")
+if good_matches > 0:
+    print(f"   👍 {good_matches} Good Matches (60-69) - Definitely worth applying")
+if fair_matches > 0:
+    print(f"   ⚠️  {fair_matches} Fair Matches (50-59) - Consider if interested")
+
+# Top Matches with Clear Recommendations
+print(f"\n" + "="*80)
+print("                    YOUR TOP 5 JOB MATCHES")
+print("="*80)
+
 for rank in range(min(5, len(jobs_tensor_sorted))):
     job = jobs_tensor_sorted.iloc[rank]
     weights = job['component_weights']
+    score = job['match_score']
     
-    print(f"\n   #{rank+1}: {job['title']} ({job['match_score']:.1f}/100)")
-    print(f"      Company: {job['company']}")
-    print(f"      Seniority: {job['seniority_level']} | Salary: ${job['salary_min']:,.0f}-${job['salary_max']:,.0f}")
-    print(f"      Scores: Semantic={weights['semantic']:.1f} | Exp={weights['experience']:.1f} | Salary={weights['salary']:.1f}")
+    # Determine recommendation based on score
+    if score >= 70:
+        action = "✅ APPLY NOW - Strong Match!"
+        priority = "HIGH PRIORITY"
+    elif score >= 60:
+        action = "👍 RECOMMENDED - Good Fit"
+        priority = "RECOMMENDED"
+    elif score >= 50:
+        action = "💡 CONSIDER - Fair Match"
+        priority = "OPTIONAL"
+    else:
+        action = "⚠️  REVIEW - Lower Match"
+        priority = "LOW PRIORITY"
+    
+    print(f"\n{'─'*80}")
+    print(f"MATCH #{rank+1} - {priority} (Score: {score:.0f}/100)")
+    print(f"{'─'*80}")
+    print(f"\nPosition: {job['title']}")
+    print(f"Company: {job['company']}")
+    print(f"Location: {job['city']}, {job['state']}")
+    print(f"Salary Range: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
+    print(f"Experience Level: {job['seniority_level'].title()}")
+    
+    print(f"\n{action}")
+    
+    # Why this match?
+    print(f"\nWhy This Match?")
+    if weights['semantic'] >= 12:
+        print(f"  • Your skills align well with this role")
+    if weights['experience'] >= 25:
+        print(f"  • Your experience level is a perfect fit")
+    elif weights['experience'] >= 18:
+        print(f"  • Your experience level matches reasonably well")
+    if weights['salary'] >= 20:
+        print(f"  • Salary meets your requirements")
+    
+    # Application link
+    if pd.notna(job.get('url')):
+        print(f"\nApply Here: {job['url']}")
 
 # =====================================================================
 # RESUME QUALITY FEEDBACK
 # =====================================================================
 
 if 'resume_analysis' in globals():
-    print("\n" + "="*80)
-    print("📋 RESUME QUALITY ASSESSMENT")
+    print(f"\n" + "="*80)
+    print("                    YOUR RESUME FEEDBACK")
     print("="*80)
     
     analysis = resume_analysis
-    print(f"\n⭐ Overall Score: {analysis['quality_score']}/100")
-    print(f"   Status: {analysis['quality_status']}")
+    score = analysis['quality_score']
+    
+    # Visual score indicator
+    if score >= 85:
+        score_visual = "⭐⭐⭐⭐⭐ EXCELLENT"
+        score_msg = "Your resume is in great shape!"
+    elif score >= 70:
+        score_visual = "⭐⭐⭐⭐ GOOD"
+        score_msg = "Your resume is solid with room for minor improvements."
+    elif score >= 55:
+        score_visual = "⭐⭐⭐ FAIR"
+        score_msg = "Your resume is decent but could use some improvements."
+    else:
+        score_visual = "⭐⭐ NEEDS WORK"
+        score_msg = "Your resume needs significant improvements to stand out."
+    
+    print(f"\nResume Quality Score: {score}/100")
+    print(f"{score_visual}")
+    print(f"\n{score_msg}")
     
     if analysis['years_exp_detected']:
-        print(f"\n✅ AUTO-DETECTED VALUES:")
-        print(f"   Experience: {analysis['years_exp_detected']} years")
-        print(f"   Seniority: {analysis['seniority_detected'].upper()}")
+        print(f"\nWhat We Found in Your Resume:")
+        print(f"  • Experience: {analysis['years_exp_detected']} years")
+        print(f"  • Career Level: {analysis['seniority_detected'].title()}")
         if analysis['location_detected']:
-            print(f"   Location: {analysis['location_detected']}")
-        print(f"   Skills Found: {analysis['skills_count']}")
+            print(f"  • Location: {analysis['location_detected']}")
+        print(f"  • Technical Skills: {analysis['skills_count']} identified")
     
     if analysis['recommendations']:
-        print(f"\n💡 RECOMMENDATIONS TO IMPROVE YOUR RESUME ({len(analysis['recommendations'])}):")
-        print(f"   (Making these changes will improve both AI matching and human readability)")
-        print()
+        print(f"\n" + "─"*80)
+        print(f"HOW TO IMPROVE YOUR RESUME")
+        print("─"*80)
+        print(f"\nMaking these {len(analysis['recommendations'])} change(s) will help you get more interviews:\n")
         for i, rec in enumerate(analysis['recommendations'], 1):
-            print(f"   {i}. {rec}")
+            print(f"{i}. {rec}")
         
-        print(f"\n📝 WHY THIS MATTERS:")
-        print(f"   • Better resume = better matches from this system")
-        print(f"   • Hiring managers will also find it easier to evaluate you")
-        print(f"   • Clear dates, skills, and achievements = higher interview rate")
+        print(f"\nWhy These Changes Matter:")
+        print(f"  ✓ AI systems (like this one) will match you better")
+        print(f"  ✓ Hiring managers can quickly see your qualifications")
+        print(f"  ✓ You'll stand out from other applicants")
+        print(f"  ✓ Higher chance of getting interview callbacks")
     else:
-        print(f"\n✅ No major recommendations - your resume is well-structured!")
+        print(f"\n✅ Great news! Your resume is well-structured with no major issues.")
 
-print("\n" + "="*80)
-print("✅ KEY ACHIEVEMENTS:")
+print(f"\n" + "="*80)
+print("                    NEXT STEPS")
 print("="*80)
-print("   ✅ Profile built dynamically from applicant_params (not hardcoded)")
-print("   ✅ Resume analyzed automatically - experience/seniority detected")
-print("   ✅ Experience-based scoring matrix adapts to applicant seniority")
-print("   ✅ Salary matching uses applicant parameters directly")
-print("   ✅ Veteran embedding generated from resume_text or constructed from params")
-print("   ✅ Job embeddings use fresh scraped data (per-applicant table)")
-print("   ✅ Actionable resume improvement recommendations provided")
-print("\n" + "="*80)
-print("🚀 PIPELINE READY FOR PRODUCTION DEPLOYMENT")
-print("="*80)
+print(f"\n1. Review your top matches above")
+print(f"2. Apply to HIGH PRIORITY jobs first")
+print(f"3. Customize your cover letter for each application")
+if 'resume_analysis' in globals() and resume_analysis.get('recommendations'):
+    print(f"4. Update your resume with the recommended improvements")
+    print(f"5. Re-run this analysis to see your improved match scores")
+
+print(f"\n📞 Need Help? Contact 7 Eagle Group for personalized support")
+print(f"\n" + "="*80)
+print(f"                    GOOD LUCK WITH YOUR JOB SEARCH!")
+print("="*80 + "\n")
 
 # COMMAND ----------
 
