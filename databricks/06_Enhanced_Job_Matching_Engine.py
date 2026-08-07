@@ -1034,9 +1034,9 @@ def scrape_jobs_for_location(city, state, max_results=100):
         List of job dictionaries
     """
     
-    # Adzuna API credentials
-    ADZUNA_APP_ID = "c32c67ab"
-    ADZUNA_APP_KEY = "b4c4c0f2fe8b2b1e05b74976ef0b9aca"
+    # Adzuna API credentials (7 Eagle Group - Updated)
+    ADZUNA_APP_ID = "ea966e18"
+    ADZUNA_APP_KEY = "90f7d868807b93575515153c3a8d0a51"
     
     location_query = f"{city}, {state}"
     
@@ -1085,7 +1085,7 @@ def scrape_jobs_for_location(city, state, max_results=100):
                         "salary": {
                             "min": result.get('salary_min'),
                             "max": result.get('salary_max'),
-                            "is_predicted": result.get('salary_is_predicted', False)
+                            "is_predicted": bool(result.get('salary_is_predicted', False)) if result.get('salary_is_predicted') is not None else False
                         },
                         "description": result.get('description', '')[:5000],
                         "requirements": None,  # Adzuna doesn't separate requirements
