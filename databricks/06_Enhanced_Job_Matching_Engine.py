@@ -187,84 +187,54 @@
 
 # PASTE RESUME HERE (between the triple quotes):
 resume_input = """
-Stephen D. Porterfield
-AZURE CLOUD ENGINEER | INFRASTRUCTURE AS CODE | CLOUD OPERATIONS
-Kingwood, TX 77339 | (832) 597-4724 | steve_csp@protonmail.com | linkedin.com/in/stephen-porterfield
+WILLIAM FREE HALL
+Technical Lead & Solutions Architect | Cloud & Data Engineer
+Niceville, FL  •  (910) 584-3843  •  whall4.wh@gmail.com  •  linkedin.com/in/william-free-hall  •  github.com/For-Your-Service
 
-PROFESSIONAL SUMMARY
-Azure-focused cloud and infrastructure engineer with hands-on experience provisioning and operating virtual
-machines, storage, load balancing, VPN gateways, and virtual networks. Applies Terraform, Azure DevOps, GitHub,
-Kubernetes, CI/CD automation, Azure Policy, and Microsoft Entra ID to standardize deployments, address
-configuration drift, and strengthen cloud governance. Enterprise networking and cybersecurity background brings
-a security-first approach to reliability, identity, segmentation, and incident response.
+EXECUTIVE SUMMARY
+Results-driven Technical Lead and Cloud/Data Architect with over 10 years of specialized experience in data analytics, data engineering, and executive intelligence briefings, backed by over 20 years of elite military leadership in US Army Special Operations. Proven track record of architecting multi-tier data lakehouses on Databricks, engineering graph analytical models, managing enterprise cloud infrastructure, and interpreting high-stakes intelligence analysis using Palantir and i2 Analyst's Notebook for General Officers and senior DOD decision-makers. Combines operational discipline with deep technical expertise in PySpark, Databricks, Terraform, Kubernetes, and CI/CD pipelines to deliver high-availability, cost-optimized enterprise platforms.
 
-CORE TECHNICAL SKILLS
-Cloud Platforms & Services: Microsoft Azure; Virtual Machines; Storage Accounts; Virtual Networks; Load
-Balancer; VPN Gateway; Microsoft Entra ID; Azure Policy; Azure Blueprints
-Infrastructure & DevOps: Terraform; Azure DevOps; GitHub; Kubernetes; CI/CD; Infrastructure as Code;
-automation; runbooks; playbooks
-Cloud Operations & Networking: TCP/IP; DNS; routing; VPN; firewalls; network segmentation; root-cause analysis;
-configuration drift remediation
-Security & Governance: Palo Alto Panorama; Prisma; Cortex XSIAM/XSOAR; Cortex Cloud; Illumio; Microsoft
-Defender; Zero Trust; NIST; ISO 27001; CIS Controls
+TECHNICAL SKILLS
+•	Data & Analytics Engineering: Palantir, i2 Analyst's Notebook, Databricks, Apache Spark (PySpark), Delta Lake, Unity Catalog, Vector Search, PyTorch, Transformers, Scikit-Learn, Pandas, NumPy
+•	Cloud & Infrastructure: AWS (Lambda, EC2, S3, IAM, CloudFormation), GCP (Cloud Functions, GCS, GKE), Azure (VMs, AKS), Serverless Architecture
+•	Containers & Orchestration: Kubernetes (GKE, AKS), Docker, Helm
+•	IaC & DevOps: Terraform, GitHub Actions, Jenkins, GitLab CI, Git, Bash/Shell Scripting
+•	Databases & Query Languages: SQL (Databricks SQL, PostgreSQL), Vector Databases, Graph & Link Analysis
+•	Executive Communication & Ops: Executive Data Briefings (General Officer Level), Inter-Agency Coordination (DOD, CIA, State Dept), Cross-Functional Team Leadership, Process Optimization
 
 PROFESSIONAL EXPERIENCE
+Technical Lead & Solutions Architect  |  For Your Service	2024 – Present
+Partnered with 7 Eagle Group (Veteran Placement Organization)
+Led the full-stack architectural design and implementation of a production-grade ML platform automated to match military veterans with high-demand civilian technology roles.
+•	Cloud & Data Lakehouse Architecture: Architected an enterprise multi-tier data lakehouse (Bronze / Silver / Gold) on Databricks utilizing Unity Catalog for end-to-end data governance and access control.
+•	Serverless & Cloud Infrastructure: Deployed cost-optimized, serverless compute infrastructure on AWS with automated scaling capabilities for real-time machine learning inference workloads.
+•	Deployment Strategy: Designed a modular deployment strategy featuring a zero-cost prototyping tier on Hugging Face Spaces ($0/mo) with a seamless migration path to Google Kubernetes Engine (GKE) ($95–$600/mo) for production scaling.
+•	Machine Learning & ETL Engineering: Engineered automated ETL pipelines in PySpark ingesting and processing 670+ live job market postings from external REST APIs (USAJobs, Adzuna).
+•	Neural Network & Semantic Search: Built a Siamese twin-tower neural network utilizing 384-dimensional vector embeddings for high-precision semantic job-to-candidate matching.
+•	Inference Engine: Developed real-time inference workflows integrating vector search, automated resume parsing, skills extraction, and weighted ranking algorithms.
+•	DevOps & Infrastructure as Code: Implemented automated CI/CD deployment pipelines using GitHub Actions and managed infrastructure state using Terraform, enforcing zero-downtime updates.
 
-First Community Credit Union - Security Engineer I | Houston, TX
-May 2026 - Present
-• Engineer, maintain, and secure hybrid infrastructure and cloud controls using Palo Alto Cortex
-XSOAR/XSIAM and Cortex Cloud, developing automated playbooks and runbooks to streamline
-operations and incident response.
-• Administer enterprise network and security services, including next-generation firewalls, VPNs, IDS,
-SIEM, DLP, and cloud security controls, supporting availability and a layered defense strategy.
-• Manage Active Directory environments with ADManager Plus, ADAudit Plus, and Endpoint Central,
-monitoring privileged access, auditing changes, and remediating configuration and compliance issues.
-• Administer Illumio microsegmentation policies to enforce zero-trust segmentation, reduce lateral-
-movement risk, and protect enterprise workloads.
-• Monitor Microsoft 365 with Microsoft Defender and perform cross-platform incident investigation,
-event correlation, threat hunting, and forensic analysis with business and technical teams.
+Cloud Engineer & DevOps Analyst  |  ConocoPhillips	2022 – 2024
+Managed enterprise cloud architecture, CI/CD automation pipelines, and data infrastructure maintenance within a multi-tenant cloud environment for a global energy enterprise.
+•	Enterprise Cloud & Pipeline Automation: Architected and maintained automated CI/CD deployment pipelines, streamlining infrastructure provisioning and database migration workflows across multi-tenant cloud environments.
+•	Enterprise Data Infrastructure: Managed large-scale data ingestion and storage architectures, ensuring high availability, strict security compliance, and optimized query performance for enterprise analytics platforms.
+•	Infrastructure as Code (IaC): Provisioned and managed cloud infrastructure using Terraform, standardizing multi-environment configurations and reducing deployment cycle times.
+•	Monitoring & Telemetry Engineering: Implemented comprehensive telemetry and operational dashboards using Prometheus, Grafana, and ELK Stack to maintain system reliability and enforce zero-downtime SLA standards.
 
-SkillStorm (ConocoPhillips) - Firewall Engineer & Cloud Operations Specialist
-Houston, TX
-Sep 2023 - Dec 2025
-• Built and deployed Terraform infrastructure-as-code solutions for Azure environments, improving
-deployment consistency and reducing configuration drift.
-• Provisioned and maintained Azure Virtual Machines, Storage Accounts, Load Balancers, VPN Gateways,
-and virtual networking services.
-• Applied Azure Policy, Azure Blueprints, and Microsoft Entra ID controls to enforce cloud governance,
-identity, and compliance requirements.
-• Supported CI/CD workflows using GitHub, Azure DevOps, and Kubernetes, integrating security into
-delivery processes.
-• Operated Palo Alto Panorama, Prisma, and GlobalProtect services; optimized policies, supported
-secure remote access, and enforced zero-trust controls for corporate and BYOD devices.
-• Troubleshot cloud and network security issues, performed root-cause analysis, and partnered across
-teams to restore service and improve system reliability.
+Special Forces Intelligence Sergeant (18F) & Team Sergeant  |  U.S. Army Special Forces	1999 – 2017
+18 Series Green Beret (18F Special Forces Assistant Operations and Intelligence Sergeant)
+Spearheaded intelligence operations, data analytics, and operational planning for 12-man Special Forces operational teams, leveraging enterprise intelligence software and data engineering practices across 10+ years of active intelligence roles.
+•	Executive Briefings & Strategic Decision Support: Synthesized complex analytics into high-impact operational briefings, presenting and interpreting data findings directly to General Officers (U.S. Army) and senior Department of Defense (DOD) leadership to drive strategic mission planning.
+•	Data Analytics & Link Analysis: Utilized Palantir and i2 Analyst's Notebook to aggregate, fuse, and analyze massive multi-source datasets, identifying complex relational networks, threat patterns, and actionable intelligence.
+•	Data Engineering & Intelligence Pipelines: Designed and maintained operational data pipelines to standardize, cleanse, and ingest disparate tactical and strategic intelligence feeds into centralized analysis platforms.
+•	Operations & Leadership: Commanded cross-functional teams across multiple combat deployments, maintaining a 100% mission success rate while making real-time data-driven decisions under extreme pressure.
+•	Inter-Agency Coordination: Planned and executed sensitive operations requiring detailed intelligence analysis in coordination with inter-agency partners (DOD, CIA, Department of State).
+•	Operations & Secure Communications: Maintained strict operational security (OPSEC), risk management, and secure data network integrity across austere tactical environments.
 
 EDUCATION & CERTIFICATIONS
-Western Governors University - B.S., Cybersecurity & Information Assurance
-May 2023
-
-Cloud & DevOps: Azure Administrator Associate; DevOps Engineer Expert; Terraform Associate; ITIL 4
-Security & Infrastructure: ISC2 SSCP; CompTIA A+, Network+, Security+, CySA+, PenTest+, Project+; Cisco
-Cybersecurity Pathway: CNSP, CSAP, CIOS, CSIS, CNVP
-Application Platform: Appian Associate Developer
-
-SELECTED PROJECTS
-
-Azure Governance & Configuration Drift Remediation
-• Audited and remediated noncompliant Azure resources with Azure Policy across virtual machine,
-storage, and networking services.
-• Implemented automated policy enforcement aligned with NIST and ISO controls to support consistent
-governance and address configuration drift.
-• Strengthened identity and access governance with Microsoft Entra ID.
-
-Palo Alto Firewall Policy Audit & Optimization
-• Audited Palo Alto firewall rules to identify unused, redundant, and overly permissive policies within
-Panorama-managed environments.
-• Tightened rules and improved network segmentation to reduce security risk and support zero-trust
-architecture.
-• Aligned firewall configurations with security and compliance practices while improving policy clarity
-and maintainability.
+•	Bachelor of Science in Cybersecurity
+•	AWS Certified Cloud Practitioner
+•	U.S. Army Special Forces Qualification Course (SFQC) – 18F Intelligence Sergeant & 18 Series Green Beret
 """
 
 # =====================================================================
@@ -273,15 +243,15 @@ and maintainability.
 
 # Basic applicant information (name, location, salary, experience)
 applicant_info = {
-    "name": "Stephen D. Porterfield",
-    "city": "Kingwood",
-    "state": "TX",
-    "salary_min": 90000,
-    "salary_max": 140000,
-    "experience_years": 3,
-    "seniority": "mid",  # Options: junior, mid, senior
-    "keywords": "azure,cloud engineer,devops,infrastructure as code,terraform,kubernetes,ci/cd",
-    "clearance": "none"  # Options: active, expired, none
+    "name": "William Free Hall",
+    "city": "Greenville",
+    "state": "SC",
+    "salary_min": 120000,
+    "salary_max": 180000,
+    "experience_years": 18,
+    "seniority": "senior",  # Options: junior, mid, senior
+    "keywords": "devops engineer,solutions architect,cloud engineer,site reliability engineer,platform engineer,kubernetes,databricks,aws,terraform,python,data engineer",
+    "clearance": "expired"  # Options: active, expired, none
 }
 
 print("="*70)
@@ -1944,9 +1914,9 @@ def scrape_jobs_for_location(city, state, max_results=100):
     
     return all_jobs
 
-# Get location from dynamic applicant parameters
-target_city = applicant_params['target_city']
-target_state = applicant_params['target_state']
+# Get location from veteran profile (target search location, NOT resume location)
+target_city = veteran_profile['location']['target_city']
+target_state = veteran_profile['location']['target_state']
 
 print(f"\n🎯 Target Location: {target_city}, {target_state}")
 print(f"📋 Applicant: {applicant_params['applicant_name']}")
@@ -2263,8 +2233,8 @@ veteran_profile = {
     "applicant_id": applicant_params['applicant_id'],
     
     "location": {
-        "target_city": applicant_params['target_city'],
-        "target_state": applicant_params['target_state']
+        "target_city": "Greenville",
+        "target_state": "SC"
     },
     
     "experience_summary": {
