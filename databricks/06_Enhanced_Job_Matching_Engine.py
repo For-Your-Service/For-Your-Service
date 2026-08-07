@@ -274,7 +274,7 @@ and maintainability.
 # Basic applicant information (name, location, salary, experience)
 applicant_info = {
     "name": "Stephen D. Porterfield",
-    "city": "Houston",
+    "city": "Kingwood",
     "state": "TX",
     "salary_min": 90000,
     "salary_max": 140000,
