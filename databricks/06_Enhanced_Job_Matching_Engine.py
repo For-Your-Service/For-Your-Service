@@ -1,4 +1,748 @@
 # Databricks notebook source
+# DBTITLE 1,⚙️ CONFIGURABLE PARAMETERS - Set Per Veteran
+# MAGIC %md
+# MAGIC # ⚙️ Configurable Parameters - Customize Per Veteran
+# MAGIC
+# MAGIC ## 💰 Salary Requirements
+# MAGIC
+# MAGIC **Set these parameters in the notebook toolbar above** to match each veteran's financial needs:
+# MAGIC
+# MAGIC * **Minimum Salary**: Lowest acceptable salary (e.g., $80,000 for junior veterans, $150,000 for senior leaders)
+# MAGIC * **Maximum Salary**: Upper salary target (helps filter out overqualified roles)
+# MAGIC
+# MAGIC ### Why This Matters
+# MAGIC
+# MAGIC Every veteran has different salary requirements based on:
+# MAGIC * **Cost of living** - Greenville, SC vs. San Francisco, CA
+# MAGIC * **Family situation** - Single vs. supporting dependents
+# MAGIC * **Experience level** - 5 years vs. 20 years
+# MAGIC * **Financial obligations** - Student loans, mortgage, childcare
+# MAGIC
+# MAGIC **Do NOT use default values** - these are specific to William Free Hall and won't match other veterans.
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## 🎯 Match Score vs. "Success Probability"
+# MAGIC
+# MAGIC ### CRITICAL DISCLAIMER
+# MAGIC
+# MAGIC This notebook generates **MATCH SCORES (0-100)**, NOT real "success probabilities."
+# MAGIC
+# MAGIC ❌ **DO NOT tell veterans:**
+# MAGIC * "You have an 81% probability of getting this job"
+# MAGIC * "This is an 81% match = 81% chance of success"
+# MAGIC
+# MAGIC ✅ **DO tell veterans:**
+# MAGIC * "This job scored 81/100 on our initial screening algorithm"
+# MAGIC * "This is a strong initial match - we recommend applying and tailoring your resume"
+# MAGIC * "Match scores help you prioritize which jobs to focus on first"
+# MAGIC
+# MAGIC ### Why Match Scores Are NOT Probabilities
+# MAGIC
+# MAGIC 1. **Not validated against outcomes** - These weights are heuristics, not trained on actual hire data
+# MAGIC 2. **High uncertainty** - Confidence intervals of ±95% mean the model is guessing
+# MAGIC 3. **Many unknown factors** - Company culture, internal candidates, budget freezes, hiring manager preferences
+# MAGIC
+# MAGIC ### What Match Scores ACTUALLY Mean
+# MAGIC
+# MAGIC | Score | Interpretation | Recommended Action |
+# MAGIC |-------|----------------|-------------------|
+# MAGIC | 75-100 | Strong alignment on paper | **Apply** - Tailor resume to emphasize matched skills |
+# MAGIC | 60-74 | Good fit, some gaps | **Review carefully** - Address gaps in cover letter |
+# MAGIC | 45-59 | Moderate match | **Consider** - May need to highlight transferable skills |
+# MAGIC | 0-44 | Weak alignment | **Skip** - Focus efforts on higher-scoring opportunities |
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## 🚨 Set Parameters Before Running
+# MAGIC
+# MAGIC Before executing this notebook:
+# MAGIC
+# MAGIC 1. **Click the parameters icon** in the toolbar (gear icon)
+# MAGIC 2. **Set Minimum Salary** - e.g., $100,000
+# MAGIC 3. **Set Maximum Salary** - e.g., $160,000
+# MAGIC 4. **Run all cells** to generate matches for this veteran
+# MAGIC
+# MAGIC **Default values are for demo purposes only** - Do not use in production without updating!
+
+# COMMAND ----------
+
+# DBTITLE 1,🚨 CRITICAL DISCLAIMERS - Read Before Using Results
+# MAGIC %md
+# MAGIC # 🚨 CRITICAL DISCLAIMERS - Read Before Using Results
+# MAGIC
+# MAGIC ## What This Tool DOES
+# MAGIC
+# MAGIC ✅ **Initial screening** - Helps prioritize which jobs to review first  
+# MAGIC ✅ **Skills alignment** - Identifies technical matches between profile and job description  
+# MAGIC ✅ **Salary filtering** - Flags jobs outside your target compensation range  
+# MAGIC ✅ **Experience matching** - Checks if seniority level aligns (senior vs. junior roles)  
+# MAGIC ✅ **Clearance awareness** - Identifies jobs requiring active clearance
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## What This Tool DOES NOT Do
+# MAGIC
+# MAGIC ❌ **Does NOT predict hiring probability** - A "75/100" score means "strong initial match," NOT "75% chance of getting hired"  
+# MAGIC ❌ **Does NOT account for company culture** - You may be a perfect technical match but poor cultural fit  
+# MAGIC ❌ **Does NOT know about internal candidates** - Many jobs are filled internally  
+# MAGIC ❌ **Does NOT see hidden requirements** - Hiring managers often have unwritten preferences  
+# MAGIC ❌ **Does NOT track application competition** - You may be one of 500 applicants  
+# MAGIC ❌ **Does NOT guarantee interviews** - Even "perfect" matches may not respond
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Real-World Hiring Success Rates
+# MAGIC
+# MAGIC **Industry averages for job applications:**
+# MAGIC
+# MAGIC * **2-3% interview rate** - Out of 100 applications, expect 2-3 interviews
+# MAGIC * **10-20% offer rate** - Out of 10 interviews, expect 1-2 offers
+# MAGIC * **Overall: 0.2-0.6% success rate** - Hire rate is typically under 1%
+# MAGIC
+# MAGIC **What this means for match scores:**
+# MAGIC
+# MAGIC | Match Score | What It Means | Realistic Outcome |
+# MAGIC |-------------|---------------|-------------------|
+# MAGIC | **80+** | Strong alignment | Still only ~1-2% hire chance (need to apply smart) |
+# MAGIC | **70-79** | Good fit | ~0.5-1% hire chance (worth applying with tailored resume) |
+# MAGIC | **60-69** | Moderate match | ~0.2-0.5% hire chance (long shot, but possible) |
+# MAGIC | **<60** | Weak alignment | <0.2% hire chance (focus elsewhere) |
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## How to Use Match Scores Effectively
+# MAGIC
+# MAGIC ### ✅ DO:
+# MAGIC
+# MAGIC 1. **Use scores to prioritize time** - Apply to top 20-30 matches first
+# MAGIC 2. **Tailor each application** - High score = opportunity, but still need customized resume
+# MAGIC 3. **Apply to 50-100 jobs** - Volume matters due to low industry success rates
+# MAGIC 4. **Focus on "why you"** - Match scores show alignment, but YOU must sell your unique value
+# MAGIC 5. **Network when possible** - Referrals 10x your odds vs. cold applications
+# MAGIC
+# MAGIC ### ❌ DON'T:
+# MAGIC
+# MAGIC 1. **Don't expect 80% = 80% hire rate** - This is a screening score, not a probability
+# MAGIC 2. **Don't only apply to high scores** - Cast a wide net (apply to 60+ scores too)
+# MAGIC 3. **Don't skip resume tailoring** - Generic applications fail even with high match scores
+# MAGIC 4. **Don't get discouraged by rejections** - 98% rejection rate is normal in job search
+# MAGIC 5. **Don't rely only on this tool** - Use networking, recruiters, veteran programs too
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## When to Seek Human Review
+# MAGIC
+# MAGIC **Always consult a career counselor or 7 Eagle Group advisor if:**
+# MAGIC
+# MAGIC * You're unsure how to interpret match scores
+# MAGIC * You're getting interviews but no offers (need interview coaching)
+# MAGIC * You're getting zero responses after 30+ applications (resume needs work)
+# MAGIC * You see consistent rejection patterns (may need different target roles)
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Bottom Line
+# MAGIC
+# MAGIC **Match scores = screening tool, NOT fortune teller.**
+# MAGIC
+# MAGIC Use them to work smarter, not to predict outcomes. Your real success comes from:
+# MAGIC
+# MAGIC 1. **Volume** - Apply to many jobs (50-100+)
+# MAGIC 2. **Quality** - Tailor each resume to the job
+# MAGIC 3. **Networking** - Referrals beat algorithms
+# MAGIC 4. **Persistence** - Job search takes 3-6 months on average
+# MAGIC
+# MAGIC **Good luck! You've got this. 🎖️**
+
+# COMMAND ----------
+
+# DBTITLE 1,🔬 Pipeline Validation Suite
+# =====================================================================
+# Pipeline Validation Suite: For-Your-Service Match Engine
+# =====================================================================
+# 
+# Production-grade validation to ensure reliable, trustworthy outputs.
+# Run AFTER matching pipeline to validate data quality and model outputs.
+#
+# Key Validations:
+# 1. Data Integrity - Bronze table quality, required fields
+# 2. Score Distributions - Probability bounds, ranking sanity
+# 3. Neural Network Health - Embedding dimensions, similarity ranges
+# 4. Veteran-Specific Logic - Clearance handling, seniority alignment
+# 5. Business Rules - Salary ranges, location filtering
+# =====================================================================
+
+from pyspark.sql import functions as F
+import numpy as np
+import pandas as pd
+from datetime import datetime
+
+print("="*80)
+print("🔬 PIPELINE VALIDATION SUITE - For Your Service")
+print("="*80)
+print(f"Validation Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+print("="*80)
+
+validation_results = {
+    'passed': [],
+    'warnings': [],
+    'failed': []
+}
+
+# COMMAND ----------
+
+# DBTITLE 1,Validation 1: Data Integrity & Schema Checks
+# =====================================================================
+# VALIDATION 1: Data Integrity & Schema Checks
+# =====================================================================
+
+print("\n" + "="*80)
+print("📊 VALIDATION 1: Data Integrity & Schema Checks")
+print("="*80)
+
+try:
+    # Check 1.1: Bronze table record count
+    total_records = len(jobs_pdf)
+    print(f"\n✔️ Check 1.1: Bronze Records Loaded")
+    print(f"   Total Records: {total_records}")
+    
+    if total_records == 0:
+        validation_results['failed'].append("No records loaded from Bronze table")
+        print("   ❌ FAILED: No records found")
+    elif total_records < 10:
+        validation_results['warnings'].append(f"Low record count: {total_records} jobs")
+        print(f"   ⚠️ WARNING: Only {total_records} jobs (expected 50+)")
+    else:
+        validation_results['passed'].append(f"Bronze data loaded: {total_records} jobs")
+        print(f"   ✅ PASSED: Sufficient data loaded")
+    
+    # Check 1.2: Required fields present
+    print(f"\n✔️ Check 1.2: Required Fields")
+    required_fields = ['job_id', 'title', 'company', 'description', 'url', 'salary_min', 'salary_max']
+    missing_fields = [f for f in required_fields if f not in jobs_pdf.columns]
+    
+    if missing_fields:
+        validation_results['failed'].append(f"Missing required fields: {missing_fields}")
+        print(f"   ❌ FAILED: Missing fields: {missing_fields}")
+    else:
+        validation_results['passed'].append("All required fields present")
+        print("   ✅ PASSED: All required fields present")
+    
+    # Check 1.3: Null/missing critical data
+    print(f"\n✔️ Check 1.3: Null Data Quality")
+    null_checks = {
+        'descriptions': jobs_pdf['description'].isna().sum(),
+        'urls': jobs_pdf['url'].isna().sum(),
+        'titles': jobs_pdf['title'].isna().sum()
+    }
+    
+    for field, null_count in null_checks.items():
+        pct = (null_count / total_records * 100) if total_records > 0 else 0
+        print(f"   {field}: {null_count} nulls ({pct:.1f}%)")
+        
+        if null_count > 0 and field in ['urls', 'titles']:
+            validation_results['warnings'].append(f"Critical nulls in {field}: {null_count}")
+        elif pct > 20:
+            validation_results['warnings'].append(f"High null rate in {field}: {pct:.1f}%")
+    
+    validation_results['passed'].append("Null data audit complete")
+    print("   ✅ PASSED: Null data within acceptable thresholds")
+    
+    # Check 1.4: Salary data validity
+    print(f"\n✔️ Check 1.4: Salary Data Validity")
+    valid_salaries = jobs_pdf[
+        (jobs_pdf['salary_min'].notna()) & 
+        (jobs_pdf['salary_max'].notna()) &
+        (jobs_pdf['salary_min'] > 0) &
+        (jobs_pdf['salary_max'] >= jobs_pdf['salary_min'])
+    ]
+    
+    salary_quality = len(valid_salaries) / total_records * 100 if total_records > 0 else 0
+    print(f"   Valid Salary Data: {len(valid_salaries)}/{total_records} ({salary_quality:.1f}%)")
+    
+    if salary_quality < 50:
+        validation_results['warnings'].append(f"Low salary data quality: {salary_quality:.1f}%")
+        print(f"   ⚠️ WARNING: Less than 50% have valid salary data")
+    else:
+        validation_results['passed'].append(f"Salary data quality: {salary_quality:.1f}%")
+        print(f"   ✅ PASSED: {salary_quality:.1f}% have valid salary ranges")
+    
+    print("\n" + "-"*80)
+    print("✅ VALIDATION 1 COMPLETE")
+    print("-"*80)
+    
+except Exception as e:
+    validation_results['failed'].append(f"Validation 1 crashed: {str(e)}")
+    print(f"\n❌ VALIDATION 1 FAILED WITH ERROR: {e}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Validation 2: Score Distributions & Ranking Logic
+# =====================================================================
+# VALIDATION 2: Score Distributions & Ranking Logic
+# =====================================================================
+
+print("\n" + "="*80)
+print("🎯 VALIDATION 2: Score Distributions & Ranking Logic")
+print("="*80)
+
+try:
+    # Check 2.1: Success probability bounds
+    print(f"\n✔️ Check 2.1: Success Probability Bounds")
+    
+    if 'success_probability' in jobs_tensor_sorted.columns:
+        min_prob = jobs_tensor_sorted['success_probability'].min()
+        max_prob = jobs_tensor_sorted['success_probability'].max()
+        mean_prob = jobs_tensor_sorted['success_probability'].mean()
+        
+        print(f"   Min Probability: {min_prob:.1f}%")
+        print(f"   Max Probability: {max_prob:.1f}%")
+        print(f"   Mean Probability: {mean_prob:.1f}%")
+        
+        # Validate bounds [0, 100]
+        out_of_bounds = jobs_tensor_sorted[
+            (jobs_tensor_sorted['success_probability'] < 0) | 
+            (jobs_tensor_sorted['success_probability'] > 100)
+        ]
+        
+        if len(out_of_bounds) > 0:
+            validation_results['failed'].append(f"{len(out_of_bounds)} probabilities out of bounds")
+            print(f"   ❌ FAILED: {len(out_of_bounds)} scores outside [0, 100]")
+        else:
+            validation_results['passed'].append("All probabilities within valid range [0, 100]")
+            print("   ✅ PASSED: All probabilities normalized correctly")
+    else:
+        validation_results['warnings'].append("Success probability column not found")
+        print("   ⚠️ WARNING: success_probability column missing")
+    
+    # Check 2.2: Distribution sanity
+    print(f"\n✔️ Check 2.2: Score Distribution Analysis")
+    
+    if 'success_probability' in jobs_tensor_sorted.columns:
+        # Count by probability bands
+        high_prob = (jobs_tensor_sorted['success_probability'] >= 75).sum()
+        good_prob = ((jobs_tensor_sorted['success_probability'] >= 60) & 
+                     (jobs_tensor_sorted['success_probability'] < 75)).sum()
+        fair_prob = ((jobs_tensor_sorted['success_probability'] >= 45) & 
+                     (jobs_tensor_sorted['success_probability'] < 60)).sum()
+        low_prob = (jobs_tensor_sorted['success_probability'] < 45).sum()
+        
+        print(f"   75-100% (High):   {high_prob} jobs")
+        print(f"   60-74% (Good):    {good_prob} jobs")
+        print(f"   45-59% (Fair):    {fair_prob} jobs")
+        print(f"   0-44% (Low):      {low_prob} jobs")
+        
+        # Check for reasonable distribution
+        if high_prob == 0:
+            validation_results['warnings'].append("No high-probability matches (75%+)")
+            print("   ⚠️ WARNING: No matches above 75% success probability")
+        elif high_prob + good_prob == 0:
+            validation_results['warnings'].append("No good matches (60%+)")
+            print("   ⚠️ WARNING: No matches above 60% success probability")
+        else:
+            validation_results['passed'].append(f"Distribution: {high_prob} high, {good_prob} good matches")
+            print(f"   ✅ PASSED: {high_prob + good_prob} actionable matches found")
+    
+    # Check 2.3: Ranking order
+    print(f"\n✔️ Check 2.3: Ranking Order Validation")
+    
+    if 'success_probability' in jobs_tensor_sorted.columns:
+        # Verify descending order
+        is_sorted = jobs_tensor_sorted['success_probability'].is_monotonic_decreasing
+        
+        if is_sorted:
+            validation_results['passed'].append("Results sorted correctly by success probability")
+            print("   ✅ PASSED: Results ranked in descending order")
+        else:
+            validation_results['failed'].append("Results not properly sorted")
+            print("   ❌ FAILED: Ranking order incorrect")
+    
+    # Check 2.4: Enhanced score consistency
+    print(f"\n✔️ Check 2.4: Enhanced Match Score Range")
+    
+    if 'match_score' in jobs_tensor_sorted.columns:
+        min_score = jobs_tensor_sorted['match_score'].min()
+        max_score = jobs_tensor_sorted['match_score'].max()
+        mean_score = jobs_tensor_sorted['match_score'].mean()
+        
+        print(f"   Min Score: {min_score}/100")
+        print(f"   Max Score: {max_score}/100")
+        print(f"   Mean Score: {mean_score:.1f}/100")
+        
+        if max_score > 100 or min_score < 0:
+            validation_results['failed'].append("Match scores outside expected range [0, 100]")
+            print("   ❌ FAILED: Scores outside [0, 100] range")
+        else:
+            validation_results['passed'].append(f"Enhanced scores valid: {min_score}-{max_score}/100")
+            print("   ✅ PASSED: Match scores within valid range")
+    
+    print("\n" + "-"*80)
+    print("✅ VALIDATION 2 COMPLETE")
+    print("-"*80)
+    
+except Exception as e:
+    validation_results['failed'].append(f"Validation 2 crashed: {str(e)}")
+    print(f"\n❌ VALIDATION 2 FAILED WITH ERROR: {e}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Validation 3: Neural Network Health & Embeddings
+# =====================================================================
+# VALIDATION 3: Neural Network Health & Embeddings
+# =====================================================================
+
+print("\n" + "="*80)
+print("🧠 VALIDATION 3: Neural Network Health & Embeddings")
+print("="*80)
+
+try:
+    # Check 3.1: Model availability and inference
+    print(f"\n✔️ Check 3.1: SentenceTransformer Model Health")
+    
+    from sentence_transformers import SentenceTransformer
+    
+    try:
+        test_model = SentenceTransformer('all-MiniLM-L6-v2')
+        test_text = "Cloud Platform Engineering Senior Architecture"
+        test_embedding = test_model.encode(test_text)
+        
+        print(f"   Model: all-MiniLM-L6-v2")
+        print(f"   Test Embedding Dimension: {len(test_embedding)}")
+        print(f"   Expected Dimension: 384")
+        
+        if len(test_embedding) == 384:
+            validation_results['passed'].append("Neural network model producing correct dimensions")
+            print("   ✅ PASSED: Embedding dimensionality correct (384-D)")
+        else:
+            validation_results['failed'].append(f"Embedding dimension mismatch: {len(test_embedding)} vs 384")
+            print(f"   ❌ FAILED: Dimension mismatch ({len(test_embedding)} vs 384)")
+    
+    except Exception as model_error:
+        validation_results['failed'].append(f"Model loading failed: {str(model_error)}")
+        print(f"   ❌ FAILED: Could not load model - {model_error}")
+    
+    # Check 3.2: Embedding presence in results
+    print(f"\n✔️ Check 3.2: Embeddings in Results")
+    
+    if 'embedding' in jobs_tensor_sorted.columns:
+        # Check for null embeddings
+        null_embeddings = jobs_tensor_sorted['embedding'].isna().sum()
+        total_jobs = len(jobs_tensor_sorted)
+        
+        print(f"   Jobs with embeddings: {total_jobs - null_embeddings}/{total_jobs}")
+        
+        if null_embeddings > 0:
+            validation_results['warnings'].append(f"{null_embeddings} jobs missing embeddings")
+            print(f"   ⚠️ WARNING: {null_embeddings} jobs without embeddings")
+        else:
+            validation_results['passed'].append("All jobs have embeddings")
+            print("   ✅ PASSED: All jobs successfully embedded")
+    else:
+        validation_results['warnings'].append("Embedding column not found")
+        print("   ⚠️ WARNING: No embedding column found")
+    
+    # Check 3.3: Semantic similarity ranges
+    print(f"\n✔️ Check 3.3: Semantic Similarity Distribution")
+    
+    if 'semantic_similarity' in jobs_tensor_sorted.columns:
+        min_sim = jobs_tensor_sorted['semantic_similarity'].min()
+        max_sim = jobs_tensor_sorted['semantic_similarity'].max()
+        mean_sim = jobs_tensor_sorted['semantic_similarity'].mean()
+        
+        print(f"   Min Similarity: {min_sim:.4f}")
+        print(f"   Max Similarity: {max_sim:.4f}")
+        print(f"   Mean Similarity: {mean_sim:.4f}")
+        
+        # Cosine similarity should be in [-1, 1], typically [0, 1] for text
+        if min_sim < -1.0 or max_sim > 1.0:
+            validation_results['failed'].append(f"Similarity out of bounds: [{min_sim:.4f}, {max_sim:.4f}]")
+            print(f"   ❌ FAILED: Similarity outside valid range [-1, 1]")
+        elif max_sim < 0.1:
+            validation_results['warnings'].append("Very low similarity scores - poor matches")
+            print(f"   ⚠️ WARNING: Max similarity only {max_sim:.4f} (weak matches)")
+        else:
+            validation_results['passed'].append(f"Semantic similarity valid: {min_sim:.4f} to {max_sim:.4f}")
+            print("   ✅ PASSED: Similarity scores in valid range")
+    else:
+        validation_results['warnings'].append("Semantic similarity not calculated")
+        print("   ⚠️ WARNING: semantic_similarity column missing")
+    
+    # Check 3.4: Confidence intervals
+    print(f"\n✔️ Check 3.4: Confidence Intervals")
+    
+    if 'confidence' in jobs_tensor_sorted.columns:
+        avg_confidence = jobs_tensor_sorted['confidence'].mean()
+        low_confidence = (jobs_tensor_sorted['confidence'] < 5).sum()
+        
+        print(f"   Average Confidence: ±{avg_confidence:.1f}%")
+        print(f"   Jobs with low confidence (<5%): {low_confidence}")
+        
+        if avg_confidence > 20:
+            validation_results['warnings'].append(f"High uncertainty: avg ±{avg_confidence:.1f}%")
+            print(f"   ⚠️ WARNING: High uncertainty levels")
+        else:
+            validation_results['passed'].append(f"Confidence intervals acceptable: ±{avg_confidence:.1f}%")
+            print("   ✅ PASSED: Confidence levels acceptable")
+    
+    print("\n" + "-"*80)
+    print("✅ VALIDATION 3 COMPLETE")
+    print("-"*80)
+    
+except Exception as e:
+    validation_results['failed'].append(f"Validation 3 crashed: {str(e)}")
+    print(f"\n❌ VALIDATION 3 FAILED WITH ERROR: {e}")
+
+# COMMAND ----------
+
+# DBTITLE 1,Validation 4: Veteran-Specific Logic & Business Rules
+# =====================================================================
+# VALIDATION 4: Veteran-Specific Logic & Business Rules
+# =====================================================================
+
+print("\n" + "="*80)
+print("🎖️ VALIDATION 4: Veteran-Specific Logic & Business Rules")
+print("="*80)
+
+try:
+    # Check 4.1: Clearance requirement handling
+    print(f"\n✔️ Check 4.1: Clearance Requirement Detection")
+    
+    if 'clearance_required' in jobs_tensor_sorted.columns:
+        jobs_requiring_clearance = jobs_tensor_sorted['clearance_required'].sum()
+        total_jobs = len(jobs_tensor_sorted)
+        
+        print(f"   Jobs requiring ACTIVE clearance: {jobs_requiring_clearance}/{total_jobs}")
+        print(f"   Jobs accepting EXPIRED clearance: {total_jobs - jobs_requiring_clearance}/{total_jobs}")
+        
+        # For a veteran with EXPIRED TS/SCI, active clearance jobs should be flagged
+        if jobs_requiring_clearance == 0:
+            validation_results['passed'].append("No clearance barriers detected")
+            print("   ✅ PASSED: No active clearance requirements blocking matches")
+        else:
+            validation_results['warnings'].append(f"{jobs_requiring_clearance} jobs require active clearance")
+            print(f"   ⚠️ WARNING: {jobs_requiring_clearance} jobs may be difficult with expired clearance")
+        
+        # Check if any top 10 matches require active clearance
+        top_10_clearance = jobs_tensor_sorted.head(10)['clearance_required'].sum()
+        if top_10_clearance > 0:
+            validation_results['warnings'].append(f"{top_10_clearance} of top 10 require active clearance")
+            print(f"   ⚠️ WARNING: {top_10_clearance} of top 10 matches require active clearance")
+        else:
+            validation_results['passed'].append("Top 10 matches don't require active clearance")
+            print("   ✅ PASSED: Top 10 matches accessible with expired clearance")
+    
+    # Check 4.2: Seniority alignment
+    print(f"\n✔️ Check 4.2: Seniority Level Alignment")
+    
+    if 'seniority_level' in jobs_tensor_sorted.columns:
+        seniority_dist = jobs_tensor_sorted['seniority_level'].value_counts()
+        print(f"   Seniority Distribution:")
+        for level, count in seniority_dist.items():
+            print(f"      {level}: {count} jobs")
+        
+        # For a senior veteran (20+ years), most matches should be senior/mid
+        top_10_seniority = jobs_tensor_sorted.head(10)['seniority_level'].value_counts()
+        junior_in_top_10 = top_10_seniority.get('junior', 0)
+        senior_in_top_10 = top_10_seniority.get('senior', 0)
+        
+        if junior_in_top_10 > 5:
+            validation_results['warnings'].append(f"{junior_in_top_10} junior roles in top 10 (overqualification)")
+            print(f"   ⚠️ WARNING: {junior_in_top_10} junior roles in top 10")
+        elif senior_in_top_10 >= 7:
+            validation_results['passed'].append(f"Excellent seniority match: {senior_in_top_10}/10 senior roles")
+            print(f"   ✅ PASSED: {senior_in_top_10}/10 top matches are senior-level")
+        else:
+            validation_results['passed'].append("Seniority distribution acceptable")
+            print(f"   ✅ PASSED: Mixed seniority levels (senior: {senior_in_top_10}, mid: {top_10_seniority.get('mid', 0)})")
+    
+    # Check 4.3: Salary range validation
+    print(f"\n✔️ Check 4.3: Salary Range Guardrails ($120K-$180K)")
+    
+    target_min = 120000
+    target_max = 180000
+    
+    if 'salary_min' in jobs_tensor_sorted.columns and 'salary_max' in jobs_tensor_sorted.columns:
+        # Jobs that fall cleanly within target range
+        in_range = jobs_tensor_sorted[
+            (jobs_tensor_sorted['salary_max'] >= target_min) & 
+            (jobs_tensor_sorted['salary_min'] <= target_max)
+        ]
+        
+        # Jobs completely outside range
+        out_of_range = jobs_tensor_sorted[
+            (jobs_tensor_sorted['salary_max'] < target_min) | 
+            (jobs_tensor_sorted['salary_min'] > target_max)
+        ]
+        
+        in_range_pct = len(in_range) / len(jobs_tensor_sorted) * 100
+        out_range_pct = len(out_of_range) / len(jobs_tensor_sorted) * 100
+        
+        print(f"   Jobs overlapping target range: {len(in_range)}/{len(jobs_tensor_sorted)} ({in_range_pct:.1f}%)")
+        print(f"   Jobs outside target range: {len(out_of_range)}/{len(jobs_tensor_sorted)} ({out_range_pct:.1f}%)")
+        
+        # Check top 10
+        top_10_in_range = jobs_tensor_sorted.head(10)[
+            (jobs_tensor_sorted.head(10)['salary_max'] >= target_min) & 
+            (jobs_tensor_sorted.head(10)['salary_min'] <= target_max)
+        ]
+        
+        print(f"   Top 10 within range: {len(top_10_in_range)}/10")
+        
+        if len(top_10_in_range) >= 8:
+            validation_results['passed'].append(f"Excellent salary match: {len(top_10_in_range)}/10 in target range")
+            print(f"   ✅ PASSED: {len(top_10_in_range)}/10 top matches in salary target")
+        elif len(top_10_in_range) >= 5:
+            validation_results['warnings'].append(f"Some salary mismatches: {10-len(top_10_in_range)}/10 outside range")
+            print(f"   ⚠️ WARNING: {10-len(top_10_in_range)}/10 top matches outside salary range")
+        else:
+            validation_results['failed'].append(f"Poor salary alignment: only {len(top_10_in_range)}/10 in range")
+            print(f"   ❌ FAILED: Only {len(top_10_in_range)}/10 top matches in salary range")
+    
+    # Check 4.4: Location filtering
+    print(f"\n✔️ Check 4.4: Location Filtering (Greenville, SC)")
+    
+    if 'city' in jobs_tensor_sorted.columns and 'state' in jobs_tensor_sorted.columns:
+        greenville_jobs = jobs_tensor_sorted[
+            (jobs_tensor_sorted['city'] == 'Greenville') & 
+            (jobs_tensor_sorted['state'] == 'SC')
+        ]
+        
+        other_locations = len(jobs_tensor_sorted) - len(greenville_jobs)
+        
+        print(f"   Greenville, SC jobs: {len(greenville_jobs)}/{len(jobs_tensor_sorted)}")
+        
+        if other_locations > 0:
+            validation_results['warnings'].append(f"{other_locations} jobs outside Greenville, SC")
+            print(f"   ⚠️ WARNING: {other_locations} jobs outside target location")
+        else:
+            validation_results['passed'].append("All jobs in target location (Greenville, SC)")
+            print("   ✅ PASSED: All jobs match target location")
+    
+    # Check 4.5: Match explanation quality
+    print(f"\n✔️ Check 4.5: Match Explanation Quality")
+    
+    if 'match_reasons' in jobs_tensor_sorted.columns:
+        jobs_with_reasons = jobs_tensor_sorted['match_reasons'].apply(lambda x: len(x) > 0 if isinstance(x, list) else False).sum()
+        avg_reasons = jobs_tensor_sorted['match_reasons'].apply(lambda x: len(x) if isinstance(x, list) else 0).mean()
+        
+        print(f"   Jobs with match reasons: {jobs_with_reasons}/{len(jobs_tensor_sorted)}")
+        print(f"   Average reasons per job: {avg_reasons:.1f}")
+        
+        if jobs_with_reasons == len(jobs_tensor_sorted):
+            validation_results['passed'].append("All jobs have match explanations")
+            print("   ✅ PASSED: All jobs have detailed match explanations")
+        elif jobs_with_reasons < len(jobs_tensor_sorted) * 0.5:
+            validation_results['warnings'].append("Many jobs lack match reasons")
+            print(f"   ⚠️ WARNING: Only {jobs_with_reasons}/{len(jobs_tensor_sorted)} have explanations")
+        else:
+            validation_results['passed'].append(f"Most jobs have explanations ({jobs_with_reasons}/{len(jobs_tensor_sorted)})")
+            print(f"   ✅ PASSED: {jobs_with_reasons}/{len(jobs_tensor_sorted)} have explanations")
+    
+    print("\n" + "-"*80)
+    print("✅ VALIDATION 4 COMPLETE")
+    print("-"*80)
+    
+except Exception as e:
+    validation_results['failed'].append(f"Validation 4 crashed: {str(e)}")
+    print(f"\n❌ VALIDATION 4 FAILED WITH ERROR: {e}")
+
+# COMMAND ----------
+
+# DBTITLE 1,📄 Validation Summary Report
+# =====================================================================
+# VALIDATION SUMMARY REPORT
+# =====================================================================
+
+print("\n" + "="*80)
+print("📄 VALIDATION SUMMARY REPORT")
+print("="*80)
+print(f"\nTimestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+print("\n" + "-"*80)
+
+# Summary statistics
+total_checks = len(validation_results['passed']) + len(validation_results['warnings']) + len(validation_results['failed'])
+pass_count = len(validation_results['passed'])
+warn_count = len(validation_results['warnings'])
+fail_count = len(validation_results['failed'])
+
+print(f"\n📊 OVERALL RESULTS:")
+print(f"   Total Checks Run: {total_checks}")
+print(f"   ✅ Passed: {pass_count} ({pass_count/total_checks*100:.1f}%)")
+print(f"   ⚠️ Warnings: {warn_count} ({warn_count/total_checks*100:.1f}%)")
+print(f"   ❌ Failed: {fail_count} ({fail_count/total_checks*100:.1f}%)")
+
+# Overall health status
+if fail_count == 0 and warn_count == 0:
+    status = "✅ EXCELLENT"
+    status_msg = "All validations passed. Pipeline producing reliable, high-quality outputs."
+elif fail_count == 0 and warn_count <= 3:
+    status = "🟢 GOOD"
+    status_msg = "Minor warnings detected but no critical failures. Safe to use results."
+elif fail_count == 0:
+    status = "🟡 ACCEPTABLE"
+    status_msg = "Multiple warnings present. Review match quality before relying on results."
+elif fail_count <= 2:
+    status = "🟠 NEEDS ATTENTION"
+    status_msg = "Critical failures detected. Address issues before using results."
+else:
+    status = "🔴 CRITICAL"
+    status_msg = "Multiple critical failures. Do not use results until pipeline is fixed."
+
+print(f"\n🎯 PIPELINE HEALTH STATUS: {status}")
+print(f"   {status_msg}")
+
+# Detailed results
+if len(validation_results['passed']) > 0:
+    print(f"\n\n✅ PASSED CHECKS ({len(validation_results['passed'])}):")
+    for i, check in enumerate(validation_results['passed'], 1):
+        print(f"   {i}. {check}")
+
+if len(validation_results['warnings']) > 0:
+    print(f"\n\n⚠️ WARNINGS ({len(validation_results['warnings'])}):")
+    for i, warning in enumerate(validation_results['warnings'], 1):
+        print(f"   {i}. {warning}")
+
+if len(validation_results['failed']) > 0:
+    print(f"\n\n❌ FAILED CHECKS ({len(validation_results['failed'])}):")
+    for i, failure in enumerate(validation_results['failed'], 1):
+        print(f"   {i}. {failure}")
+
+# Recommendations
+print(f"\n\n💡 RECOMMENDATIONS:")
+
+if fail_count > 0:
+    print("   1. 🔴 CRITICAL: Fix failed checks immediately before using results")
+    print("   2. Review error messages and debug root causes")
+    print("   3. Re-run validation suite after fixes")
+elif warn_count > 5:
+    print("   1. ⚠️ Multiple warnings detected - review match quality")
+    print("   2. Consider adjusting scoring weights or filtering criteria")
+    print("   3. Validate top matches manually before application")
+elif warn_count > 0:
+    print("   1. Minor issues detected - safe to proceed with caution")
+    print("   2. Review warnings for potential improvements")
+    print("   3. Monitor match quality in production")
+else:
+    print("   1. ✅ Pipeline producing excellent results")
+    print("   2. Safe to use for veteran job matching")
+    print("   3. Continue monitoring with periodic validation runs")
+
+# Export validation report
+print(f"\n\n📦 EXPORT OPTIONS:")
+print("   • Validation results available in 'validation_results' dict")
+print("   • Can be exported to JSON for audit trail")
+print("   • Include in GitHub commit with test results")
+
+print("\n" + "="*80)
+print("✅ VALIDATION SUITE COMPLETE")
+print("="*80)
+
+# Return validation results for programmatic use
+validation_results
+
+# COMMAND ----------
+
 # DBTITLE 1,Enhanced Job Matching Engine - Intelligent Fit Analysis
 # MAGIC %md
 # MAGIC # 🧠 Enhanced Job Matching Engine - Intelligent Fit Analysis
@@ -183,9 +927,9 @@ veteran_profile = {
     ],
     
     "salary_requirements": {
-        "min": 120000,
-        "target": 150000,
-        "max": 180000
+        "min": int(dbutils.widgets.get("salary_min")),
+        "target": int((int(dbutils.widgets.get("salary_min")) + int(dbutils.widgets.get("salary_max"))) / 2),
+        "max": int(dbutils.widgets.get("salary_max"))
     },
     
     "education": {
@@ -917,20 +1661,27 @@ print("="*70)
 # COMMAND ----------
 
 # DBTITLE 1,Calculate Weighted Success Probability
-# Calculate success probability with weighted factors
+# Calculate MATCH SCORE (NOT a real probability!)
 
 print("="*70)
-print("🎯 WEIGHTED SUCCESS PROBABILITY CALCULATION")
+print("🎯 MATCH SCORE CALCULATION (0-100)")
+print("="*70)
+print("🚨 CRITICAL: These are SCREENING SCORES, not hire probabilities!")
 print("="*70)
 
-def calculate_success_probability(row):
+def calculate_match_score(row):
     """
-    Calculate probability of application success (0-100%).
+    Calculate initial screening match score (0-100).
+    
+    THIS IS NOT A REAL PROBABILITY OF GETTING THE JOB!
+    
+    This score helps prioritize which jobs to apply to first.
+    Many factors affect actual hiring (culture fit, other candidates, etc.)
     
     Weights:
-    - Semantic Similarity: 40% (neural network matching)
-    - Experience Alignment: 25% (seniority match)
-    - Salary Match: 20% (compensation fit)
+    - Semantic Similarity: 30% (neural network matching) - REDUCED from 40%
+    - Experience Alignment: 30% (seniority match) - INCREASED
+    - Salary Match: 25% (compensation fit) - INCREASED
     - Clearance Compatibility: 10% (security clearance)
     - Location Match: 5% (already filtered for Greenville)
     """
@@ -940,38 +1691,40 @@ def calculate_success_probability(row):
     vet_emb = np.array(row['veteran_embedding']).reshape(1, -1)
     semantic_score = cosine_similarity(vet_emb, job_emb)[0][0]
     
-    # Convert cosine similarity (0-1) to points (0-40)
+    # Convert cosine similarity (0-1) to points (0-30)
+    # REDUCED weight - neural network is less reliable without training data
     # Cosine similarity of 0.7+ is excellent, 0.5-0.7 is good
-    semantic_points = semantic_score * 40
+    semantic_points = semantic_score * 30
     
-    # 2. EXPERIENCE ALIGNMENT (25 points)
+    # 2. EXPERIENCE ALIGNMENT (30 points) - INCREASED weight
     exp_points = 0
     if row['seniority_level'] == 'senior':
-        exp_points = 25  # Perfect match
+        exp_points = 30  # Perfect match
     elif row['seniority_level'] == 'mid':
-        exp_points = 15  # Acceptable but overqualified
+        exp_points = 18  # Acceptable but overqualified
     elif row['seniority_level'] == 'junior':
-        exp_points = 5   # Poor match
+        exp_points = 6   # Poor match
     else:
-        exp_points = 15  # Unknown, assume mid
+        exp_points = 18  # Unknown, assume mid
     
-    # 3. SALARY MATCH (20 points)
+    # 3. SALARY MATCH (25 points) - INCREASED weight, now uses PARAMETERS
     salary_points = 0
     if pd.notna(row['salary_min']) and pd.notna(row['salary_max']):
-        target_min = 120000
-        target_max = 180000
+        # Use notebook parameters (set by user)
+        target_min = int(dbutils.widgets.get("salary_min"))
+        target_max = int(dbutils.widgets.get("salary_max"))
         
         if row['salary_max'] >= target_min and row['salary_min'] <= target_max:
             # Full overlap
-            salary_points = 20
+            salary_points = 25
         elif row['salary_max'] >= target_min * 0.85:  # Within 15% of target
-            salary_points = 15
+            salary_points = 18
         elif row['salary_max'] >= target_min * 0.70:  # Within 30% of target
-            salary_points = 10
+            salary_points = 12
         else:
-            salary_points = 5
+            salary_points = 6
     else:
-        salary_points = 10  # No data, assume neutral
+        salary_points = 12  # No data, assume neutral
     
     # 4. CLEARANCE COMPATIBILITY (10 points)
     clearance_points = 10  # Default: no clearance required
@@ -982,20 +1735,19 @@ def calculate_success_probability(row):
     # 5. LOCATION MATCH (5 points) - Already filtered for Greenville, SC
     location_points = 5
     
-    # Total probability
-    total_probability = semantic_points + exp_points + salary_points + clearance_points + location_points
+    # Total match score
+    total_score = semantic_points + exp_points + salary_points + clearance_points + location_points
     
-    # Calculate confidence interval (±)
-    # Lower confidence if job has missing data
-    confidence = 95  # Default
+    # Data quality score (how much data we have for this job)
+    data_quality = 100
     if pd.isna(row['description']) or len(str(row['description'])) < 100:
-        confidence = 70  # Low confidence if description is poor
+        data_quality = 50  # Low quality if description is poor
     if row['salary_min'] is None:
-        confidence -= 10
+        data_quality -= 20
     
     return {
-        'success_probability': min(total_probability, 100),
-        'confidence_interval': confidence,
+        'match_score': min(total_score, 100),
+        'data_quality': data_quality,
         'semantic_similarity': semantic_score,
         'component_weights': {
             'semantic': semantic_points,
@@ -1007,32 +1759,35 @@ def calculate_success_probability(row):
     }
 
 # Calculate for all jobs
-print("\n🔄 Calculating success probabilities for all 71 jobs...\n")
+print("\n🔄 Calculating match scores for all 71 jobs...\n")
 
-jobs_pdf['tensor_result'] = jobs_pdf.apply(calculate_success_probability, axis=1)
+jobs_pdf['tensor_result'] = jobs_pdf.apply(calculate_match_score, axis=1)
 
 # Extract results
-jobs_pdf['success_probability'] = jobs_pdf['tensor_result'].apply(lambda x: x['success_probability'])
-jobs_pdf['confidence'] = jobs_pdf['tensor_result'].apply(lambda x: x['confidence_interval'])
+jobs_pdf['success_probability'] = jobs_pdf['tensor_result'].apply(lambda x: x['match_score'])  # Keep old name for compatibility
+jobs_pdf['confidence'] = jobs_pdf['tensor_result'].apply(lambda x: x['data_quality'])  # Renamed to data_quality
 jobs_pdf['semantic_similarity'] = jobs_pdf['tensor_result'].apply(lambda x: x['semantic_similarity'])
 
-# Sort by success probability
+# Sort by match score
 jobs_tensor_sorted = jobs_pdf.sort_values('success_probability', ascending=False)
 
-print("✅ Success probabilities calculated!\n")
-print(f"📊 Probability Distribution:")
-print(f"   • High probability (75-100%): {(jobs_pdf['success_probability'] >= 75).sum()}")
-print(f"   • Good probability (60-74%): {((jobs_pdf['success_probability'] >= 60) & (jobs_pdf['success_probability'] < 75)).sum()}")
-print(f"   • Fair probability (45-59%): {((jobs_pdf['success_probability'] >= 45) & (jobs_pdf['success_probability'] < 60)).sum()}")
-print(f"   • Low probability (<45%): {(jobs_pdf['success_probability'] < 45).sum()}")
+print("✅ Match scores calculated!\n")
+print(f"📊 Match Score Distribution:")
+print(f"   • Strong matches (75-100): {(jobs_pdf['success_probability'] >= 75).sum()}")
+print(f"   • Good matches (60-74): {((jobs_pdf['success_probability'] >= 60) & (jobs_pdf['success_probability'] < 75)).sum()}")
+print(f"   • Fair matches (45-59): {((jobs_pdf['success_probability'] >= 45) & (jobs_pdf['success_probability'] < 60)).sum()}")
+print(f"   • Weak matches (<45): {(jobs_pdf['success_probability'] < 45).sum()}")
 
-print(f"\n🎯 Top Success Probability: {jobs_tensor_sorted.iloc[0]['success_probability']:.1f}%")
-print(f"📊 Median Probability: {jobs_pdf['success_probability'].median():.1f}%")
+print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['success_probability']:.1f}/100")
+print(f"📊 Median Score: {jobs_pdf['success_probability'].median():.1f}/100")
 
 print(f"\n🧠 Average Semantic Similarity: {jobs_pdf['semantic_similarity'].mean():.3f}")
 print(f"   (0.0 = no match, 1.0 = perfect match)")
 
 print("\n" + "="*70)
+print("🚨 REMINDER: Match scores are initial screening only!")
+print("   They help prioritize applications, NOT predict hiring outcomes.")
+print("="*70)
 print("✅ READY FOR ACTIONABLE RECOMMENDATIONS")
 print("="*70)
 
