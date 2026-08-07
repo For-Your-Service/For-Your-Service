@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "5"
+# ///
 # DBTITLE 1,⚙️ CONFIGURABLE PARAMETERS - Set Per Veteran
 # MAGIC %md
 # MAGIC # 🚀 QUICK START - 3 Simple Steps
