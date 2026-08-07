@@ -2278,14 +2278,16 @@ print("="*70)
 print("📊 LOADING JOBS FROM BRONZE TABLE")
 print("="*70)
 
-# Query Bronze table for veteran's target location (dynamic from profile)
-table_name = "workspace.fys_bronze.job_postings"
+# Query Bronze table - Use applicant-specific table from scraper
+applicant_id = applicant_params.get('applicant_id', 'test_unknown')
+table_name = f"workspace.fys_bronze.job_postings_{applicant_id}"
 
 # Get location from veteran profile
 target_city = veteran_profile['location']['target_city']
 target_state = veteran_profile['location']['target_state']
 
 print(f"\n🎯 Querying jobs for: {target_city}, {target_state}")
+print(f"📦 From table: {table_name}")
 
 try:
     jobs_df = spark.sql(f"""
@@ -2303,8 +2305,6 @@ try:
             requirements,
             url
         FROM {table_name}
-        WHERE location.city = '{target_city}'
-            AND location.state = '{target_state}'
     """)
     
     # Convert to pandas for easier text processing
@@ -3162,28 +3162,36 @@ def calculate_match_score(row):
     }
 
 # Calculate for all jobs
-print("\n🔄 Calculating match scores for all 71 jobs...\n")
+print(f"\n🔄 Calculating match scores for {len(jobs_pdf)} jobs...\n")
 
-jobs_pdf['tensor_result'] = jobs_pdf.apply(calculate_match_score, axis=1)
+# Apply scoring function row by row
+scores = []
+for idx, row in jobs_pdf.iterrows():
+    result = calculate_match_score(row)
+    scores.append(result)
 
-# Extract results
-jobs_pdf['match_score'] = jobs_pdf['tensor_result'].apply(lambda x: x['match_score'])
-jobs_pdf['data_quality'] = jobs_pdf['tensor_result'].apply(lambda x: x['data_quality'])
-jobs_pdf['semantic_similarity'] = jobs_pdf['tensor_result'].apply(lambda x: x['semantic_similarity'])
-jobs_pdf['component_weights'] = jobs_pdf['tensor_result'].apply(lambda x: x['component_weights'])
+# Convert results to separate columns
+jobs_pdf['match_score'] = [s['match_score'] for s in scores]
+jobs_pdf['data_quality'] = [s['data_quality'] for s in scores]
+jobs_pdf['semantic_similarity'] = [s['semantic_similarity'] for s in scores]
+jobs_pdf['component_weights'] = [s['component_weights'] for s in scores]
 
 # Sort by match score
 jobs_tensor_sorted = jobs_pdf.sort_values('match_score', ascending=False)
 
 print("✅ Match scores calculated!\n")
-print(f"📊 Match Score Distribution:")
-print(f"   • Strong matches (75-100): {(jobs_pdf['match_score'] >= 75).sum()}")
-print(f"   • Good matches (60-74): {((jobs_pdf['match_score'] >= 60) & (jobs_pdf['match_score'] < 75)).sum()}")
-print(f"   • Fair matches (45-59): {((jobs_pdf['match_score'] >= 45) & (jobs_pdf['match_score'] < 60)).sum()}")
-print(f"   • Weak matches (<45): {(jobs_pdf['match_score'] < 45).sum()}")
 
-print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['match_score']:.1f}/100")
-print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
+if len(jobs_pdf) > 0:
+    print(f"📊 Match Score Distribution:")
+    print(f"   • Strong matches (75-100): {(jobs_pdf['match_score'] >= 75).sum()}")
+    print(f"   • Good matches (60-74): {((jobs_pdf['match_score'] >= 60) & (jobs_pdf['match_score'] < 75)).sum()}")
+    print(f"   • Fair matches (45-59): {((jobs_pdf['match_score'] >= 45) & (jobs_pdf['match_score'] < 60)).sum()}")
+    print(f"   • Weak matches (<45): {(jobs_pdf['match_score'] < 45).sum()}")
+    
+    print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['match_score']:.1f}/100")
+    print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
+else:
+    print("⚠️ No jobs found to score!")
 
 print(f"\n🧠 Average Semantic Similarity: {jobs_pdf['semantic_similarity'].mean():.3f}")
 print(f"   (0.0 = no match, 1.0 = perfect match)")
