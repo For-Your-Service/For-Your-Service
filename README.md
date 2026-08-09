@@ -1,222 +1,280 @@
-# For Your Service - Veteran Job Placement Platform
+# For Your Service
+## AI-Powered Veteran Job Matching Platform
 
-## 🚀 **START HERE: [Deployment Progress Log](./DEPLOYMENT_LOG.md)**
-
-**👉 New to the project?** Read the [DEPLOYMENT_LOG.md](./DEPLOYMENT_LOG.md) first!
-
-It contains:
-- ✅ **What we've built so far** - Complete work summary
-- 🔄 **Current deployment status** - What's live, what's in progress
-- 📋 **Next steps** - Detailed checklist
-- 🏗️ **Simple architecture explanation** - How everything works
-- 🔐 **Privacy & security details** - How we protect veteran data
-- 🛠️ **Troubleshooting guide** - Common issues and fixes
-
-**Last Updated:** August 5, 2026
+**Organization:** 7 Eagle Group  
+**Developer:** Free Hall <whall4.wh@gmail.com>  
+**Mission:** Connect veterans with meaningful employment through intelligent job matching
 
 ---
 
-## 🔐 **Privacy & PII Protection**
+## 🎯 Project Overview
 
-We take veteran privacy seriously. Read our comprehensive documentation:
+For Your Service is an AI-powered job matching platform designed specifically for military veterans. Using neural network technology and semantic analysis, we match veterans with civilian job opportunities based on their military experience, skills, and career goals.
 
-### 👉 [PII Protection Documentation](./PII_PROTECTION.md)
-
-**What you'll learn:**
-- ✅ How we remove ALL personal identifying information
-- ✅ Simple explanation for non-technical readers
-- ✅ Technical implementation details
-- ✅ Complete data flow showing where PII is removed
-- ✅ What data we keep vs. remove
-- ✅ Security guarantees and compliance (GDPR, CCPA, HIPAA)
-
-**Quick Summary:**
-Before storing any veteran data, our system automatically removes names, emails, phone numbers, addresses, SSNs, and birthdates. We replace them with anonymous IDs. This means veteran identities are protected even if our database is compromised.
+**Partner:** [7 Eagle Group](https://7eaglegroup.org) - Veteran placement and support organization
 
 ---
 
-# 🎖️ For Your Service - Veteran Job Placement Platform
+## 📊 Key Features
 
-## Mission
-For Your Service (FYS) is an AI-powered platform that matches transitioning military veterans with civilian job opportunities using multi-dimensional tensor analysis and machine learning.
-
-**Partner:** 7 Eagle Group (Veteran Placement Organization)
+* **Intelligent Matching:** Siamese twin tower neural network architecture for semantic job-veteran matching
+* **Resume Optimization:** Gap analysis showing veterans how to improve match scores
+* **Cost-Effective:** $5-10/month total infrastructure cost (95% savings vs. traditional cloud)
+* **Scalable:** Built on Databricks lakehouse for enterprise-grade data processing
+* **FREE API:** Hosted on Hugging Face Spaces (zero hosting costs)
 
 ---
 
-## Architecture Overview
+## 🏗️ Architecture
+
+For Your Service uses a **three-tier hybrid architecture**:
 
 ```
-Counselor Intake Wizard
-        ↓
-    JSON Payload (Veteran Profile)
-        ↓
-GCP Cloud Function (PII Anonymization)
-        ↓
-GCS Raw Bucket (gs://fys-veteran-intake-raw)
-        ↓
-Databricks Bronze Layer (Raw Anonymized Data)
-        ↓
-Databricks Silver Layer (Feature Engineering)
-        ↓
-Databricks Gold Layer (Tensor Engine - Vector Dot Products)
-        ↓
-Placement Probability Matrix
-        ↓
-Counselor Dashboard + Ranked Job Matches
+Base44 Frontend → Hugging Face API (FREE) → Databricks Lakehouse ($5-10/month)
+```
+
+**Key Innovation:** Separates API hosting (FREE tier) from data processing (serverless pay-per-query)
+
+📖 **Read the full story:**
+* [Architecture Overview](docs/ARCHITECTURE.md) - Technical deep-dive
+* [Deployment Strategy](docs/DEPLOYMENT_STRATEGY.md) - Cost optimization and design decisions
+
+---
+
+## 💰 Cost Breakdown
+
+| Component | Service | Cost |
+|-----------|---------|------|
+| Frontend | Base44 | $0/month |
+| API Hosting | Hugging Face Spaces | **$0/month (FREE)** |
+| Data Storage | Databricks Unity Catalog | ~$2-3/month |
+| Compute | Databricks Serverless SQL | ~$3-7/month |
+| **Total** | | **~$5-10/month** |
+
+**Traditional Cloud (GCP/AWS):** $95-600/month  
+**Savings:** 95-98% cost reduction
+
+---
+
+## 🚀 Quick Start
+
+### For Developers
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/For-Your-Service/For-Your-Service.git
+   cd For-Your-Service
+   ```
+
+2. **Set up Unity Catalog tables**
+   ```bash
+   # Run in Databricks notebook
+   python setup/01_Unity_Catalog_Setup.py
+   ```
+
+3. **Deploy to Hugging Face Spaces**
+   * Create Space: https://huggingface.co/spaces
+   * Upload files from `huggingface/` directory
+   * Configure secrets (see [huggingface/README.md](huggingface/README.md))
+
+4. **Test the API**
+   ```bash
+   python setup/03_Test_API.py
+   ```
+
+📖 **Full deployment guide:** [DEPLOYMENT_STATUS.md](DEPLOYMENT_STATUS.md)
+
+---
+
+## 📁 Repository Structure
+
+```
+For-Your-Service/
+├── docs/
+│   ├── ARCHITECTURE.md              # System architecture deep-dive
+│   ├── DEPLOYMENT_STRATEGY.md       # Cost optimization rationale
+│   └── daily-notes/                 # Development progress notes
+├── huggingface/
+│   ├── Dockerfile                   # HF Spaces deployment
+│   ├── app.py                       # FastAPI backend (262 lines)
+│   ├── requirements.txt             # Python dependencies
+│   └── README.md                    # Deployment instructions
+├── notebooks/
+│   ├── 06_Enhanced_Job_Matching_Engine.py   # Neural network matching
+│   └── 08_Base44_API_Backend.py             # API development notebook
+├── setup/
+│   ├── 01_Unity_Catalog_Setup.py            # Automated table creation
+│   ├── 02_Generate_Databricks_Token.md      # Token generation guide
+│   └── 03_Test_API.py                       # API testing suite
+├── DEPLOYMENT_STATUS.md             # Current deployment checklist
+└── README.md                        # This file
 ```
 
 ---
 
-## Repository Structure
+## 🔧 Technology Stack
 
-### `/cloud-functions/`
-GCP Cloud Functions for intake processing
-- `veteran-intake/` - PII anonymization and GCS storage
+### Frontend
+* Base44 (No-code form builder)
 
-### `/databricks/`
-Databricks notebooks for data pipeline
-- `01_intake_schema_definition.py` - Veteran profile schema
-- `03_bronze_ingestion.py` - Raw data ingestion from GCS
-- `04_silver_feature_engineering.py` - MOS-to-skill mapping, feature extraction
-- `05_gold_tensor_engine.py` - Tensor computations for job matching
+### API Layer
+* FastAPI 0.104.1
+* Python 3.11
+* Databricks SQL Connector 3.0.0
+* Deployed on Hugging Face Spaces (Docker)
 
-### `/docs/`
-Architecture and technical documentation
+### Data & Compute
+* Databricks Lakehouse Platform
+* Unity Catalog (Delta Lake storage)
+* Serverless SQL Warehouse
+* PySpark for data processing
 
-### `/terraform/`
-(Future) Infrastructure as Code for GCP resources
-
-### `/scripts/`
-(Future) Deployment and utility scripts
-
----
-
-## Quick Start
-
-### 1. Deploy GCP Infrastructure
-
-```bash
-# Create GCS bucket
-gsutil mb -p uap-scraper-lab-2026 -c STANDARD -l us-central1 gs://fys-veteran-intake-raw
-
-# Deploy Cloud Function
-cd cloud-functions/veteran-intake
-gcloud functions deploy veteran-intake-processor \
-  --gen2 \
-  --runtime=python311 \
-  --region=us-central1 \
-  --source=. \
-  --entry-point=veteran_intake \
-  --trigger-http \
-  --allow-unauthenticated \
-  --memory=1GB \
-  --timeout=60s
-```
-
-### 2. Configure Databricks
-
-1. Import notebooks from `/databricks/` to your Databricks workspace
-2. Configure GCS access in cluster settings:
-   ```
-   spark.hadoop.google.cloud.auth.service.account.json.keyfile /path/to/keyfile.json
-   ```
-3. Create Unity Catalog schemas:
-   ```sql
-   CREATE SCHEMA IF NOT EXISTS main.fys_bronze;
-   CREATE SCHEMA IF NOT EXISTS main.fys_silver;
-   CREATE SCHEMA IF NOT EXISTS main.fys_gold;
-   ```
-
-### 3. Run Pipeline
-
-1. Test Cloud Function with sample veteran profile
-2. Run Bronze ingestion notebook
-3. Run Silver feature engineering
-4. Run Gold tensor engine
+### Machine Learning
+* Siamese Twin Tower Neural Network
+* 384-dimensional semantic embeddings
+* Cosine similarity matching
 
 ---
 
-## Data Privacy & Security
+## 📈 Current Status
 
-### PII Protection
-- All personally identifiable information (PII) is anonymized before storage
-- Anonymous `veteran_id` generated for tracking
-- Only aggregated location data (ZIP3) retained
-- Email hashed for deduplication only
+**Development Phase:** MVP Complete  
+**Deployment:** Ready for Hugging Face Spaces  
+**Data:** 90+ Houston job postings, 1 test veteran profile  
+**Next Steps:** Deploy to production, integrate neural network
 
-### Anonymized Data
+### Recent Updates (2026-08-09)
 
-✅ **Kept:**
-- Military service data (MOS, rank, branch, deployments)
-- Skills, certifications, education
-- Job preferences (roles, industries, salary range)
-- General location (city, state, ZIP3)
-- Birth year (for age-based matching)
+* ✅ Hugging Face Spaces deployment files created
+* ✅ Unity Catalog tables created and populated
+* ✅ Resume optimization pipeline added (458 lines)
+* ✅ API testing suite completed (6 automated tests)
+* ✅ Architecture documentation finalized
+* 🔄 Awaiting manual HF Space deployment
 
-❌ **Removed:**
-- Full name
-- Email address
-- Phone number
-- Full date of birth
-- SSN/Last 4
-- Street address
+📖 **Full history:** See [DEPLOYMENT_STATUS.md](DEPLOYMENT_STATUS.md)
 
 ---
 
-## Technology Stack
+## 🎓 How It Works
 
-- **GCP Cloud Functions** - Serverless intake processing
-- **Google Cloud Storage** - Raw data lake
-- **Databricks** - Data engineering and ML platform
-- **Delta Lake** - ACID transactions and time travel
-- **PySpark** - Distributed data processing
-- **Unity Catalog** - Data governance
+### For Veterans
 
----
+1. **Complete Intake Form** (Base44 frontend)
+   * Personal information
+   * Military background and skills
+   * Target roles and salary expectations
+   * Preferred job locations
 
-## Roadmap
+2. **Get Matched** (Neural network processing)
+   * 384-dimensional semantic analysis
+   * Military-to-civilian skill translation
+   * Top 10 ranked job opportunities
 
-### Phase 1: Core Pipeline (In Progress)
-- [x] Intake schema definition
-- [x] PII anonymization Cloud Function
-- [x] Bronze layer ingestion
-- [ ] Silver layer feature engineering
-- [ ] Gold layer tensor engine
+3. **Optimize Resume** (Gap analysis)
+   * Identify missing keywords
+   * Show probability lift for improvements
+   * Before/After match score simulation
 
-### Phase 2: Job Matching
-- [ ] Job posting data ingestion
-- [ ] MOS-to-civilian skill mapping
-- [ ] Real-time probability matrix computation
-- [ ] Counselor dashboard
+### For Employers
 
-### Phase 3: Operations
-- [ ] Counselor intake wizard UI
-- [ ] Local task scheduler
-- [ ] Status sync system
-- [ ] Public branding and case studies
+1. **Job Posting Aggregation**
+   * Scraped from Indeed, USAJobs, Adzuna
+   * Standardized schema (location, salary, requirements)
+   * Daily updates
 
----
-
-## Contributing
-
-This project is in active development. Contributors:
-- Will Hall (whall4.wh@gmail.com)
-- Donavan Marcus (Donavanmarcus@gmail.com)
-- Josh Shalack (Josh.shalack@gmail.com)
-- Leroy (leroy@ironin.com)
+2. **Veteran Matching**
+   * AI-powered candidate ranking
+   * Skills gap identification
+   * Cultural fit scoring (military values alignment)
 
 ---
 
-## License
+## 🛠️ API Endpoints
 
-Proprietary - For Your Service Organization
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Service info and health |
+| `/health` | GET | Database connectivity check |
+| `/api/v1/veteran/register` | POST | Register new veteran profile |
+| `/api/v1/veteran/{id}` | GET | Retrieve veteran profile |
+| `/api/v1/match` | POST | Get AI-powered job matches |
+| `/api/v1/jobs` | GET | Search job postings |
+
+**Interactive Docs:** `https://YOUR-HF-SPACE.hf.space/docs` (after deployment)
 
 ---
 
-## Contact
+## 🔒 Security & Privacy
 
-For questions or partnership inquiries:
-- **Email:** whall4.wh@gmail.com
-- **Organization:** For Your Service
-- **Partner:** 7 Eagle Group
+* **PII Protection:** Unity Catalog governance tags applied
+* **Credential Management:** Databricks tokens stored as HF Spaces secrets
+* **HTTPS Only:** All communications encrypted
+* **CORS Restrictions:** API limited to Base44 frontend domain
+* **Access Control:** Row-level security for veteran profiles
+
+---
+
+## 🚦 Roadmap
+
+### Phase 1: MVP (Current)
+- [x] Databricks data pipeline
+- [x] FastAPI backend
+- [x] Neural network matching algorithm
+- [x] Hugging Face deployment prep
+- [ ] Production deployment
+- [ ] Base44 frontend integration
+
+### Phase 2: Enhancement (Q3 2026)
+- [ ] Multi-city job coverage (Greenville, SC + nationwide)
+- [ ] Resume optimization UI
+- [ ] Email notifications for new matches
+- [ ] Veteran login and saved searches
+
+### Phase 3: Scale (Q4 2026+)
+- [ ] Mobile app (iOS/Android)
+- [ ] Employer portal for direct job posting
+- [ ] Success metrics and outcomes tracking
+- [ ] Integration with VA benefits
+
+---
+
+## 🤝 Contributing
+
+This is a nonprofit project supporting veterans. Contributions welcome!
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is developed for 7 Eagle Group, a 501(c)(3) nonprofit organization dedicated to veteran support.
+
+---
+
+## 📞 Contact
+
+**Developer:** Free Hall  
+**Email:** whall4.wh@gmail.com  
+**Organization:** 7 Eagle Group  
+**GitHub:** https://github.com/For-Your-Service/For-Your-Service
+
+---
+
+## 🙏 Acknowledgments
+
+* **7 Eagle Group** - Mission, partnership, and veteran advocacy
+* **Databricks Community Edition** - Lakehouse platform
+* **Hugging Face** - FREE API hosting
+* **All veterans** - Your service inspires this work
+
+---
+
+**Built with ❤️ for those who served**
+
+*"No veteran left behind in the civilian job market"*
