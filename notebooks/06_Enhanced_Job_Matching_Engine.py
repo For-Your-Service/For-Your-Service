@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "5"
+# ///
 # DBTITLE 1,Enhanced Job Matching Engine - Intelligent Fit Analysis
 # MAGIC %md
 # MAGIC # 🧠 Enhanced Job Matching Engine - Intelligent Fit Analysis
@@ -1283,3 +1287,455 @@ print(f"      - High-pressure operations → Production system reliability")
 print("\n" + "="*70)
 print("✅ TENSOR-BASED MATCHING COMPLETE")
 print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Resume Optimization Pipeline - Semantic Gap Analysis
+# MAGIC %md
+# MAGIC ---
+# MAGIC
+# MAGIC # 📈 RESUME OPTIMIZATION PIPELINE
+# MAGIC ## Semantic Gap Analysis & Probability Lift Simulation
+# MAGIC
+# MAGIC ## The Value Proposition
+# MAGIC
+# MAGIC Most veterans don't know **WHY** they're not matching with jobs or **WHAT** to add to improve their chances.
+# MAGIC
+# MAGIC This pipeline provides:
+# MAGIC * **Gap Detection**: Identify missing skills/keywords that create distance from target jobs
+# MAGIC * **Evidence-Based Suggestions**: Show exactly what to add (with examples from top jobs)
+# MAGIC * **Probability Lift**: Re-simulate match score to show the improvement potential
+# MAGIC * **Visual Feedback**: Gauge charts and percentage bars to incentivize action
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Pipeline Workflow
+# MAGIC
+# MAGIC ```
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  STEP 1: Vectorization                                      │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • Transform veteran resume → 384-dim tensor                │
+# MAGIC │  • Transform top 10 job descriptions → 384-dim tensors      │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC                            ↓
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  STEP 2: Similarity Scoring (Baseline)                     │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • Calculate cosine similarity (current state)              │
+# MAGIC │  • Establish baseline 'Match Score'                         │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC                            ↓
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  STEP 3: Delta Detection                                    │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • Extract keywords from top jobs NOT in veteran profile    │
+# MAGIC │  • Identify missing: Skills, Certifications, Tools          │
+# MAGIC │  • Detect responsibility gaps (what you haven't shown)      │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC                            ↓
+# MAGIC ┌─────────────────────────────────────────────────────────────┐
+# MAGIC │  STEP 4: Probability Lift Simulation                       │
+# MAGIC ├─────────────────────────────────────────────────────────────┤
+# MAGIC │  • Add suggested keywords to veteran profile (simulated)    │
+# MAGIC │  • Re-vectorize enhanced profile                            │
+# MAGIC │  • Re-calculate similarity scores                           │
+# MAGIC │  • Show 'Before' vs 'After' match probability               │
+# MAGIC └─────────────────────────────────────────────────────────────┘
+# MAGIC ```
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## UI Presentation Recommendations
+# MAGIC
+# MAGIC **Visual Feedback:**
+# MAGIC * Gauge charts showing current match strength (0-100%)
+# MAGIC * Side-by-side comparison: "Current Match" vs "Projected Match"
+# MAGIC * Color coding: Red (< 50%), Yellow (50-70%), Green (70%+)
+# MAGIC
+# MAGIC **Evidence-Based Suggestions:**
+# MAGIC * "Must-Have" additions (skills found in 80%+ of top matches)
+# MAGIC * "High-Impact" additions (skills that create largest lift)
+# MAGIC * Example phrases from actual job descriptions
+# MAGIC
+# MAGIC **Probability Simulator:**
+# MAGIC * Interactive slider: "If you add X skill, your match improves by Y%"
+# MAGIC * Prioritized action list: "Add these 3 skills first for maximum impact"
+
+# COMMAND ----------
+
+# DBTITLE 1,Extract Missing Keywords from Top Job Matches
+# Identify semantic gaps: keywords in top jobs but NOT in veteran profile
+
+import re
+from collections import Counter
+
+print("="*70)
+print("🔍 SEMANTIC GAP ANALYSIS - Missing Keywords Detection")
+print("="*70)
+
+# Get top 10 jobs for analysis
+top_jobs = jobs_pdf_sorted.head(10)
+
+print(f"\n📊 Analyzing {len(top_jobs)} top job matches...\n")
+
+# Combine all job descriptions
+all_job_text = " ".join(top_jobs['description'].fillna("").str.lower())
+
+# Combine veteran profile text
+veteran_skills_text = " ".join([
+    " ".join(veteran_profile['technical_skills']['expert']),
+    " ".join(veteran_profile['technical_skills']['proficient']),
+    " ".join(veteran_profile['technical_skills']['familiar']),
+    " ".join([comp for comps in veteran_profile['core_competencies'].values() for comp in comps])
+]).lower()
+
+# Technical keywords to look for (tools, languages, frameworks, certifications)
+technical_patterns = [
+    # Cloud platforms
+    r'\b(aws|azure|gcp|google cloud|cloud platform)\b',
+    # DevOps tools
+    r'\b(kubernetes|k8s|docker|terraform|ansible|jenkins|gitlab|circleci|travis)\b',
+    # Programming
+    r'\b(python|golang|java|javascript|typescript|rust|c\+\+)\b',
+    # Monitoring
+    r'\b(prometheus|grafana|datadog|new relic|splunk|elk|kibana)\b',
+    # Databases
+    r'\b(postgresql|mysql|mongodb|redis|elasticsearch|cassandra|dynamodb)\b',
+    # CI/CD
+    r'\b(github actions|gitlab ci|argocd|flux|spinnaker)\b',
+    # Infrastructure
+    r'\b(istio|linkerd|consul|vault|nomad|helm|kustomize)\b',
+    # Certifications
+    r'\b(cka|ckad|cks|aws certified|azure certified|gcp certified)\b'
+]
+
+# Extract all technical keywords from jobs
+job_keywords = []
+for pattern in technical_patterns:
+    matches = re.findall(pattern, all_job_text)
+    job_keywords.extend(matches)
+
+# Count frequency
+keyword_counts = Counter(job_keywords)
+
+# Identify missing keywords (in jobs but NOT in veteran profile)
+missing_keywords = {}
+for keyword, count in keyword_counts.most_common():
+    if keyword not in veteran_skills_text:
+        # Calculate importance: (frequency in top jobs) / (total jobs)
+        importance = (count / len(top_jobs)) * 100
+        missing_keywords[keyword] = {
+            'frequency': count,
+            'importance': importance,
+            'appears_in': f"{count}/{len(top_jobs)} top jobs"
+        }
+
+print("🎯 MISSING HIGH-IMPACT KEYWORDS:\n")
+print("These skills appear frequently in your top matches but are missing from your profile:\n")
+
+for idx, (keyword, data) in enumerate(sorted(missing_keywords.items(), key=lambda x: x[1]['importance'], reverse=True)[:10], 1):
+    print(f"{idx:2d}. {keyword.upper():20s} - Found in {data['appears_in']:15s} (Impact: {data['importance']:.0f}%)")
+
+print("\n" + "="*70)
+print(f"✅ Identified {len(missing_keywords)} missing keywords")
+print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Calculate Baseline Match Scores (Current Resume)
+# Calculate baseline similarity scores with CURRENT veteran profile
+
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+print("="*70)
+print("📊 BASELINE MATCH SCORES - Current Resume")
+print("="*70)
+
+# Get current veteran embedding (already calculated in earlier cells)
+if 'veteran_embedding' not in jobs_pdf_sorted.columns:
+    print("\n⚠️ Veteran embeddings not found. Run the embedding cells first.\n")
+else:
+    # Get top 10 jobs
+    top_jobs = jobs_pdf_sorted.head(10).copy()
+    
+    print(f"\n🎯 Analyzing top {len(top_jobs)} matches...\n")
+    
+    # Calculate baseline scores
+    baseline_scores = []
+    
+    for idx, row in top_jobs.iterrows():
+        job_emb = np.array(row['embedding']).reshape(1, -1)
+        vet_emb = np.array(row['veteran_embedding']).reshape(1, -1)
+        
+        # Cosine similarity
+        similarity = cosine_similarity(vet_emb, job_emb)[0][0]
+        
+        # Convert to percentage
+        match_pct = similarity * 100
+        
+        baseline_scores.append({
+            'job_id': row['job_id'],
+            'title': row['title'],
+            'company': row['company'],
+            'baseline_similarity': similarity,
+            'baseline_match_pct': match_pct
+        })
+    
+    baseline_df = pd.DataFrame(baseline_scores)
+    
+    print("📈 BASELINE MATCH SCORES (Current Resume):\n")
+    for idx, row in baseline_df.iterrows():
+        print(f"{idx+1:2d}. {row['title'][:50]:50s} - {row['baseline_match_pct']:.1f}%")
+    
+    print(f"\n📊 Average Baseline Match: {baseline_df['baseline_match_pct'].mean():.1f}%")
+    print("\n" + "="*70)
+    print("✅ Baseline established - Ready for optimization simulation")
+    print("="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Simulate Enhanced Profile with Missing Keywords
+# Re-vectorize veteran profile WITH missing keywords added
+
+from sentence_transformers import SentenceTransformer
+
+print("="*70)
+print("🚀 PROBABILITY LIFT SIMULATION")
+print("="*70)
+
+print("\n🔄 Simulating enhanced resume with top 5 missing keywords...\n")
+
+# Get top 5 missing keywords
+top_missing = sorted(missing_keywords.items(), key=lambda x: x[1]['importance'], reverse=True)[:5]
+missing_skills = [kw for kw, _ in top_missing]
+
+print("📝 Adding these skills to simulated profile:")
+for skill in missing_skills:
+    print(f"   + {skill.upper()}")
+
+# Create enhanced veteran profile text
+enhanced_veteran_text = veteran_text + "\n\nAdditional Skills: " + ", ".join(missing_skills)
+
+print("\n🧠 Generating new embedding for enhanced profile...")
+
+# Re-vectorize with sentence transformer
+if 'model' not in locals():
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+
+enhanced_embedding = model.encode(enhanced_veteran_text)
+
+print("✅ Enhanced embedding generated!\n")
+
+# Calculate NEW similarity scores with enhanced profile
+enhanced_scores = []
+
+for idx, row in top_jobs.iterrows():
+    job_emb = np.array(row['embedding']).reshape(1, -1)
+    enhanced_vet_emb = enhanced_embedding.reshape(1, -1)
+    
+    # New cosine similarity
+    enhanced_similarity = cosine_similarity(enhanced_vet_emb, job_emb)[0][0]
+    enhanced_match_pct = enhanced_similarity * 100
+    
+    # Get baseline for comparison
+    baseline_match = baseline_df[baseline_df['job_id'] == row['job_id']]['baseline_match_pct'].values[0]
+    
+    # Calculate lift
+    lift = enhanced_match_pct - baseline_match
+    lift_pct = (lift / baseline_match) * 100 if baseline_match > 0 else 0
+    
+    enhanced_scores.append({
+        'job_id': row['job_id'],
+        'title': row['title'],
+        'company': row['company'],
+        'baseline_match': baseline_match,
+        'enhanced_match': enhanced_match_pct,
+        'absolute_lift': lift,
+        'relative_lift_pct': lift_pct
+    })
+
+enhanced_df = pd.DataFrame(enhanced_scores)
+
+print("="*70)
+print("📈 MATCH SCORE IMPROVEMENTS (Before → After)")
+print("="*70)
+print()
+
+for idx, row in enhanced_df.iterrows():
+    arrow = "📈" if row['absolute_lift'] > 0 else "📉"
+    print(f"{idx+1:2d}. {row['title'][:45]:45s}")
+    print(f"    Before: {row['baseline_match']:5.1f}%  →  After: {row['enhanced_match']:5.1f}%  {arrow} +{row['absolute_lift']:.1f}% ({row['relative_lift_pct']:+.1f}%)")
+    print()
+
+avg_baseline = enhanced_df['baseline_match'].mean()
+avg_enhanced = enhanced_df['enhanced_match'].mean()
+avg_lift = avg_enhanced - avg_baseline
+
+print("="*70)
+print("🎯 SUMMARY - Adding 5 Missing Keywords")
+print("="*70)
+print(f"\n📊 Average Match Score:")
+print(f"   • Current Resume:  {avg_baseline:.1f}%")
+print(f"   • Enhanced Resume: {avg_enhanced:.1f}%")
+print(f"   • Average Lift:    +{avg_lift:.1f}% improvement")
+print(f"\n💡 Relative Improvement: {(avg_lift/avg_baseline)*100:.1f}% increase in match probability")
+print("\n" + "="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Generate Actionable Resume Recommendations
+# Generate prioritized, actionable recommendations for resume improvement
+
+print("="*70)
+print("🎯 ACTIONABLE RESUME OPTIMIZATION RECOMMENDATIONS")
+print("="*70)
+
+print("\n📝 Based on semantic gap analysis of your top 10 job matches:\n")
+
+print("\n" + "#"*70)
+print("PRIORITY 1: ADD THESE MUST-HAVE SKILLS")
+print("#"*70)
+print("\nThese skills appear in 50%+ of your top matches:\n")
+
+must_have_skills = [(kw, data) for kw, data in missing_keywords.items() if data['importance'] >= 50]
+must_have_skills = sorted(must_have_skills, key=lambda x: x[1]['importance'], reverse=True)[:5]
+
+for idx, (skill, data) in enumerate(must_have_skills, 1):
+    print(f"{idx}. **{skill.upper()}** - Found in {data['appears_in']}")
+    print(f"   Expected Lift: +{enhanced_df['absolute_lift'].mean():.1f}% match probability")
+    print(f"   Where to add: 'Skills' or 'Technical Proficiencies' section")
+    print()
+
+print("\n" + "#"*70)
+print("PRIORITY 2: ENHANCE EXPERIENCE DESCRIPTIONS")
+print("#"*70)
+print("\nAdd these responsibility keywords to your work history:\n")
+
+# Extract responsibility keywords from top jobs
+responsibility_keywords = []
+for text in top_jobs['description'].fillna(""):
+    text_lower = text.lower()
+    # Look for action verbs and responsibilities
+    patterns = [
+        r'\b(architect\w*|design\w*|implement\w*|deploy\w*|manage\w*|lead\w*)\b',
+        r'\b(automat\w*|optimiz\w*|streamlin\w*|improv\w*)\b',
+        r'\b(monitor\w*|troubleshoot\w*|debug\w*|resolv\w*)\b'
+    ]
+    for pattern in patterns:
+        matches = re.findall(pattern, text_lower)
+        responsibility_keywords.extend(matches)
+
+top_responsibilities = Counter(responsibility_keywords).most_common(5)
+
+for idx, (resp, count) in enumerate(top_responsibilities, 1):
+    print(f"{idx}. Use '{resp}' in your accomplishment bullets")
+    print(f"   Example: '{resp.capitalize()} cloud infrastructure for...'")
+    print()
+
+print("\n" + "#"*70)
+print("PRIORITY 3: QUANTIFY YOUR IMPACT")
+print("#"*70)
+print("\nTop jobs emphasize measurable outcomes. Add metrics like:\n")
+
+metrics_examples = [
+    "• 'Reduced deployment time by X%'",
+    "• 'Managed infrastructure supporting X users/requests'",
+    "• 'Automated X% of manual processes'",
+    "• 'Led team of X engineers'",
+    "• 'Improved system uptime to 99.X%'"
+]
+
+for example in metrics_examples:
+    print(f"   {example}")
+
+print("\n\n" + "="*70)
+print("🎯 PROJECTED OUTCOMES")
+print("="*70)
+print(f"\n✅ Current average match: {avg_baseline:.1f}%")
+print(f"🚀 Projected with changes: {avg_enhanced:.1f}%")
+print(f"📈 Expected improvement: +{avg_lift:.1f}% ({(avg_lift/avg_baseline)*100:.1f}% increase)")
+print(f"\n💼 This could increase your application success rate by {(avg_lift/avg_baseline)*100:.0f}%")
+print("\n" + "="*70)
+
+# COMMAND ----------
+
+# DBTITLE 1,Visualize Match Score Improvements (Gauge Chart)
+# Create visual gauge chart showing before/after match scores
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+print("="*70)
+print("📊 VISUAL MATCH SCORE COMPARISON")
+print("="*70)
+
+# Create figure with 2 gauge charts
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), subplot_kw={'projection': 'polar'})
+
+def create_gauge(ax, percentage, title, color):
+    """
+    Create a gauge chart showing match percentage.
+    """
+    # Set gauge parameters
+    theta = np.linspace(0, np.pi, 100)  # Half circle
+    
+    # Background arc (gray)
+    ax.plot(theta, [1]*len(theta), linewidth=25, color='lightgray', alpha=0.3)
+    
+    # Filled arc based on percentage
+    filled_theta = theta[:int(percentage)]
+    ax.plot(filled_theta, [1]*len(filled_theta), linewidth=25, color=color)
+    
+    # Add percentage text in center
+    ax.text(np.pi/2, 0.5, f"{percentage:.1f}%", 
+            ha='center', va='center', fontsize=32, fontweight='bold')
+    
+    # Add title
+    ax.text(np.pi/2, 1.3, title, 
+            ha='center', va='center', fontsize=16, fontweight='bold')
+    
+    # Style
+    ax.set_ylim(0, 1.5)
+    ax.set_theta_zero_location('W')
+    ax.set_theta_direction(1)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.spines['polar'].set_visible(False)
+    ax.grid(False)
+
+# Determine colors based on score ranges
+def get_color(pct):
+    if pct >= 70:
+        return '#2ecc71'  # Green
+    elif pct >= 50:
+        return '#f39c12'  # Orange
+    else:
+        return '#e74c3c'  # Red
+
+baseline_color = get_color(avg_baseline)
+enhanced_color = get_color(avg_enhanced)
+
+# Create gauges
+create_gauge(ax1, avg_baseline, "Current Resume\nMatch Score", baseline_color)
+create_gauge(ax2, avg_enhanced, "Enhanced Resume\nMatch Score", enhanced_color)
+
+plt.suptitle('Resume Optimization Impact - Average Match Score', 
+             fontsize=18, fontweight='bold', y=1.05)
+
+# Add improvement arrow annotation
+fig.text(0.5, 0.15, f"🚀 +{avg_lift:.1f}% Improvement", 
+         ha='center', fontsize=16, fontweight='bold', color='green')
+
+plt.tight_layout()
+display(plt.gcf())
+plt.close()
+
+print("\n✅ Visual comparison generated!")
+print(f"\n🎨 Color Key:")
+print(f"   🔴 Red (0-50%):     Weak match - major improvements needed")
+print(f"   🟠 Orange (50-70%): Good match - room for optimization")
+print(f"   🟢 Green (70%+):    Strong match - minimal changes needed")
+print("\n" + "="*70)
