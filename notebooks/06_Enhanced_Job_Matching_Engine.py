@@ -216,8 +216,11 @@ print("="*70)
 print("📊 LOADING JOBS FROM BRONZE TABLE")
 print("="*70)
 
-# Query Bronze table for Greenville, SC jobs
+# Query Bronze table for Houston, TX jobs (test data - Greenville jobs need to be scraped)
 table_name = "workspace.fys_bronze.job_postings"
+
+print("\n⚠️ NOTE: Currently using Houston, TX data for testing.")
+print("   We'll need to scrape Greenville, SC jobs for production.\n")
 
 try:
     jobs_df = spark.sql(f"""
@@ -235,15 +238,15 @@ try:
             requirements,
             url
         FROM {table_name}
-        WHERE location.city = 'Greenville'
-            AND location.state = 'SC'
+        WHERE location.city = 'Houston'
+            AND location.state = 'TX'
     """)
     
     # Convert to pandas for easier text processing
     jobs_pdf = jobs_df.toPandas()
     
     print(f"\n✅ Loaded {len(jobs_pdf)} jobs from Bronze table")
-    print(f"   📍 Location: Greenville, SC")
+    print(f"   📍 Location: Houston, TX (TEST DATA)")
     print(f"   💼 Sources: {jobs_pdf['source'].unique().tolist()}")
     
     if len(jobs_pdf) > 0:
@@ -608,6 +611,10 @@ if len(jobs_pdf) > 0:
     print(f"\n🏆 Top Score: {jobs_pdf_sorted.iloc[0]['match_score']:.1f}/100")
     print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
 
+else:
+    # Create empty sorted dataframe if no jobs
+    jobs_pdf_sorted = pd.DataFrame()
+
 print("\n" + "="*70)
 print("✅ Ready to display top matches")
 print("="*70)
@@ -620,7 +627,7 @@ print("="*70)
 print("="*70)
 print("🏆 TOP 10 INTELLIGENT JOB MATCHES FOR WILLIAM FREE HALL")
 print("="*70)
-print("\n📍 Location: Greenville, SC")
+print("\n📍 Location: Houston, TX (TEST DATA - Greenville jobs to be scraped)")
 print("👤 Profile: 28 years experience, Senior-level, Former TS/SCI")
 print("💰 Salary Target: $120K-$180K\n")
 
