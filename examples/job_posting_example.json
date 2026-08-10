@@ -1,0 +1,34 @@
+{
+  "job_id": "job_67890",
+  "title": "Senior DevOps Engineer",
+  "company": "Tech Innovations Inc",
+  "source": "indeed",
+  "location": {
+    "city": "Greenville",
+    "state": "SC",
+    "latitude": 34.8526,
+    "longitude": -82.3940
+  },
+  "salary": {
+    "min": 130000,
+    "max": 170000,
+    "currency": "USD"
+  },
+  "description": "We are seeking an experienced DevOps Engineer to join our growing team. Veterans encouraged to apply!",
+  "requirements": [
+    "5+ years DevOps experience",
+    "AWS or Azure certification",
+    "Kubernetes expertise",
+    "CI/CD pipeline development",
+    "Security clearance eligible"
+  ],
+  "benefits": [
+    "Health insurance",
+    "401k matching",
+    "Remote work options",
+    "Professional development"
+  ],
+  "url": "https://example.com/jobs/67890",
+  "created_date": "2026-08-01",
+  "scrape_date": "2026-08-10"
+}
