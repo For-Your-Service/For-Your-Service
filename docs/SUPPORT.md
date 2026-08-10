@@ -1,35 +1,83 @@
-# Support
+# Support & Help
 
-## Getting Help
+## 🆘 Need Help?
 
-### Documentation
+### 1. Check Documentation
 Start with our comprehensive docs:
-* [README.md](README.md) - Project overview
-* [QUICK_START.md](docs/QUICK_START.md) - Get started in 5 minutes
-* [FAQ.md](docs/FAQ.md) - Common questions
-* [API.md](docs/API.md) - API documentation
-* [DEPLOYMENT.md](docs/DEPLOYMENT.md) - Deployment guide
+- [Getting Started Guide](GETTING_STARTED.md)
+- [FAQ](FAQ.md)
+- [Troubleshooting Guide](TROUBLESHOOTING.md)
+- [API Quickstart](API_QUICKSTART.md)
 
-### Issues
-Found a bug? Have a feature request?
-* Check [existing issues](https://github.com/For-Your-Service/For-Your-Service/issues)
-* Create a [new issue](https://github.com/For-Your-Service/For-Your-Service/issues/new)
+### 2. Search Issues
+Check if someone else had the same problem:
+- [GitHub Issues](https://github.com/For-Your-Service/For-Your-Service/issues)
+- Use search filters
 
-### Contact
-* **Email**: whall4.wh@gmail.com
-* **GitHub**: @For-Your-Service
+### 3. Ask the Community
+- [GitHub Discussions](https://github.com/For-Your-Service/For-Your-Service/discussions)
+- Stack Overflow (tag: `for-your-service`)
 
-## Contributing
-Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md)
+### 4. Report a Bug
+Open an issue with:
+- Clear description
+- Steps to reproduce
+- Expected vs actual behavior
+- Environment details (OS, Python version, etc.)
+- Error logs/screenshots
 
-## Reporting Security Issues
-See [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
+### 5. Contact Developer
+**Free Hall**  
+Email: whall4.wh@gmail.com  
+Response time: 24-48 hours
 
-## Community
-We're building a community of developers and veterans!
-* Star the repo to show support
-* Share with others who might benefit
-* Contribute code, docs, or ideas
+---
 
-## License
-MIT License - see [LICENSE](LICENSE)
+## 🤝 Partner Organizations
+
+**7 Eagle Group**  
+Veteran placement organization partner  
+Website: [TBD]
+
+---
+
+## 💼 Commercial Support
+
+For organizations requiring:
+- Dedicated support SLA
+- Custom feature development
+- White-label deployment
+- Training and onboarding
+
+Contact: whall4.wh@gmail.com
+
+---
+
+## 🎓 Training Resources
+
+### Free Resources
+- Documentation (this repo)
+- YouTube tutorials (coming soon)
+- Blog posts (coming soon)
+
+### Paid Training
+- 1-on-1 onboarding sessions
+- Team training workshops
+- Custom curriculum
+
+Contact for pricing.
+
+---
+
+## 🌟 Success Stories
+
+Share your success story!
+
+Email: whall4.wh@gmail.com  
+Subject: "Success Story: [Veteran Name]"
+
+We'd love to feature how For Your Service helped you or your organization.
+
+---
+
+Built with ❤️ for veterans. 🇺🇸
