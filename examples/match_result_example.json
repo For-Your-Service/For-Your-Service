@@ -1,0 +1,22 @@
+{
+  "veteran_id": "vet_12345",
+  "job_id": "job_67890",
+  "match_score": 0.92,
+  "match_breakdown": {
+    "skill_match": 0.95,
+    "location_match": 1.0,
+    "salary_match": 0.88,
+    "clearance_match": 0.85
+  },
+  "matching_skills": [
+    "AWS",
+    "Kubernetes",
+    "Docker",
+    "Python"
+  ],
+  "missing_skills": [
+    "Azure"
+  ],
+  "recommendation": "Strong match - highly recommended to apply",
+  "match_timestamp": "2026-08-10T14:30:00Z"
+}
