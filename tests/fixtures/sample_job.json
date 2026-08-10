@@ -1,0 +1,22 @@
+{
+  "job_id": "TEST_JOB_001",
+  "title": "Senior DevOps Engineer",
+  "company": "Tech Innovations Inc",
+  "location": "Greenville, SC",
+  "description": "Join our team as a Senior DevOps Engineer! We're seeking an experienced professional with strong AWS and Kubernetes expertise. Military veterans encouraged to apply.\n\nResponsibilities:\n- Design and maintain CI/CD pipelines\n- Manage Kubernetes clusters on AWS\n- Implement infrastructure as code with Terraform\n- Mentor junior engineers\n\nRequirements:\n- 8+ years DevOps experience\n- Expert AWS knowledge (EC2, S3, RDS, Lambda)\n- Kubernetes production experience\n- Strong Python and Bash scripting\n- Security clearance (Secret or higher) preferred",
+  "required_skills": [
+    "AWS",
+    "Kubernetes",
+    "Docker",
+    "Terraform",
+    "Python",
+    "CI/CD"
+  ],
+  "salary_min": 130000,
+  "salary_max": 170000,
+  "remote": "Hybrid",
+  "clearance_required": "Secret",
+  "veteran_friendly": true,
+  "posted_date": "2026-08-05",
+  "data_source": "indeed"
+}
