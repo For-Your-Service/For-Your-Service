@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       job_target:
-        description: 'Target job offering source'
+        description: 'Target job offering source (e.g., usajobs, jsearch, 7eagle, all)'
         required: true
         default: 'all'
   push:
@@ -29,10 +29,12 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          # PowerShell execution on runner
           $Params = @{
-              api_key = "${{ secrets.JOB_OFFERING_API_KEY }}"
-              target_source = "${{ github.event.inputs.job_target }}"
+              rapidapi_key       = "${{ secrets.RAPIDAPI_KEY }}"
+              usajobs_key        = "${{ secrets.USAJOBS_API_KEY }}"
+              seven_eagle_id     = "${{ secrets.SEVEN_EAGLE_APP_ID }}"
+              seven_eagle_key    = "${{ secrets.SEVEN_EAGLE_APP_KEY }}"
+              target_source      = "${{ github.event.inputs.job_target }}"
           } | ConvertTo-Json -Compress
 
           databricks jobs run-now <YOUR_DATABRICKS_JOB_ID> --notebook-params $Params
