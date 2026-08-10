@@ -2,45 +2,74 @@
 
 ## Military Terms
 
-**MOS (Military Occupational Specialty)**
-Unique code identifying a job in the military (e.g., 25B = IT Specialist)
+**MOS (Military Occupational Specialty):** Job code in the military (e.g., 18E = Special Forces Communications)
 
-**TS/SCI (Top Secret / Sensitive Compartmented Information)**
-High-level security clearance
+**TS/SCI:** Top Secret / Sensitive Compartmented Information clearance
 
-**DD-214**
-Official discharge papers from military service
+**Branch:** Service branch (Army, Navy, Air Force, Marines, Coast Guard, Space Force)
 
-## Technical Terms
+**DD-214:** Military discharge paperwork
 
-**Embedding**
-384-dimensional vector representation of text for neural networks
+**Rank:** Military grade (E-1 through E-9, O-1 through O-10)
 
-**Siamese Network**
-Neural network architecture for similarity comparison
+---
 
-**Bronze/Silver/Gold**
-Data lakehouse layers (raw → normalized → analytical)
+## Data Engineering
 
-**Unity Catalog**
-Databricks data governance and management system
+**Bronze Layer:** Raw ingested data, minimal transformations
 
-**O*NET**
-Occupational Information Network - standardized civilian job codes
+**Silver Layer:** Cleaned, enriched, deduplicated data
 
-**SOC (Standard Occupational Classification)**
-U.S. government job classification system
+**Gold Layer:** Aggregated, business-ready data
 
-## Data Pipeline Terms
+**Delta Lake:** Storage format for ACID transactions
 
-**ETL (Extract, Transform, Load)**
-Data integration process
+**Unity Catalog:** Databricks data governance solution
 
-**Feature Engineering**
-Creating ML-ready features from raw data
+**Lakehouse:** Unified data platform (data lake + warehouse)
 
-**Rate Limiting**
-Controlling API call frequency
+---
 
-**Orchestration**
-Coordinating multiple data processes
+## Machine Learning
+
+**Embedding:** Vector representation of text
+
+**Siamese Network:** Twin neural networks for similarity matching
+
+**Cosine Similarity:** Measure of vector similarity (-1 to 1)
+
+**Match Score:** Confidence level for veteran-job match (0 to 1)
+
+**Inference:** Making predictions with a trained model
+
+---
+
+## Technical
+
+**API:** Application Programming Interface
+
+**ETL:** Extract, Transform, Load (data pipeline)
+
+**CI/CD:** Continuous Integration / Continuous Deployment
+
+**Serverless:** Computing without managing servers
+
+**JSON:** JavaScript Object Notation (data format)
+
+**SQL:** Structured Query Language
+
+**YAML:** Yet Another Markup Language (config files)
+
+---
+
+## Platform Specific
+
+**O*NET:** Occupational Information Network (skills database)
+
+**USAJOBS:** Federal government job board
+
+**JSearch:** RapidAPI job aggregator
+
+**Adzuna:** Job search engine with API
+
+**Hugging Face:** AI/ML platform and community
