@@ -1,0 +1,37 @@
+{
+  "applicant_name": "William Free Hall",
+  "run_date": "2026-08-07",
+  "timestamp": "2026-08-07T18:51:10",
+  "profile": {
+    "experience_years": 24,
+    "seniority_level": "executive",
+    "target_location": "Greenville, SC",
+    "salary_range": "$120,000 - $180,000",
+    "clearance_status": "expired",
+    "target_roles": [
+      "DevOps Engineer",
+      "Solutions Architect",
+      "Cloud Engineer",
+      "Security Engineer",
+      "Infrastructure Engineer",
+      "Platform Engineer"
+    ]
+  },
+  "results": {
+    "total_jobs_scraped": 61,
+    "jobs_analyzed": 61,
+    "top_match_score": 78.0,
+    "median_match_score": 58.0,
+    "strong_matches_70_plus": 14,
+    "good_matches_60_69": 16,
+    "fair_matches_50_59": 18,
+    "weak_matches_below_50": 13
+  },
+  "resume_quality": {
+    "score": 100,
+    "rating": "excellent",
+    "recommendations": []
+  },
+  "scraping_source": "workspace.fys_bronze.job_postings_test_20260807_184328",
+  "pdf_report": "William_Free_Hall_Job_Match_Report_20260807_185110.pdf"
+}
