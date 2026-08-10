@@ -1,0 +1,37 @@
+# Databricks Job Configuration - Multi-Source Ingestion
+# For Your Service - 7 Eagle Group
+
+name: FYS Multi-Source Job Ingestion
+description: Daily ingestion from USAJOBS, JSearch, and Adzuna APIs
+
+schedule:
+  quartz_cron_expression: "0 0 6 * * ?"  # 6 AM daily
+  timezone_id: "America/New_York"
+  pause_status: "UNPAUSED"
+
+tasks:
+  - task_key: ingest_jobs
+    description: Fetch jobs from all sources
+    notebook_task:
+      notebook_path: /Users/whall4.wh@gmail.com/For-Your-Service/notebooks/03b_Multi_Source_Job_Ingestion
+      source: WORKSPACE
+    new_cluster:
+      spark_version: "13.3.x-scala2.12"
+      node_type_id: "i3.xlarge"
+      num_workers: 2
+      spark_conf:
+        spark.databricks.cluster.profile: "serverless"
+    timeout_seconds: 1800
+    max_retries: 2
+    retry_on_timeout: true
+
+email_notifications:
+  on_failure:
+    - whall4.wh@gmail.com
+  on_success:
+    - whall4.wh@gmail.com
+
+tags:
+  project: for-your-service
+  environment: production
+  team: 7-eagle-group
