@@ -1,0 +1,11 @@
+# For Your Service - Development Dependencies
+
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+black>=23.11.0
+flake8>=6.1.0
+pylint>=3.0.0
+mypy>=1.7.0
+pre-commit>=3.5.0
+jupyter>=1.0.0
