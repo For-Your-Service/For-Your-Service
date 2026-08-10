@@ -1,0 +1,40 @@
+{
+  "veteran_id": "TEST_VET_001",
+  "name": "William Free Hall",
+  "military_branch": "Army",
+  "rank": "SFC (E-7)",
+  "mos": "18F",
+  "specialty": "Special Forces Intelligence Sergeant",
+  "years_service": 18,
+  "clearance_level": "TS/SCI",
+  "clearance_status": "Expired",
+  "target_location": "Greenville, SC",
+  "target_radius_miles": 50,
+  "desired_roles": [
+    "DevOps Engineer",
+    "Cloud Solutions Architect",
+    "Site Reliability Engineer",
+    "Platform Engineer"
+  ],
+  "technical_skills": [
+    "AWS",
+    "Azure",
+    "Kubernetes",
+    "Docker",
+    "Terraform",
+    "Python",
+    "Bash",
+    "Jenkins",
+    "GitHub Actions",
+    "Databricks"
+  ],
+  "certifications": [
+    "AWS Solutions Architect",
+    "Azure Administrator",
+    "Certified Kubernetes Administrator"
+  ],
+  "salary_min": 120000,
+  "salary_max": 180000,
+  "remote_acceptable": true,
+  "security_clearance_required": false
+}
