@@ -1,53 +1,20 @@
-# For Your Service - Docker Ignore
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+__pycache__
+*.pyc
+*.pyo
+*.pyd
 .Python
-env/
-venv/
-ENV/
-
-# Git
-.git/
-.gitignore
-
-# IDE
-.vscode/
-.idea/
-*.swp
-
-# Databricks
-.databricks/
-
-# Docs
-docs/
-*.md
-!README.md
-
-# Tests
-tests/
-pytest.ini
-.pytest_cache/
-
-# Examples
-examples/
-
-# Config
-config/
-
-# Secrets
+*.so
+*.egg
+*.egg-info
+dist
+build
 .env
-*.key
-*.pem
-secrets/
-
-# Logs
-*.log
-logs/
-
-# OS
+.venv
+venv/
+.git
+.gitignore
 .DS_Store
-Thumbs.db
+*.log
+.pytest_cache
+.coverage
+htmlcov/
