@@ -1,0 +1,250 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-07T15:18:54.981279",
+    "veteran_name": "William Free Hall",
+    "location": "Greenville, SC",
+    "salary_range": "$120,000 - $180,000",
+    "experience_years": 28,
+    "seniority_level": "Senior",
+    "total_jobs_analyzed": 71,
+    "top_match_score": 86.14846801757812,
+    "pipeline_version": "v2.0_anti_overconfidence",
+    "changes": [
+      "Removed all 'probability' terminology",
+      "Replaced with match scores (0-100)",
+      "Added comprehensive disclaimers",
+      "Updated all recommendations to emphasize competition",
+      "Added warnings about unmeasurable hiring factors"
+    ]
+  },
+  "top_10_matches": [
+    {
+      "rank": 26,
+      "job_id": "5716802088",
+      "title": "Manager, Cloud Platform Engineering",
+      "company": "American Credit Acceptance",
+      "location": "Spartanburg, Spartanburg County",
+      "salary_range": "$127,625 - $127,625",
+      "match_score": 86.14846801757812,
+      "score_breakdown": {
+        "skills": 4,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5716802088?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "1 technical skills matched: AWS",
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $127,625-$127,625 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 32,
+      "job_id": "5830016570",
+      "title": "Manager, MEP",
+      "company": "NorthMark Strategies",
+      "location": "Spartanburg, Spartanburg County",
+      "salary_range": "$157,536 - $157,536",
+      "match_score": 81.58905792236328,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5830016570?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $157,536-$157,536 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 27,
+      "job_id": "5701011344",
+      "title": "Manager, Network Services",
+      "company": "American Credit Acceptance",
+      "location": "Spartanburg, Spartanburg County",
+      "salary_range": "$153,642 - $153,642",
+      "match_score": 80.7681884765625,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5701011344?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $153,642-$153,642 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 3,
+      "job_id": "5823269711",
+      "title": "Senior Engineering Leader - Software Development (REMOTE)",
+      "company": "Newbold",
+      "location": "Greenville, Greenville County",
+      "salary_range": "$170,000 - $190,000",
+      "match_score": 80.74219512939453,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5823269711?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Salary $170,000-$190,000 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 18,
+      "job_id": "5767753193",
+      "title": "VP Information Technology",
+      "company": "RBC",
+      "location": "Mauldin, Greenville County",
+      "salary_range": "$140,449 - $140,449",
+      "match_score": 80.65263366699219,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5767753193?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Salary $140,449-$140,449 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 8,
+      "job_id": "5802346846",
+      "title": "Senior Systems Engineer",
+      "company": "Interim HealthCare",
+      "location": "Batesville, Greenville County",
+      "salary_range": "$115,000 - $125,000",
+      "match_score": 80.50027465820312,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5802346846?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $115,000-$125,000 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 40,
+      "job_id": "5815218672",
+      "title": "C-130J Propulsion Field Service Engineer, Level 4",
+      "company": "Lockheed Martin",
+      "location": "Greenville, Greenville County",
+      "salary_range": "$165,952 - $165,952",
+      "match_score": 80.25435638427734,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/land/ad/5815218672?se=Xj2UEa2R8RG2-8VpLMe1pg&utm_medium=api&utm_source=ea966e18&v=0183C531A5B185D3EAAECCABC0CFE81DDC1BAF47",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Salary $165,952-$165,952 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 53,
+      "job_id": "5830564291",
+      "title": "Senior Project Manager - Water/Wastewater",
+      "company": "KCI Technologies",
+      "location": "Piedmont, Greenville County",
+      "salary_range": "$121,933 - $121,933",
+      "match_score": 80.18989562988281,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5830564291?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $121,933-$121,933 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 5,
+      "job_id": "5822729859",
+      "title": "E-House Solution Architect",
+      "company": "Schneider Electric",
+      "location": "Seneca, Oconee County",
+      "salary_range": "$130,250 - $130,250",
+      "match_score": 80.10877990722656,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5822729859?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $130,250-$130,250 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 9,
+      "job_id": "5800868764",
+      "title": "Business Unit Site IT Manager",
+      "company": "BorgWarner",
+      "location": "Seneca, Oconee County",
+      "salary_range": "$125,600 - $172,700",
+      "match_score": 79.85551452636719,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 25,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5800868764?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Perfect seniority match: Senior-level role for senior professional",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $125,600-$172,700 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    }
+  ]
+}
