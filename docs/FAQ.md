@@ -1,50 +1,49 @@
-# Frequently Asked Questions
+# ❓ Frequently Asked Questions
 
 ## General
 
-**Q: What is For Your Service?**  
-A: An AI-powered platform matching veterans to civilian careers using neural networks.
+### Q: What is For Your Service?
+A: AI-powered veteran job matching platform using neural networks to match military experience with civilian roles.
 
-**Q: Who is it for?**  
-A: Transitioning military service members and veterans seeking employment.
+### Q: Who developed this?
+A: Free Hall (7 Eagle Group) in partnership with veteran placement organizations.
 
-**Q: Is it free?**  
-A: Yes! The platform uses free-tier cloud services and government APIs.
+### Q: Is this open source?
+A: Yes! GitHub: https://github.com/For-Your-Service/For-Your-Service
 
-## Technical
+## API Keys
 
-**Q: What APIs do you use?**  
-A:
-* USAJobs (federal jobs)
-* O*NET (occupational data)
-* BLS (wage statistics)
-* Adzuna (job aggregator)
-* CareerOneStop (DOL veteran services)
+### Q: Do I need paid API keys?
+A: No! All three APIs have FREE tiers:
+- USAJOBS: 1000/day
+- JSearch: 1000/month  
+- Adzuna: 5000/month
 
-**Q: How does the matching work?**  
-A: We use a Siamese neural network to compute similarity between veteran profiles (MOS, skills, experience) and job requirements, represented as 384-dimensional embeddings.
+### Q: How do I get API keys?
+A: See docs/API_QUICKSTART.md for step-by-step guide
 
-**Q: What is the MOS mapper?**  
-A: Maps military occupational specialties to civilian O*NET occupation codes, translating military experience to civilian job requirements.
+### Q: Where do I store API keys?
+A: Use Databricks Secrets (never commit to Git!)
 
 ## Data
 
-**Q: How often is job data updated?**  
-A: Daily for job postings, weekly for occupational data, monthly for wage statistics.
+### Q: How many jobs are ingested daily?
+A: Target: 500+ for Greenville MSA
 
-**Q: Where is data stored?**  
-A: Databricks Unity Catalog with Bronze (raw), Silver (normalized), and Gold (embeddings) layers.
+### Q: How fresh is the data?
+A: Updated daily (configurable)
 
-**Q: Is data secure?**  
-A: Yes! We follow enterprise security practices and comply with data privacy regulations.
+### Q: What regions are supported?
+A: Currently: Greenville-Anderson, SC (50-mile radius)
+Planned: Charlotte, Raleigh, Atlanta
 
-## For Developers
+## Deployment
 
-**Q: How can I contribute?**  
-A: See CONTRIBUTING.md for guidelines.
+### Q: What infrastructure is required?
+A: Databricks (Unity Catalog + Serverless Compute)
 
-**Q: What tech stack?**  
-A: Python 3.11, Databricks, Unity Catalog, Sentence-Transformers, Docker.
+### Q: What's the monthly cost?
+A: ~$10-15/month (serverless + API costs)
 
-**Q: Can I run it locally?**  
-A: Yes! See DEPLOYMENT.md for instructions.
+### Q: Can this run on AWS/Azure/GCP?
+A: Yes! Databricks supports all three clouds
