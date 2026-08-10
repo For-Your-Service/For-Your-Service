@@ -103,3 +103,5 @@ temp/
 # Generated files
 generated/
 output/
+
+raw_jobs_output.json

@@ -1,0 +1,127 @@
+{
+  "run_id": "test_20260807_180856",
+  "timestamp": "2026-08-07T18:08:56Z",
+  "applicant": {
+    "name": "Stephen D. Porterfield",
+    "location": {
+      "city": "Kingwood",
+      "state": "TX"
+    },
+    "experience_years": 4,
+    "seniority_level": "mid",
+    "salary_range": {
+      "min": 90000,
+      "max": 140000
+    },
+    "top_skills": [
+      "go",
+      "rust",
+      "azure",
+      "kubernetes",
+      "terraform",
+      "github",
+      "ci/cd",
+      "devops"
+    ],
+    "clearance": "none"
+  },
+  "resume_analysis": {
+    "quality_score": 90,
+    "quality_status": "EXCELLENT",
+    "years_detected": 4,
+    "seniority_detected": "junior",
+    "location_detected": "Kingwood, TX",
+    "skills_count": 8,
+    "recommendations": [
+      "USE ACTION VERBS: Start bullet points with strong verbs (Led, Built, Designed)"
+    ]
+  },
+  "job_scraping": {
+    "total_scraped": 17,
+    "location": "Kingwood, TX",
+    "keywords": [
+      "infrastructure",
+      "site reliability engineer",
+      "platform engineer"
+    ],
+    "bronze_table": "workspace.fys_bronze.job_postings_test_20260807_180856"
+  },
+  "matching_results": {
+    "total_analyzed": 17,
+    "top_match_score": 73.9,
+    "median_score": 58.1,
+    "avg_semantic_similarity": 0.314,
+    "strong_matches_70plus": 4,
+    "good_matches_60_69": 4,
+    "fair_matches_50_59": 2,
+    "weak_matches_below_50": 7
+  },
+  "top_5_matches": [
+    {
+      "rank": 1,
+      "title": "Senior Applications Engineer",
+      "company": "GRAYWOLF INTEGRATED CONSTRUCTION COMPANY",
+      "location": "Kingwood, TX",
+      "salary_min": 129579,
+      "salary_max": 129579,
+      "seniority": "senior",
+      "match_score": 73.9,
+      "priority": "HIGH PRIORITY"
+    },
+    {
+      "rank": 2,
+      "title": "Director of Quality Modular",
+      "company": "GRAYWOLF INTEGRATED CONSTRUCTION COMPANY",
+      "location": "Kingwood, TX",
+      "salary_min": 130428,
+      "salary_max": 130428,
+      "seniority": "senior",
+      "match_score": 72.6,
+      "priority": "HIGH PRIORITY"
+    },
+    {
+      "rank": 3,
+      "title": "Plant Manager",
+      "company": "GRAYWOLF INTEGRATED CONSTRUCTION COMPANY",
+      "location": "Kingwood, TX",
+      "salary_min": 90704,
+      "salary_max": 90704,
+      "seniority": "senior",
+      "match_score": 71.1,
+      "priority": "HIGH PRIORITY"
+    },
+    {
+      "rank": 4,
+      "title": "Senior Semantic Data Architect",
+      "company": "Insperity",
+      "location": "Kingwood, TX",
+      "salary_min": 109681,
+      "salary_max": 109681,
+      "seniority": "senior",
+      "match_score": 70.3,
+      "priority": "HIGH PRIORITY"
+    },
+    {
+      "rank": 5,
+      "title": "Maintenance Tech I",
+      "company": "RS Utility Structures Inc",
+      "location": "Kingwood, TX",
+      "salary_min": 110044,
+      "salary_max": 110044,
+      "seniority": "unknown",
+      "match_score": 68.1,
+      "priority": "RECOMMENDED"
+    }
+  ],
+  "outputs": {
+    "pdf_report": "results/pdfs/Stephen_D._Porterfield_Job_Match_Report_20260807_181814.pdf",
+    "bronze_table": "workspace.fys_bronze.job_postings_test_20260807_180856"
+  },
+  "observations": [
+    "Pipeline successfully processed resume with employment dates",
+    "Auto-detection correctly identified location and years of experience",
+    "Semantic matching found relevant tech roles",
+    "Seniority detection marked as 'Junior' despite 4 years experience",
+    "Some top matches are construction/manufacturing vs. pure tech roles"
+  ]
+}
