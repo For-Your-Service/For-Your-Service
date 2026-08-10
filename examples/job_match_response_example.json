@@ -1,0 +1,78 @@
+{
+  "veteran_id": "vet_12345",
+  "query_timestamp": "2026-08-10T14:30:00Z",
+  "matches": [
+    {
+      "rank": 1,
+      "job_id": "job_abc123xyz",
+      "match_score": 0.92,
+      "title": "Senior DevOps Engineer",
+      "company": "Lockheed Martin",
+      "location": {
+        "city": "Greenville",
+        "state": "SC",
+        "distance_miles": 5.2
+      },
+      "salary": {
+        "min": 130000,
+        "max": 170000,
+        "currency": "USD",
+        "period": "year",
+        "is_predicted": false
+      },
+      "match_reasons": [
+        "Strong match on AWS/Azure cloud skills (0.95)",
+        "Kubernetes experience aligns with job requirements (0.89)",
+        "Project management background fits team lead role (0.88)",
+        "Salary range matches preferences",
+        "Location within 10 miles of target"
+      ],
+      "required_skills": [
+        {"skill": "AWS", "veteran_has": true, "importance": 0.95},
+        {"skill": "Kubernetes", "veteran_has": true, "importance": 0.90},
+        {"skill": "Terraform", "veteran_has": true, "importance": 0.85},
+        {"skill": "Python", "veteran_has": true, "importance": 0.80}
+      ],
+      "missing_skills": [
+        {"skill": "Ansible", "importance": 0.60}
+      ],
+      "url": "https://example.com/job/abc123xyz",
+      "posted_date": "2026-08-05",
+      "source": "JSearch"
+    },
+    {
+      "rank": 2,
+      "job_id": "job_def456uvw",
+      "match_score": 0.88,
+      "title": "Cloud Solutions Architect",
+      "company": "General Dynamics",
+      "location": {
+        "city": "Anderson",
+        "state": "SC",
+        "distance_miles": 15.8
+      },
+      "salary": {
+        "min": 125000,
+        "max": 165000,
+        "currency": "USD",
+        "period": "year",
+        "is_predicted": false
+      },
+      "match_reasons": [
+        "Azure expertise highly valued (0.92)",
+        "Security clearance advantage (0.85)",
+        "Leadership experience matches senior role (0.82)"
+      ],
+      "url": "https://example.com/job/def456uvw",
+      "posted_date": "2026-08-07",
+      "source": "USAJOBS"
+    }
+  ],
+  "total_matches": 47,
+  "displayed": 2,
+  "filters_applied": {
+    "location_radius_miles": 50,
+    "min_salary": 120000,
+    "match_score_threshold": 0.70
+  }
+}
