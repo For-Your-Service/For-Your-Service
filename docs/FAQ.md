@@ -1,49 +1,68 @@
-# ❓ Frequently Asked Questions
+# Frequently Asked Questions
 
 ## General
 
-### Q: What is For Your Service?
-A: AI-powered veteran job matching platform using neural networks to match military experience with civilian roles.
+**Q: What is For Your Service?**  
+A: An AI-powered platform matching veterans with civilian tech jobs.
 
-### Q: Who developed this?
-A: Free Hall (7 Eagle Group) in partnership with veteran placement organizations.
+**Q: Is it really free?**  
+A: Yes, 100% free for veterans. Built by veterans, for veterans.
 
-### Q: Is this open source?
-A: Yes! GitHub: https://github.com/For-Your-Service/For-Your-Service
+**Q: Who is behind this?**  
+A: 7 Eagle Group, a veteran placement organization.
 
-## API Keys
+---
 
-### Q: Do I need paid API keys?
-A: No! All three APIs have FREE tiers:
-- USAJOBS: 1000/day
-- JSearch: 1000/month  
-- Adzuna: 5000/month
+## For Veterans
 
-### Q: How do I get API keys?
-A: See docs/API_QUICKSTART.md for step-by-step guide
+**Q: How do I get started?**  
+A: Create a profile with your MOS, skills, and preferences. Our AI matches you with jobs.
 
-### Q: Where do I store API keys?
-A: Use Databricks Secrets (never commit to Git!)
+**Q: Do I need to translate my MOS?**  
+A: No! We automatically map military skills to civilian roles.
 
-## Data
+**Q: What if I don't have tech experience?**  
+A: The platform identifies transferable skills from your military background.
 
-### Q: How many jobs are ingested daily?
-A: Target: 500+ for Greenville MSA
+**Q: Is my data private?**  
+A: Yes. We never sell your data. See our Privacy Policy.
 
-### Q: How fresh is the data?
-A: Updated daily (configurable)
+---
 
-### Q: What regions are supported?
-A: Currently: Greenville-Anderson, SC (50-mile radius)
-Planned: Charlotte, Raleigh, Atlanta
+## Matching
 
-## Deployment
+**Q: How does the matching work?**  
+A: Neural network embeddings compare your profile to job requirements.
 
-### Q: What infrastructure is required?
-A: Databricks (Unity Catalog + Serverless Compute)
+**Q: Can I see why jobs match?**  
+A: Yes! Each match shows skill alignment and match score breakdown.
 
-### Q: What's the monthly cost?
-A: ~$10-15/month (serverless + API costs)
+**Q: How often are jobs updated?**  
+A: Daily from multiple job boards (Indeed, USAJOBS, Adzuna).
 
-### Q: Can this run on AWS/Azure/GCP?
-A: Yes! Databricks supports all three clouds
+---
+
+## Technical
+
+**Q: What technologies power this?**  
+A: Databricks, PySpark, Sentence Transformers, FastAPI, Hugging Face.
+
+**Q: Can I contribute?**  
+A: Absolutely! Check out CONTRIBUTING.md on GitHub.
+
+**Q: Is the code open source?**  
+A: Yes, MIT licensed. https://github.com/For-Your-Service/For-Your-Service
+
+---
+
+## Employers
+
+**Q: Can employers use this platform?**  
+A: Not yet, but planned for v2.0.
+
+**Q: How can we become a partner?**  
+A: Email whall4.wh@gmail.com
+
+---
+
+Still have questions? Email whall4.wh@gmail.com
