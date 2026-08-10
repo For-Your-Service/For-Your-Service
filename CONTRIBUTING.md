@@ -1,181 +1,176 @@
 # Contributing to For Your Service
 
-Thank you for your interest in helping veterans find meaningful careers!
+Thank you for your interest in contributing! This project helps military veterans find civilian tech jobs using AI-powered matching.
 
-## 🎯 Mission
+## Partner Organization
 
-For Your Service helps veterans transition from military to civilian careers through AI-powered job matching.
+**7 Eagle Group** - Veteran placement organization  
+**Project Lead:** William Free Hall <whall4.wh@gmail.com>
 
-## 🤝 Ways to Contribute
+## How to Contribute
 
 ### 1. Code Contributions
-- Bug fixes
-- Feature enhancements
-- Performance improvements
+
+**Areas needing help:**
+- Job scraper APIs (Indeed, LinkedIn, USAJobs)
+- ML model improvements (better embeddings, feature engineering)
+- UI/UX enhancements (Streamlit interface)
+- Data validation and cleaning
 - Test coverage
 
-### 2. Documentation
-- Improve setup guides
-- Add examples
-- Fix typos
-- Translate to other languages
-
-### 3. Data Contributions
-- Additional MOS → civilian job mappings
-- Regional job market insights
-- Veteran success stories
-
-### 4. Testing
-- Report bugs
-- Test new features
-- Performance testing
-- User experience feedback
-
----
-
-## 🚀 Getting Started
-
-### Fork & Clone
+**Setup:**
 ```bash
-git clone https://github.com/YOUR_USERNAME/For-Your-Service.git
+# Clone repo
+git clone https://github.com/For-Your-Service/For-Your-Service.git
 cd For-Your-Service
-```
 
-### Create Branch
-```bash
-git checkout -b feature/your-feature-name
-```
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-### Make Changes
-- Write clear, commented code
-- Follow existing code style
-- Add tests for new features
-- Update documentation
+# Install dependencies
+pip install -r requirements.txt
 
-### Test Changes
-```bash
+# Run tests
 pytest tests/
 ```
 
-### Commit
+**Branch naming:**
+- `feature/description` - New features
+- `fix/description` - Bug fixes
+- `docs/description` - Documentation
+- `refactor/description` - Code refactoring
+
+**Commit messages:**
+```
+feat: Add LinkedIn job scraper
+fix: Correct salary parsing bug
+docs: Update API authentication guide
+refactor: Extract embedding logic to utils
+```
+
+### 2. Data Contributions
+
+**We need:**
+- Real veteran resumes (with permission)
+- Job posting samples
+- Skills taxonomy data
+- MOS-to-civilian role mappings
+
+**Data privacy:**
+- Remove PII before contributing
+- Get explicit consent for any veteran data
+- Anonymize all personal information
+
+### 3. Documentation
+
+**Docs needed:**
+- API integration guides
+- Deployment tutorials
+- User guides for veterans
+- Admin/operator manuals
+
+### 4. Testing
+
+**Test categories:**
+- Unit tests (pytest)
+- Integration tests (API mocking)
+- End-to-end tests (full pipeline)
+- Performance benchmarks
+
+**Run tests:**
 ```bash
-git commit -m "Add: Your feature description
+# All tests
+pytest
 
-- Detail 1
-- Detail 2
-- Closes #issue_number"
+# With coverage
+pytest --cov=.
+
+# Specific module
+pytest tests/unit/test_matching.py
 ```
 
-### Push & PR
+### 5. Issue Reporting
+
+**Bug reports should include:**
+1. Description of the bug
+2. Steps to reproduce
+3. Expected vs actual behavior
+4. Environment (OS, Python version, etc.)
+5. Logs/screenshots if applicable
+
+**Feature requests should include:**
+1. Problem statement
+2. Proposed solution
+3. Alternative approaches considered
+4. Impact on veterans/users
+
+## Code Style
+
+**Python:**
+- Follow PEP 8
+- Use Black for formatting
+- Type hints encouraged
+- Docstrings required for public APIs
+
+**SQL:**
+- Uppercase keywords (SELECT, FROM, WHERE)
+- Lowercase table/column names
+- 2-space indentation
+- Comments for complex queries
+
+**Format code:**
 ```bash
-git push origin feature/your-feature-name
+# Format Python
+black .
+
+# Sort imports
+isort .
+
+# Lint
+flake8 .
 ```
 
-Then open a Pull Request on GitHub.
+## Pull Request Process
+
+1. **Fork the repo** and create your branch
+2. **Make changes** with clear commit messages
+3. **Add tests** for new functionality
+4. **Update docs** if needed
+5. **Run all tests** and ensure they pass
+6. **Submit PR** with description of changes
+
+**PR checklist:**
+- [ ] Tests pass
+- [ ] Code formatted (black, isort)
+- [ ] Documentation updated
+- [ ] No PII in commits
+- [ ] Signed commits (if required)
+
+## Review Process
+
+- PRs reviewed within 48 hours
+- At least 1 approval required
+- CI/CD must pass
+- No merge conflicts
+
+## Code of Conduct
+
+- Be respectful and inclusive
+- Focus on helping veterans
+- Constructive feedback only
+- Zero tolerance for discrimination
+
+## Questions?
+
+- **Email:** whall4.wh@gmail.com
+- **GitHub Issues:** Use for technical questions
+- **Discussions:** Use for general questions
+
+## License
+
+By contributing, you agree your contributions will be licensed under the project's MIT License.
 
 ---
 
-## 📝 Commit Message Guidelines
-
-Format:
-```
-Type: Brief description (50 chars max)
-
-- Detailed explanation
-- Why this change was needed
-- Related issue numbers
-
-Signed-off-by: Your Name <your.email@example.com>
-```
-
-Types:
-- `Add:` New feature
-- `Fix:` Bug fix
-- `Docs:` Documentation
-- `Test:` Tests
-- `Refactor:` Code refactoring
-- `Perf:` Performance improvement
-
----
-
-## 🧪 Testing Standards
-
-### Unit Tests
-- Test individual functions
-- Mock external dependencies
-- Fast execution (<1 sec each)
-
-### Integration Tests
-- Test full workflows
-- Use real Databricks environment
-- Mark with `@pytest.mark.integration`
-
-### Coverage Goal
-- Minimum 80% code coverage
-- 100% coverage for critical paths
-
----
-
-## 📚 Documentation Standards
-
-- Use markdown format
-- Include code examples
-- Add screenshots where helpful
-- Link to related docs
-- Keep language clear and concise
-
----
-
-## 🔍 Code Review Process
-
-1. **Automated checks:** Tests, linting must pass
-2. **Peer review:** At least 1 approval required
-3. **Maintainer review:** Final approval by project lead
-4. **Merge:** Squash and merge to main
-
----
-
-## 🌟 Recognition
-
-Contributors will be:
-- Listed in CONTRIBUTORS.md
-- Thanked in release notes
-- Invited to contributor calls
-
----
-
-## ⚖️ Code of Conduct
-
-### Our Pledge
-
-We are committed to providing a welcoming and inclusive experience for everyone.
-
-### Our Standards
-
-**✅ Encouraged:**
-- Respectful communication
-- Constructive feedback
-- Collaboration
-- Helping others
-
-**❌ Not Tolerated:**
-- Harassment
-- Discrimination
-- Trolling
-- Inappropriate content
-
-### Enforcement
-
-Report violations to: whall4.wh@gmail.com
-
----
-
-## 📧 Questions?
-
-- Open an issue on GitHub
-- Email: whall4.wh@gmail.com
-- Join our contributor Slack (request invite)
-
----
-
-Thank you for helping veterans! 🇺🇸
+**Thank you for helping veterans transition to civilian tech careers!**
