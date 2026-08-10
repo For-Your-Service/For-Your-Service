@@ -1,4 +1,4 @@
-# Editor configuration for consistent coding style
+# EditorConfig is awesome: https://EditorConfig.org
 
 root = true
 
@@ -8,11 +8,11 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{py,sql}]
+[*.{py,pyx}]
 indent_style = space
 indent_size = 4
 
-[*.{yml,yaml,json}]
+[*.{json,yml,yaml}]
 indent_style = space
 indent_size = 2
 
