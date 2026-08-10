@@ -1,19 +1,53 @@
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-.Python
+# For Your Service - Docker Ignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 *.so
-*.egg
-*.egg-info
-dist
-build
-.env
-.venv
+.Python
+env/
 venv/
-.git
+ENV/
+
+# Git
+.git/
 .gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Databricks
+.databricks/
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Tests
+tests/
+pytest.ini
+.pytest_cache/
+
+# Examples
+examples/
+
+# Config
+config/
+
+# Secrets
+.env
+*.key
+*.pem
+secrets/
+
+# Logs
+*.log
+logs/
+
+# OS
 .DS_Store
-*.ipynb_checkpoints
-.pytest_cache
-.coverage
+Thumbs.db
