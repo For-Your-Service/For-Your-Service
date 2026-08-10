@@ -1,81 +1,51 @@
+# For Your Service - Git Ignore
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-PIPFILE.lock
-
-# Virtual Environments
+env/
 venv/
 ENV/
-env/
-.venv
+
+# Databricks
+.databricks/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+*.key
+*.pem
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
+
+# OS
 .DS_Store
-
-# Databricks
-.databricks/
-*.dbc
-
-# GCP Credentials (NEVER COMMIT)
-*.json
-service-account*.json
-keyfile.json
-*-key.json
-
-# Environment Variables
-.env
-.env.local
-*.env
-
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.backup
-.terraform.lock.hcl
+Thumbs.db
 
 # Logs
 *.log
 logs/
 
-# Data Files (use GCS/Databricks instead)
-*.csv
-*.parquet
-*.json.gz
-data/
-raw/
-processed/
-
 # Secrets
 secrets/
-*.pem
-*.key
-*.crt
+credentials/
 
-# OS
-Thumbs.db
-.DS_Store
+# Backup files
+*.backup
+*.bak
+*~
+
+# Test outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# CRC files from HDFS
+*.crc
