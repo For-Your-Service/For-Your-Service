@@ -1,0 +1,32 @@
+[
+  {
+    "job_id": "TEST_JOB_002",
+    "title": "Cloud Solutions Architect",
+    "company": "CloudFirst Consulting",
+    "location": "Columbia, SC",
+    "salary_min": 140000,
+    "salary_max": 190000,
+    "required_skills": ["AWS", "Azure", "Architecture", "Leadership"],
+    "clearance_required": "TS/SCI"
+  },
+  {
+    "job_id": "TEST_JOB_003",
+    "title": "Site Reliability Engineer",
+    "company": "Reliable Systems Corp",
+    "location": "Charlotte, NC",
+    "salary_min": 125000,
+    "salary_max": 165000,
+    "required_skills": ["Kubernetes", "Python", "Monitoring", "Terraform"],
+    "clearance_required": "Secret"
+  },
+  {
+    "job_id": "TEST_JOB_004",
+    "title": "Platform Engineer",
+    "company": "Platform Builders LLC",
+    "location": "Greenville, SC",
+    "salary_min": 115000,
+    "salary_max": 155000,
+    "required_skills": ["Docker", "Kubernetes", "CI/CD", "Python"],
+    "clearance_required": "None"
+  }
+]
