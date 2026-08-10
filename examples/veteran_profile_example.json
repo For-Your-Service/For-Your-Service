@@ -1,9 +1,9 @@
 {
   "veteran_id": "vet_12345",
   "personal_info": {
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "phone": "+1-864-555-0123",
+    "name": "John Veteran",
+    "email": "john.veteran@example.com",
+    "phone": "+1-864-555-0100",
     "location": {
       "city": "Greenville",
       "state": "SC",
@@ -11,58 +11,44 @@
     }
   },
   "military_experience": {
-    "branch": "US Army",
-    "mos": "18Z",
-    "mos_title": "Special Forces Senior Sergeant",
-    "years_of_service": 18,
-    "rank": "Sergeant First Class (E-7)",
-    "clearance": {
-      "level": "TS/SCI",
-      "status": "Expired",
-      "last_active": "2017-06-30"
-    },
-    "deployments": [
-      {"location": "Afghanistan", "duration_months": 12},
-      {"location": "Iraq", "duration_months": 15}
-    ]
+    "branch": "Army",
+    "mos": "18E",
+    "rank": "SFC",
+    "years_of_service": 12,
+    "clearance": "TS/SCI (expired)",
+    "honorable_discharge": true
   },
-  "civilian_skills": [
-    "Project Management",
-    "Leadership",
-    "Risk Assessment",
-    "Cross-functional Team Coordination",
-    "Strategic Planning"
-  ],
-  "technical_skills": [
+  "skills": [
     "AWS",
-    "Azure",
     "Kubernetes",
     "Docker",
-    "Terraform",
     "Python",
     "Bash",
+    "Terraform",
     "Jenkins",
-    "GitHub"
+    "Git"
   ],
   "certifications": [
-    {"name": "AWS Solutions Architect", "year": 2024},
-    {"name": "Certified Kubernetes Administrator", "year": 2025}
+    "AWS Certified Solutions Architect",
+    "Certified Kubernetes Administrator"
   ],
+  "education": {
+    "degree": "Bachelor of Science",
+    "field": "Computer Science",
+    "institution": "University of South Carolina"
+  },
   "preferences": {
     "target_roles": [
       "DevOps Engineer",
-      "Solutions Architect",
-      "Cloud Engineer",
-      "Site Reliability Engineer"
+      "Site Reliability Engineer",
+      "Cloud Engineer"
     ],
     "desired_salary": {
       "min": 120000,
       "max": 180000,
-      "currency": "USD",
-      "period": "year"
+      "currency": "USD"
     },
-    "remote_preference": "hybrid",
-    "willing_to_relocate": false,
-    "max_commute_miles": 30
+    "work_arrangement": "Remote or Hybrid",
+    "willing_to_relocate": false
   }
 }
