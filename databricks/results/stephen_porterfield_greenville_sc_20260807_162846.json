@@ -1,0 +1,256 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-07T16:28:46.121048",
+    "veteran_name": "Stephen D. Porterfield",
+    "location": "Greenville, SC (Testing - Target: Houston, TX)",
+    "salary_range": "$120,000 - $180,000",
+    "experience_years": 5,
+    "seniority_level": "Mid",
+    "target_roles": [
+      "Azure Cloud Engineer",
+      "Cloud Operations Specialist",
+      "Security Engineer"
+    ],
+    "top_skills": [
+      "Microsoft Azure",
+      "Terraform",
+      "Palo Alto Firewalls",
+      "Cortex XSOAR"
+    ],
+    "total_jobs_analyzed": 90,
+    "top_match_score": 88.29217529296875,
+    "pipeline_version": "v2.0_anti_overconfidence",
+    "changes": [
+      "Removed all 'probability' terminology",
+      "Replaced with match scores (0-100)",
+      "Added comprehensive disclaimers",
+      "Updated all recommendations to emphasize competition",
+      "Added warnings about unmeasurable hiring factors"
+    ]
+  },
+  "top_10_matches": [
+    {
+      "rank": 18,
+      "job_id": "5820189252",
+      "title": "AWS DevOps/Platform Engineer",
+      "company": "INSPYR Solutions",
+      "location": "Trammells, Harris County",
+      "salary_range": "$150,719 - $150,719",
+      "match_score": 88.29217529296875,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/land/ad/5820189252?se=BBobrHuS8RGgVoNrFFS5Tw&utm_medium=api&utm_source=ea966e18&v=14ED80BCB729FD9D342B6CEA4739E7245892E918",
+      "match_reasons": [
+        "Leadership role with 1 leadership indicators",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $150,719-$150,719 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 2,
+      "job_id": "5748436324",
+      "title": "Azure Cloud Engineer with Oil and Gas Industry",
+      "company": "Advent Global Solutions, Inc.",
+      "location": "Trammells, Harris County",
+      "salary_range": "$135,351 - $135,351",
+      "match_score": 84.93374633789062,
+      "score_breakdown": {
+        "skills": 4,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/land/ad/5748436324?se=fiPKq3uS8RGsct_4gxI3kQ&utm_medium=api&utm_source=ea966e18&v=449F7A944E76E6A12E8FD95D9A1739B675CB4266",
+      "match_reasons": [
+        "1 technical skills matched: Microsoft Azure",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $135,351-$135,351 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 8,
+      "job_id": "5823258965",
+      "title": "Senior Cloud Engineer",
+      "company": "Fervo Energy Company",
+      "location": "Crestwood, Houston",
+      "salary_range": "$167,407 - $167,407",
+      "match_score": 84.86444091796875,
+      "score_breakdown": {
+        "skills": 2,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5823258965?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "1 technical skills matched: GitHub",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $167,407-$167,407 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 6,
+      "job_id": "5778343720",
+      "title": "Senior Cloud Engineer",
+      "company": "ESG - USA",
+      "location": "Eldridge/West Oaks, Houston",
+      "salary_range": "$111,000 - $133,500",
+      "match_score": 84.41378784179688,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5778343720?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $111,000-$133,500 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 45,
+      "job_id": "5744397357",
+      "title": "Senior Cloud Security Engineer",
+      "company": "Heath Consultants",
+      "location": "Glenbrook Valley, Houston",
+      "salary_range": "$115,000 - $135,000",
+      "match_score": 84.00597381591797,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5744397357?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Salary $115,000-$135,000 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 53,
+      "job_id": "5828258043",
+      "title": "Senior Infrastructure Engineer Hyper-V Virtualization & Infrastructure Engineering",
+      "company": "Keen Technology Solutions LLC",
+      "location": "Trammells, Harris County",
+      "salary_range": "$172,213 - $172,213",
+      "match_score": 83.57208251953125,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/land/ad/5828258043?se=3kSxrHuS8RG9ks23jnlnsA&utm_medium=api&utm_source=ea966e18&v=CE87C3AB7F2304045378F6958EB12268948D1A36",
+      "match_reasons": [
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $172,213-$172,213 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 82,
+      "job_id": "5832183040",
+      "title": "Senior AIML Platform Engineer",
+      "company": "ThinkNorth LLC",
+      "location": "Trammells, Harris County",
+      "salary_range": "$168,361 - $168,361",
+      "match_score": 83.50727081298828,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/land/ad/5832183040?se=zDNRrXuS8RGsct_4gxI3kQ&utm_medium=api&utm_source=ea966e18&v=964595353BEA1BADD1D4AE0583D6D47CD7402443",
+      "match_reasons": [
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $168,361-$168,361 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 61,
+      "job_id": "5828553051",
+      "title": "Infrastructure Engineer",
+      "company": "Akaasa Technologies",
+      "location": "Willowood, Houston",
+      "salary_range": "$124,674 - $124,674",
+      "match_score": 83.4996566772461,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5828553051?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $124,674-$124,674 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 73,
+      "job_id": "5804442358",
+      "title": "Senior Site Reliability Engineer -AI Infrastructure Operations",
+      "company": "Nscale",
+      "location": "Houston, Harris County",
+      "salary_range": "$170,000 - $265,000",
+      "match_score": 83.47271728515625,
+      "score_breakdown": {
+        "skills": 0,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5804442358?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $170,000-$265,000 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    },
+    {
+      "rank": 78,
+      "job_id": "5766903197",
+      "title": "Senior Director, Secure DevOps Requisition - Remote",
+      "company": "Maximus Inc.",
+      "location": "Trammells, Harris County",
+      "salary_range": "$120,161 - $120,161",
+      "match_score": 83.05368041992188,
+      "score_breakdown": {
+        "skills": 2,
+        "experience": 0,
+        "salary": 15
+      },
+      "seniority_level": "senior",
+      "clearance_required": false,
+      "url": "https://www.adzuna.com/details/5766903197?utm_medium=api&utm_source=ea966e18",
+      "match_reasons": [
+        "1 technical skills matched: Kubernetes",
+        "Architecture/design responsibilities (matches your background)",
+        "Salary $120,161-$120,161 fits your $120,000-$180,000 range"
+      ],
+      "match_concerns": []
+    }
+  ]
+}
