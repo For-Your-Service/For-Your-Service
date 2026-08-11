@@ -105,3 +105,13 @@ generated/
 output/
 
 raw_jobs_output.json
+
+# Resume Privacy - Never commit personal resumes
+data/resumes/*.pdf
+data/resumes/*.docx
+data/resumes/*.doc
+results/*.json
+
+# Keep directory structure
+!data/resumes/.gitkeep
+!results/.gitkeep
