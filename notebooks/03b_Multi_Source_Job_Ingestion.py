@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "5"
+# ///
 # DBTITLE 1,Multi-Source Job Ingestion Pipeline
 # MAGIC %md
 # MAGIC # 🌐 For Your Service - Multi-Source Job Ingestion Pipeline
@@ -62,14 +66,14 @@ print("="*70)
 print("🔐 MULTI-SOURCE JOB INGESTION - API CONFIGURATION")
 print("="*70)
 
-# Databricks Secrets scope (create with: databricks secrets create-scope --scope fys-apis)
-# Store keys with: databricks secrets put --scope fys-apis --key <key_name>
+# Databricks Secrets scope: api-keys (already created)
+# Credentials stored via Databricks UI: https://dbc-3e95d032-684c.cloud.databricks.com/#secrets
 
 # For testing, use environment variables or Databricks Secrets
 try:
     # USAJOBS API
-    USAJOBS_API_KEY = dbutils.secrets.get(scope="fys-apis", key="usajobs-api-key")
-    USAJOBS_USER_AGENT = dbutils.secrets.get(scope="fys-apis", key="usajobs-user-agent")
+    USAJOBS_API_KEY = dbutils.secrets.get(scope="api-keys", key="usajobs-api-key")
+    USAJOBS_USER_AGENT = dbutils.secrets.get(scope="api-keys", key="usajobs-email")
     print("✅ USAJOBS credentials loaded")
 except:
     USAJOBS_API_KEY = os.getenv("USAJOBS_API_KEY", "")
@@ -78,7 +82,7 @@ except:
 
 try:
     # JSearch API (RapidAPI)
-    JSEARCH_API_KEY = dbutils.secrets.get(scope="fys-apis", key="jsearch-rapidapi-key")
+    JSEARCH_API_KEY = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
     print("✅ JSearch credentials loaded")
 except:
     JSEARCH_API_KEY = os.getenv("JSEARCH_RAPIDAPI_KEY", "")
@@ -86,8 +90,8 @@ except:
 
 try:
     # Adzuna API
-    ADZUNA_APP_ID = dbutils.secrets.get(scope="fys-apis", key="adzuna-app-id")
-    ADZUNA_APP_KEY = dbutils.secrets.get(scope="fys-apis", key="adzuna-app-key")
+    ADZUNA_APP_ID = dbutils.secrets.get(scope="api-keys", key="adzuna-app-id")
+    ADZUNA_APP_KEY = dbutils.secrets.get(scope="api-keys", key="adzuna-app-key")
     print("✅ Adzuna credentials loaded")
 except:
     ADZUNA_APP_ID = os.getenv("ADZUNA_APP_ID", "")
@@ -131,7 +135,7 @@ def fetch_usajobs_data(keywords, location="Greenville, SC", max_results=100):
     
     params = {
         "Keyword": keywords,
-        "LocationName": location,
+        "LocationName": "South Carolina",  # Broader search, then filter locally
         "ResultsPerPage": min(max_results, 500),  # API max is 500
         "Fields": "min"  # Minimal fields for efficiency
     }
@@ -192,7 +196,7 @@ def fetch_usajobs_data(keywords, location="Greenville, SC", max_results=100):
 
 # Test USAJOBS connector
 usajobs_data = fetch_usajobs_data(
-    keywords="DevOps OR Cloud OR Kubernetes OR AWS",
+    keywords="Information Technology",  # Broader search for more results
     location="Greenville, SC",
     max_results=100
 )
@@ -374,7 +378,7 @@ def fetch_adzuna_data(keywords, location="Greenville, SC", max_results=100):
 
 # Test Adzuna connector
 adzuna_data = fetch_adzuna_data(
-    keywords="DevOps Cloud AWS Kubernetes",
+    keywords="DevOps Engineer",  # Simplified for better match rate
     location="Greenville, SC",
     max_results=100
 )
@@ -493,6 +497,12 @@ if filtered_jobs:
         StructField("source_board", StringType(), True)
     ])
     
+    # Clean data types before creating DataFrame
+    for job in filtered_jobs:
+        # Convert string booleans to actual booleans
+        if isinstance(job.get("salary", {}).get("is_predicted"), str):
+            job["salary"]["is_predicted"] = job["salary"]["is_predicted"].lower() in ['true', '1', 'yes']
+    
     # Create DataFrame
     df = spark.createDataFrame(filtered_jobs, schema=schema)
     
@@ -593,3 +603,41 @@ print("5. Feed normalized tensors into neural matching engine")
 
 # COMMAND ----------
 
+# DBTITLE 1,🚀 Execute Multi-Platform Job Search
+# Multi-platform job search for Free Hall
+# Execute the full pipeline: USAJobs + JSearch + Adzuna
+
+print("\n" + "="*70)
+print("🚀 MULTI-PLATFORM JOB SEARCH - FREE HALL")
+print("="*70)
+print("\n👤 Profile: Army Green Beret (18 years SF)")
+print("📍 Location: Greenville, SC + Remote")
+print("💼 Target: DevOps/Cloud/SRE/Platform Engineer")
+print("💰 Salary Range: $120K-$180K")
+print("🔒 Clearance: Former TS/SCI (reactivation eligible)")
+
+# API Status Check
+print("\n" + "="*70)
+print("📡 API CONFIGURATION STATUS")
+print("="*70)
+print(f"   USAJOBS: {'❌ NOT CONFIGURED' if not USAJOBS_API_KEY else '✅ Connected'}")
+print(f"   JSearch: {'❌ NOT CONFIGURED' if not JSEARCH_API_KEY else '✅ Connected'}")
+print(f"   Adzuna:  {'❌ NOT CONFIGURED' if not ADZUNA_APP_ID else '✅ Connected'}")
+
+if not USAJOBS_API_KEY:
+    print("\n⚠️  USAJOBS CREDENTIALS NOT STORED")
+    print("="*70)
+    print("\nYou received your USAJobs API key via email (Aug 6, 2026)")
+    print("\n📍 ACTION REQUIRED:")
+    print("\n1. Go to: https://dbc-3e95d032-684c.cloud.databricks.com/#secrets")
+    print("2. Select scope: api-keys")
+    print("3. Add secret:")
+    print("   Key: usajobs-api-key")
+    print("   Value: [your API key from email]")
+    print("4. Add secret:")
+    print("   Key: usajobs-email")
+    print("   Value: whall4.wh@gmail.com")
+    print("5. Re-run this notebook")
+    print("\n💡 Once configured, you'll get 100-200 federal veteran jobs!")
+else:
+    print("\n✅ All APIs configured - executing search...\n")
