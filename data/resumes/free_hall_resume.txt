@@ -1,0 +1,42 @@
+WILLIAM FREE HALL
+Technical Lead & Solutions Architect | Cloud & Data Engineer
+Niceville, FL  •  (910) 584-3843  •  whall4.wh@gmail.com  •  linkedin.com/in/william-free-hall  •  github.com/For-Your-Service
+EXECUTIVE SUMMARY
+Results-driven Technical Lead and Cloud/Data Architect with over 10 years of specialized experience in data analytics, data engineering, and executive intelligence briefings, backed by over 20 years of elite military leadership in US Army Special Operations. Proven track record of architecting multi-tier data lakehouses on Databricks, engineering graph analytical models, managing enterprise cloud infrastructure, and interpreting high-stakes intelligence analysis using Palantir and i2 Analyst's Notebook for General Officers and senior DOD decision-makers. Combines operational discipline with deep technical expertise in PySpark, Databricks, Terraform, Kubernetes, and CI/CD pipelines to deliver high-availability, cost-optimized enterprise platforms.
+TECHNICAL SKILLS
+•	Data & Analytics Engineering: Palantir, i2 Analyst's Notebook, Databricks, Apache Spark (PySpark), Delta Lake, Unity Catalog, Vector Search, PyTorch, Transformers, Scikit-Learn, Pandas, NumPy
+•	Cloud & Infrastructure: AWS (Lambda, EC2, S3, IAM, CloudFormation), GCP (Cloud Functions, GCS, GKE), Azure (VMs, AKS), Serverless Architecture
+•	Containers & Orchestration: Kubernetes (GKE, AKS), Docker, Helm
+•	IaC & DevOps: Terraform, GitHub Actions, Jenkins, GitLab CI, Git, Bash/Shell Scripting
+•	Databases & Query Languages: SQL (Databricks SQL, PostgreSQL), Vector Databases, Graph & Link Analysis
+•	Executive Communication & Ops: Executive Data Briefings (General Officer Level), Inter-Agency Coordination (DOD, CIA, State Dept), Cross-Functional Team Leadership, Process Optimization
+PROFESSIONAL EXPERIENCE
+Technical Lead & Solutions Architect  |  For Your Service	2024 – Present
+Partnered with 7 Eagle Group (Veteran Placement Organization)
+Led the full-stack architectural design and implementation of a production-grade ML platform automated to match military veterans with high-demand civilian technology roles.
+•	Cloud & Data Lakehouse Architecture: Architected an enterprise multi-tier data lakehouse (Bronze / Silver / Gold) on Databricks utilizing Unity Catalog for end-to-end data governance and access control.
+•	Serverless & Cloud Infrastructure: Deployed cost-optimized, serverless compute infrastructure on AWS with automated scaling capabilities for real-time machine learning inference workloads.
+•	Deployment Strategy: Designed a modular deployment strategy featuring a zero-cost prototyping tier on Hugging Face Spaces ($0/mo) with a seamless migration path to Google Kubernetes Engine (GKE) ($95–$600/mo) for production scaling.
+•	Machine Learning & ETL Engineering: Engineered automated ETL pipelines in PySpark ingesting and processing 670+ live job market postings from external REST APIs (USAJobs, Adzuna).
+•	Neural Network & Semantic Search: Built a Siamese twin-tower neural network utilizing 384-dimensional vector embeddings for high-precision semantic job-to-candidate matching.
+•	Inference Engine: Developed real-time inference workflows integrating vector search, automated resume parsing, skills extraction, and weighted ranking algorithms.
+•	DevOps & Infrastructure as Code: Implemented automated CI/CD deployment pipelines using GitHub Actions and managed infrastructure state using Terraform, enforcing zero-downtime updates.
+Cloud Engineer & DevOps Analyst  |  ConocoPhillips	2022 – 2024
+Managed enterprise cloud architecture, CI/CD automation pipelines, and data infrastructure maintenance within a multi-tenant cloud environment for a global energy enterprise.
+•	Enterprise Cloud & Pipeline Automation: Architected and maintained automated CI/CD deployment pipelines, streamlining infrastructure provisioning and database migration workflows across multi-tenant cloud environments.
+•	Enterprise Data Infrastructure: Managed large-scale data ingestion and storage architectures, ensuring high availability, strict security compliance, and optimized query performance for enterprise analytics platforms.
+•	Infrastructure as Code (IaC): Provisioned and managed cloud infrastructure using Terraform, standardizing multi-environment configurations and reducing deployment cycle times.
+•	Monitoring & Telemetry Engineering: Implemented comprehensive telemetry and operational dashboards using Prometheus, Grafana, and ELK Stack to maintain system reliability and enforce zero-downtime SLA standards.
+Special Forces Intelligence Sergeant (18F) & Team Sergeant  |  U.S. Army Special Forces	1999 – 2017
+18 Series Green Beret (18F Special Forces Assistant Operations and Intelligence Sergeant)
+Spearheaded intelligence operations, data analytics, and operational planning for 12-man Special Forces operational teams, leveraging enterprise intelligence software and data engineering practices across 10+ years of active intelligence roles.
+•	Executive Briefings & Strategic Decision Support: Synthesized complex analytics into high-impact operational briefings, presenting and interpreting data findings directly to General Officers (U.S. Army) and senior Department of Defense (DOD) leadership to drive strategic mission planning.
+•	Data Analytics & Link Analysis: Utilized Palantir and i2 Analyst's Notebook to aggregate, fuse, and analyze massive multi-source datasets, identifying complex relational networks, threat patterns, and actionable intelligence.
+•	Data Engineering & Intelligence Pipelines: Designed and maintained operational data pipelines to standardize, cleanse, and ingest disparate tactical and strategic intelligence feeds into centralized analysis platforms.
+•	Operations & Leadership: Commanded cross-functional teams across multiple combat deployments, maintaining a 100% mission success rate while making real-time data-driven decisions under extreme pressure.
+•	Inter-Agency Coordination: Planned and executed sensitive operations requiring detailed intelligence analysis in coordination with inter-agency partners (DOD, CIA, Department of State).
+•	Operations & Secure Communications: Maintained strict operational security (OPSEC), risk management, and secure data network integrity across austere tactical environments.
+EDUCATION & CERTIFICATIONS
+•	Bachelor of Science in Cybersecurity
+•	AWS Certified Cloud Practitioner
+•	U.S. Army Special Forces Qualification Course (SFQC) – 18F Intelligence Sergeant & 18 Series Green Beret
