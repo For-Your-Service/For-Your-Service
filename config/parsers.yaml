@@ -1,0 +1,15 @@
+# Resume parser configuration
+
+text_extraction:
+  pdf_library: pdfplumber  # or pypdf2
+  ocr_fallback: true
+  ocr_engine: tesseract
+
+skill_extraction:
+  confidence_threshold: 0.7
+  max_skills: 50
+  categories:
+    - hard_skill
+    - soft_skill
+    - certification
+    - clearance
