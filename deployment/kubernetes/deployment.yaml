@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fys-matching-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fys-matcher
+  template:
+    metadata:
+      labels:
+        app: fys-matcher
+    spec:
+      containers:
+      - name: matcher
+        image: gcr.io/7eagle/fys-matcher:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MODEL_PATH
+          value: /models/siamese_v1.pth
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
