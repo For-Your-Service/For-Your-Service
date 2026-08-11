@@ -115,3 +115,9 @@ results/*.json
 # Keep directory structure
 !data/resumes/.gitkeep
 !results/.gitkeep
+
+# API Credentials - NEVER commit these!
+config/api_credentials.py
+.env
+*.key
+*_credentials.py
