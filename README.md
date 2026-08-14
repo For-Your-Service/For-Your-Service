@@ -159,3 +159,12 @@ MIT License - See [LICENSE](LICENSE) for details.
 ---
 
 Built with ❤️ by veterans, for veterans.
+### Production Canonical Path
+For production job pipeline logic, reference:
+- `src/databricks/bronze/` -> `ingest_fys_job_postings.py`
+- `src/databricks/silver/` -> `transform_fys_job_postings.py`
+- `src/databricks/gold/` -> `aggregate_fys_job_postings.py`
+### Production Canonical Path
+- `src/databricks/bronze/` -> `ingest_fys_job_postings.py`
+- `src/databricks/silver/` -> `transform_fys_job_postings.py`
+- `src/databricks/gold/` -> `aggregate_fys_job_postings.py`
