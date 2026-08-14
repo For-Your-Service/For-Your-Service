@@ -112,6 +112,14 @@ Cost per veteran matched: **$0.14-0.24**
 
 ---
 
+## 🗺️ Roadmap & Epics
+
+Research-based architecture program (profile gate → medallion match → campaign → partner SITREP):
+
+- [docs/ROADMAP.md](docs/ROADMAP.md) — phases and milestones  
+- [docs/epics/PROGRAM.md](docs/epics/PROGRAM.md) — 12 capability epics  
+- [docs/epics/ISSUE_SPECS.md](docs/epics/ISSUE_SPECS.md) — issue specs to file in GitHub  
+
 ## 📚 Documentation
 
 - [API Quickstart](docs/API_QUICKSTART.md) - 15-minute setup

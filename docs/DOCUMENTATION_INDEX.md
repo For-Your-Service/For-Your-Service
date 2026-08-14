@@ -29,6 +29,12 @@ This project includes comprehensive documentation totaling **1,015+ lines** acro
 * Data flow explanations
 * Technology deep-dives
 
+### Planning / Epics (research-based)?
+**Read:** [docs/ROADMAP.md](ROADMAP.md) → [docs/epics/PROGRAM.md](epics/PROGRAM.md) → [docs/epics/ISSUE_SPECS.md](epics/ISSUE_SPECS.md)
+* Full architecture program (12 capability epics)
+* Research brief (white space, competitors, non-goals)
+* Copy/paste issue specs with acceptance criteria
+
 ### Need to Understand "Why"?
 **Read Third:** [docs/DEPLOYMENT_STRATEGY.md](DEPLOYMENT_STRATEGY.md)
 * Cost optimization rationale
@@ -79,6 +85,20 @@ This project includes comprehensive documentation totaling **1,015+ lines** acro
 | [docs/ARCHITECTURE.md](ARCHITECTURE.md) | 390 | Technical deep-dive | Developers |
 | [docs/DEPLOYMENT_STRATEGY.md](DEPLOYMENT_STRATEGY.md) | 345 | Business justification | Leadership + Devs |
 | [DEPLOYMENT_STATUS.md](../DEPLOYMENT_STATUS.md) | 167 | Current status | Operations |
+
+### Architecture Program / Epics (research-based)
+
+| File | Purpose | Audience |
+|------|---------|----------|
+| [docs/ROADMAP.md](ROADMAP.md) | Quarters, milestones M0–M5, phase checklist | Everyone |
+| [docs/epics/RESEARCH_BRIEF.md](epics/RESEARCH_BRIEF.md) | White space, competitors, non-goals | Leadership + Devs |
+| [docs/epics/FOUNDRY_ONTOLOGY_MAP.md](epics/FOUNDRY_ONTOLOGY_MAP.md) | Palantir/Foundry practices → FYS objects/actions/Slice 1 | Developers |
+| [docs/epics/PROGRAM.md](epics/PROGRAM.md) | 12 capability epics + dependency graph | Developers |
+| [docs/epics/ISSUE_SPECS.md](epics/ISSUE_SPECS.md) | Acceptance-ready issue catalog | Developers |
+| [docs/epics/specs/README.md](epics/specs/README.md) | AFK agent specs (to-spec) per epic | Agents / Devs |
+| [docs/epics/GITHUB_ISSUE_MAP.md](epics/GITHUB_ISSUE_MAP.md) | Links to filed GitHub issues | Contributors |
+| [docs/epics/GITHUB_HIERARCHY.md](epics/GITHUB_HIERARCHY.md) | Master → Epic → Task tree + Project board | Contributors |
+| [docs/epics/README.md](epics/README.md) | How to file epics/issues | Contributors |
 
 ### Setup & Configuration (3 files, 574 lines)
 
