@@ -1,3 +1,6 @@
+﻿-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
+
+-- DEPRECATED: Non-canonical main.fys_* reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 -- Bronze Layer: Raw job postings
 CREATE TABLE IF NOT EXISTS main.fys_bronze.job_postings (
     job_id STRING NOT NULL,
@@ -22,3 +25,5 @@ TBLPROPERTIES (
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_job_location ON main.fys_bronze.job_postings(location);
 CREATE INDEX IF NOT EXISTS idx_posted_date ON main.fys_bronze.job_postings(posted_date);
+
+

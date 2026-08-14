@@ -1,3 +1,5 @@
+> **DEPRECATED / NON-CANONICAL:** This document/script contains legacy schema references. The code-canonical production spine is defined in [ADR 001](adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md) (workspace.fys_*).
+
 # Production Data Pipeline Status
 
 **Project:** For Your Service  
@@ -177,3 +179,4 @@ result = ingest_from_uc_volume_files()
 Email: whall4.wh@gmail.com  
 Organization: 7 Eagle Group  
 Role: Army Special Forces (Ret.) → DevOps/Cloud Engineer
+
