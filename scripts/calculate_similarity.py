@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Calculate cosine similarity between veteran and jobs"""
+"""Calculate cosine similarity between both veteran and jobs"""
 import numpy as np
 
 def cosine_similarity(vec1, vec2):
