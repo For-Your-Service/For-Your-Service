@@ -3,7 +3,7 @@ Pytest configuration and fixtures
 """
 
 import pytest
-from src.api.config import APIConfig
+from src.api.config import Config as APIConfig
 
 
 @pytest.fixture

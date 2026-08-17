@@ -1,6 +1,7 @@
 """
 Common API Error Handling
 """
+
 import time
 import requests
 from typing import Callable, Any
@@ -9,21 +10,19 @@ from functools import wraps
 
 class APIError(Exception):
     """Base API error"""
-    pass
 
 
 class RateLimitError(APIError):
     """Rate limit exceeded"""
-    pass
 
 
 class AuthenticationError(APIError):
     """Authentication failed"""
-    pass
 
 
 def retry_with_backoff(max_retries: int = 3, backoff_factor: float = 2.0):
     """Decorator for retrying API calls with exponential backoff"""
+
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs) -> Any:
@@ -33,21 +32,23 @@ def retry_with_backoff(max_retries: int = 3, backoff_factor: float = 2.0):
                 except requests.exceptions.RequestException as e:
                     if attempt == max_retries - 1:
                         raise APIError(f"Max retries exceeded: {str(e)}")
-                    
+
                     # Check for rate limit
-                    if hasattr(e, 'response') and e.response.status_code == 429:
+                    if hasattr(e, "response") and e.response.status_code == 429:
                         raise RateLimitError("Rate limit exceeded")
-                    
+
                     # Check for auth errors
-                    if hasattr(e, 'response') and e.response.status_code in [401, 403]:
+                    if hasattr(e, "response") and e.response.status_code in [401, 403]:
                         raise AuthenticationError("Authentication failed")
-                    
+
                     # Exponential backoff
-                    wait_time = backoff_factor ** attempt
+                    wait_time = backoff_factor**attempt
                     time.sleep(wait_time)
-            
+
             raise APIError("Unexpected error in retry logic")
+
         return wrapper
+
     return decorator
 
 

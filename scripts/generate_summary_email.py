@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Generate daily summary email for operations team"""
+
 from datetime import datetime
+
 
 def generate_summary_html(spark):
     """Generate HTML email summary"""
-    
+
     # Yesterday's stats
     stats_df = spark.sql("""
         SELECT 
@@ -16,9 +18,9 @@ def generate_summary_html(spark):
         WHERE scrape_date = CURRENT_DATE - INTERVAL 1 DAYS
         GROUP BY source
     """)
-    
+
     stats = stats_df.collect()
-    
+
     html = f"""
     <html>
     <head>
@@ -47,7 +49,7 @@ def generate_summary_html(spark):
                 <th>Avg Salary</th>
             </tr>
     """
-    
+
     for row in stats:
         html += f"""
             <tr>
@@ -57,14 +59,15 @@ def generate_summary_html(spark):
                 <td>${int(row['avg_salary']):,}</td>
             </tr>
         """
-    
+
     html += """
         </table>
     </body>
     </html>
     """
-    
+
     return html
+
 
 if __name__ == "__main__":
     print("Summary Email Generator")

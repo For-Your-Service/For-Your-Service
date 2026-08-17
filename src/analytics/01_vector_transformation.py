@@ -6,10 +6,11 @@
 
 # COMMAND ----------
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf, when
+from pyspark.sql.functions import col, udf
 from pyspark.sql.types import ArrayType, FloatType
 
 spark = SparkSession.builder.appName("FYS_Vector_Transform").getOrCreate()
+
 
 def build_5d_vector(temporal, spatial, clearance, preference, modifier):
     return [
@@ -17,8 +18,9 @@ def build_5d_vector(temporal, spatial, clearance, preference, modifier):
         float(spatial or 0.0),
         float(clearance or 0.0),
         float(preference or 0.0),
-        float(modifier or 0.0)
+        float(modifier or 0.0),
     ]
+
 
 vector_udf = udf(build_5d_vector, ArrayType(FloatType()))
 
@@ -33,8 +35,8 @@ vector_df = raw_df.withColumn(
         col("spatial_score"),
         col("clearance_score"),
         col("preference_score"),
-        col("modifier_score")
-    )
+        col("modifier_score"),
+    ),
 )
 
 # Write transformed vectors out to Delta stage

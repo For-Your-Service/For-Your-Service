@@ -5,7 +5,7 @@
 # ///
 # DBTITLE 1,Setup Instructions
 # MAGIC %md
-# MAGIC # 🔒 Secure Credential Setup for JSearch API
+# MAGIC # ???? Secure Credential Setup for JSearch API
 # MAGIC
 # MAGIC **Following your security preferences - storing API keys safely in Databricks Secrets**
 # MAGIC
@@ -16,7 +16,7 @@
 # MAGIC Click this link to open Secrets management:
 # MAGIC https://dbc-3e95d032-684c.cloud.databricks.com/#secrets
 # MAGIC
-# MAGIC Or navigate: **Settings → Admin Console → Secrets**
+# MAGIC Or navigate: **Settings ??? Admin Console ??? Secrets**
 # MAGIC
 # MAGIC ---
 # MAGIC
@@ -50,7 +50,7 @@
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ✅ **Credentials are now encrypted and secure!**
+# MAGIC ??? **Credentials are now encrypted and secure!**
 # MAGIC
 # MAGIC **Run the cells below to verify setup**
 
@@ -61,7 +61,7 @@
 from databricks.sdk.runtime import dbutils
 
 print("=" * 70)
-print("🔍 CHECKING DATABRICKS SECRETS CONFIGURATION")
+print("???? CHECKING DATABRICKS SECRETS CONFIGURATION")
 print("=" * 70)
 
 try:
@@ -69,20 +69,20 @@ try:
     api_key = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
     api_host = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-host")
 
-    print("\n✅ SUCCESS! JSearch credentials are configured")
+    print("\n??? SUCCESS! JSearch credentials are configured")
     print(f"\n   API Key: [REDACTED]")
     print(f"   Key Length: {len(api_key)} characters")
     print(f"   API Host: [REDACTED]")
-    print(f"\n   ✅ No API keys exposed in code or logs")
-    print(f"   ✅ Safe to commit to git")
-    print(f"   ✅ Encrypted at rest")
+    print(f"\n   ??? No API keys exposed in code or logs")
+    print(f"   ??? Safe to commit to git")
+    print(f"   ??? Encrypted at rest")
 
     credentials_configured = True
 
 except Exception as e:
-    print("\n❌ Credentials not found!")
+    print("\n??? Credentials not found!")
     print(f"\n   Error: {e}")
-    print("\n   📋 Action needed:")
+    print("\n   ???? Action needed:")
     print("   1. Go to: https://dbc-3e95d032-684c.cloud.databricks.com/#secrets")
     print("   2. Create scope 'api-keys'")
     print("   3. Add secrets as shown in instructions above")
@@ -99,7 +99,7 @@ import requests
 
 if credentials_configured:
     print("=" * 70)
-    print("🧪 TESTING JSEARCH API CONNECTION")
+    print("???? TESTING JSEARCH API CONNECTION")
     print("=" * 70)
 
     # Fetch credentials securely
@@ -116,7 +116,7 @@ if credentials_configured:
         "date_posted": "month",
     }
 
-    print("\n📡 Connecting to JSearch API...")
+    print("\n???? Connecting to JSearch API...")
     print(f"   Query: {params['query']}")
     print(f"   Timeframe: Last 30 days")
 
@@ -132,7 +132,7 @@ if credentials_configured:
             jobs = data.get("data", [])
 
             print("\n" + "=" * 70)
-            print("✅ API CONNECTION SUCCESSFUL!")
+            print("??? API CONNECTION SUCCESSFUL!")
             print("=" * 70)
             print(f"\n   Jobs Found: {len(jobs)}")
 
@@ -151,53 +151,53 @@ if credentials_configured:
                     print(f"      Posted: {job.get('job_posted_at_datetime_utc', 'N/A')[:10]}")
 
             print("\n" + "=" * 70)
-            print("🚀 READY TO SCRAPE JOBS FOR FREE HALL!")
+            print("???? READY TO SCRAPE JOBS FOR FREE HALL!")
             print("=" * 70)
             print("\nYour secure credential setup is complete.")
             print("You can now:")
-            print("  • Run full job scraping (100+ private sector matches)")
-            print("  • Register USAJobs API for federal positions")
-            print("  • Generate comprehensive job match reports")
+            print("  ??? Run full job scraping (100+ private sector matches)")
+            print("  ??? Register USAJobs API for federal positions")
+            print("  ??? Generate comprehensive job match reports")
 
         elif response.status_code == 429:
             print("\n" + "=" * 70)
-            print("⚠️  RATE LIMIT REACHED")
+            print("??????  RATE LIMIT REACHED")
             print("=" * 70)
             print("\n   Your API key works, but rate limit hit.")
             print("   Free tier: 300 requests/month")
             print("   Wait a few minutes and try again.")
 
         else:
-            print(f"\n❌ API Error: {response.status_code}")
+            print(f"\n??? API Error: {response.status_code}")
             print(f"   Response: {response.text[:200]}")
 
     except requests.exceptions.Timeout:
-        print("\n⏱️  Request timed out")
+        print("\n??????  Request timed out")
         print("   API might be slow - try again")
 
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n??? Error: {str(e)}")
 
 else:
-    print("\n⚠️  Skipping API test - credentials not configured yet")
+    print("\n??????  Skipping API test - credentials not configured yet")
     print("   Configure credentials first, then run this cell")
 
 # COMMAND ----------
 
 # DBTITLE 1,Next Steps - USAJobs Registration
 # MAGIC %md
-# MAGIC # ✅ JSearch API Configured!
+# MAGIC # ??? JSearch API Configured!
 # MAGIC
 # MAGIC ---
 # MAGIC
 # MAGIC ## Next: Add USAJobs for Federal Job Coverage
 # MAGIC
 # MAGIC **Why USAJobs matters for Free Hall:**
-# MAGIC - 🎖️ **Veteran Preference** - 5-10 points added to application scores
-# MAGIC - 🔒 **Clearance Advantage** - Former TS/SCI = reactivation eligible
-# MAGIC - 💼 **100-200 federal matches** expected (VA, DOD, DHS roles)
-# MAGIC - 💰 **$120K-$180K GS-13/14/15 positions**
-# MAGIC - 🏠 **Many remote DevOps/Cloud roles**
+# MAGIC - ??????? **Veteran Preference** - 5-10 points added to application scores
+# MAGIC - ???? **Clearance Advantage** - Former TS/SCI = reactivation eligible
+# MAGIC - ???? **100-200 federal matches** expected (VA, DOD, DHS roles)
+# MAGIC - ???? **$120K-$180K GS-13/14/15 positions**
+# MAGIC - ???? **Many remote DevOps/Cloud roles**
 # MAGIC
 # MAGIC ---
 # MAGIC
@@ -209,7 +209,7 @@ else:
 # MAGIC    - **Email:** whall4.wh@gmail.com
 # MAGIC    - **Organization:** 7 Eagle Group
 # MAGIC    - **Purpose:** Veteran job matching platform
-# MAGIC 3. Submit → receive API key via email (instant)
+# MAGIC 3. Submit ??? receive API key via email (instant)
 # MAGIC
 # MAGIC ---
 # MAGIC
@@ -243,7 +243,7 @@ else:
 
 # DBTITLE 1,Quick Manual Setup Guide
 # MAGIC %md
-# MAGIC # 🚀 Quick 3-Minute Setup
+# MAGIC # ???? Quick 3-Minute Setup
 # MAGIC
 # MAGIC **I cannot create secrets programmatically (security restriction), but here's the fastest path:**
 # MAGIC
@@ -256,17 +256,17 @@ else:
 # MAGIC
 # MAGIC ## Do These 4 Things:
 # MAGIC
-# MAGIC 1. **Click "Create Scope"** → Name it: `api-keys` → Click "Create"
+# MAGIC 1. **Click "Create Scope"** ??? Name it: `api-keys` ??? Click "Create"
 # MAGIC
-# MAGIC 2. **Click "Add Secret"** → Key: `jsearch-rapidapi-key` → Value: [your RapidAPI key] → Click "Add"
+# MAGIC 2. **Click "Add Secret"** ??? Key: `jsearch-rapidapi-key` ??? Value: [your RapidAPI key] ??? Click "Add"
 # MAGIC
-# MAGIC 3. **Click "Add Secret"** → Key: `jsearch-rapidapi-host` → Value: `jsearch.p.rapidapi.com` → Click "Add"
+# MAGIC 3. **Click "Add Secret"** ??? Key: `jsearch-rapidapi-host` ??? Value: `jsearch.p.rapidapi.com` ??? Click "Add"
 # MAGIC
 # MAGIC 4. **Come back here and run Cell 2** to verify!
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ✅ **Takes 2-3 minutes total**
+# MAGIC ??? **Takes 2-3 minutes total**
 # MAGIC
 # MAGIC **Your API key from the screenshot you shared earlier needs to be pasted as the value for `jsearch-rapidapi-key`**
 
@@ -277,14 +277,14 @@ import requests
 from databricks.sdk.runtime import dbutils
 
 print("=" * 70)
-print("🚀 FULL PIPELINE TEST: JSearch API → Delta Table")
+print("???? FULL PIPELINE TEST: JSearch API ??? Delta Table")
 print("=" * 70)
 
 # 1. Retrieve secrets securely from Databricks
 api_key = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
 api_host = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-host")
 
-print("\n✅ Step 1: Credentials retrieved securely")
+print("\n??? Step 1: Credentials retrieved securely")
 
 # 2. Configure endpoint and search parameters for DevOps / Cloud roles
 url = "https://jsearch.p.rapidapi.com/search"
@@ -300,7 +300,7 @@ headers = {
     "x-rapidapi-key": api_key,
 }
 
-print("\n📡 Step 2: Querying JSearch API...")
+print("\n???? Step 2: Querying JSearch API...")
 print(f"   Query: {querystring['query']}")
 
 # 3. Execute request and inspect response status
@@ -310,7 +310,7 @@ print(f"\n   API Response Status Code: {response.status_code}")
 if response.status_code == 200:
     data = response.json()
     job_list = data.get("data", [])
-    print(f"\n✅ Step 3: Successfully retrieved {len(job_list)} job listings")
+    print(f"\n??? Step 3: Successfully retrieved {len(job_list)} job listings")
 
     # 4. Ingest into Delta Table (Workspace Catalog Schema)
     if len(job_list) > 0:
@@ -318,13 +318,13 @@ if response.status_code == 200:
         if job_list:
             sample_job = job_list[0]
             print(f"\n   Sample Job:")
-            print(f"   • Title: {sample_job.get('job_title', 'N/A')}")
-            print(f"   • Company: {sample_job.get('employer_name', 'N/A')}")
+            print(f"   ??? Title: {sample_job.get('job_title', 'N/A')}")
+            print(f"   ??? Company: {sample_job.get('employer_name', 'N/A')}")
             print(
-                f"   • Location: {sample_job.get('job_city', 'N/A')}, {sample_job.get('job_state', 'N/A')}"
+                f"   ??? Location: {sample_job.get('job_city', 'N/A')}, {sample_job.get('job_state', 'N/A')}"
             )
 
-        print(f"\n💾 Step 4: Writing to Delta table...")
+        print(f"\n???? Step 4: Writing to Delta table...")
 
         # Create catalog and schema if they don't exist
         spark.sql("CREATE CATALOG IF NOT EXISTS workspace")
@@ -336,24 +336,24 @@ if response.status_code == 200:
         )
 
         print("\n" + "=" * 70)
-        print("✅ SUCCESS! Full pipeline test complete!")
+        print("??? SUCCESS! Full pipeline test complete!")
         print("=" * 70)
-        print(f"\n   ✅ {len(job_list)} jobs written to workspace.veteran_intake.raw_job_postings")
-        print(f"   ✅ Credentials secured (not exposed)")
-        print(f"   ✅ Ready for production scraping")
+        print(f"\n   ??? {len(job_list)} jobs written to workspace.veteran_intake.raw_job_postings")
+        print(f"   ??? Credentials secured (not exposed)")
+        print(f"   ??? Ready for production scraping")
 
         # Show table info
-        print(f"\n📊 Table Info:")
+        print(f"\n???? Table Info:")
         row_count = spark.sql(
             "SELECT COUNT(*) as count FROM workspace.veteran_intake.raw_job_postings"
         ).collect()[0]["count"]
         print(f"   Total rows in table: {row_count}")
 
     else:
-        print("\n⚠️  No jobs returned - try broader search parameters")
+        print("\n??????  No jobs returned - try broader search parameters")
 
 else:
-    print(f"\n❌ Failed to fetch data")
+    print(f"\n??? Failed to fetch data")
     print(f"   Status: {response.status_code}")
     print(f"   Response: {response.text[:200]}")
 
@@ -361,7 +361,7 @@ else:
 
 # DBTITLE 1,Subscribe to JSearch API
 # MAGIC %md
-# MAGIC # ⚠️ Action Required: Subscribe to JSearch API
+# MAGIC # ?????? Action Required: Subscribe to JSearch API
 # MAGIC
 # MAGIC **Your credentials are stored correctly, but you need to activate your JSearch subscription on RapidAPI.**
 # MAGIC
@@ -392,10 +392,10 @@ else:
 # MAGIC ---
 # MAGIC
 # MAGIC ### Current Status:
-# MAGIC - ✅ Databricks Secrets configured correctly
-# MAGIC - ✅ API key valid and retrievable
-# MAGIC - ❌ JSearch API subscription not active
-# MAGIC - ⏳ Waiting on RapidAPI subscription activation
+# MAGIC - ??? Databricks Secrets configured correctly
+# MAGIC - ??? API key valid and retrievable
+# MAGIC - ??? JSearch API subscription not active
+# MAGIC - ??? Waiting on RapidAPI subscription activation
 # MAGIC
 # MAGIC ---
 # MAGIC
@@ -405,7 +405,7 @@ else:
 
 # DBTITLE 1,Troubleshooting - Verify Subscription
 # MAGIC %md
-# MAGIC # 🔍 Troubleshooting 404 Errors
+# MAGIC # ???? Troubleshooting 404 Errors
 # MAGIC
 # MAGIC **All endpoint paths are returning 404 - "Endpoint does not exist"**
 # MAGIC
@@ -429,7 +429,7 @@ else:
 # MAGIC 1. Click on your default application
 # MAGIC 2. Look under **"Subscriptions"**
 # MAGIC 3. Verify **"JSearch"** is listed
-# MAGIC 4. Click **"JSearch"** → **"Endpoints"** tab
+# MAGIC 4. Click **"JSearch"** ??? **"Endpoints"** tab
 # MAGIC 5. Copy the exact endpoint URL shown (should show something like `GET /search`)
 # MAGIC
 # MAGIC ---
@@ -458,7 +458,7 @@ else:
 
 # DBTITLE 1,Need Exact Endpoint from RapidAPI
 # MAGIC %md
-# MAGIC # 🎯 Action Needed: Find Exact Endpoint URL
+# MAGIC # ???? Action Needed: Find Exact Endpoint URL
 # MAGIC
 # MAGIC **The API is working on RapidAPI (you showed me a successful response!), but we're hitting the wrong endpoint path.**
 # MAGIC
@@ -523,7 +523,7 @@ endpoints_to_try = [
 ]
 
 print("=" * 70)
-print("🔍 DIAGNOSTIC: Testing All Possible Endpoint Paths")
+print("???? DIAGNOSTIC: Testing All Possible Endpoint Paths")
 print("=" * 70)
 
 for endpoint, params in endpoints_to_try:
@@ -537,19 +537,19 @@ for endpoint, params in endpoints_to_try:
         if response.status_code == 200:
             data = response.json()
             jobs = data.get("data", [])
-            print(f"{'':20s} | ✅ SUCCESS! Found {len(jobs)} jobs")
-            print(f"{'':20s} | 🎯 This is the correct endpoint!")
+            print(f"{'':20s} | ??? SUCCESS! Found {len(jobs)} jobs")
+            print(f"{'':20s} | ???? This is the correct endpoint!")
             print(f"\n{'':20s} | Full URL: {full_url}")
             break
         elif response.status_code == 404:
-            print(f"{'':20s} | ❌ Not found")
+            print(f"{'':20s} | ??? Not found")
         elif response.status_code == 403:
-            print(f"{'':20s} | ⚠️  Subscription issue")
+            print(f"{'':20s} | ??????  Subscription issue")
         else:
-            print(f"{'':20s} | ⚠️  {response.text[:50]}")
+            print(f"{'':20s} | ??????  {response.text[:50]}")
 
     except Exception as e:
-        print(f"\n{endpoint:20s} | ❌ Error: {str(e)[:50]}")
+        print(f"\n{endpoint:20s} | ??? Error: {str(e)[:50]}")
 
 print("\n" + "=" * 70)
 
@@ -603,10 +603,10 @@ endpoints = [
 params = {"query": "DevOps", "num_pages": "1"}
 
 print("=" * 80)
-print("🔍 COMPREHENSIVE JSEARCH ENDPOINT DISCOVERY")
+print("???? COMPREHENSIVE JSEARCH ENDPOINT DISCOVERY")
 print("=" * 80)
 print(f"\nTesting {len(endpoints)} possible endpoint variations...")
-print(f"Known working endpoint: /job-details ✅")
+print(f"Known working endpoint: /job-details ???")
 print(f"Looking for: Search/Query endpoint\n")
 print("-" * 80)
 
@@ -619,58 +619,58 @@ for endpoint in endpoints:
         response = requests.get(url, headers=headers, params=params, timeout=10)
 
         if response.status_code == 200:
-            print(f"\n🎯 FOUND IT! {endpoint}")
+            print(f"\n???? FOUND IT! {endpoint}")
             print("=" * 80)
-            print(f"✅ Status: {response.status_code} OK")
-            print(f"📍 Full URL: {url}")
+            print(f"??? Status: {response.status_code} OK")
+            print(f"???? Full URL: {url}")
 
             data = response.json()
             if "data" in data:
                 jobs = data.get("data", [])
-                print(f"✅ Jobs returned: {len(jobs)}")
+                print(f"??? Jobs returned: {len(jobs)}")
                 if jobs:
-                    print(f"\n📋 Sample job:")
+                    print(f"\n???? Sample job:")
                     print(f"   Title: {jobs[0].get('job_title', 'N/A')}")
                     print(f"   Company: {jobs[0].get('employer_name', 'N/A')}")
 
             print("\n" + "=" * 80)
-            print("🚀 THIS IS THE CORRECT SEARCH ENDPOINT!")
+            print("???? THIS IS THE CORRECT SEARCH ENDPOINT!")
             print("=" * 80)
             found = True
             break
 
         elif response.status_code == 404:
-            print(f"❌ {endpoint:25s} | 404 Not Found")
+            print(f"??? {endpoint:25s} | 404 Not Found")
         elif response.status_code == 403:
-            print(f"⚠️  {endpoint:25s} | 403 Subscription/Auth Issue")
+            print(f"??????  {endpoint:25s} | 403 Subscription/Auth Issue")
         elif response.status_code == 400:
             # 400 might mean endpoint exists but params wrong
-            print(f"⚡ {endpoint:25s} | 400 Bad Request (endpoint might exist!)")
+            print(f"??? {endpoint:25s} | 400 Bad Request (endpoint might exist!)")
             print(f"   Response: {response.text[:100]}")
         else:
-            print(f"⚠️  {endpoint:25s} | {response.status_code} {response.text[:60]}")
+            print(f"??????  {endpoint:25s} | {response.status_code} {response.text[:60]}")
 
     except requests.exceptions.Timeout:
-        print(f"⏱️  {endpoint:25s} | Timeout")
+        print(f"??????  {endpoint:25s} | Timeout")
     except Exception as e:
-        print(f"❌ {endpoint:25s} | Error: {str(e)[:50]}")
+        print(f"??? {endpoint:25s} | Error: {str(e)[:50]}")
 
 print("\n" + "=" * 80)
 
 if not found:
-    print("\n🤔 No search endpoint found in common patterns.")
-    print("\n📋 Next steps:")
+    print("\n???? No search endpoint found in common patterns.")
+    print("\n???? Next steps:")
     print("   1. Check RapidAPI page left sidebar for exact endpoint names")
     print("   2. Look for endpoints like 'Search Jobs', 'Find Jobs', etc.")
     print("   3. The endpoint name might be completely different")
-    print("\n💡 Alternative: The API might only support job-details (by ID)")
+    print("\n???? Alternative: The API might only support job-details (by ID)")
     print("   and not have a search/discovery endpoint at all.")
 
 # COMMAND ----------
 
 # DBTITLE 1,Critical - Check RapidAPI Dashboard
 # MAGIC %md
-# MAGIC # 🚨 CRITICAL: JSearch Search Endpoint Not Found
+# MAGIC # ???? CRITICAL: JSearch Search Endpoint Not Found
 # MAGIC
 # MAGIC **We've tested 21+ common endpoint patterns - ALL return 404.**
 # MAGIC
@@ -684,7 +684,7 @@ if not found:
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ## 🎯 ACTION REQUIRED: Check RapidAPI Page
+# MAGIC ## ???? ACTION REQUIRED: Check RapidAPI Page
 # MAGIC
 # MAGIC **Go to:** https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
 # MAGIC
@@ -694,10 +694,10 @@ if not found:
 # MAGIC
 # MAGIC ```
 # MAGIC Endpoints:
-# MAGIC   ✓ Job Details
-# MAGIC   ✓ Search
-# MAGIC   ✓ Estimated Salary
-# MAGIC   ✓ Search Filters
+# MAGIC   ??? Job Details
+# MAGIC   ??? Search
+# MAGIC   ??? Estimated Salary
+# MAGIC   ??? Search Filters
 # MAGIC   ...
 # MAGIC ```
 # MAGIC
@@ -712,7 +712,7 @@ if not found:
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ## 🔍 What to Look For:
+# MAGIC ## ???? What to Look For:
 # MAGIC
 # MAGIC The endpoint might be called something unexpected like:
 # MAGIC - "Job Search"
@@ -724,7 +724,7 @@ if not found:
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ## 💡 Alternative Paths Forward:
+# MAGIC ## ???? Alternative Paths Forward:
 # MAGIC
 # MAGIC If JSearch search endpoint doesn't exist or isn't available:
 # MAGIC
@@ -764,11 +764,11 @@ headers = {
 }
 
 print("=" * 80)
-print("🔍 JSEARCH API ENDPOINT INVESTIGATION")
+print("???? JSEARCH API ENDPOINT INVESTIGATION")
 print("=" * 80)
 
 # Step 1: Verify /job-details works (we know this endpoint exists)
-print("\n✅ Step 1: Testing known working endpoint /job-details")
+print("\n??? Step 1: Testing known working endpoint /job-details")
 print("-" * 80)
 
 test_job_id = "qIsPjUMr0Em0hqHoAAAAAA=="
@@ -780,17 +780,17 @@ try:
     print(f"Job Details Endpoint: {response.status_code}")
 
     if response.status_code == 200:
-        print("✅ SUCCESS! API connection confirmed working")
+        print("??? SUCCESS! API connection confirmed working")
         print("   Headers are correct")
         print("   Credentials are valid")
         print("   Subscription is active\n")
     else:
-        print(f"⚠️  Unexpected status: {response.text[:100]}\n")
+        print(f"??????  Unexpected status: {response.text[:100]}\n")
 except Exception as e:
-    print(f"❌ Error: {str(e)[:100]}\n")
+    print(f"??? Error: {str(e)[:100]}\n")
 
 # Step 2: Now try to find the SEARCH endpoint
-print("\n🔍 Step 2: Looking for SEARCH endpoint...")
+print("\n???? Step 2: Looking for SEARCH endpoint...")
 print("-" * 80)
 print("Testing most likely patterns based on RapidAPI conventions:\n")
 
@@ -814,48 +814,48 @@ for endpoint in search_endpoints:
         response = requests.get(url, headers=headers, params=search_params, timeout=10)
 
         if response.status_code == 200:
-            print(f"\n🎯 FOUND IT! {endpoint}")
+            print(f"\n???? FOUND IT! {endpoint}")
             print("=" * 80)
             data = response.json()
             if "data" in data:
                 jobs = data.get("data", [])
-                print(f"✅ Jobs returned: {len(jobs)}")
+                print(f"??? Jobs returned: {len(jobs)}")
                 if jobs:
-                    print(f"\n📋 First job:")
+                    print(f"\n???? First job:")
                     print(f"   Title: {jobs[0].get('job_title', 'N/A')}")
                     print(f"   Company: {jobs[0].get('employer_name', 'N/A')}")
-            print("\n🚀 Search endpoint found! Ready to scrape jobs.")
+            print("\n???? Search endpoint found! Ready to scrape jobs.")
             found_search = True
             break
         elif response.status_code == 404:
-            print(f"❌ {endpoint:20s} | 404 Not Found")
+            print(f"??? {endpoint:20s} | 404 Not Found")
         elif response.status_code == 400:
-            print(f"⚡ {endpoint:20s} | 400 Bad Request")
+            print(f"??? {endpoint:20s} | 400 Bad Request")
             print(f"   (Endpoint might exist but params wrong)")
             print(f"   Response: {response.text[:150]}")
         else:
-            print(f"⚠️  {endpoint:20s} | {response.status_code}")
+            print(f"??????  {endpoint:20s} | {response.status_code}")
     except Exception as e:
-        print(f"❌ {endpoint:20s} | {str(e)[:50]}")
+        print(f"??? {endpoint:20s} | {str(e)[:50]}")
 
 print("\n" + "=" * 80)
 
 if not found_search:
-    print("\n🚨 SEARCH ENDPOINT NOT FOUND IN COMMON PATTERNS")
+    print("\n???? SEARCH ENDPOINT NOT FOUND IN COMMON PATTERNS")
     print("=" * 80)
-    print("\n📋 This means one of three things:")
+    print("\n???? This means one of three things:")
     print("\n1. **Endpoint has unusual name** - Check RapidAPI sidebar")
     print("   Go to: https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch")
     print("   Look at LEFT SIDEBAR for endpoint list")
     print("   Click each endpoint to see its URL path")
     print("\n2. **Subscription tier limitation** - Your plan might only include:")
-    print("   - Job Details (by ID) ✅ Working")
+    print("   - Job Details (by ID) ??? Working")
     print("   - But NOT Search/Discovery")
     print("\n3. **API doesn't have search** - Some APIs only support:")
     print("   - Get job by ID (what you're paying for)")
     print("   - No browse/search capability")
     print("\n" + "=" * 80)
-    print("\n💡 RECOMMENDATION: Check RapidAPI page endpoint list NOW")
+    print("\n???? RECOMMENDATION: Check RapidAPI page endpoint list NOW")
     print("   or pivot to Adzuna API (working, 8 jobs fetched Aug 7)")
     print("=" * 80)
 
@@ -863,7 +863,7 @@ if not found_search:
 
 # DBTITLE 1,USAJobs API Registration Guide
 # MAGIC %md
-# MAGIC # 🎖️ USAJobs API Registration - Federal Veteran Jobs
+# MAGIC # ??????? USAJobs API Registration - Federal Veteran Jobs
 # MAGIC
 # MAGIC **Why USAJobs is Critical for Free Hall:**
 # MAGIC - Former Army Green Beret (18 Series SF) - **Veteran Preference Eligible**
@@ -934,9 +934,9 @@ if not found_search:
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC **✅ After this is set up, you'll have:**
+# MAGIC **??? After this is set up, you'll have:**
 # MAGIC - **JSearch:** 100-150 private sector jobs (when search endpoint found)
-# MAGIC - **USAJobs:** 100-200 federal veteran jobs ⭐
+# MAGIC - **USAJobs:** 100-200 federal veteran jobs ???
 # MAGIC - **Total:** 200-350 matches for neural network training
 # MAGIC
 # MAGIC **Federal roles for Green Berets in tech:**
@@ -953,7 +953,7 @@ import requests
 from databricks.sdk.runtime import dbutils
 
 print("=" * 80)
-print("🎖️ USAJOBS API TEST - Federal Veteran Positions")
+print("??????? USAJOBS API TEST - Federal Veteran Positions")
 print("=" * 80)
 
 try:
@@ -961,7 +961,7 @@ try:
     api_key = dbutils.secrets.get(scope="api-keys", key="usajobs-api-key")
     email = dbutils.secrets.get(scope="api-keys", key="usajobs-email")
 
-    print("\n✅ Step 1: USAJobs credentials retrieved securely")
+    print("\n??? Step 1: USAJobs credentials retrieved securely")
     print(f"   API Key Length: {len(api_key)} characters")
     print(f"   Email: {email}")
 
@@ -980,7 +980,7 @@ try:
         "ResultsPerPage": "25",
     }
 
-    print("\n📡 Step 2: Querying USAJobs API...")
+    print("\n???? Step 2: Querying USAJobs API...")
     print(f"   Keywords: {params['Keyword']}")
     print(f"   Location: {params['LocationName']}")
     print(f"   Clearance: {params['SecurityClearanceRequired']}")
@@ -997,13 +997,13 @@ try:
         jobs = search_result.get("SearchResultItems", [])
 
         print("\n" + "=" * 80)
-        print("✅ USAJOBS API CONNECTION SUCCESSFUL!")
+        print("??? USAJOBS API CONNECTION SUCCESSFUL!")
         print("=" * 80)
         print(f"\n   Total Federal Jobs Found: {job_count}")
         print(f"   Jobs Retrieved: {len(jobs)}")
 
         if jobs:
-            print("\n   📋 Sample Federal Jobs:")
+            print("\n   ???? Sample Federal Jobs:")
             for i, item in enumerate(jobs[:3], 1):
                 job = item.get("MatchedObjectDescriptor", {})
                 print(f"\n   {i}. {job.get('PositionTitle', 'N/A')}")
@@ -1018,41 +1018,41 @@ try:
                 # Check for veteran preference
                 hiring_path = job.get("UserArea", {}).get("Details", {}).get("HiringPath", [])
                 if "vet" in [p.lower() for p in hiring_path]:
-                    print(f"      ⭐ VETERAN PREFERENCE ELIGIBLE")
+                    print(f"      ??? VETERAN PREFERENCE ELIGIBLE")
 
                 # Check for clearance
                 clearance = (
                     job.get("UserArea", {}).get("Details", {}).get("SecurityClearance", "None")
                 )
                 if clearance and clearance != "None":
-                    print(f"      🔒 Clearance: {clearance}")
+                    print(f"      ???? Clearance: {clearance}")
 
         print("\n" + "=" * 80)
-        print("🚀 FEDERAL VETERAN JOB PIPELINE READY!")
+        print("???? FEDERAL VETERAN JOB PIPELINE READY!")
         print("=" * 80)
-        print("\n   ✅ Veteran preference active")
-        print("   ✅ Clearance filter working")
-        print("   ✅ Ready to fetch 100-200+ federal matches")
-        print("   ✅ Can combine with private sector (Adzuna/JSearch)")
+        print("\n   ??? Veteran preference active")
+        print("   ??? Clearance filter working")
+        print("   ??? Ready to fetch 100-200+ federal matches")
+        print("   ??? Can combine with private sector (Adzuna/JSearch)")
 
     elif response.status_code == 403:
-        print("\n❌ Authorization Failed")
+        print("\n??? Authorization Failed")
         print("   Check that:")
         print("   1. Authorization-Key is correct (from USAJobs email)")
         print("   2. User-Agent matches registered email")
         print("   3. API key is activated (may take a few minutes)")
 
     else:
-        print(f"\n❌ API Error: {response.status_code}")
+        print(f"\n??? API Error: {response.status_code}")
         print(f"   Response: {response.text[:300]}")
 
 except Exception as e:
     error_msg = str(e)
 
     if "Secret does not exist" in error_msg:
-        print("\n⚠️  USAJobs credentials not yet configured")
+        print("\n??????  USAJobs credentials not yet configured")
         print("=" * 80)
-        print("\n📋 TO SET UP:")
+        print("\n???? TO SET UP:")
         print("\n1. Register at: https://developer.usajobs.gov/APIRequest/Index")
         print("2. Check email for API credentials")
         print("3. Add to Secrets:")
@@ -1060,7 +1060,7 @@ except Exception as e:
         print("   - Key: usajobs-email")
         print("\n4. Run this cell again to test!")
     else:
-        print(f"\n❌ Error: {error_msg}")
+        print(f"\n??? Error: {error_msg}")
 
 print("\n" + "=" * 80)
 
@@ -1068,7 +1068,7 @@ print("\n" + "=" * 80)
 
 # DBTITLE 1,Store USAJobs Credentials Now
 # MAGIC %md
-# MAGIC # 🎖️ Store USAJobs API Credentials
+# MAGIC # ??????? Store USAJobs API Credentials
 # MAGIC
 # MAGIC **You received your USAJobs API key! Let's store it securely.**
 # MAGIC
@@ -1123,7 +1123,7 @@ import requests
 from databricks.sdk.runtime import dbutils
 
 print("=" * 80)
-print("🎖️ USAJOBS API TEST - Federal Veteran Positions")
+print("??????? USAJOBS API TEST - Federal Veteran Positions")
 print("=" * 80)
 
 try:
@@ -1131,7 +1131,7 @@ try:
     api_key = dbutils.secrets.get(scope="api-keys", key="usajobs-api-key")
     email = dbutils.secrets.get(scope="api-keys", key="usajobs-email")
 
-    print("\n✅ Step 1: USAJobs credentials retrieved securely")
+    print("\n??? Step 1: USAJobs credentials retrieved securely")
     print(f"   API Key: [REDACTED]")
     print(f"   Key Length: {len(api_key)} characters")
     print(f"   User-Agent: {email}")
@@ -1150,7 +1150,7 @@ try:
         "ResultsPerPage": "25",
     }
 
-    print("\n📡 Step 2: Querying USAJobs API...")
+    print("\n???? Step 2: Querying USAJobs API...")
     print(f"   Keywords: {params['Keyword']}")
     print(f"   Location: {params['LocationName']}")
     print(f"   Hiring Path: Veterans (preference eligible)")
@@ -1167,13 +1167,13 @@ try:
         jobs = search_result.get("SearchResultItems", [])
 
         print("\n" + "=" * 80)
-        print("✅ USAJOBS API CONNECTION SUCCESSFUL!")
+        print("??? USAJOBS API CONNECTION SUCCESSFUL!")
         print("=" * 80)
         print(f"\n   Total Federal Jobs Found: {job_count}")
         print(f"   Jobs Retrieved (first page): {len(jobs)}")
 
         if jobs:
-            print("\n   📋 Sample Federal Veteran Jobs:")
+            print("\n   ???? Sample Federal Veteran Jobs:")
             print("   " + "-" * 76)
 
             for i, item in enumerate(jobs[:5], 1):
@@ -1183,8 +1183,8 @@ try:
                 location = job.get("PositionLocationDisplay", "N/A")
 
                 print(f"\n   {i}. {position_title}")
-                print(f"      🏢 Agency: {org_name}")
-                print(f"      📍 Location: {location}")
+                print(f"      ???? Agency: {org_name}")
+                print(f"      ???? Location: {location}")
 
                 # Salary information
                 remuneration = job.get("PositionRemuneration", [])
@@ -1192,13 +1192,13 @@ try:
                     salary_min = remuneration[0].get("MinimumRange", "N/A")
                     salary_max = remuneration[0].get("MaximumRange", "N/A")
                     if salary_min != "N/A" and salary_max != "N/A":
-                        print(f"      💰 Salary: ${salary_min:,} - ${salary_max:,}")
+                        print(f"      ???? Salary: ${salary_min:,} - ${salary_max:,}")
 
                 # Grade level
                 job_grades = job.get("JobGrade", [])
                 if job_grades:
                     grade_code = job_grades[0].get("Code", "N/A")
-                    print(f"      🎯 Grade: {grade_code}")
+                    print(f"      ???? Grade: {grade_code}")
 
                 # Veteran preference indicator
                 user_area = job.get("UserArea", {})
@@ -1208,25 +1208,25 @@ try:
                 if isinstance(hiring_paths, list) and any(
                     "vet" in str(p).lower() for p in hiring_paths
                 ):
-                    print(f"      ⭐ VETERAN PREFERENCE ELIGIBLE")
+                    print(f"      ??? VETERAN PREFERENCE ELIGIBLE")
 
                 # Security clearance
                 clearance = details.get("SecurityClearance", "")
                 if clearance and clearance.lower() != "not applicable":
-                    print(f"      🔒 Clearance: {clearance}")
+                    print(f"      ???? Clearance: {clearance}")
 
         print("\n" + "=" * 80)
-        print("🚀 FEDERAL VETERAN JOB PIPELINE READY!")
+        print("???? FEDERAL VETERAN JOB PIPELINE READY!")
         print("=" * 80)
-        print("\n   ✅ API connection verified")
-        print("   ✅ Veteran preference filter active")
-        print("   ✅ Ready to fetch 100-200+ federal matches")
-        print(f"   ✅ {job_count} total jobs matching Free Hall's profile")
+        print("\n   ??? API connection verified")
+        print("   ??? Veteran preference filter active")
+        print("   ??? Ready to fetch 100-200+ federal matches")
+        print(f"   ??? {job_count} total jobs matching Free Hall's profile")
         print("\n   Next: Combine with Adzuna for 200-300+ total matches")
 
     elif response.status_code == 403:
         print("\n" + "=" * 80)
-        print("❌ AUTHORIZATION FAILED")
+        print("??? AUTHORIZATION FAILED")
         print("=" * 80)
         print("\n   Check that:")
         print("   1. usajobs-api-key matches the Authorization-Key from email")
@@ -1235,7 +1235,7 @@ try:
         print(f"\n   Response: {response.text[:200]}")
 
     else:
-        print(f"\n❌ API Error: {response.status_code}")
+        print(f"\n??? API Error: {response.status_code}")
         print(f"   Response: {response.text[:300]}")
 
 except Exception as e:
@@ -1243,15 +1243,19 @@ except Exception as e:
 
     if "Secret does not exist" in error_msg:
         print("\n" + "=" * 80)
-        print("⚠️  USAJOBS CREDENTIALS NOT YET STORED")
+        print("??????  USAJOBS CREDENTIALS NOT YET STORED")
         print("=" * 80)
-        print("\n📋 ACTION NEEDED:")
+        print("\n???? ACTION NEEDED:")
         print("\n1. Go to: https://dbc-3e95d032-684c.cloud.databricks.com/#secrets")
         print("2. Select `api-keys` scope")
         print("3. Add secret: usajobs-api-key = [Your API key from email]")
         print("4. Add secret: usajobs-email = whall4.wh@gmail.com")
         print("5. Run this cell again!")
     else:
-        print(f"\n❌ Error: {error_msg}")
+        print(f"\n??? Error: {error_msg}")
 
 print("\n" + "=" * 80)
+
+
+
+

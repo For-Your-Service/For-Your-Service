@@ -1,5 +1,4 @@
 ﻿# Databricks Ingestion Script for 7 Eagle Group API
-import requests
 
 # 1. Define and retrieve widget parameters passed from GitHub Actions
 dbutils.widgets.text("seven_eagle_id", "", "7 Eagle App ID")
@@ -15,7 +14,7 @@ if not seven_eagle_id or not seven_eagle_key:
 headers = {
     "X-App-Id": seven_eagle_id,
     "X-App-Key": seven_eagle_key,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
 }
 
 print(f"Loaded credentials for 7 Eagle App ID: {seven_eagle_id[:4]}****")

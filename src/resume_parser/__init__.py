@@ -17,7 +17,7 @@ from .schema import ResumeSchema, SkillEntry, ExperienceEntry, EducationEntry
 
 __all__ = [
     "BaseResumeParser",
-    "PDFResumeParser", 
+    "PDFResumeParser",
     "DOCXResumeParser",
     "ResumeSchema",
     "SkillEntry",

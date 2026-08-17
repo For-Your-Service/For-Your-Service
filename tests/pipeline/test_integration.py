@@ -121,7 +121,7 @@ class TestPipelineIntegration(unittest.TestCase):
                 }
 
                 # Process
-                result = orchestrator.process_resume("fake_path.pdf")
+                orchestrator.process_resume("fake_path.pdf")
 
                 # Verify military mapper was called
                 mock_enrich.assert_called_once()
@@ -145,7 +145,7 @@ class TestPipelineIntegration(unittest.TestCase):
             result = self.orchestrator.process_resume("fake_path.pdf")
 
             # Skills should be normalized
-            skill_names = [s.name for s in result.skills]
+            [s.name for s in result.skills]
 
             # Check normalization happened (skills should have canonical forms)
             self.assertIsNotNone(result.skills[0].category)  # Categories assigned

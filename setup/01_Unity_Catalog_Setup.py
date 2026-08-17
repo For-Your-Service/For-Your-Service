@@ -24,8 +24,8 @@
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC Developer: Free Hall <whall4.wh@gmail.com>  
-# MAGIC Organization: 7 Eagle Group  
+# MAGIC Developer: Free Hall <whall4.wh@gmail.com>
+# MAGIC Organization: 7 Eagle Group
 # MAGIC Date: 2026-08-09
 
 # COMMAND ----------
@@ -80,7 +80,7 @@
 # MAGIC );
 # MAGIC
 # MAGIC -- Add governance tags
-# MAGIC ALTER TABLE workspace.fys_silver.veteran_profiles 
+# MAGIC ALTER TABLE workspace.fys_silver.veteran_profiles
 # MAGIC   SET TAGS ('pii' = 'true', 'domain' = 'veteran_services');
 # MAGIC
 # MAGIC -- Show table details
@@ -122,7 +122,7 @@
 # MAGIC );
 # MAGIC
 # MAGIC -- Add governance tags
-# MAGIC ALTER TABLE workspace.fys_bronze.job_postings 
+# MAGIC ALTER TABLE workspace.fys_bronze.job_postings
 # MAGIC   SET TAGS ('domain' = 'job_market', 'source' = 'web_scraper');
 # MAGIC
 # MAGIC -- Show table details
@@ -159,8 +159,8 @@
 # MAGIC -- Insert sample Houston jobs (from existing scraper data)
 # MAGIC -- Note: We have 90 Houston jobs in the system already from Indeed scraper
 # MAGIC
-# MAGIC INSERT INTO workspace.fys_bronze.job_postings 
-# MAGIC SELECT 
+# MAGIC INSERT INTO workspace.fys_bronze.job_postings
+# MAGIC SELECT
 # MAGIC   job_id,
 # MAGIC   title,
 # MAGIC   company,
@@ -182,8 +182,8 @@
 # MAGIC LIMIT 100;
 # MAGIC
 # MAGIC -- Show sample
-# MAGIC SELECT job_id, title, company, location_display, salary_display 
-# MAGIC FROM workspace.fys_bronze.job_postings 
+# MAGIC SELECT job_id, title, company, location_display, salary_display
+# MAGIC FROM workspace.fys_bronze.job_postings
 # MAGIC LIMIT 10;
 
 # COMMAND ----------
@@ -195,10 +195,10 @@
 # MAGIC SHOW TABLES IN workspace.fys_silver;
 # MAGIC
 # MAGIC -- Count records
-# MAGIC SELECT 'veteran_profiles' as table_name, COUNT(*) as record_count 
+# MAGIC SELECT 'veteran_profiles' as table_name, COUNT(*) as record_count
 # MAGIC FROM workspace.fys_silver.veteran_profiles
 # MAGIC UNION ALL
-# MAGIC SELECT 'job_postings' as table_name, COUNT(*) as record_count 
+# MAGIC SELECT 'job_postings' as table_name, COUNT(*) as record_count
 # MAGIC FROM workspace.fys_bronze.job_postings;
 # MAGIC
 # MAGIC -- Grant read permissions to API service principal (update with actual principal)
@@ -246,9 +246,8 @@
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC **Developer:** Free Hall <whall4.wh@gmail.com>  
-# MAGIC **Organization:** 7 Eagle Group  
+# MAGIC **Developer:** Free Hall <whall4.wh@gmail.com>
+# MAGIC **Organization:** 7 Eagle Group
 # MAGIC **Status:** Ready for API integration
 
 # COMMAND ----------
-

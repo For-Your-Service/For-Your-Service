@@ -1,429 +1,256 @@
 # Databricks notebook source
-# DBTITLE 1,🎖️ Veteran Profile Matching Demo
+# DBTITLE 1,requirements.txt - Dependencies
+# Save as: veteran-intake-function/requirements.txt
+
+# functions-framework==3.*  # Replaced raw requirements syntax
+# google-cloud-storage==2.10.0  # Replaced raw requirements syntax
+
+# COMMAND ----------
+
+# DBTITLE 1,Step 3: Deploy Cloud Function
+# MAGIC %undefined
+# MAGIC # Deploy the Cloud Function
+# MAGIC
+# MAGIC cd veteran-intake-function
+# MAGIC
+# MAGIC gcloud functions deploy veteran-intake-processor \
+# MAGIC   --gen2 \
+# MAGIC   --runtime=python311 \
+# MAGIC   --region=us-central1 \
+# MAGIC   --source=. \
+# MAGIC   --entry-point=veteran_intake \
+# MAGIC   --trigger-http \
+# MAGIC   --allow-unauthenticated \
+# MAGIC   --memory=1GB \
+# MAGIC   --timeout=60s
+# MAGIC
+# MAGIC echo "Ã¢Å“â€¦ Cloud Function deployed!"
+# MAGIC echo "Ã°Å¸â€â€” Get the function URL:"
+# MAGIC gcloud functions describe veteran-intake-processor --region=us-central1 --gen2 --format="value(serviceConfig.uri)"
+# MAGIC
+# MAGIC # Test it
+# MAGIC echo "
+# MAGIC Ã°Å¸Â§Âª Test the function with a sample veteran profile:"
+# MAGIC echo "(Copy the URL from above and use it in the next cell)"
+
+# COMMAND ----------
+
+# DBTITLE 1,Step 2: Cloud Function - PII Anonymization Code
 # MAGIC %md
-# MAGIC # 🎖️ Veteran Profile Matching Demo - Free Hall
+# MAGIC ## Ã°Å¸â€â€™ Cloud Function: PII Anonymization
 # MAGIC
-# MAGIC ## Objective
-# MAGIC Demonstrate the **end-to-end matching pipeline** using:
-# MAGIC * **Real Veteran Data**: Free Hall's resume (Army Green Beret, AWS DevOps, 20+ years experience)
-# MAGIC * **Real Job Market Data**: 670 jobs from Adzuna + USAJobs APIs (Bronze table)
-# MAGIC
-# MAGIC ---
-# MAGIC
-# MAGIC ## Pipeline Flow
-# MAGIC
-# MAGIC ```
-# MAGIC ┌────────────────────────────────────────────────────────────┐
-# MAGIC │  STEP 1: Parse Veteran Resume                             │
-# MAGIC ├────────────────────────────────────────────────────────────┤
-# MAGIC │  • Extract: Skills, Experience, Location, Certifications  │
-# MAGIC │  • Normalize: Job titles, technical skills, education      │
-# MAGIC │  • MOS Mapping: Green Beret → Civilian occupations        │
-# MAGIC └────────────────────────────────────────────────────────────┘
-# MAGIC                            ↓
-# MAGIC ┌────────────────────────────────────────────────────────────┐
-# MAGIC │  STEP 2: Build Veteran Feature Vector                     │
-# MAGIC ├────────────────────────────────────────────────────────────┤
-# MAGIC │  • Technical Skills: AWS, Kubernetes, Python, etc.         │
-# MAGIC │  • Leadership: Team Sergeant, 100+ engineers               │
-# MAGIC │  • Clearance: Special Forces (likely TS/SCI)              │
-# MAGIC │  • Location: Niceville, FL (preferences: remote/flexible)  │
-# MAGIC │  • Salary Target: $120K-$180K (DevOps/Solutions Architect) │
-# MAGIC └────────────────────────────────────────────────────────────┘
-# MAGIC                            ↓
-# MAGIC ┌────────────────────────────────────────────────────────────┐
-# MAGIC │  STEP 3: Query Bronze Table (670 Real Jobs)               │
-# MAGIC ├────────────────────────────────────────────────────────────┤
-# MAGIC │  • 480 from Adzuna                                         │
-# MAGIC │  • 190 from USAJobs                                        │
-# MAGIC │  • Locations: Virginia Beach VA, San Diego CA, San Antonio │
-# MAGIC └────────────────────────────────────────────────────────────┘
-# MAGIC                            ↓
-# MAGIC ┌────────────────────────────────────────────────────────────┐
-# MAGIC │  STEP 4: Calculate Similarity Scores                      │
-# MAGIC ├────────────────────────────────────────────────────────────┤
-# MAGIC │  • Skills Match: AWS, Kubernetes, DevOps, Python           │
-# MAGIC │  • Title Match: Solutions Architect, Cloud Engineer        │
-# MAGIC │  • Salary Match: Within $120K-$180K range                  │
-# MAGIC │  • Location: Remote-friendly or relocation                 │
-# MAGIC └────────────────────────────────────────────────────────────┘
-# MAGIC                            ↓
-# MAGIC ┌────────────────────────────────────────────────────────────┐
-# MAGIC │  STEP 5: Return Top 10 Matches                            │
-# MAGIC ├────────────────────────────────────────────────────────────┤
-# MAGIC │  • Ranked by similarity score (0-100)                      │
-# MAGIC │  • Explanation: Why this job matches                       │
-# MAGIC │  • Company, Location, Salary, URL                          │
-# MAGIC └────────────────────────────────────────────────────────────┘
-# MAGIC ```
+# MAGIC This Cloud Function:
+# MAGIC 1. Receives veteran profile JSON via HTTP POST
+# MAGIC 2. Validates schema
+# MAGIC 3. Anonymizes all PII fields
+# MAGIC 4. Generates unique `veteran_id`
+# MAGIC 5. Stores anonymized JSON to GCS
+# MAGIC 6. Returns confirmation
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC ## Real Veteran Profile: Free Hall
-# MAGIC
-# MAGIC **Background:**
-# MAGIC * 🎖️ **Army Green Beret Special Forces** (1999-2017) - 18 years
-# MAGIC * 🔐 **Likely Clearance**: Top Secret/SCI (Special Forces requirement)
-# MAGIC * 📍 **Location**: Niceville, FL (willing to relocate or remote)
-# MAGIC * 💼 **Current Role**: AWS DevOps Solution Architect @ ConocoPhillips
-# MAGIC * 🎓 **Education**: BS Cybersecurity, AA Computer Programming
-# MAGIC * 🏆 **Certifications**: AWS Professional, Azure Professional
-# MAGIC
-# MAGIC **Top Skills:**
-# MAGIC * Cloud: AWS (EKS, VPC, EC2, S3), Azure (Entra ID, DevOps)
-# MAGIC * DevOps: Kubernetes, Docker, Terraform, Jenkins, GitHub Enterprise
-# MAGIC * Languages: Python, Bash, Java, C, C++, SQL
-# MAGIC * Leadership: 100+ engineers trained, Team Sergeant
-# MAGIC * Security: GitHub Advanced Security (GHAS), Threat Assessments
-# MAGIC
-# MAGIC ---
-# MAGIC
-# MAGIC Let's match Free against the **670 real jobs** in our Bronze table!
+# MAGIC ### Create these files in a directory called `veteran-intake-function/`:
 
 # COMMAND ----------
 
-# DBTITLE 1,Define Veteran Profile - William Free Hall (Enhanced)
-# Parse Free Hall's resume into structured veteran profile
+# DBTITLE 1,main.py - Cloud Function Entry Point
+# Save as: veteran-intake-function/main.py
 
-print("="*70)
-print("🎖️ VETERAN PROFILE - Free Hall")
-print("="*70)
+import functions_framework
+import json
+import hashlib
+from datetime import datetime
+from google.cloud import storage
+import uuid
 
-veteran_profile = {
-    "name": "William Free Hall",
-    "location": {
-        "current_city": "Niceville",
-        "current_state": "FL",
-        "target_city": "Greenville",
-        "target_state": "SC",
-        "willing_to_relocate": True,
-        "remote_preference": True
-    },
-    
-    "military": {
-        "branch": "Army",
-        "mos": "18 Series (Special Forces - Green Beret)",
-        "rank": "Team Sergeant",
-        "years_served": 18,
-        "service_dates": "1999-2017",
-        "clearance": "Former TS/SCI (1999-2017, expired - no longer active)",
-        "clearance_notes": "18 years handling classified material, security-first mindset remains"
-    },
-    
-    "target_roles": [
-        "DevOps Engineer",
-        "Solutions Architect",
-        "Cloud Engineer",
-        "Site Reliability Engineer",
-        "Platform Engineer",
-        "Technical Sales Engineer"
-    ],
-    
-    "skills": {
-        "cloud_platforms": ["AWS", "Azure", "EKS", "EC2", "S3", "VPC", "Fargate"],
-        "devops_tools": ["Kubernetes", "Docker", "Terraform", "Jenkins", "Ansible", "GitHub"],
-        "languages": ["Python", "Bash", "Java", "C", "C++", "SQL"],
-        "operating_systems": ["Linux", "RHEL", "Ubuntu", "Amazon Linux", "Windows"],
-        "security": ["GitHub Advanced Security", "GHAS", "Threat Assessment", "Security Clearance"],
-        "leadership": ["Team Leadership", "Technical Training", "Stakeholder Management"]
-    },
-    
-    "certifications": [
-        "AWS Professional",
-        "Azure Professional",
-        "Cybersecurity Training (Syracuse O2O)"
-    ],
-    
-    "education": [
-        "BS Cybersecurity (2020-2022)",
-        "AA Computer Programming (2018-2020)"
-    ],
-    
-    "experience": [
-        {
-            "company": "ConocoPhillips",
-            "title": "AWS DevOps Solution Architect / Azure Cloud Engineer",
-            "years": "2023-2025",
-            "key_achievements": [
-                "Built automated CI/CD pipelines with GitHub Enterprise",
-                "Designed scalable AWS EKS (Kubernetes) environments",
-                "Led Azure DevOps to GitHub Enterprise migration (100+ engineers)"
-            ]
+
+def anonymize_veteran_profile(profile):
+    """
+    Anonymize PII fields in veteran profile.
+    Returns anonymized profile with veteran_id.
+    """
+
+    # Generate anonymous veteran ID based on email hash + timestamp
+    email = profile.get('personal_info', {}).get('email', '')
+    email_hash = hashlib.sha256(email.encode()).hexdigest()[:16]
+    veteran_id = f"VET_{email_hash}"
+
+    # Create anonymized profile
+    anonymized = {
+        "veteran_id": veteran_id,
+        "intake_id": profile.get('intake_id', str(uuid.uuid4())),
+        "timestamp": profile.get('timestamp', datetime.utcnow().isoformat()),
+
+        # Anonymized personal info - keep only non-PII location data
+        "demographics": {
+            "birth_year": int(profile['personal_info']['date_of_birth'].split('-')[0]),
+            "age": datetime.now().year - int(profile['personal_info']['date_of_birth'].split('-')[0]),
+            "location": {
+                "city": profile['personal_info']['address']['city'],
+                "state": profile['personal_info']['address']['state'],
+                "zip3": profile['personal_info']['address']['zip'][:3],  # First 3 digits only
+                "country": profile['personal_info']['address'].get('country', 'USA')
+            },
+            # Store email hash for deduplication only
+            "email_hash": email_hash
         },
-        {
-            "company": "US Army Special Forces",
-            "title": "Team Sergeant / Senior Program Manager",
-            "years": "1999-2017",
-            "key_achievements": [
-                "Technical advisor to senior commanders",
-                "Secured $1M-$2.5M budgets for tactical systems",
-                "Led high-stakes technical intelligence briefings"
-            ]
+
+        # Keep all military service data (not PII)
+        "military_service": profile.get('military_service', {}),
+
+        # Keep skills, education, certifications
+        "skills": profile.get('skills', {}),
+        "education": profile.get('education', []),
+        "certifications": profile.get('certifications', []),
+
+        # Keep job preferences
+        "job_preferences": profile.get('job_preferences', {}),
+
+        # Keep transition info (counselor can contact veteran via their system)
+        "transition_info": profile.get('transition_info', {}),
+
+        # Keep metadata
+        "metadata": profile.get('metadata', {}),
+
+        # Add processing metadata
+        "processing": {
+            "anonymized_at": datetime.utcnow().isoformat(),
+            "schema_version": "1.0.0",
+            "pii_removed": True
         }
-    ],
-    
-    "salary_target": {
-        "min": 120000,
-        "max": 180000,
-        "currency": "USD"
-    }
-}
-
-print("\n📄 Profile Summary:")
-print(f"   Name: {veteran_profile['name']}")
-print(f"   Location: {veteran_profile['location']['city']}, {veteran_profile['location']['state']}")
-print(f"   Military: {veteran_profile['military']['branch']} ({veteran_profile['military']['mos']})")
-print(f"   Years Served: {veteran_profile['military']['years_served']}")
-print(f"   Clearance: {veteran_profile['military']['clearance']}")
-print(f"   Salary Target: ${veteran_profile['salary_target']['min']:,} - ${veteran_profile['salary_target']['max']:,}")
-
-print(f"\n🎯 Target Roles:")
-for role in veteran_profile['target_roles']:
-    print(f"   • {role}")
-
-print(f"\n🛠️ Top Skills:")
-for category, skills in veteran_profile['skills'].items():
-    print(f"   {category.replace('_', ' ').title()}: {', '.join(skills[:5])}")
-
-print("\n" + "="*70)
-print("✅ Veteran profile structured and ready for matching")
-print("="*70)
-
-# COMMAND ----------
-
-# DBTITLE 1,Query Bronze Table & Calculate Match Scores
-# Query Bronze table and calculate similarity scores
-
-from pyspark.sql.functions import col, lower, concat_ws
-
-print("="*70)
-print("🔍 Querying Bronze Table for Job Matches")
-print("="*70)
-
-# Load all jobs from Bronze table
-table_name = "workspace.fys_bronze.job_postings"
-jobs_df = spark.sql(f"""
-    SELECT 
-        job_id,
-        title,
-        company,
-        source,
-        location.city as city,
-        location.state as state,
-        location.display as location_display,
-        salary.min as salary_min,
-        salary.max as salary_max,
-        description,
-        requirements,
-        url
-    FROM {table_name}
-    WHERE salary.max IS NOT NULL  -- Only jobs with salary data
-""")
-
-print(f"\n✅ Loaded {jobs_df.count()} jobs from Bronze table")
-
-# Convert to pandas for easier text processing
-import pandas as pd
-jobs_pdf = jobs_df.toPandas()
-
-print(f"\n📊 Jobs by Location:")
-print(jobs_pdf.groupby('state')['job_id'].count().to_dict())
-
-print(f"\n💰 Salary Range: ${jobs_pdf['salary_min'].min():,.0f} - ${jobs_pdf['salary_max'].max():,.0f}")
-
-print("\n" + "="*70)
-print("✅ Ready to calculate match scores")
-print("="*70)
-
-# COMMAND ----------
-
-# DBTITLE 1,Calculate Similarity Scores - Keyword Matching Algorithm
-# Simple keyword-based matching algorithm (MVP version)
-# Production would use 384-dim embeddings + neural network
-
-import re
-
-print("="*70)
-print("🧮 Calculating Match Scores")
-print("="*70)
-
-# Extract all veteran skills as keywords (flattened)
-veteran_keywords = []
-for skill_category in veteran_profile['skills'].values():
-    veteran_keywords.extend([s.lower() for s in skill_category])
-
-# Add target role keywords
-veteran_keywords.extend([role.lower() for role in veteran_profile['target_roles']])
-
-print(f"\n🎯 Veteran Keywords ({len(set(veteran_keywords))} unique): ")
-print(f"   {', '.join(list(set(veteran_keywords))[:15])}...")
-
-def calculate_match_score(job_row):
-    """
-    Calculate similarity score (0-100) between veteran profile and job posting.
-    
-    Scoring factors:
-    1. Skills Match (40 points): Keyword overlap in title + description + requirements
-    2. Salary Match (30 points): Overlap with veteran's target salary range
-    3. Title Match (20 points): Target role keywords in job title
-    4. Company/Industry (10 points): Bonus for tech companies, government, defense
-    """
-    score = 0
-    match_reasons = []
-    
-    # Combine all job text for keyword matching
-    job_text = ' '.join([
-        str(job_row['title']),
-        str(job_row['description']) if pd.notna(job_row['description']) else '',
-        str(job_row['requirements']) if pd.notna(job_row['requirements']) else ''
-    ]).lower()
-    
-    # 1. Skills Match (40 points)
-    skills_matched = [kw for kw in veteran_keywords if kw in job_text]
-    skills_score = min(40, len(skills_matched) * 2)  # 2 points per matched skill, max 40
-    score += skills_score
-    
-    if skills_score > 20:
-        match_reasons.append(f"{len(skills_matched)} skills matched ({', '.join(skills_matched[:5])})")
-    
-    # 2. Salary Match (30 points)
-    vet_min = veteran_profile['salary_target']['min']
-    vet_max = veteran_profile['salary_target']['max']
-    job_min = job_row['salary_min'] if pd.notna(job_row['salary_min']) else 0
-    job_max = job_row['salary_max'] if pd.notna(job_row['salary_max']) else 0
-    
-    if job_max >= vet_min and job_min <= vet_max:
-        # Salary ranges overlap
-        overlap_amount = min(job_max, vet_max) - max(job_min, vet_min)
-        overlap_pct = overlap_amount / (vet_max - vet_min)
-        salary_score = min(30, overlap_pct * 30)
-        score += salary_score
-        
-        if salary_score > 15:
-            match_reasons.append(f"Salary ${job_min:,.0f}-${job_max:,.0f} in target range")
-    
-    # 3. Title Match (20 points)
-    job_title = str(job_row['title']).lower()
-    title_keywords_matched = [role for role in veteran_profile['target_roles'] 
-                               if any(word in job_title for word in role.lower().split())]
-    
-    title_score = min(20, len(title_keywords_matched) * 10)  # 10 points per matched target role
-    score += title_score
-    
-    if title_score > 0:
-        match_reasons.append(f"Title matches: {', '.join(title_keywords_matched)}")
-    
-    # 4. Company/Industry Bonus (10 points)
-    company_name = str(job_row['company']).lower() if pd.notna(job_row['company']) else ''
-    source = str(job_row['source']).lower()
-    
-    # Bonus for government jobs (veteran preference)
-    if source == 'usajobs' or 'government' in job_text:
-        score += 5
-        match_reasons.append("Government job (veteran preference)")
-    
-    # Bonus for tech/defense companies
-    if any(tech in company_name for tech in ['northrop', 'lockheed', 'raytheon', 'amazon', 'microsoft', 'google']):
-        score += 5
-        match_reasons.append("Major tech/defense company")
-    
-    return {
-        'score': round(score, 1),
-        'match_reasons': match_reasons,
-        'skills_matched': len(skills_matched)
     }
 
-# Calculate scores for all jobs
-print(f"\n🔄 Scoring {len(jobs_pdf)} jobs...")
+    return anonymized
 
-jobs_pdf['match_data'] = jobs_pdf.apply(calculate_match_score, axis=1)
-jobs_pdf['match_score'] = jobs_pdf['match_data'].apply(lambda x: x['score'])
-jobs_pdf['match_reasons'] = jobs_pdf['match_data'].apply(lambda x: ', '.join(x['match_reasons']))
-jobs_pdf['skills_matched'] = jobs_pdf['match_data'].apply(lambda x: x['skills_matched'])
 
-# Sort by score
-jobs_pdf_sorted = jobs_pdf.sort_values('match_score', ascending=False)
+@functions_framework.http
+def veteran_intake(request):
+    """
+    HTTP Cloud Function entry point.
+    Receives veteran profile, anonymizes PII, stores to GCS.
+    """
 
-print(f"\n✅ Scored all jobs!")
-print(f"\n📈 Score Distribution:")
-print(f"   Top Score: {jobs_pdf_sorted['match_score'].max():.1f}")
-print(f"   Median Score: {jobs_pdf_sorted['match_score'].median():.1f}")
-print(f"   Jobs scoring >50: {len(jobs_pdf_sorted[jobs_pdf_sorted['match_score'] > 50])}")
-print(f"   Jobs scoring >70: {len(jobs_pdf_sorted[jobs_pdf_sorted['match_score'] > 70])}")
+    # Handle CORS for web intake wizard
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        }
+        return ('', 204, headers)
 
-print("\n" + "="*70)
-print("✅ Match scoring complete - ready to show top matches")
-print("="*70)
+    headers = {'Access-Control-Allow-Origin': '*'}
 
-# COMMAND ----------
+    try:
+        # Parse incoming JSON
+        request_json = request.get_json(silent=True)
 
-# DBTITLE 1,🏆 Top 10 Job Matches for Free Hall
-# Display top 10 matches with full details
+        if not request_json:
+            return json.dumps({"error": "No JSON payload provided"}), 400, headers
 
-print("="*70)
-print("🏆 TOP 10 JOB MATCHES FOR FREE HALL")
-print("="*70)
+        # Validate required fields
+        required_fields = ['personal_info', 'military_service', 'job_preferences']
+        for field in required_fields:
+            if field not in request_json:
+                return json.dumps({"error": f"Missing required field: {field}"}), 400, headers
 
-top_10 = jobs_pdf_sorted.head(10)
+        # Anonymize the profile
+        anonymized_profile = anonymize_veteran_profile(request_json)
+        veteran_id = anonymized_profile['veteran_id']
 
-for idx, (i, job) in enumerate(top_10.iterrows(), 1):
-    print(f"\n\n{'#'*70}")
-    print(f"MATCH #{idx} - Score: {job['match_score']:.1f}/100")
-    print(f"{'#'*70}")
-    
-    print(f"\n💼 JOB TITLE: {job['title']}")
-    print(f"🏢 COMPANY: {job['company']}")
-    print(f"📍 LOCATION: {job['city']}, {job['state']}")
-    print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
-    print(f"📊 SOURCE: {job['source']}")
-    
-    print(f"\n🎯 WHY THIS MATCHES:")
-    if job['match_reasons']:
-        for reason in job['match_reasons'].split(', '):
-            print(f"   ✅ {reason}")
-    else:
-        print(f"   • {job['skills_matched']} skills matched")
-    
-    print(f"\n🔗 APPLICATION URL:")
-    print(f"   {job['url']}")
-    
-    # Show snippet of job description
-    if pd.notna(job['description']):
-        desc_snippet = job['description'][:300].replace('\n', ' ')
-        print(f"\n📝 DESCRIPTION SNIPPET:")
-        print(f"   {desc_snippet}...")
+        # Store to GCS
+        storage_client = storage.Client()
+        bucket_name = 'fys-veteran-intake-raw'  # Match your bucket name
+        bucket = storage_client.bucket(bucket_name)
 
-print("\n\n" + "="*70)
-print("✅ MATCHING COMPLETE")
-print("="*70)
+        # Create filename with timestamp + veteran_id
+        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        filename = f"intake/{timestamp}_{veteran_id}.json"
 
-print(f"\n📊 SUMMARY:")
-print(f"   Total Jobs Evaluated: {len(jobs_pdf)}")
-print(f"   Top Match Score: {top_10.iloc[0]['match_score']:.1f}/100")
-print(f"   Average Top-10 Score: {top_10['match_score'].mean():.1f}/100")
-print(f"   Jobs scoring >60: {len(jobs_pdf_sorted[jobs_pdf_sorted['match_score'] > 60])}")
+        blob = bucket.blob(filename)
+        blob.upload_from_string(
+            json.dumps(anonymized_profile, indent=2),
+            content_type='application/json'
+        )
 
-print(f"\n🎖️ VETERAN: Free Hall")
-print(f"   Location: {veteran_profile['location']['city']}, {veteran_profile['location']['state']}")
-print(f"   Target Salary: ${veteran_profile['salary_target']['min']:,} - ${veteran_profile['salary_target']['max']:,}")
-print(f"   Clearance: {veteran_profile['military']['clearance']}")
-print(f"   Years Military: {veteran_profile['military']['years_served']}")
+        # Return success response
+        return json.dumps({
+            "status": "success",
+            "veteran_id": veteran_id,
+            "gcs_path": f"gs://{bucket_name}/{filename}",
+            "message": "Veteran profile anonymized and stored successfully"
+        }), 200, headers
 
-print("\n" + "="*70)
-print("🚀 NEXT STEPS: Build Silver Layer (Feature Engineering)")
-print("="*70)
-print("""
-This MVP demonstrates keyword-based matching.
-
-Production pipeline will use:
-  1. Silver Layer: NLP feature extraction, skill normalization
-  2. Gold Layer: 384-dim embeddings (sentence-transformers)
-  3. Neural Network: Siamese twin tower architecture
-  4. Training: Contrastive loss on veteran-job pairs
-  5. Inference: Fast similarity search with FAISS/Annoy
-
-Expected improvement: 60-80% match accuracy (vs 40-50% keyword-based)
-""")
+    except Exception as e:
+        return json.dumps({
+            "status": "error",
+            "error": str(e)
+        }), 500, headers
 
 # COMMAND ----------
 
+# DBTITLE 1,For Your Service - GCP Infrastructure
+# MAGIC %md
+# MAGIC # Ã¢ËœÂÃ¯Â¸Â For Your Service - GCP Infrastructure Setup
+# MAGIC
+# MAGIC ## Overview
+# MAGIC This notebook contains all the commands and code to set up the GCP infrastructure for the veteran intake pipeline.
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Infrastructure Components
+# MAGIC
+# MAGIC 1. **GCS Bucket** - Raw veteran intake JSON storage
+# MAGIC 2. **Cloud Function** - PII anonymization + schema validation
+# MAGIC 3. **Event Trigger** - Automatic processing on intake submission
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC ## Prerequisites
+# MAGIC - GCP Project: `uap-scraper-lab-2026` (or create new for FYS)
+# MAGIC - Cloud Shell or `gcloud` CLI installed
+# MAGIC - Permissions: Editor or Owner role
+# MAGIC
+# MAGIC ---
+# MAGIC
+# MAGIC **Run all commands in Cloud Shell or your local terminal with gcloud configured.**
+
+# COMMAND ----------
+
+# DBTITLE 1,Step 1: Create GCS Bucket
+# MAGIC %undefined
+# MAGIC # Create GCS bucket for veteran intake data
+# MAGIC # Use unique bucket name
+# MAGIC
+# MAGIC BUCKET_NAME="fys-veteran-intake-raw"
+# MAGIC PROJECT_ID="uap-scraper-lab-2026"  # Or your FYS project ID
+# MAGIC REGION="us-central1"
+# MAGIC
+# MAGIC echo "Creating GCS bucket: ${BUCKET_NAME}"
+# MAGIC
+# MAGIC # Create bucket
+# MAGIC gsutil mb -p ${PROJECT_ID} -c STANDARD -l ${REGION} gs://${BUCKET_NAME}
+# MAGIC
+# MAGIC # Set lifecycle policy (auto-delete raw intake after 30 days - anonymized data is in Databricks)
+# MAGIC cat > lifecycle.json <<EOF
+# MAGIC {
+# MAGIC   "lifecycle": {
+# MAGIC     "rule": [
+# MAGIC       {
+# MAGIC         "action": {"type": "Delete"},
+# MAGIC         "condition": {"age": 30}
+# MAGIC       }
+# MAGIC     ]
+# MAGIC   }
+# MAGIC }
+# MAGIC EOF
+# MAGIC
+# MAGIC gsutil lifecycle set lifecycle.json gs://${BUCKET_NAME}
+# MAGIC
+# MAGIC echo "Ã¢Å“â€¦ Bucket created with 30-day lifecycle policy"
+# MAGIC echo "Ã°Å¸â€œÂ Bucket URL: gs://${BUCKET_NAME}"
+# MAGIC
+# MAGIC # Verify
+# MAGIC gsutil ls -L gs://${BUCKET_NAME}
+
+# COMMAND ----------

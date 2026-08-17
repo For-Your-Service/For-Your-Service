@@ -1,24 +1,27 @@
 """
 Adzuna API Data Models
 """
-from pydantic import BaseModel, Field
+
+from pydantic import BaseModel
 from typing import List, Optional
-from datetime import datetime
 
 
 class Company(BaseModel):
     """Company information"""
+
     display_name: str
 
 
 class Location(BaseModel):
     """Job location"""
+
     display_name: str
     area: List[str]
 
 
 class AdzunaJob(BaseModel):
     """Adzuna job posting"""
+
     id: str
     title: str
     company: Company

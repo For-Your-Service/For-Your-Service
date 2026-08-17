@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Export Bronze table data to CSV for external analysis"""
 
+
 def export_bronze_to_csv(spark, output_path, days=7):
     """Export last N days of job data to CSV"""
-    
+
     df = spark.sql(f"""
         SELECT 
           job_id,
@@ -22,13 +23,14 @@ def export_bronze_to_csv(spark, output_path, days=7):
         WHERE scrape_date >= CURRENT_DATE - INTERVAL {days} DAYS
         ORDER BY scrape_date DESC, company, title
     """)
-    
+
     # Write to CSV
     df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_path)
-    
+
     print(f"✅ Exported {df.count()} records to {output_path}")
-    
+
     return df.count()
+
 
 if __name__ == "__main__":
     print("CSV Export Utility")

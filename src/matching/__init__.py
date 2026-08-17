@@ -1,7 +1,4 @@
-"""
-Neural matching engine for veteran-job pairing
-"""
-from .siamese_network import SiameseNetwork
-from .matcher import JobMatcher
+﻿from .siamese_network import SiameseNetwork
+from .encoder import encode_veteran_profile, calculate_similarity
 
-__all__ = ["SiameseNetwork", "JobMatcher"]
+__all__ = ['SiameseNetwork', 'encode_veteran_profile', 'calculate_similarity']

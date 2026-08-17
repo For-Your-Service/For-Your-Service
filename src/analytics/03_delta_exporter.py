@@ -19,5 +19,7 @@ window_spec = Window.partitionBy("candidate_uuid").orderBy(col("match_score").de
 top_matches = results.withColumn("rank", row_number().over(window_spec)).filter(col("rank") <= 5)
 
 # Save into Gold Delta Table for direct Counselor Dashboard querying
-top_matches.write.format("delta").mode("overwrite").saveAsTable("fys_catalog.analytics.top_candidate_matches")
+top_matches.write.format("delta").mode("overwrite").saveAsTable(
+    "fys_catalog.analytics.top_candidate_matches"
+)
 print("Top candidate matches exported to fys_catalog.analytics.top_candidate_matches.")

@@ -6,7 +6,7 @@
 
 # COMMAND ----------
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, expr
+from pyspark.sql.functions import expr
 
 spark = SparkSession.builder.appName("FYS_Tensor_Match").getOrCreate()
 
@@ -19,7 +19,9 @@ matches = candidates.crossJoin(jobs)
 # Compute dot product sum across all 5 dimensions
 matched_df = matches.withColumn(
     "match_score",
-    expr("aggregate(zip_with(candidate_vector, job_vector, (x, y) -> x * y), 0.0f, (acc, x) -> acc + x)")
+    expr(
+        "aggregate(zip_with(candidate_vector, job_vector, (x, y) -> x * y), 0.0f, (acc, x) -> acc + x)"
+    ),
 )
 
 matched_df.write.format("delta").mode("overwrite").save("gs://fys-landing-dev/match_results")

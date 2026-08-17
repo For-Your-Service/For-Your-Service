@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 """Generate comprehensive data quality report"""
-from datetime import datetime, timedelta
-import json
+
+from datetime import datetime
+
 
 def generate_report(spark):
     """Generate data quality metrics"""
-    
-    report = {
-        "report_date": datetime.now().isoformat(),
-        "period": "Last 7 days",
-        "metrics": {}
-    }
-    
+
+    report = {"report_date": datetime.now().isoformat(), "period": "Last 7 days", "metrics": {}}
+
     # Total records
     total_df = spark.sql("""
         SELECT COUNT(*) as total
@@ -19,7 +16,7 @@ def generate_report(spark):
         WHERE scrape_date >= CURRENT_DATE - INTERVAL 7 DAYS
     """)
     report["metrics"]["total_records"] = total_df.collect()[0]["total"]
-    
+
     # Completeness checks
     completeness_df = spark.sql("""
         SELECT 
@@ -30,10 +27,10 @@ def generate_report(spark):
         FROM workspace.fys_bronze.job_postings
         WHERE scrape_date >= CURRENT_DATE - INTERVAL 7 DAYS
     """)
-    
+
     completeness = completeness_df.collect()[0].asDict()
     report["metrics"]["completeness"] = completeness
-    
+
     # Duplicate check
     duplicate_df = spark.sql("""
         SELECT COUNT(*) - COUNT(DISTINCT job_id) as duplicates
@@ -41,7 +38,7 @@ def generate_report(spark):
         WHERE scrape_date >= CURRENT_DATE - INTERVAL 7 DAYS
     """)
     report["metrics"]["duplicates"] = duplicate_df.collect()[0]["duplicates"]
-    
+
     # Source breakdown
     source_df = spark.sql("""
         SELECT source, COUNT(*) as count
@@ -50,16 +47,17 @@ def generate_report(spark):
         GROUP BY source
     """)
     report["metrics"]["by_source"] = {row["source"]: row["count"] for row in source_df.collect()}
-    
+
     # Overall quality score
     avg_completeness = sum(completeness.values()) / len(completeness)
     duplicate_rate = report["metrics"]["duplicates"] / report["metrics"]["total_records"] * 100
-    quality_score = avg_completeness * (1 - duplicate_rate/100)
-    
+    quality_score = avg_completeness * (1 - duplicate_rate / 100)
+
     report["quality_score"] = round(quality_score, 2)
     report["status"] = "PASS" if quality_score >= 75 else "FAIL"
-    
+
     return report
+
 
 if __name__ == "__main__":
     print("Data Quality Report Generator")

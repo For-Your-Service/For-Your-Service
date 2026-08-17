@@ -1,6 +1,7 @@
 """
 Utility functions
 """
+
 from .logger import setup_logger
 from .validators import validate_mos, validate_email
 
