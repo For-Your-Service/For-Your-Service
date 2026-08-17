@@ -1,7 +1,7 @@
 """
 Tests for USAJobs API client
 """
-import pytest
+
 from src.api.usajobs.client import USAJobsClient
 
 
@@ -15,10 +15,7 @@ def test_usajobs_client_initialization():
 def test_build_search_params():
     """Test search parameter construction"""
     client = USAJobsClient(api_key="test_key", user_agent="test@example.com")
-    params = client._build_search_params(
-        keyword="cybersecurity",
-        location="California"
-    )
+    params = client._build_search_params(keyword="cybersecurity", location="California")
     assert params["Keyword"] == "cybersecurity"
     assert params["LocationName"] == "California"
     assert params["ResultsPerPage"] == 100

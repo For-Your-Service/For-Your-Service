@@ -1,7 +1,7 @@
 """
 Tests for O*NET API client
 """
-import pytest
+
 from src.api.onet.client import ONetClient
 
 
@@ -16,5 +16,5 @@ def test_occupation_code_format():
     """Test O*NET occupation code format"""
     # Valid format: XX-XXXX.XX
     valid_code = "15-1212.00"
-    assert len(valid_code.split('-')) == 2
-    assert len(valid_code.split('.')) == 2
+    assert len(valid_code.split("-")) == 2
+    assert len(valid_code.split(".")) == 2

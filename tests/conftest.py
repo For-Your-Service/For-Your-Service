@@ -1,6 +1,7 @@
 """
 Pytest configuration and fixtures
 """
+
 import pytest
 from src.api.config import APIConfig
 
@@ -21,7 +22,7 @@ def mock_usajobs_response():
                     "MatchedObjectDescriptor": {
                         "PositionTitle": "Cybersecurity Specialist",
                         "OrganizationName": "Department of Defense",
-                        "PositionLocationDisplay": "San Diego, CA"
+                        "PositionLocationDisplay": "San Diego, CA",
                     }
                 }
             ]

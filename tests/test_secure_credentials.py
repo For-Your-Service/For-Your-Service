@@ -96,7 +96,6 @@ print("\n" + "=" * 70)
 # DBTITLE 1,Test JSearch API Connection
 # Test actual API connection with stored credentials
 import requests
-import json
 
 if credentials_configured:
     print("=" * 70)
@@ -279,7 +278,6 @@ else:
 
 # DBTITLE 1,Full Pipeline Test - API to Delta Table
 import requests
-import json
 from databricks.sdk.runtime import dbutils
 
 print("=" * 70)
@@ -963,7 +961,6 @@ if not found_search:
 # DBTITLE 1,Test USAJobs API Connection
 # Test USAJobs API - Federal Veteran Jobs
 import requests
-import json
 from databricks.sdk.runtime import dbutils
 
 print("=" * 80)
@@ -1136,7 +1133,6 @@ print("\n" + "=" * 80)
 # DBTITLE 1,Test USAJobs API - Federal Veteran Jobs
 # Test USAJobs API - Federal Veteran Jobs for Free Hall
 import requests
-import json
 from databricks.sdk.runtime import dbutils
 
 print("=" * 80)
