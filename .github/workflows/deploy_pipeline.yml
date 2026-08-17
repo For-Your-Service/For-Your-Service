@@ -1,0 +1,40 @@
+﻿name: Execute Job Offering Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_target:
+        description: 'Target job offering source (e.g., usajobs, jsearch, 7eagle, all)'
+        required: true
+        default: 'all'
+  push:
+    branches:
+      - main
+
+jobs:
+  run-databricks-job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@v0.2.0
+
+      - name: Trigger Databricks Pipeline
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          $Params = @{
+              rapidapi_key       = "${{ secrets.RAPIDAPI_KEY }}"
+              usajobs_key        = "${{ secrets.USAJOBS_API_KEY }}"
+              seven_eagle_id     = "${{ secrets.SEVEN_EAGLE_APP_ID }}"
+              seven_eagle_key    = "${{ secrets.SEVEN_EAGLE_APP_KEY }}"
+              target_source      = "${{ github.event.inputs.job_target }}"
+          } | ConvertTo-Json -Compress
+
+          databricks jobs run-now <YOUR_DATABRICKS_JOB_ID> --notebook-params $Params

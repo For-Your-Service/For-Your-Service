@@ -1,0 +1,20 @@
+# File: terraform.tfvars.example
+# Description: Example variable values for For Your Service AWS infrastructure
+# Usage: Copy to terraform.tfvars and update with your values
+
+# AWS Configuration
+aws_region  = "us-east-1"  # Free tier optimized region
+environment = "dev"         # dev, staging, or prod
+
+# Databricks Configuration
+databricks_aws_account_id = "414351767826"           # Standard Databricks account ID
+databricks_external_id    = "your-unique-external-id" # ⚠️ REQUIRED: Get from Databricks
+
+# Project Metadata
+project_name = "ForYourService"
+owner        = "Free Hall"
+organization = "7 Eagle Group"
+
+# S3 Configuration
+enable_versioning = true  # Enable bucket versioning for data protection
+force_destroy     = false # Set to true ONLY for test environments

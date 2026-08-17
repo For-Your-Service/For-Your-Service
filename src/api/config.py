@@ -1,59 +1,15 @@
-"""
-API Keys Configuration
-Store your API keys as environment variables in production
-This file is a template - DO NOT commit actual keys to Git
-"""
+﻿import os
 
-import os
-from typing import Optional
-
-
-class APIConfig:
-    """Centralized API configuration management"""
-    
-    # USAJobs API (https://developer.usajobs.gov/)
+class Config:
+    ONET_USERNAME: str = os.getenv("ONET_USERNAME", "")
+    ONET_PASSWORD: str = os.getenv("ONET_PASSWORD", "")
     USAJOBS_API_KEY: str = os.getenv("USAJOBS_API_KEY", "")
-    USAJOBS_USER_AGENT: str = os.getenv("USAJOBS_USER_AGENT", "whall4.wh@gmail.com")
-    
-    # BLS API (https://data.bls.gov/registrationEngine/)
-    BLS_API_KEY: str = os.getenv("BLS_API_KEY", "d2d7521b04c2411e9f16e639e617cd7a")
-    
-    # Adzuna API (https://developer.adzuna.com/)
-    ADZUNA_APP_ID: str = os.getenv("ADZUNA_APP_ID", "")
-    ADZUNA_API_KEY: str = os.getenv("ADZUNA_API_KEY", "")
-    
-    # O*NET API (https://services.onetcenter.org/)
-    ONET_USERNAME: str = os.getenv("ONET_USERNAME", "whall4.wh@gmail.com")
-    ONET_API_KEY: str = os.getenv("ONET_API_KEY", "1bI5R-GtQp9-JdxaL-bTiqM")
-    
-    # CareerOneStop API (https://www.careeronestop.org/Developers/)
-    CAREERONESTOP_USER_ID: str = os.getenv("CAREERONESTOP_USER_ID", "")
-    CAREERONESTOP_TOKEN: str = os.getenv("CAREERONESTOP_TOKEN", "")
-    
-    @classmethod
-    def validate(cls) -> dict:
-        """Check which API keys are configured"""
-        return {
-            "usajobs": bool(cls.USAJOBS_API_KEY),
-            "bls": bool(cls.BLS_API_KEY),
-            "adzuna": bool(cls.ADZUNA_APP_ID and cls.ADZUNA_API_KEY),
-            "onet": bool(cls.ONET_API_KEY),
-            "careeronestop": bool(cls.CAREERONESTOP_USER_ID and cls.CAREERONESTOP_TOKEN)
-        }
-    
-    @classmethod
-    def get_missing_keys(cls) -> list:
-        """Return list of APIs with missing keys"""
-        validation = cls.validate()
-        return [api for api, configured in validation.items() if not configured]
+    USAJOBS_EMAIL: str = os.getenv("USAJOBS_EMAIL", "")
+    ENV: str = os.getenv("APP_ENV", "development")
 
-
-# Usage example:
-if __name__ == "__main__":
-    print("API Configuration Status:")
-    for api, status in APIConfig.validate().items():
-        print(f"  {api}: {'✅ Configured' if status else '❌ Missing'}")
-    
-    missing = APIConfig.get_missing_keys()
-    if missing:
-        print(f"\nMissing API keys: {', '.join(missing)}")
+    @classmethod
+    def validate_secrets(cls) -> None:
+        if cls.ENV.lower() in ("production", "prod", "staging"):
+            missing = [k for k in ["ONET_USERNAME", "ONET_PASSWORD", "USAJOBS_API_KEY", "USAJOBS_EMAIL"] if not getattr(cls, k)]
+            if missing:
+                raise ValueError(f"Missing required production credentials: {', '.join(missing)}")

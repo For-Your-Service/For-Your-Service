@@ -1,0 +1,40 @@
+[
+  {
+    "id": "indeed_REPLACE_WITH_REAL_JOB_ID",
+    "title": "Senior DevOps Engineer",
+    "company": {
+      "display_name": "REPLACE_WITH_REAL_COMPANY"
+    },
+    "location": {
+      "display_name": "Greenville, SC"
+    },
+    "description": "\n        REPLACE THIS WITH FULL REAL JOB DESCRIPTION FROM INDEED\n        \n        Include:\n        - Responsibilities\n        - Required skills\n        - Qualifications\n        - Benefits\n        - Any veteran/military mentions\n        - Clearance requirements\n        ",
+    "salary_min": 120000,
+    "salary_max": 160000,
+    "redirect_url": "https://www.indeed.com/viewjob?jk=REAL_JOB_ID",
+    "created": "2025-01-08T10:00:00Z",
+    "category": {
+      "label": "IT Jobs"
+    },
+    "contract_type": "permanent"
+  },
+  {
+    "id": "linkedin_REPLACE_WITH_REAL_JOB_ID",
+    "title": "Cloud Solutions Architect",
+    "company": {
+      "display_name": "REPLACE_WITH_REAL_COMPANY"
+    },
+    "location": {
+      "display_name": "Remote"
+    },
+    "description": "\n        REPLACE THIS WITH FULL REAL JOB DESCRIPTION FROM LINKEDIN\n        ",
+    "salary_min": 140000,
+    "salary_max": 180000,
+    "redirect_url": "https://www.linkedin.com/jobs/view/REAL_JOB_ID",
+    "created": "2025-01-07T14:30:00Z",
+    "category": {
+      "label": "IT Jobs"
+    },
+    "contract_type": "permanent"
+  }
+]

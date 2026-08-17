@@ -1,3 +1,6 @@
+﻿-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
+
+-- DEPRECATED: Non-canonical schema definition. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 -- Create Unity Catalog schemas for For Your Service
 -- Run this first to set up the database structure
 
@@ -21,3 +24,5 @@ CREATE SCHEMA IF NOT EXISTS veteran_intake.gold
 USE CATALOG veteran_intake;
 
 SHOW SCHEMAS;
+
+

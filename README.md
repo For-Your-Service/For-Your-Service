@@ -35,12 +35,18 @@ Follow [docs/API_QUICKSTART.md](docs/API_QUICKSTART.md) to register for:
 - JSearch (RapidAPI)
 - Adzuna API
 
-### 3. Configure Databricks Secrets
+### 3. Configure AWS Infrastructure (Optional)
+For production deployment with S3 and DynamoDB:
+- See [docs/aws/AWS_IAM_SECURITY_SETUP.md](docs/aws/AWS_IAM_SECURITY_SETUP.md)
+- Or use Quick Setup: Open `AWS_Quick_Setup` notebook in Databricks
+- Test connection: `scripts/aws/test_aws_connection.py`
+
+### 4. Configure Databricks Secrets
 ```bash
 ./scripts/setup_databricks_secrets.sh
 ```
 
-### 4. Run Ingestion Pipeline
+### 5. Run Ingestion Pipeline
 Open `notebooks/03b_Multi_Source_Job_Ingestion` in Databricks
 
 ### 5. Test API
@@ -109,6 +115,7 @@ Cost per veteran matched: **$0.14-0.24**
 ## 📚 Documentation
 
 - [API Quickstart](docs/API_QUICKSTART.md) - 15-minute setup
+- [AWS IAM Security Setup](docs/aws/AWS_IAM_SECURITY_SETUP.md) - AWS infrastructure configuration
 - [Multi-Source Ingestion Spec](docs/MULTI_SOURCE_INGESTION_SPEC.md)
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
 - [FAQ](docs/FAQ.md)
@@ -152,3 +159,12 @@ MIT License - See [LICENSE](LICENSE) for details.
 ---
 
 Built with ❤️ by veterans, for veterans.
+### Production Canonical Path
+For production job pipeline logic, reference:
+- `src/databricks/bronze/` -> `ingest_fys_job_postings.py`
+- `src/databricks/silver/` -> `transform_fys_job_postings.py`
+- `src/databricks/gold/` -> `aggregate_fys_job_postings.py`
+### Production Canonical Path
+- `src/databricks/bronze/` -> `ingest_fys_job_postings.py`
+- `src/databricks/silver/` -> `transform_fys_job_postings.py`
+- `src/databricks/gold/` -> `aggregate_fys_job_postings.py`

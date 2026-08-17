@@ -1,0 +1,65 @@
+﻿name: Automated Dead Code & Static Analysis
+
+on:
+  schedule:
+    # Runs every Monday at 04:00 UTC
+    - cron: '0 4 * * 1'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  vulture-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Analysis Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install vulture
+
+      - name: Run Vulture Dead Code Analysis
+        run: |
+          # Run vulture and output results to a report file
+          # Minimum confidence set to 80% to reduce false positives
+          vulture . --min-confidence 80 > vulture-report.txt || true
+          
+      - name: Check if Dead Code Was Found
+        id: check_report
+        run: |
+          if [ -s vulture-report.txt ]; then
+            echo "findings=true" >> ${{ github.output }}
+          else
+            echo "findings=false" >> ${{ github.output }}
+          fi
+
+      - name: Create Pull Request with Cleanup Report
+        if: steps.check_report.outputs.findings == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(code-quality): automated dead code analysis report"
+          branch: automated/vulture-dead-code-sweep
+          title: "🧹 Automated Dead Code Sweep (Vulture Report)"
+          body: |
+            Automated static analysis scan detected potentially unused code or unimported modules. 
+            Review the attached report below and clear out the technical debt.
+            
+            `	ext
+            
+            `
+          labels: |
+            code-quality
+            automated-pr
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          signoff: true

@@ -105,3 +105,38 @@ generated/
 output/
 
 raw_jobs_output.json
+
+# Resume Privacy - Never commit personal resumes
+data/resumes/*.pdf
+data/resumes/*.docx
+data/resumes/*.doc
+results/*.json
+
+# Keep directory structure
+!data/resumes/.gitkeep
+!results/.gitkeep
+
+# API Credentials - NEVER commit these!
+config/api_credentials.py
+.env
+*.key
+*_credentials.py
+
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Terraform outputs
+outputs.json
