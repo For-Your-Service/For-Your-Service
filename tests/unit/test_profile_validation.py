@@ -15,7 +15,7 @@ def test_valid_profile():
         "years_service": 10,
         "target_location": "Greenville, SC",
     }
-    assert validate_veteran_profile(profile) == True
+    assert validate_veteran_profile(profile) is True
 
 
 def test_missing_required_field():
