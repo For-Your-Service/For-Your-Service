@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Massive notebook cleanup: Reduced bloat in notebooks
 **5. Code Refactoring**
 
 * `automated/vulture-dead-code-sweep` - Dead code cleanup automation
