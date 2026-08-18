@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* See [LINEAGE.md](docs/LINEAGE.md) for complete data flow documentation
 * See [ADR-001](docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md) for Unity Catalog spine details
 **Related Documentation:**
 * **Net Change:** -2,610 lines (improved code quality through consolidation)
