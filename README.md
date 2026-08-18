@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+  * Declared official production tables:
 * **ADR-001:** Established code-canonical Unity Catalog spine (`workspace.fys_*`)
 **2. Production Architecture Documentation**
 
