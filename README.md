@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+**3. System Architecture for Hugging Face Deployment**
+
 * **PRODUCTION_STATUS.md:** Current state showing infrastructure ready but blocked on Adzuna API credentials
 
 * **LINEAGE.md:** Documents data flow from APIs → Bronze → Silver → Gold → Hugging Face matching
