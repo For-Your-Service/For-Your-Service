@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+**6. New Utilities**
+
 * Legacy code migration: Moved deprecated transaction lakehouse code to `sandbox/legacy_transactions/`
 
 * Script improvements: Enhanced error handling across API clients, data quality scripts, and production scrapers
