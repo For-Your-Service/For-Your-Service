@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `automated/vulture-dead-code-sweep` - Dead code cleanup automation
+
 * `feature/system-architecture-docs` - Architecture documentation
 * `feature/consumer-packaging-options` - Consumer distribution strategy
 * `feature/add-pipeline-ingestion` - Pipeline ingestion enhancements
