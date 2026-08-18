@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `feature/system-architecture-docs` - Architecture documentation
 * `feature/consumer-packaging-options` - Consumer distribution strategy
 * `feature/add-pipeline-ingestion` - Pipeline ingestion enhancements
 * `feature/huggingface-deployment` - Hugging Face Space deployment work
