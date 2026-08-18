@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Deploy FastAPI ingestion backend with GCS integration
 * Add consumer packaging documentation
 * Resolve flake8 linting issues (config BOM + test suite)
 * Add system architecture documentation for Hugging Face
