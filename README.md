@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* **LINEAGE.md:** Documents data flow from APIs → Bronze → Silver → Gold → Hugging Face matching
   * Deprecated legacy namespaces (`for_your_service`, `veteran_intake`, `main.fys_*`)
     * `workspace.fys_gold.job_embeddings`
     * `workspace.fys_gold.match_results`
