@@ -13,8 +13,10 @@ Help veterans transition from military to civilian careers by matching their uni
 
 ## 🎯 What It Does
 
+- **Streamlit Web Interface:** Production-ready veteran intake portal with real-time job matching
 - **Multi-Source Ingestion:** Aggregates jobs from USAJOBS, JSearch, and Adzuna APIs
 - **Semantic Matching:** Uses sentence-transformers for neural embedding-based matching
+- **AI Resume Parsing:** Automatic skill extraction and experience analysis
 - **MOS Crosswalk:** Maps military specialties to civilian job titles
 - **Regional Focus:** Greenville-Anderson MSA (expandable)
 - **FREE Deployment:** $7-12/month on Databricks + Hugging Face Spaces
