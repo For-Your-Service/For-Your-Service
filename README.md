@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Added `flake8-linter.yml` - Automated linting for code quality
 * Added `black-formatter.yml` - Automated Python code formatting workflow
 **1. Code Quality & CI/CD Automation**
 
