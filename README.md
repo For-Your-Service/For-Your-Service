@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+    * `workspace.fys_silver.veteran_profiles`
+    * `workspace.fys_silver.enriched_jobs`
     * `workspace.fys_bronze.job_postings`
   * Declared official production tables:
 * **ADR-001:** Established code-canonical Unity Catalog spine (`workspace.fys_*`)
