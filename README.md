@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+#### 🔴 Production Status
+
 * Automated dependency remediation
 
 * Add automated CI workflows (Black, Flake8, Vulture)
