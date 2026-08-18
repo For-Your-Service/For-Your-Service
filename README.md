@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+  * Example: `notebooks/04_Job_Market_Data_Sources.py` reduced from 2,578 lines
 * Massive notebook cleanup: Reduced bloat in notebooks
 **5. Code Refactoring**
 
