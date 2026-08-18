@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* See [PRODUCTION_STATUS.md](docs/PRODUCTION_STATUS.md) for current deployment status
+
 * See [LINEAGE.md](docs/LINEAGE.md) for complete data flow documentation
 * See [ADR-001](docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md) for Unity Catalog spine details
 **Related Documentation:**
