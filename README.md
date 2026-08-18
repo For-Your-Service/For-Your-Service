@@ -158,6 +158,9 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
+
+## 📋 Changelog
+
 Built with ❤️ by veterans, for veterans.
 ### Production Canonical Path
 For production job pipeline logic, reference:
