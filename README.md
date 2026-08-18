@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `feature/huggingface-deployment` - Hugging Face Space deployment work
 **4. New Feature Branches**
 
   * Gold: `src/databricks/gold/aggregate_fys_job_postings.py`
