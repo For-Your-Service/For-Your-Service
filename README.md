@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Add consumer packaging documentation
 * Resolve flake8 linting issues (config BOM + test suite)
 * Add system architecture documentation for Hugging Face
 * Fix unit test failures across matching/validation/ingestion
