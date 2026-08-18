@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* **PRODUCTION_STATUS.md:** Current state showing infrastructure ready but blocked on Adzuna API credentials
+
 * **LINEAGE.md:** Documents data flow from APIs → Bronze → Silver → Gold → Hugging Face matching
   * Deprecated legacy namespaces (`for_your_service`, `veteran_intake`, `main.fys_*`)
     * `workspace.fys_gold.job_embeddings`
