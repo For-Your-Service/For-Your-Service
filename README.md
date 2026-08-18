@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+#### 📊 Commit Highlights
+
 * PowerShell automation scripts for GitHub admin and issue resolution
 
 * `pipeline_config.json` - Centralized pipeline configuration
