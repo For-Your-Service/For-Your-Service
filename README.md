@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+**Recommended Actions:**
 * 🔴 Data ingestion **BLOCKED** on invalid Adzuna API credentials (401 Unauthorized)
 
 * ✅ Unity Catalog infrastructure is **READY**
