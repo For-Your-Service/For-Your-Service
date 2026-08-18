@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* ✅ Unity Catalog infrastructure is **READY**
 **Infrastructure Status:**
 #### 🔴 Production Status
 
