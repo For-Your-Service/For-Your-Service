@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+**Infrastructure Status:**
 #### 🔴 Production Status
 
 * Automated dependency remediation
