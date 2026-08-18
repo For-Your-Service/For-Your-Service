@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+  * Bronze: `src/databricks/bronze/ingest_fys_job_postings.py`
 * Established canonical pipeline paths:
 * Added comprehensive deployment documentation
 **3. System Architecture for Hugging Face Deployment**
