@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Automated dependency remediation
+
 * Add automated CI workflows (Black, Flake8, Vulture)
 * Deploy FastAPI ingestion backend with GCS integration
 * Add consumer packaging documentation
