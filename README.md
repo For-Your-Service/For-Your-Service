@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Resolved unit test failures across neural matching, validation, ingestion, and pipeline orchestration
 * Added `dead-code-analysis.yml` - Automated detection of unused code using Vulture
 * Added `flake8-linter.yml` - Automated linting for code quality
 * Added `black-formatter.yml` - Automated Python code formatting workflow
