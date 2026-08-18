@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+    * `workspace.fys_gold.job_embeddings`
+    * `workspace.fys_gold.match_results`
     * `workspace.fys_silver.veteran_profiles`
     * `workspace.fys_silver.enriched_jobs`
     * `workspace.fys_bronze.job_postings`
