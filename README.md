@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+**Related Documentation:**
 * **Net Change:** -2,610 lines (improved code quality through consolidation)
 
 * **Deletions:** 11,006 lines removed (code cleanup and refactoring)
