@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `feature/add-pipeline-ingestion` - Pipeline ingestion enhancements
 * `feature/huggingface-deployment` - Hugging Face Space deployment work
 **4. New Feature Branches**
 
