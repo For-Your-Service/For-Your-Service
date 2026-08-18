@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Established canonical pipeline paths:
 * Added comprehensive deployment documentation
 **3. System Architecture for Hugging Face Deployment**
 
