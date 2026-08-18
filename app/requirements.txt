@@ -1,0 +1,18 @@
+# ============================================================================
+# For Your Service - Streamlit App Dependencies
+# 7 Eagle Group - Veteran Intake Portal
+# ============================================================================
+
+# Core Streamlit framework
+streamlit>=1.28.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Databricks connectivity
+databricks-sdk>=0.12.0
+pyspark>=3.4.0
+
+# Utilities
+python-dateutil>=2.8.2

@@ -1,0 +1,16 @@
+# ============================================================================
+# Databricks App Configuration
+# For Your Service - Veteran Intake Portal
+# 7 Eagle Group
+# ============================================================================
+
+command: ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+
+# Environment configuration
+env:
+  - name: STREAMLIT_SERVER_HEADLESS
+    value: "true"
+  - name: STREAMLIT_BROWSER_GATHER_USAGE_STATS
+    value: "false"
+  - name: STREAMLIT_THEME_BASE
+    value: "light"
