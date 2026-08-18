@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `pipeline_config.json` - Centralized pipeline configuration
 * `resume_cheatsheet.md` - Resume parsing reference guide
 * `ingest_resume.py` - Resume ingestion pipeline
 **6. New Utilities**
