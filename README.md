@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Generated `flake8_errors.md` documenting 1,844 lint errors for systematic cleanup
+
 * Resolved unit test failures across neural matching, validation, ingestion, and pipeline orchestration
 * Added `dead-code-analysis.yml` - Automated detection of unused code using Vulture
 * Added `flake8-linter.yml` - Automated linting for code quality
