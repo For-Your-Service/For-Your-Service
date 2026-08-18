@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+### August 18, 2026
+
 ---
 
 Built with ❤️ by veterans, for veterans.
