@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Add system architecture documentation for Hugging Face
 * Fix unit test failures across matching/validation/ingestion
 #### 📊 Commit Highlights
 
