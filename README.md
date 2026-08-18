@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* **Option A:** Get Adzuna API credentials (free tier: 10K requests/month)
 **Recommended Actions:**
 * 🔴 Data ingestion **BLOCKED** on invalid Adzuna API credentials (401 Unauthorized)
 
