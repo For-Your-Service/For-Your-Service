@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Legacy code migration: Moved deprecated transaction lakehouse code to `sandbox/legacy_transactions/`
+
 * Script improvements: Enhanced error handling across API clients, data quality scripts, and production scrapers
   * Example: `notebooks/04_Job_Market_Data_Sources.py` reduced from 2,578 lines
 * Massive notebook cleanup: Reduced bloat in notebooks
