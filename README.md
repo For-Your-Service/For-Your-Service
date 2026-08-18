@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* `ingest_resume.py` - Resume ingestion pipeline
 **6. New Utilities**
 
 * Legacy code migration: Moved deprecated transaction lakehouse code to `sandbox/legacy_transactions/`
