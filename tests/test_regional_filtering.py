@@ -20,6 +20,15 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     return R * c
 
 
+def is_in_greenville_msa(location: str) -> bool:
+    """Filter out non-Greenville MSA locations"""
+    excluded = ["Charleston", "Columbia", "Myrtle Beach"]
+    for city in excluded:
+        if city.lower() in location.lower():
+            return False
+    return True
+
+
 def test_greenville_msa_center():
     """Test Greenville MSA center coordinates"""
     greenville_lat = 34.8526
@@ -48,8 +57,9 @@ def test_excluded_cities():
     """Test exclusion of non-Greenville MSA cities"""
     excluded = ["Charleston", "Columbia", "Myrtle Beach"]
 
-    job_location = "Charleston, SC"
-
     for city in excluded:
-        if city in job_location:
-            assert False, f"{city} should be filtered out"
+        job_location = f"{city}, SC"
+        assert not is_in_greenville_msa(job_location), f"{city} should be filtered out"
+
+    assert is_in_greenville_msa("Greenville, SC") is True
+    assert is_in_greenville_msa("Anderson, SC") is True

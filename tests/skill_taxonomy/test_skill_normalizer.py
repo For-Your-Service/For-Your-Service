@@ -33,7 +33,7 @@ class TestSkillNormalizer(unittest.TestCase):
     def test_normalize_unknown_skill(self):
         """Test normalizing unknown skill"""
         result = self.normalizer.normalize_skill("SuperRareSkill")
-        self.assertEqual(result["canonical_name"], "Supperareskill")
+        self.assertEqual(result["canonical_name"], "Superrareskill")
         self.assertLess(result["confidence"], 1.0)
 
     def test_normalize_skills_deduplication(self):

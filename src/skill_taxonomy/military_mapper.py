@@ -135,6 +135,7 @@ class MilitarySkillMapper:
                 title="Special Forces Senior Sergeant",
                 civilian_equivalent="Senior Manager / Director of Operations",
                 skills=[
+                    "Leadership",
                     "Senior Leadership",
                     "Strategic Planning",
                     "Multi-team Coordination",

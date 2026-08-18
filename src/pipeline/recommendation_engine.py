@@ -154,15 +154,20 @@ class RecommendationEngine:
         )
 
         # Missing skills from gap analysis
+        missing_skills = gap_analysis.get("missing_skills", [])
         missing_critical = [
-            g for g in gap_analysis.get("missing_skills", []) if g.get("importance") == "Critical"
+            g for g in missing_skills
+            if (g.get("importance") if isinstance(g, dict) else getattr(g, "importance", None)) == "Critical"
         ]
         if missing_critical:
-            skill_names = [g["skill_name"] for g in missing_critical[:3]]
+            skill_names = [
+                (g.get("skill_name") if isinstance(g, dict) else getattr(g, "skill_name", ""))
+                for g in missing_critical[:3]
+            ]
             improvements.append(
                 ResumeImprovement(
                     section="Skills",
-                    issue=f"Missing critical skills for target roles",
+                    issue="Missing critical skills for target roles",
                     suggestion=f"Consider adding projects or labs for: {', '.join(skill_names)}",
                     priority="High",
                 )
@@ -240,20 +245,27 @@ class RecommendationEngine:
 
         missing_skills = gap_analysis.get("missing_skills", [])
 
-        # Sort by importance
         importance_order = {"Critical": 0, "Important": 1, "Nice-to-have": 2}
         sorted_skills = sorted(
-            missing_skills, key=lambda s: importance_order.get(s.get("importance", "Important"), 3)
+            missing_skills,
+            key=lambda s: importance_order.get(
+                s.get("importance", "Important") if isinstance(s, dict) else getattr(s, "importance", "Important"),
+                3
+            )
         )
 
         for idx, skill in enumerate(sorted_skills[:5], 1):
+            s_name = skill.get("skill_name") if isinstance(skill, dict) else getattr(skill, "skill_name", "")
+            s_time = skill.get("estimated_time", "4-6 weeks") if isinstance(skill, dict) else getattr(skill, "estimated_time", "4-6 weeks")
+            s_res = skill.get("learning_resources", []) if isinstance(skill, dict) else getattr(skill, "learning_resources", [])
+            s_level = skill.get("target_level", "Proficient") if isinstance(skill, dict) else getattr(skill, "target_level", "Proficient")
             plan.append(
                 {
                     "priority": idx,
-                    "skill": skill.get("skill_name"),
-                    "estimated_time": skill.get("estimated_time", "4-6 weeks"),
-                    "resources": skill.get("learning_resources", []),
-                    "goal": f"Reach {skill.get('target_level', 'Proficient')} level",
+                    "skill": s_name,
+                    "estimated_time": s_time,
+                    "resources": s_res,
+                    "goal": f"Reach {s_level} level",
                 }
             )
 

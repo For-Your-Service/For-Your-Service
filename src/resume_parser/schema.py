@@ -90,38 +90,48 @@ class EducationEntry:
         }
 
 
-@dataclass
 class ResumeSchema:
     """Complete structured resume data"""
 
-    # Contact Information
-    full_name: str
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    location: Optional[str] = None
-    linkedin_url: Optional[str] = None
-    github_url: Optional[str] = None
-
-    # Professional Summary
-    summary: Optional[str] = None
-
-    # Core Data
-    skills: List[SkillEntry] = field(default_factory=list)
-    experience: List[ExperienceEntry] = field(default_factory=list)
-    education: List[EducationEntry] = field(default_factory=list)
-
-    # Veteran-Specific Fields
-    military_branch: Optional[str] = None
-    military_mos: Optional[str] = None  # Military Occupational Specialty
-    security_clearance: Optional[str] = None
-    years_of_service: Optional[float] = None
-
-    # Certifications
-    certifications: List[str] = field(default_factory=list)
-
-    # Metadata
-    raw_text: Optional[str] = None  # Full extracted text
-    parse_timestamp: Optional[str] = None
+    def __init__(
+        self,
+        full_name: str,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
+        location: Optional[str] = None,
+        linkedin_url: Optional[str] = None,
+        github_url: Optional[str] = None,
+        summary: Optional[str] = None,
+        skills: Optional[List[SkillEntry]] = None,
+        experience: Optional[List[ExperienceEntry]] = None,
+        education: Optional[List[EducationEntry]] = None,
+        military_branch: Optional[str] = None,
+        military_mos: Optional[str] = None,
+        security_clearance: Optional[str] = None,
+        years_of_service: Optional[float] = None,
+        total_years_experience: Optional[float] = None,
+        certifications: Optional[List[str]] = None,
+        raw_text: Optional[str] = None,
+        parse_timestamp: Optional[str] = None,
+    ):
+        self.full_name = full_name
+        self.email = email
+        self.phone = phone
+        self.location = location
+        self.linkedin_url = linkedin_url
+        self.github_url = github_url
+        self.summary = summary
+        self.skills = skills if skills is not None else []
+        self.experience = experience if experience is not None else []
+        self.education = education if education is not None else []
+        self.military_branch = military_branch
+        self.military_mos = military_mos
+        self.security_clearance = security_clearance
+        self.years_of_service = years_of_service
+        self._total_years_experience = total_years_experience
+        self.certifications = certifications if certifications is not None else []
+        self.raw_text = raw_text
+        self.parse_timestamp = parse_timestamp
 
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization"""
@@ -148,7 +158,13 @@ class ResumeSchema:
     @property
     def total_years_experience(self) -> float:
         """Calculate total years of professional experience"""
+        if self._total_years_experience is not None:
+            return float(self._total_years_experience)
         total = sum(exp.duration_years for exp in self.experience if exp.duration_years is not None)
         if self.years_of_service:
             total += self.years_of_service
         return round(total, 1)
+
+    @total_years_experience.setter
+    def total_years_experience(self, value: float):
+        self._total_years_experience = value
