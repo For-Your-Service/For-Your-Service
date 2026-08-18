@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+  * Gold: `src/databricks/gold/aggregate_fys_job_postings.py`
+
   * Silver: `src/databricks/silver/transform_fys_job_postings.py`
   * Bronze: `src/databricks/bronze/ingest_fys_job_postings.py`
 * Established canonical pipeline paths:
