@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+#### 🔧 Technical Details
+
 * **Option B:** Manually scrape 5-10 real jobs from Indeed/LinkedIn for immediate validation
 
 * **Option A:** Get Adzuna API credentials (free tier: 10K requests/month)
