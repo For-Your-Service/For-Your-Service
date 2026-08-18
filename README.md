@@ -161,6 +161,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* Fix unit test failures across matching/validation/ingestion
 #### 📊 Commit Highlights
 
 * PowerShell automation scripts for GitHub admin and issue resolution
