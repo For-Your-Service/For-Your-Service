@@ -161,6 +161,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 📋 Changelog
 
+* PowerShell automation scripts for GitHub admin and issue resolution
+
 * `pipeline_config.json` - Centralized pipeline configuration
 * `resume_cheatsheet.md` - Resume parsing reference guide
 * `ingest_resume.py` - Resume ingestion pipeline
