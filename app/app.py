@@ -535,10 +535,12 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(
         """
-        <div style='font-size: 0.8rem; color: #64748b; text-align: center;'>
+        <div style='font-size: 0.82rem; color: #64748b; text-align: center; line-height: 1.45;'>
             <strong>For Your Service</strong><br>
-            Universal Platform for All Military Service Members<br>
-            Free Hall • 18Z / 18F US Army Special Forces (Ret.)
+            Universal Veteran Career Platform<br>
+            <strong>Free Hall</strong><br>
+            <em>Cloud Engineer • DevOps Analyst • Data Architect</em><br>
+            <em>18Z / 18F US Army Special Forces (Ret.)</em>
         </div>
         """,
         unsafe_allow_html=True
@@ -1232,16 +1234,35 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
 
 
 # ============================================================================
-# FOOTER
+# FOOTER & BACKEND DATA ENGINEERING TECH STACK SUMMARY
 # ============================================================================
 
 st.markdown("---")
+
+with st.expander("⚙️ Backend Architecture & Data Engineering Tech Stack Summary"):
+    st.markdown("""
+    ### 🏗️ Backend System Architecture & Data Engineering Stack
+    **Lead Architect & Developer:** **Free Hall** — *Cloud Engineer • DevOps Analyst • Data Architect* (18Z / 18F, US Army Special Forces, Ret.)
+
+    * **Medallion Lakehouse Architecture (Databricks & Delta Lake):**
+        * **Bronze Layer (`workspace.fys_bronze.job_postings`):** Automated multi-source ingestion pipeline aggregating active opportunities across USAJOBS, Adzuna, and JSearch REST APIs with schema enforcement and deduplication.
+        * **Silver Layer (`workspace.fys_silver.veteran_profiles`):** PII-anonymized candidate ingestion, O*NET taxonomy skill normalization, and military MOS/AFSC/Rating crosswalk translation.
+        * **Gold Layer (`workspace.fys_gold.job_embeddings`):** 384-dimensional dense semantic vector representations powered by `sentence-transformers/all-MiniLM-L6-v2`.
+    * **AI Neural Matching & Career Readiness Engine:**
+        * **PyTorch Siamese Twin Tower Neural Network:** Deep learning model evaluating candidate-to-job semantic compatibility via cosine similarity.
+        * **Delta Vector Skill Gap Attribution ($\Delta = J_{\\text{target}} - V_{\\text{candidate}}$):** Isolates high-residual missing competencies and maps them to high-impact certifications with 100% free veteran funding.
+    * **Zero-Cost & Serverless Cloud Hybrid:**
+        * Runs on Databricks Serverless Compute in production; automatically falls back to 100% free local CPU execution for offline / zero-cost operation.
+    * **Streamlit Responsive Frontend:**
+        * Mobile-first, cross-platform UI optimized for iOS Safari, Android Chrome, macOS, and Windows.
+    """)
+
 st.markdown("""
-<div style="text-align: center; color: #64748b; font-size: 0.9rem; padding: 1rem 0;">
+<div style="text-align: center; color: #64748b; font-size: 0.9rem; padding: 1rem 0; line-height: 1.6;">
     <img src="https://flagcdn.com/w40/us.png" width="22" height="14" alt="US Flag" style="vertical-align: middle; border-radius: 2px; margin-right: 6px; display: inline-block;">
     <strong>For Your Service</strong> | AI-Powered Veteran Job Matching Platform<br>
     Proudly Partnered with <strong>7 Eagle Group</strong> | Free & Open Source for Veterans<br>
-    Lead Developer: <strong>Free Hall</strong> (18Z / 18F, US Army Special Forces, Ret.)<br>
+    Lead Architect & Developer: <strong>Free Hall</strong> (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)<br>
     <em>🎖️ Serving Those Who Served 🎖️</em>
 </div>
 """, unsafe_allow_html=True)

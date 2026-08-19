@@ -7,7 +7,7 @@ AI-powered veteran job matching platform using neural networks.
 Help veterans transition from military to civilian careers by matching their unique skills and experience with the right opportunities.
 
 **Partner:** 7 Eagle Group  
-**Developer:** Free Hall (18Z, US Army Special Forces, Ret.)
+**Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
 
 ---
 
