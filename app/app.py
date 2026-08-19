@@ -365,29 +365,29 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "situational awareness", "mentorship", "inspections", "training & development"
     ]
     
-    detected_tech = [s for s in tech_keywords if s in text_lower]
-    detected_trades = [s for s in trades_keywords if s in text_lower]
-    detected_logistics = [s for s in logistics_keywords if s in text_lower]
-    detected_construction = [s for s in construction_keywords if s in text_lower]
-    detected_security = [s for s in security_keywords if s in text_lower]
-    detected_healthcare = [s for s in healthcare_keywords if s in text_lower]
-    detected_leadership = [s for s in leadership_keywords if s in text_lower]
+    def has_keyword(kw: str) -> bool:
+        # Exact word-boundary match to prevent false positives (e.g. 'security' matching 'security+')
+        pattern = r'(?:\b|_)' + re.escape(kw) + r'(?:\b|_)'
+        return bool(re.search(pattern, text_lower))
+
+    detected_tech = [s for s in tech_keywords if has_keyword(s)]
+    detected_trades = [s for s in trades_keywords if has_keyword(s)]
+    detected_logistics = [s for s in logistics_keywords if has_keyword(s)]
+    detected_construction = [s for s in construction_keywords if has_keyword(s)]
+    detected_security = [s for s in security_keywords if has_keyword(s)]
+    detected_healthcare = [s for s in healthcare_keywords if has_keyword(s)]
+    detected_leadership = [s for s in leadership_keywords if has_keyword(s)]
     
     detected_ops = list(set(detected_trades + detected_logistics + detected_construction + detected_security + detected_healthcare))
     
-    # Add MOS-specific transferable skills
+    # MOS information is kept separate as background context, NEVER injected as claimed personal skills/certs
     mos_info = lookup_mos(mos_code)
-    mos_skills = []
-    if mos_info:
-        mos_skills = mos_info.get("transferable_skills", [])
-        for ts in mos_info.get("tech_skills", []):
-            if ts not in detected_tech and ts not in detected_ops:
-                detected_tech.append(ts)
+    mos_skills = mos_info.get("transferable_skills", []) if mos_info else []
                 
-    # Estimate years of experience
+    # Estimate years of experience from resume text
     years_pattern = r'(\d+)\+?\s*years?'
     years_matches = re.findall(years_pattern, text_lower)
-    total_years = max([int(y) for y in years_matches], default=6)
+    total_years = max([int(y) for y in years_matches], default=4)
     
     if total_years >= 12:
         seniority = "Senior / Executive Leader"
@@ -1039,19 +1039,34 @@ if nav_selection == "📋 Veteran Intake & Match":
         </div>
         """, unsafe_allow_html=True)
         
-        # Extracted Skills Tag Cloud
-        st.markdown("#### 🔍 Extracted Military & Civilian Strengths")
-        skills_html = ""
-        for s in extracted["technical_skills"][:10]:
-            skills_html += f"<span class='skill-chip'>💻 {s.upper()}</span>"
-        for l in extracted["leadership_skills"][:6]:
-            skills_html += f"<span class='mil-skill-chip'>🎖️ {l.title()}</span>"
-        for o in extracted["ops_skills"][:6]:
-            skills_html += f"<span class='ops-skill-chip'>⚙️ {o.title()}</span>"
-        if extracted.get("mos_skills"):
-            for m in extracted["mos_skills"][:4]:
-                skills_html += f"<span class='mil-skill-chip'>🪖 {m.title()}</span>"
-        st.markdown(skills_html, unsafe_allow_html=True)
+        # Extracted Skills & Verification Display
+        st.markdown("#### 🔍 Candidate Skills & Military Experience Breakdown")
+        
+        col_sk1, col_sk2 = st.columns(2)
+        with col_sk1:
+            st.markdown("**📄 Verified Skills Detected in Resume:**")
+            resume_skills = extracted["technical_skills"] + extracted["ops_skills"] + extracted["leadership_skills"]
+            if resume_skills:
+                skills_html = ""
+                for s in extracted["technical_skills"][:8]:
+                    skills_html += f"<span class='skill-chip'>💻 {s.upper()}</span> "
+                for o in extracted["ops_skills"][:6]:
+                    skills_html += f"<span class='ops-skill-chip'>⚙️ {o.title()}</span> "
+                for l in extracted["leadership_skills"][:6]:
+                    skills_html += f"<span class='mil-skill-chip'>🎖️ {l.title()}</span> "
+                st.markdown(skills_html, unsafe_allow_html=True)
+            else:
+                st.info("No specific technical keywords detected in resume text. The matching engine is using your verified military experience, rank, clearance, and target career track.")
+                
+        with col_sk2:
+            st.markdown(f"**🪖 Military Specialty Crosswalk ({profile['branch']} {profile['mos']}):**")
+            if extracted.get("mos_skills"):
+                mos_html = ""
+                for m in extracted["mos_skills"][:6]:
+                    mos_html += f"<span class='mil-skill-chip'>🪖 {m.title()}</span> "
+                st.markdown(mos_html, unsafe_allow_html=True)
+            else:
+                st.markdown(f"*General Military Service — {profile['branch']}*")
         st.markdown("")
 
         # TABS: JOB MATCHES vs CAREER READINESS & SKILL GAP OPTIMIZER
