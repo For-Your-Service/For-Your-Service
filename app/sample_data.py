@@ -294,6 +294,90 @@ SAMPLE_JOBS: List[Dict] = [
         "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, Cisco network switches, and cloud access. Direct translation for 25B, 25U, Navy IT, 0671, 1D7X1.",
         "skills": ["windows server", "active directory", "cisco", "linux", "tcp/ip", "powershell", "virtualization", "networking", "troubleshooting"],
         "url": "https://www.fluor.com/careers"
+    },
+
+    # -------------------------------------------------------------------------
+    # CONSTRUCTION, HEAVY INFRASTRUCTURE & COMBAT ENGINEERING
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_const_001",
+        "title": "Heavy Civil Construction Site Superintendent",
+        "company": "Kiewit Infrastructure",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC / Regional",
+        "salary_min": 95000,
+        "salary_max": 135000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Construction & Infrastructure",
+        "description": "Direct large-scale earthmoving, bridge, and highway construction projects. Enforce OSHA safety protocols, subcontractor scheduling, and blueprint execution. Perfect for Army 12B/12N Combat Engineers, Navy Seabees (BU/EO), and Air Force RED HORSE.",
+        "skills": ["heavy equipment operations", "site safety enforcement", "subcontractor management", "blueprint reading", "project scheduling", "osha 30", "earthmoving"],
+        "url": "https://kiewit.com/careers"
+    },
+
+    # -------------------------------------------------------------------------
+    # ADVANCED MANUFACTURING, PRECISION MACHINING & INDUSTRIAL TRADES
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_mfg_001",
+        "title": "Advanced CNC Manufacturing & Tooling Supervisor",
+        "company": "General Electric Aerospace",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 88000,
+        "salary_max": 122000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "USAJobs / Defense Partners",
+        "category": "Advanced Manufacturing & Machining",
+        "description": "Supervise multi-axis CNC machining centers producing high-tolerance turbine components. Direct fit for military machinists, weapons repairers (91F, 91G), Navy Machinery Repairmen (MR), and Air Force Metals Techs.",
+        "skills": ["cnc machining", "precision measurement", "quality assurance", "blueprint interpretation", "lean manufacturing", "g-code", "tooling calibration"],
+        "url": "https://geaerospace.com/careers"
+    },
+
+    # -------------------------------------------------------------------------
+    # MARITIME OPERATIONS & PORT LOGISTICS
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_mar_001",
+        "title": "Port Operations & Marine Terminal Safety Supervisor",
+        "company": "South Carolina Ports Authority",
+        "city": "Charleston",
+        "state": "SC",
+        "location_display": "Charleston, SC",
+        "salary_min": 82000,
+        "salary_max": 115000,
+        "clearance_required": "Public Trust",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Maritime & Port Operations",
+        "description": "Oversee container terminal vessel operations, stevedore safety, and maritime cargo handling. Ideal fit for Coast Guard Boatswain's Mates (BM), Marine Science Techs (MST), and Navy Boatswain's Mates / Quartermasters.",
+        "skills": ["maritime navigation", "cargo handling", "dock operations", "vessel safety protocols", "twic compliance", "incident response"],
+        "url": "https://scspa.com/careers"
+    },
+
+    # -------------------------------------------------------------------------
+    # RENEWABLE ENERGY & HIGH-VOLTAGE POWER GENERATION
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_pwr_001",
+        "title": "High-Voltage Substation & Power Grid Field Specialist",
+        "company": "Dominion Energy",
+        "city": "Columbia",
+        "state": "SC",
+        "location_display": "Columbia, SC / Greenville, SC",
+        "salary_min": 86000,
+        "salary_max": 120000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Energy & Power Generation",
+        "description": "Install, test, and maintain high-voltage transformers, switchgear, and utility substation relays. Direct translation for Army Prime Power Specialists (12P), Tactical Power Gen (91D), and Navy Electrician's Mates (EM).",
+        "skills": ["high voltage electrical", "switchgear maintenance", "transformer testing", "schematic reading", "electrical safety (nfpa 70e)", "substation relays"],
+        "url": "https://careers.dominionenergy.com"
     }
 ]
 
