@@ -551,7 +551,10 @@ with st.sidebar:
 
 st.markdown("""
 <div class="hero-banner">
-    <div class="hero-title">🇺🇸 FOR YOUR SERVICE</div>
+    <div class="hero-title" style="display: flex; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" width="46" height="30" alt="United States Flag" style="border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.35); vertical-align: middle; display: inline-block;">
+        <span>FOR YOUR SERVICE</span>
+    </div>
     <div class="hero-subtitle">Universal Veteran Career Intake & AI Military-to-Civilian Job Matching Platform</div>
     <div class="hero-badge">🎖️ Serving ALL Branches • Any Rank • Any Specialty • 100% Free</div>
 </div>
@@ -1235,7 +1238,8 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: #64748b; font-size: 0.9rem; padding: 1rem 0;">
-    🇺🇸 <strong>For Your Service</strong> | AI-Powered Veteran Job Matching Platform<br>
+    <img src="https://flagcdn.com/w40/us.png" width="22" height="14" alt="US Flag" style="vertical-align: middle; border-radius: 2px; margin-right: 6px; display: inline-block;">
+    <strong>For Your Service</strong> | AI-Powered Veteran Job Matching Platform<br>
     Proudly Partnered with <strong>7 Eagle Group</strong> | Free & Open Source for Veterans<br>
     Lead Developer: <strong>Free Hall</strong> (18Z / 18F, US Army Special Forces, Ret.)<br>
     <em>🎖️ Serving Those Who Served 🎖️</em>
