@@ -25,33 +25,54 @@ Help veterans transition from military to civilian careers by matching their uni
 
 ## 🚀 Quick Start
 
-### 1. Clone Repository
+### 1. Run the Streamlit Veteran Portal (100% Free & Local)
+The fastest way to test the platform:
 ```bash
+# Clone and enter repo
 git clone https://github.com/For-Your-Service/For-Your-Service.git
 cd For-Your-Service
-```
 
-### 2. Set Up API Keys
+# Install app dependencies
+pip install -r app/requirements.txt
+
+# Launch the Streamlit Portal
+streamlit run app/app.py
+```
+Open **`http://localhost:8501`** in your browser.
+
+---
+
+### 2. Deploy 24/7 to Streamlit Community Cloud (100% Free)
+1. Go to **[share.streamlit.io](https://share.streamlit.io)** and log in with GitHub.
+2. Click **"New app"**.
+3. Select `For-Your-Service/For-Your-Service`, branch `main`, and main file path `app/app.py`.
+4. Click **"Deploy"** to get a permanent public link (e.g. `https://fys-veterans.streamlit.app`).
+
+See [docs/STREAMLIT_GUIDE.md](docs/STREAMLIT_GUIDE.md) and [app/README.md](app/README.md) for full portal documentation.
+
+---
+
+### 3. Set Up Data Ingestion & API Keys (Databricks / Cloud)
 Follow [docs/API_QUICKSTART.md](docs/API_QUICKSTART.md) to register for:
 - USAJOBS API
 - JSearch (RapidAPI)
 - Adzuna API
 
-### 3. Configure AWS Infrastructure (Optional)
+### 4. Configure AWS Infrastructure (Optional)
 For production deployment with S3 and DynamoDB:
 - See [docs/aws/AWS_IAM_SECURITY_SETUP.md](docs/aws/AWS_IAM_SECURITY_SETUP.md)
 - Or use Quick Setup: Open `AWS_Quick_Setup` notebook in Databricks
 - Test connection: `scripts/aws/test_aws_connection.py`
 
-### 4. Configure Databricks Secrets
+### 5. Configure Databricks Secrets
 ```bash
 ./scripts/setup_databricks_secrets.sh
 ```
 
-### 5. Run Ingestion Pipeline
+### 6. Run Ingestion Pipeline
 Open `notebooks/03b_Multi_Source_Job_Ingestion` in Databricks
 
-### 5. Test API
+### 7. Test API
 ```bash
 python setup/03_Test_API.py
 ```

@@ -50,10 +50,12 @@ This project includes comprehensive documentation totaling **1,015+ lines** acro
 ### For Developers
 
 1. **[README.md](../README.md)** - Quick start and repository structure
-2. **[docs/ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture
-3. **[setup/01_Unity_Catalog_Setup.py](../setup/01_Unity_Catalog_Setup.py)** - Database setup script
-4. **[setup/03_Test_API.py](../setup/03_Test_API.py)** - API testing suite
-5. **[huggingface/README.md](../huggingface/README.md)** - HF deployment guide
+2. **[docs/STREAMLIT_GUIDE.md](STREAMLIT_GUIDE.md)** - Streamlit web portal guide & free cloud deployment
+3. **[app/README.md](../app/README.md)** - Streamlit intake portal architecture & Databricks apps
+4. **[docs/ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture
+5. **[setup/01_Unity_Catalog_Setup.py](../setup/01_Unity_Catalog_Setup.py)** - Database setup script
+6. **[setup/03_Test_API.py](../setup/03_Test_API.py)** - API testing suite
+7. **[huggingface/README.md](../huggingface/README.md)** - HF deployment guide
 
 ### For 7 Eagle Group Leadership
 

@@ -87,17 +87,24 @@ app/
    - Share the app URL with 7 Eagle Group coordinators
    - Veterans can access directly without Databricks accounts
 
-### Option 2: Local Development
+### Option 2: Streamlit Community Cloud (100% Free - Recommended)
+
+Deploy permanently 24/7 in 60 seconds directly from GitHub:
+
+1. Go to **[share.streamlit.io](https://share.streamlit.io)** and log in with your GitHub account.
+2. Click **"New app"**.
+3. Set **Repository**: `For-Your-Service/For-Your-Service`
+4. Set **Branch**: `main`
+5. Set **Main file path**: `app/app.py`
+6. Click **"Deploy"**.
+
+### Option 3: Local Development (100% Free & Offline)
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Set Databricks credentials
-export DATABRICKS_HOST="https://dbc-3e95d032-684c.cloud.databricks.com"
-export DATABRICKS_TOKEN="<your-token>"
-
-# Run locally
+# Run locally (runs in local fallback mode if Databricks is not configured)
 streamlit run app.py
 ```
 
