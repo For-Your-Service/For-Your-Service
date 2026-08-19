@@ -1,8 +1,9 @@
 """
 Sample Data and Offline Fallback Engine
 For Your Service - 7 Eagle Group
-Provides realistic veteran-friendly job postings, fallback profiles, and local job matching.
-100% Free - Works without external paid API or cloud requirements.
+Provides diverse veteran-friendly job postings across all career fields:
+Operations, Logistics, Mechanics, Law Enforcement, Healthcare, Aviation, IT, and Leadership.
+100% Free - Works offline without external paid API or cloud requirements.
 """
 
 import json
@@ -10,90 +11,51 @@ import os
 from pathlib import Path
 from typing import List, Dict, Optional
 
-# Realistic veteran-friendly job postings
+# Realistic veteran-friendly job postings across diverse career categories
 SAMPLE_JOBS: List[Dict] = [
+    # -------------------------------------------------------------------------
+    # OPERATIONS, PROGRAM MANAGEMENT & LEADERSHIP
+    # -------------------------------------------------------------------------
     {
-        "job_id": "fys_001",
-        "title": "Lead Cloud Solutions Architect",
-        "company": "Lockheed Martin",
-        "city": "Greenville",
-        "state": "SC",
-        "location_display": "Greenville, SC (Hybrid)",
-        "salary_min": 145000,
-        "salary_max": 185000,
-        "clearance_required": "Secret",
-        "veteran_friendly": True,
-        "source": "USAJobs / Defense Partners",
-        "description": "Lead enterprise cloud modernization using AWS, Kubernetes, Terraform, and Databricks. Design zero-trust data architectures and mission-critical pipelines. Prior military special operations or defense intelligence experience strongly valued.",
-        "skills": ["aws", "kubernetes", "terraform", "python", "databricks", "docker", "ci/cd", "linux", "cloud architecture", "leadership"],
-        "url": "https://www.lockheedmartinjobs.com"
-    },
-    {
-        "job_id": "fys_002",
-        "title": "Senior DevOps & Platform Engineer",
-        "company": "Michelin North America",
-        "city": "Greenville",
-        "state": "SC",
-        "location_display": "Greenville, SC",
-        "salary_min": 125000,
-        "salary_max": 160000,
-        "clearance_required": "None",
-        "veteran_friendly": True,
-        "source": "Adzuna API",
-        "description": "Seeking experienced DevOps Engineer to architect automated CI/CD pipelines, Kubernetes clusters, and infrastructure-as-code deployments using Terraform and GitHub Actions. Strong military leadership and technical problem-solving background preferred.",
-        "skills": ["devops", "kubernetes", "docker", "terraform", "python", "github actions", "bash", "ci/cd", "aws", "prometheus"],
-        "url": "https://jobs.michelinman.com"
-    },
-    {
-        "job_id": "fys_003",
-        "title": "Senior Cyber Threat Intelligence Analyst",
-        "company": "Booz Allen Hamilton",
-        "city": "Columbia",
-        "state": "SC",
-        "location_display": "Columbia, SC / Remote",
-        "salary_min": 115000,
-        "salary_max": 150000,
-        "clearance_required": "Top Secret / SCI",
-        "veteran_friendly": True,
-        "source": "JSearch API",
-        "description": "Conduct all-source cyber threat intelligence analysis, threat actor profiling, and link analysis. Utilize Palantir, i2 Analyst's Notebook, and SIEM tools to deliver executive-level intelligence briefings to defense stakeholders.",
-        "skills": ["cybersecurity", "threat intelligence", "palantir", "i2 analyst notebook", "link analysis", "siem", "python", "incident response", "executive briefings"],
-        "url": "https://www.boozallen.com/careers"
-    },
-    {
-        "job_id": "fys_004",
-        "title": "Systems Administrator / Cloud Operations Lead",
-        "company": "Fluor Corporation",
-        "city": "Greenville",
-        "state": "SC",
-        "location_display": "Greenville, SC",
-        "salary_min": 95000,
-        "salary_max": 130000,
-        "clearance_required": "Public Trust",
-        "veteran_friendly": True,
-        "source": "Adzuna API",
-        "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, VMware virtualization, and Azure cloud resources. Support global engineering projects with high availability standards.",
-        "skills": ["windows server", "active directory", "linux", "vmware", "azure", "powershell", "networking", "cisco", "troubleshooting"],
-        "url": "https://www.fluor.com/careers"
-    },
-    {
-        "job_id": "fys_005",
-        "title": "Data Engineering Lead (Databricks / PySpark)",
-        "company": "General Dynamics Information Technology",
-        "city": "Charleston",
-        "state": "SC",
-        "location_display": "Charleston, SC (Remote Eligible)",
+        "job_id": "fys_ops_001",
+        "title": "Director of Field Operations & Mission Support",
+        "company": "7 Eagle Group Partner Employer",
+        "city": "Atlanta",
+        "state": "GA",
+        "location_display": "Atlanta, GA (Hybrid / Remote)",
         "salary_min": 135000,
         "salary_max": 175000,
         "clearance_required": "Secret",
         "veteran_friendly": True,
-        "source": "USAJobs",
-        "description": "Design and optimize high-throughput data lakehouses using Databricks, Apache Spark, Delta Lake, and AWS. Build scalable ETL pipelines and vector search pipelines for defense applications.",
-        "skills": ["databricks", "spark", "python", "sql", "delta lake", "aws", "data pipelines", "lakehouse", "etl", "git"],
-        "url": "https://www.gdit.com/careers"
+        "source": "7 Eagle Group Direct",
+        "category": "Operations & Leadership",
+        "description": "Lead cross-functional technical and field teams delivering complex operational deployments. Requires seasoned military leadership (Senior NCO E-7+ or Officer O-3+), strategic risk planning, crisis decision-making, and SOP enforcement.",
+        "skills": ["executive leadership", "strategic planning", "operations management", "risk mitigation", "cross-functional operations", "crisis management", "personnel accountability"],
+        "url": "https://7eaglegroup.com"
     },
     {
-        "job_id": "fys_006",
+        "job_id": "fys_ops_002",
+        "title": "Operations Team Lead / Field Project Coordinator",
+        "company": "Fluor Corporation",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 85000,
+        "salary_max": 115000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Operations & Leadership",
+        "description": "Coordinate field execution, workforce scheduling, safety compliance, and operational workflows for large infrastructure initiatives. Military combat arms (11B, 11C, 19D, 0311) and NCOs with squad/platoon leadership excel in this role.",
+        "skills": ["team leadership", "operational planning", "safety compliance", "risk assessment", "situational awareness", "standard operating procedures"],
+        "url": "https://www.fluor.com/careers"
+    },
+
+    # -------------------------------------------------------------------------
+    # LOGISTICS, SUPPLY CHAIN & TRANSPORTATION
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_log_001",
         "title": "Operations & Logistics Program Manager",
         "company": "BMW Manufacturing Co.",
         "city": "Spartanburg",
@@ -104,60 +66,127 @@ SAMPLE_JOBS: List[Dict] = [
         "clearance_required": "None",
         "veteran_friendly": True,
         "source": "Adzuna API",
-        "description": "Oversee complex supply chain operations, fleet management, and production line logistics. Military veterans with NCO/Officer operations management experience (11B, 88M, 92A, 18Z) highly encouraged to apply.",
-        "skills": ["operations management", "supply chain", "logistics", "team leadership", "risk management", "continuous improvement", "sap", "excel"],
+        "category": "Logistics & Supply Chain",
+        "description": "Oversee complex supply chain operations, fleet management, and production line logistics. Military veterans with logistics, supply, and transportation backgrounds (88M, 92A, 92Y, LS, 2T2X1, 0431) strongly encouraged to apply.",
+        "skills": ["supply chain optimization", "inventory auditing", "fleet tracking", "procurement", "shipping & receiving", "warehouse management", "sap", "excel"],
         "url": "https://www.bmwgroup.jobs"
     },
     {
-        "job_id": "fys_007",
-        "title": "Principal Cyber Security Engineer (Red Team / Penetration Testing)",
-        "company": "Raytheon Technologies (RTX)",
-        "city": "Tampa",
-        "state": "FL",
-        "location_display": "Tampa, FL / Remote",
-        "salary_min": 150000,
-        "salary_max": 195000,
-        "clearance_required": "Top Secret / SCI",
+        "job_id": "fys_log_002",
+        "title": "Fleet Transportation Supervisor / CDL Route Dispatcher",
+        "company": "Schneider National",
+        "city": "Columbia",
+        "state": "SC",
+        "location_display": "Columbia, SC",
+        "salary_min": 72000,
+        "salary_max": 98000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Logistics & Transportation",
+        "description": "Manage commercial freight routes, driver scheduling, DOT compliance, and fleet safety inspections. Direct translation for military motor transport operators (88M, 3531) and convoy commanders.",
+        "skills": ["heavy vehicle operations", "route planning", "cargo safety", "preventive maintenance", "dot compliance", "telematics"],
+        "url": "https://schneiderjobs.com"
+    },
+    {
+        "job_id": "fys_log_003",
+        "title": "Supply Chain & Property Inventory Controller",
+        "company": "Lockheed Martin",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 78000,
+        "salary_max": 108000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "USAJobs / Defense Partners",
+        "category": "Logistics & Supply Chain",
+        "description": "Maintain defense asset accountability, warehouse logistics, and inventory auditing for aerospace manufacturing. Direct fit for 92Y, 92A, LS, 0431, SK specialists.",
+        "skills": ["property accountability", "asset tracking", "budget reconciliation", "vendor coordination", "erp software", "excel"],
+        "url": "https://www.lockheedmartinjobs.com"
+    },
+
+    # -------------------------------------------------------------------------
+    # MAINTENANCE, MECHANICS & FIELD ENGINEERING
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_mech_001",
+        "title": "Fleet Maintenance Shop Supervisor / Heavy Diesel Mechanic",
+        "company": "Penske Truck Leasing",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 75000,
+        "salary_max": 102000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Maintenance & Mechanics",
+        "description": "Supervise diesel fleet maintenance, hydraulic troubleshooting, engine diagnostics, and preventive inspection schedules. Ideal for 91B, 91X, MK, 3531, or mechanical NCOs.",
+        "skills": ["diesel engine overhaul", "electrical troubleshooting", "hydraulic repair", "preventive maintenance inspection", "diagnostic testing", "team leadership"],
+        "url": "https://penske.jobs"
+    },
+    {
+        "job_id": "fys_mech_002",
+        "title": "Aviation Maintenance Technician (A&P / Helicopter Specialist)",
+        "company": "Boeing",
+        "city": "Charleston",
+        "state": "SC",
+        "location_display": "Charleston, SC",
+        "salary_min": 85000,
+        "salary_max": 120000,
+        "clearance_required": "Secret",
         "veteran_friendly": True,
         "source": "Defense Partners",
-        "description": "Perform adversary emulation, penetration testing, and security architecture reviews for defense networks. Hands-on experience with exploit development, Wireshark, Metasploit, and Linux kernel required.",
-        "skills": ["cybersecurity", "penetration testing", "python", "metasploit", "wireshark", "linux", "reverse engineering", "security+", "cissp"],
-        "url": "https://careers.rtx.com"
+        "category": "Aviation & Maintenance",
+        "description": "Perform structural inspections, turbine powerplant maintenance, and flight-line diagnostics. Direct match for Army 15T/15U, Air Force 2A6X1, and Navy Aviation mechanics.",
+        "skills": ["turbine engine maintenance", "rotor systems repair", "faa/military aviation standards", "avionics diagnostics", "precision torque tools"],
+        "url": "https://jobs.boeing.com"
+    },
+
+    # -------------------------------------------------------------------------
+    # LAW ENFORCEMENT, SECURITY & PHYSICAL PROTECTION
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_sec_001",
+        "title": "Corporate Physical Security Manager / Site Protection Lead",
+        "company": "Duke Energy",
+        "city": "Charlotte",
+        "state": "NC",
+        "location_display": "Charlotte, NC / Greenville, SC",
+        "salary_min": 92000,
+        "salary_max": 128000,
+        "clearance_required": "Public Trust",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Law Enforcement & Security",
+        "description": "Oversee physical security operations, access control infrastructure, threat assessments, and emergency response plans for critical energy facilities. Direct fit for 31B, 31D, 5811, 3P0X1, MA, ME.",
+        "skills": ["force protection", "perimeter security", "incident investigation", "access control", "cctv", "conflict de-escalation", "emergency response"],
+        "url": "https://duke-energy.com/careers"
     },
     {
-        "job_id": "fys_008",
-        "title": "Senior Network Security Engineer",
+        "job_id": "fys_sec_002",
+        "title": "Federal Background & Fraud Investigator",
         "company": "CACI International",
-        "city": "Fayetteville",
-        "state": "NC",
-        "location_display": "Fayetteville, NC (Fort Liberty area)",
-        "salary_min": 110000,
-        "salary_max": 145000,
-        "clearance_required": "Secret",
+        "city": "Columbia",
+        "state": "SC",
+        "location_display": "Columbia, SC (Remote / Hybrid)",
+        "salary_min": 80000,
+        "salary_max": 110000,
+        "clearance_required": "Top Secret",
         "veteran_friendly": True,
         "source": "USAJobs",
-        "description": "Design and maintain secure tactical and enterprise IP networks, Cisco routers/switches, firewalls, and SATCOM systems. Ideal for transitioning 25B, 18E, or Navy IT specialists.",
-        "skills": ["cisco", "networking", "firewalls", "tcp/ip", "security+", "satcom", "voip", "active directory", "troubleshooting"],
+        "category": "Law Enforcement & Security",
+        "description": "Conduct investigative interviews, background verifications, and record checks for federal security clearance candidates. Great fit for 31D, 35M, CID agents, NCIS/OSI veterans, or military investigators.",
+        "skills": ["felony investigations", "interpersonal interviewing", "debriefing", "case file preparation", "court testimony", "background databases"],
         "url": "https://careers.caci.com"
     },
+
+    # -------------------------------------------------------------------------
+    # HEALTHCARE, MEDICAL & SAFETY
+    # -------------------------------------------------------------------------
     {
-        "job_id": "fys_009",
-        "title": "Director of Field Operations & Mission Support",
-        "company": "7 Eagle Group Partner Employer",
-        "city": "Atlanta",
-        "state": "GA",
-        "location_display": "Atlanta, GA (Hybrid)",
-        "salary_min": 140000,
-        "salary_max": 180000,
-        "clearance_required": "Secret",
-        "veteran_friendly": True,
-        "source": "7 Eagle Group Direct",
-        "description": "Lead cross-functional technical field teams delivering enterprise infrastructure deployments. Requires seasoned military leadership (E-7+ or O-3+), strategic planning, and crisis decision-making.",
-        "skills": ["executive leadership", "strategic planning", "operations management", "risk mitigation", "cross-functional teams", "budgeting", "crisis management"],
-        "url": "https://7eaglegroup.com"
-    },
-    {
-        "job_id": "fys_010",
+        "job_id": "fys_med_001",
         "title": "Clinical Operations Specialist / Healthcare Lead",
         "company": "Prisma Health",
         "city": "Greenville",
@@ -168,74 +197,251 @@ SAMPLE_JOBS: List[Dict] = [
         "clearance_required": "None",
         "veteran_friendly": True,
         "source": "Adzuna API",
-        "description": "Manage clinical workflows, emergency triage protocols, and healthcare documentation. Great fit for military medics (68W), Navy Hospital Corpsmen (HM), or Special Forces Medics (18D).",
-        "skills": ["emergency care", "patient triage", "clinical operations", "emr", "healthcare administration", "team leadership", "critical decision making"],
+        "category": "Healthcare & Medical",
+        "description": "Manage clinical workflows, emergency triage protocols, patient intake, and healthcare documentation. Direct fit for military combat medics (68W), Navy Hospital Corpsmen (HM), 4N0X1, or 18D.",
+        "skills": ["emergency trauma care", "patient triage", "vital signs assessment", "medical documentation", "critical decision making", "emr", "cpr / bls"],
         "url": "https://prismahealth.org/careers"
+    },
+    {
+        "job_id": "fys_med_002",
+        "title": "Environmental Health & Safety (EHS) Manager",
+        "company": "Michelin North America",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 90000,
+        "salary_max": 125000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Healthcare & Medical",
+        "description": "Lead OSHA compliance audits, hazmat protocols, workplace safety training, and incident investigation. Direct match for Coast Guard MST, Army Safety NCOs, and Medical/Hazmat specialists.",
+        "skills": ["hazmat compliance", "environmental compliance", "safety enforcement", "incident command", "osha compliance", "risk assessment"],
+        "url": "https://jobs.michelinman.com"
+    },
+
+    # -------------------------------------------------------------------------
+    # HUMAN RESOURCES, ADMINISTRATION & RECRUITING
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_hr_001",
+        "title": "Human Resources & Talent Acquisition Specialist (Veteran Hiring)",
+        "company": "7 Eagle Group Partner Employer",
+        "city": "Atlanta",
+        "state": "GA",
+        "location_display": "Atlanta, GA / Remote",
+        "salary_min": 75000,
+        "salary_max": 105000,
+        "clearance_required": "None",
+        "veteran_friendly": True,
+        "source": "7 Eagle Group Direct",
+        "category": "Human Resources & Administration",
+        "description": "Lead talent sourcing, candidate screening, veteran transition mentorship, and HR onboarding. Direct fit for 42A, Navy PS, Air Force 3F0X1, and military recruiters.",
+        "skills": ["personnel records management", "talent acquisition", "onboarding / outboarding", "hr compliance", "interviewing", "hris", "excel"],
+        "url": "https://7eaglegroup.com"
+    },
+
+    # -------------------------------------------------------------------------
+    # IT, CLOUD, CYBERSECURITY & INTELLIGENCE
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_tech_001",
+        "title": "Lead Cloud Solutions Architect",
+        "company": "Lockheed Martin",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC (Hybrid / Remote)",
+        "salary_min": 145000,
+        "salary_max": 185000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "USAJobs / Defense Partners",
+        "category": "Information Technology & Cloud",
+        "description": "Lead enterprise cloud modernization using AWS, Kubernetes, Terraform, and Databricks. Design zero-trust data architectures and mission-critical pipelines. Prior military communications, cyber, or intelligence experience valued.",
+        "skills": ["aws", "kubernetes", "terraform", "python", "databricks", "docker", "ci/cd", "linux", "cloud architecture", "leadership"],
+        "url": "https://www.lockheedmartinjobs.com"
+    },
+    {
+        "job_id": "fys_tech_002",
+        "title": "Senior Cyber Threat Intelligence Analyst",
+        "company": "Booz Allen Hamilton",
+        "city": "Columbia",
+        "state": "SC",
+        "location_display": "Columbia, SC / Remote",
+        "salary_min": 115000,
+        "salary_max": 150000,
+        "clearance_required": "Top Secret / SCI",
+        "veteran_friendly": True,
+        "source": "JSearch API",
+        "category": "Intelligence & Analytics",
+        "description": "Conduct all-source cyber threat intelligence analysis, threat actor profiling, and link analysis. Utilize Palantir, i2 Analyst's Notebook, and SIEM tools to deliver executive-level intelligence briefings to defense stakeholders.",
+        "skills": ["cybersecurity", "threat intelligence", "palantir", "i2 analyst notebook", "link analysis", "siem", "python", "incident response", "executive briefings"],
+        "url": "https://www.boozallen.com/careers"
+    },
+    {
+        "job_id": "fys_tech_003",
+        "title": "Systems Administrator / Network Support Lead",
+        "company": "Fluor Corporation",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 85000,
+        "salary_max": 118000,
+        "clearance_required": "Public Trust",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Information Technology",
+        "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, Cisco network switches, and cloud access. Direct translation for 25B, 25U, Navy IT, 0671, 1D7X1.",
+        "skills": ["windows server", "active directory", "cisco", "linux", "tcp/ip", "powershell", "virtualization", "networking", "troubleshooting"],
+        "url": "https://www.fluor.com/careers"
     }
 ]
 
 
-# Demo Veteran Profile (William Free Hall - 18F / Solutions Architect)
-DEMO_VETERAN_PROFILE = {
-    "name": "William Free Hall",
-    "email": "whall4.wh@gmail.com",
-    "phone": "(910) 584-3843",
-    "branch": "Army",
-    "rank": "E-8 / Master Sergeant",
-    "mos": "18F",
-    "clearance": "Top Secret / SCI",
-    "service_status": "Veteran (Retired)",
-    "target_city": "Greenville",
-    "target_state": "SC",
-    "salary_min": 120000,
-    "salary_max": 180000,
-    "relocation": True,
-    "remote_ok": True,
-    "target_roles": ["Cloud Solutions Architect", "Data Engineer", "Technical Lead", "Intelligence Analyst"],
-    "resume_text": """WILLIAM FREE HALL
+# Demo Veteran Profiles representing diverse backgrounds
+DEMO_VETERAN_PROFILES: Dict[str, Dict] = {
+    "18F": {
+        "name": "William Free Hall",
+        "email": "whall4.wh@gmail.com",
+        "phone": "(910) 584-3843",
+        "branch": "Army",
+        "rank": "E-8 | Master Sergeant (MSG) / First Sergeant (1SG)",
+        "mos": "18F",
+        "clearance": "Top Secret / SCI",
+        "service_status": "Veteran (Retired)",
+        "target_city": "Greenville",
+        "target_state": "SC",
+        "salary_min": 120000,
+        "salary_max": 180000,
+        "relocation": True,
+        "remote_ok": True,
+        "resume_text": """WILLIAM FREE HALL
 Technical Lead & Solutions Architect | Cloud & Data Engineer
-Niceville, FL  •  (910) 584-3843  •  whall4.wh@gmail.com  •  linkedin.com/in/william-free-hall  •  github.com/For-Your-Service
+Niceville, FL  •  (910) 584-3843  •  whall4.wh@gmail.com  •  linkedin.com/in/william-free-hall
 
 EXECUTIVE SUMMARY
-Results-driven Technical Lead and Cloud/Data Architect with over 10 years of specialized experience in data analytics, data engineering, and executive intelligence briefings, backed by over 20 years of elite military leadership in US Army Special Operations. Proven track record of architecting multi-tier data lakehouses on Databricks, engineering graph analytical models, managing enterprise cloud infrastructure, and interpreting high-stakes intelligence analysis using Palantir and i2 Analyst's Notebook for General Officers and senior DOD decision-makers. Combines operational discipline with deep technical expertise in PySpark, Databricks, Terraform, Kubernetes, and CI/CD pipelines to deliver high-availability, cost-optimized enterprise platforms.
+Results-driven Technical Lead and Cloud/Data Architect with over 10 years of specialized experience in data analytics, data engineering, and executive intelligence briefings, backed by over 20 years of elite military leadership in US Army Special Operations. Proven track record of architecting multi-tier data lakehouses on Databricks, engineering graph analytical models, managing enterprise cloud infrastructure, and interpreting high-stakes intelligence analysis using Palantir and i2 Analyst's Notebook for General Officers and senior DOD decision-makers.
+
+TECHNICAL & LEADERSHIP SKILLS
+• Data & Analytics: Palantir, i2 Analyst's Notebook, Databricks, Apache Spark (PySpark), Delta Lake, Unity Catalog, Vector Search, PyTorch, Scikit-Learn, Pandas, SQL
+• Cloud & Infrastructure: AWS, GCP, Azure, Kubernetes, Docker, Terraform, GitHub Actions, CI/CD, Linux
+• Executive Leadership: Executive Data Briefings (General Officer Level), Inter-Agency Coordination (DOD, CIA, State Dept), Cross-Functional Team Leadership, Risk Assessment, OPSEC
+
+MILITARY SERVICE
+Special Forces Intelligence Sergeant (18F) & Team Sergeant | U.S. Army Special Forces (1999 – 2017)
+• Led 12-man Special Forces operational teams across multiple combat deployments with 100% mission success.
+• Synthesized complex data analytics into executive operational briefings for General Officers and senior DOD leadership.
+• Aggregated and analyzed massive multi-source datasets using Palantir and i2 Analyst's Notebook.
+"""
+    },
+    "11B": {
+        "name": "Marcus Vance",
+        "email": "marcus.vance@example.com",
+        "phone": "(864) 555-0192",
+        "branch": "Army",
+        "rank": "E-6 | Staff Sergeant (SSG)",
+        "mos": "11B",
+        "clearance": "Secret",
+        "service_status": "Active Duty (Transitioning / ETS soon)",
+        "target_city": "Greenville",
+        "target_state": "SC",
+        "salary_min": 75000,
+        "salary_max": 110000,
+        "relocation": True,
+        "remote_ok": True,
+        "resume_text": """MARCUS VANCE
+Operations Team Lead & Field Supervisor
+Greenville, SC  •  (864) 555-0192  •  marcus.vance@example.com
+
+SUMMARY
+Disciplined, results-oriented Infantry Squad Leader (SSG / E-6) with 8 years of active-duty Army leadership experience directing 9-man teams in high-tempo tactical and training environments. Expert in risk management, standard operating procedures, personnel accountability, and equipment maintenance. Transitioning to civilian operations management, field project supervision, or physical security leadership.
+
+CORE COMPETENCIES
+• Operations & Team Leadership: Squad & Platoon Leadership, High-Stress Decision Making, Crisis Management, SOP Enforcement
+• Safety & Risk Assessment: Composite Risk Management, Physical Security Protocols, Incident Reporting, Safety Auditing
+• Logistics & Equipment: Property Accountability ($1.5M+ equipment), Preventive Maintenance, Tactical Radios, GPS Navigation
+
+MILITARY EXPERIENCE
+Infantry Squad Leader (11B) | U.S. Army (2018 – Present)
+• Commanded a 9-person squad responsible for mission planning, operational safety, and continuous tactical readiness.
+• Maintained 100% accountability for over $1.5M in sensitive military optical, communications, and vehicle equipment with zero losses.
+• Conducted daily safety briefings, risk mitigation audits, and after-action reviews to optimize team performance.
+"""
+    },
+    "88M": {
+        "name": "David Miller",
+        "email": "david.miller@example.com",
+        "phone": "(803) 555-0144",
+        "branch": "Army",
+        "rank": "E-5 | Sergeant (SGT)",
+        "mos": "88M",
+        "clearance": "Secret",
+        "service_status": "Veteran (Separated / Discharged)",
+        "target_city": "Columbia",
+        "target_state": "SC",
+        "salary_min": 70000,
+        "salary_max": 95000,
+        "relocation": False,
+        "remote_ok": False,
+        "resume_text": """DAVID MILLER
+Fleet Logistics Coordinator & Commercial Transport Specialist
+Columbia, SC  •  (803) 555-0144  •  david.miller@example.com
+
+SUMMARY
+Experienced Motor Transport Operator (SGT / E-5) with 6 years of military fleet transport, cargo distribution, and convoy route management. Logged over 80,000 incident-free miles operating heavy military tractor-trailers (M915, PLS, HEMTT) under severe environmental conditions. Possesses valid Class A CDL equivalent qualifications, hazmat handling experience, and DOT compliance knowledge.
+
+CORE COMPETENCIES
+• Fleet Operations: Heavy Vehicle Driving (Class A CDL), Convoy Logistics, Route Planning, Cargo Rigging & Tie-Down
+• Compliance & Maintenance: DOT Safety Regulations, Hazmat Transport, Preventive Maintenance Checks (PMCS), Dispatching
+• Logistics Software: Telematics Tracking, Electronic Logging Devices (ELD), Excel Inventory Logs
+
+EXPERIENCE
+Motor Transport Operator (88M) | U.S. Army (2019 – 2025)
+• Safely operated heavy tactical transport vehicles across interstate and tactical routes with zero preventable accidents.
+• Supervised loading, weight distribution, and securing of sensitive cargo and hazardous materials.
+• Performed daily preventive maintenance and fluid diagnostics on diesel engines, hydraulic lifts, and pneumatic brakes.
+"""
+    },
+    "25B": {
+        "name": "Sarah Jenkins",
+        "email": "sarah.jenkins@example.com",
+        "phone": "(843) 555-0188",
+        "branch": "Navy",
+        "rank": "E-5 | Petty Officer Second Class (PO2)",
+        "mos": "IT",
+        "clearance": "Top Secret / SCI",
+        "service_status": "Active Duty (Transitioning / ETS soon)",
+        "target_city": "Charleston",
+        "target_state": "SC",
+        "salary_min": 90000,
+        "salary_max": 125000,
+        "relocation": True,
+        "remote_ok": True,
+        "resume_text": """SARAH JENKINS
+Systems Administrator & Network Security Specialist
+Charleston, SC  •  (843) 555-0188  •  sarah.jenkins@example.com
+
+SUMMARY
+Naval Information Systems Technician (IT2 / E-5) with 5 years of experience administering secure shipboard and shore-based enterprise IT networks. Holds active Top Secret / SCI clearance, CompTIA Security+, and Cisco CCNA. Proven track record managing Active Directory, Windows Server 2022, Cisco switches, and satellite communications links for 1,200+ users.
 
 TECHNICAL SKILLS
-• Data & Analytics Engineering: Palantir, i2 Analyst's Notebook, Databricks, Apache Spark (PySpark), Delta Lake, Unity Catalog, Vector Search, PyTorch, Transformers, Scikit-Learn, Pandas, NumPy
-• Cloud & Infrastructure: AWS (Lambda, EC2, S3, IAM, CloudFormation), GCP (Cloud Functions, GCS, GKE), Azure (VMs, AKS), Serverless Architecture
-• Containers & Orchestration: Kubernetes (GKE, AKS), Docker, Helm
-• IaC & DevOps: Terraform, GitHub Actions, Jenkins, GitLab CI, Git, Bash/Shell Scripting
-• Databases & Query Languages: SQL (Databricks SQL, PostgreSQL), Vector Databases, Graph & Link Analysis
-• Executive Communication & Ops: Executive Data Briefings (General Officer Level), Inter-Agency Coordination (DOD, CIA, State Dept), Cross-Functional Team Leadership, Process Optimization
+• Systems & Networks: Active Directory, Windows Server, Linux (RHEL), Cisco Routers & Switches, VMware ESXi, TCP/IP, DNS, DHCP
+• Security & Comms: CompTIA Security+, Cisco CCNA, Firewalls, COMSEC, SATCOM, Incident Handling, Patch Management
+• Tools: PowerShell, Wireshark, Splunk, SolarWinds, Microsoft 365 Admin
 
-PROFESSIONAL EXPERIENCE
-Technical Lead & Solutions Architect | For Your Service (2024 – Present)
-Partnered with 7 Eagle Group (Veteran Placement Organization)
-• Cloud & Data Lakehouse Architecture: Architected an enterprise multi-tier data lakehouse (Bronze / Silver / Gold) on Databricks utilizing Unity Catalog for end-to-end data governance.
-• Machine Learning & ETL Engineering: Engineered automated ETL pipelines in PySpark ingesting and processing 670+ live job market postings from external REST APIs (USAJobs, Adzuna).
-• Neural Network & Semantic Search: Built a Siamese twin-tower neural network utilizing 384-dimensional vector embeddings for high-precision semantic job-to-candidate matching.
-• DevOps & Infrastructure as Code: Implemented automated CI/CD deployment pipelines using GitHub Actions and managed infrastructure state using Terraform.
-
-Cloud Engineer & DevOps Analyst | ConocoPhillips (2022 – 2024)
-• Enterprise Cloud & Pipeline Automation: Architected and maintained automated CI/CD deployment pipelines across multi-tenant cloud environments.
-• Infrastructure as Code (IaC): Provisioned and managed cloud infrastructure using Terraform, standardizing multi-environment configurations.
-
-Special Forces Intelligence Sergeant (18F) & Team Sergeant | U.S. Army Special Forces (1999 – 2017)
-• Executive Briefings & Strategic Decision Support: Synthesized complex analytics into high-impact operational briefings directly to General Officers.
-• Data Analytics & Link Analysis: Utilized Palantir and i2 Analyst's Notebook to aggregate, fuse, and analyze massive multi-source datasets, identifying complex relational networks and actionable intelligence.
-• Inter-Agency Coordination: Planned and executed sensitive operations requiring detailed intelligence analysis in coordination with inter-agency partners (DOD, CIA, State Dept).
-
-EDUCATION & CERTIFICATIONS
-• Bachelor of Science in Cybersecurity
-• AWS Certified Cloud Practitioner
-• U.S. Army Special Forces Qualification Course (SFQC) – 18F Intelligence Sergeant & 18 Series Green Beret
+MILITARY EXPERIENCE
+Information Systems Technician (IT) | U.S. Navy (2021 – Present)
+• Administered classified and unclassified LAN/WAN networks supporting 1,200+ naval personnel with 99.9% uptime.
+• Configured Cisco switches, virtual machines on VMware, and Active Directory group policies.
+• Conducted vulnerability scans using ACAS/Nessus and remediated security findings to maintain strict DoD compliance.
 """
+    }
 }
 
 
 def load_cached_scraped_jobs() -> List[Dict]:
     """
-    Attempt to load real scraped jobs from repo results directory.
-    Falls back to SAMPLE_JOBS if no files found.
+    Load real scraped jobs from repo results directory or return rich sample database.
     """
     repo_root = Path(__file__).resolve().parent.parent
     results_dir = repo_root / "results"
@@ -250,7 +456,6 @@ def load_cached_scraped_jobs() -> List[Dict]:
                     
                 parsed_jobs = []
                 for j in raw_jobs:
-                    # Normalize fields
                     loc = j.get("location", {})
                     salary = j.get("salary", {})
                     
@@ -261,18 +466,18 @@ def load_cached_scraped_jobs() -> List[Dict]:
                         "city": loc.get("city", "Greenville"),
                         "state": loc.get("state", "SC"),
                         "location_display": loc.get("display", f"{loc.get('city', '')}, {loc.get('state', '')}"),
-                        "salary_min": float(salary.get("min", 60000) or 60000),
-                        "salary_max": float(salary.get("max", 120000) or 120000),
+                        "salary_min": float(salary.get("min", 65000) or 65000),
+                        "salary_max": float(salary.get("max", 125000) or 125000),
                         "clearance_required": "None",
                         "veteran_friendly": True,
                         "source": j.get("source", "Adzuna API"),
+                        "category": j.get("category", "General"),
                         "description": j.get("description", ""),
                         "skills": [w.strip() for w in j.get("title", "").lower().split() if len(w) > 3],
                         "url": j.get("url", "https://adzuna.com")
                     })
                 
                 if parsed_jobs:
-                    # Combine with curated sample jobs for rich experience
                     return SAMPLE_JOBS + parsed_jobs
             except Exception:
                 pass

@@ -1,5 +1,6 @@
 # ============================================================================
 # For Your Service - Veteran Intake & Job Matching Portal 🇺🇸
+# Universal Platform for ALL Service Members: Any Branch, Any Rank, Any Clearance
 # Powered by 7 Eagle Group | AI-Driven Veteran Placement Platform
 # Developer: Free Hall (18Z / 18F, US Army Special Forces, Ret.)
 # ============================================================================
@@ -15,13 +16,13 @@ import os
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
-# Import local MOS data and sample engine
+# Import local MOS data, dynamic branch ranks, and sample engine
 try:
-    from mos_data import MOS_DATABASE, lookup_mos, get_all_mos_choices
-    from sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILE, load_cached_scraped_jobs
+    from mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
+    from sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
 except ImportError:
-    from app.mos_data import MOS_DATABASE, lookup_mos, get_all_mos_choices
-    from app.sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILE, load_cached_scraped_jobs
+    from app.mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
+    from app.sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
 
 # Check for Databricks / PySpark compute availability safely
 SPARK_AVAILABLE = False
@@ -40,32 +41,33 @@ if os.getenv("DATABRICKS_RUNTIME_VERSION") or os.getenv("DATABRICKS_SERVER_HOSTN
 # ============================================================================
 
 st.set_page_config(
-    page_title="For Your Service - Veteran Intake & Career Matching",
+    page_title="For Your Service - Veteran Career Portal",
     page_icon="🎖️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Patriotic CSS (Navy, Crimson, Gold, Clean White)
+# Custom Patriotic CSS (Navy, Crimson, Gold, Clean Modern White)
 st.markdown("""
 <style>
-    /* Primary Colors: Deep Military Navy (#0B2545), Crimson (#C81D25), Gold (#D4AF37) */
+    /* Global Base */
     .stApp {
         background-color: #f8fafc;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* Header Banner */
+    /* Hero Banner */
     .hero-banner {
         background: linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 50%, #13315c 100%);
         color: white;
         padding: 2rem 2.5rem;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(11, 29, 58, 0.2);
+        box-shadow: 0 4px 20px rgba(11, 29, 58, 0.25);
         margin-bottom: 1.5rem;
-        border-bottom: 4px solid #c81d25;
+        border-bottom: 5px solid #c81d25;
     }
     .hero-title {
-        font-size: 2.3rem;
+        font-size: 2.4rem;
         font-weight: 800;
         letter-spacing: -0.5px;
         margin: 0;
@@ -84,7 +86,7 @@ st.markdown("""
         color: #0b1d3a;
         font-size: 0.85rem;
         font-weight: 700;
-        padding: 0.25rem 0.75rem;
+        padding: 0.3rem 0.85rem;
         border-radius: 20px;
         margin-top: 0.75rem;
         text-transform: uppercase;
@@ -95,29 +97,31 @@ st.markdown("""
     .branch-card {
         background: white;
         border: 1px solid #e2e8f0;
+        border-top: 4px solid #1e3a8a;
         border-radius: 8px;
-        padding: 0.75rem;
+        padding: 0.75rem 0.5rem;
         text-align: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        font-size: 0.9rem;
     }
     
-    /* Match Score Badges */
+    /* Match Badges */
     .match-badge-high {
         background-color: #15803d;
         color: white;
-        padding: 0.35rem 0.85rem;
+        padding: 0.35rem 0.9rem;
         border-radius: 20px;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1rem;
         display: inline-block;
     }
     .match-badge-med {
         background-color: #d97706;
         color: white;
-        padding: 0.35rem 0.85rem;
+        padding: 0.35rem 0.9rem;
         border-radius: 20px;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1rem;
         display: inline-block;
     }
     
@@ -130,46 +134,59 @@ st.markdown("""
         padding: 1.25rem;
         margin-bottom: 1rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    /* Skill Chip */
+    /* Skill Chips */
     .skill-chip {
         display: inline-block;
         background: #e0e7ff;
         color: #1e3a8a;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 600;
-        padding: 0.2rem 0.6rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 12px;
-        margin-right: 0.3rem;
-        margin-bottom: 0.3rem;
+        margin-right: 0.35rem;
+        margin-bottom: 0.35rem;
+        border: 1px solid #c7d2fe;
     }
     .mil-skill-chip {
         display: inline-block;
         background: #fef3c7;
         color: #92400e;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 600;
-        padding: 0.2rem 0.6rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 12px;
-        margin-right: 0.3rem;
-        margin-bottom: 0.3rem;
+        margin-right: 0.35rem;
+        margin-bottom: 0.35rem;
+        border: 1px solid #fde68a;
+    }
+    .ops-skill-chip {
+        display: inline-block;
+        background: #dcfce7;
+        color: #166534;
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0.25rem 0.65rem;
+        border-radius: 12px;
+        margin-right: 0.35rem;
+        margin-bottom: 0.35rem;
+        border: 1px solid #bbf7d0;
     }
     
     /* Clearance Badge */
     .clearance-badge {
-        background: #1e293b;
+        background: #0f172a;
         color: #f8fafc;
-        padding: 0.2rem 0.6rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 6px;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         border: 1px solid #475569;
     }
-    
+
     /* Buttons */
     .stButton>button {
         background-color: #1e3a8a;
@@ -177,7 +194,7 @@ st.markdown("""
         font-weight: 700;
         border-radius: 8px;
         border: none;
-        padding: 0.5rem 1rem;
+        padding: 0.55rem 1.2rem;
     }
     .stButton>button:hover {
         background-color: #0b1d3a;
@@ -188,41 +205,34 @@ st.markdown("""
 
 
 # ============================================================================
-# HELPER FUNCTIONS FOR RESUME EXTRACTION & SKILLS
+# HELPER FUNCTIONS: RESUME PARSING & SKILL EXTRACTION
 # ============================================================================
 
 def extract_text_from_file(uploaded_file) -> str:
-    """Extract raw text from uploaded PDF, DOCX, or TXT file (100% free/local)"""
+    """Extract raw text from uploaded PDF, DOCX, or TXT file (100% free & local)"""
     if uploaded_file is None:
         return ""
     
     filename = uploaded_file.name.lower()
     
     try:
-        # PDF Extraction
         if filename.endswith(".pdf"):
             try:
                 from PyPDF2 import PdfReader
                 reader = PdfReader(uploaded_file)
-                text = ""
-                for page in reader.pages:
-                    text += page.extract_text() or ""
+                text = "".join([page.extract_text() or "" for page in reader.pages])
                 return text
             except Exception:
                 import pypdf
                 reader = pypdf.PdfReader(uploaded_file)
-                text = ""
-                for page in reader.pages:
-                    text += page.extract_text() or ""
+                text = "".join([page.extract_text() or "" for page in reader.pages])
                 return text
                 
-        # DOCX Extraction
         elif filename.endswith(".docx"):
             import docx
             doc = docx.Document(uploaded_file)
             return "\n".join([p.text for p in doc.paragraphs])
             
-        # Plain text
         elif filename.endswith(".txt"):
             return uploaded_file.getvalue().decode("utf-8", errors="ignore")
             
@@ -230,35 +240,50 @@ def extract_text_from_file(uploaded_file) -> str:
             return uploaded_file.getvalue().decode("utf-8", errors="ignore")
             
     except Exception as e:
-        st.warning(f"⚠️ Notice reading file: {str(e)}. You can also paste your resume text directly.")
+        st.warning(f"⚠️ Note during file reading: {str(e)}. You can also paste resume text directly.")
         return ""
 
 
 def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
-    """Extract technical and military leadership skills from resume text & MOS"""
+    """
+    Extract technical skills, military leadership competencies, operations skills,
+    and estimate years of service from resume text and MOS code.
+    """
     text_lower = resume_text.lower()
     
-    # Technical skills taxonomy
+    # 1. Technical & Trade Skills Taxonomy
     tech_keywords = [
         "aws", "azure", "gcp", "kubernetes", "docker", "terraform", "python", "java",
         "javascript", "sql", "bash", "powershell", "jenkins", "github", "gitlab",
-        "ci/cd", "devops", "linux", "windows", "ansible", "cisco", "active directory",
-        "palantir", "databricks", "spark", "pyspark", "delta lake", "networking",
-        "cybersecurity", "siem", "splunk", "wireshark", "penetration testing", "security+",
-        "cissp", "vmware", "tableau", "power bi", "excel", "satcom", "cryptography"
+        "ci/cd", "devops", "linux", "windows", "windows server", "ansible", "cisco",
+        "active directory", "palantir", "databricks", "spark", "pyspark", "delta lake",
+        "networking", "cybersecurity", "siem", "splunk", "wireshark", "penetration testing",
+        "security+", "cissp", "vmware", "tableau", "power bi", "excel", "satcom", "cryptography",
+        "diesel mechanics", "hydraulics", "pneumatics", "cdl", "dot compliance", "telematics",
+        "emr", "triage", "paramedic", "cpr", "bls", "cad", "sap", "erp", "osha", "hazmat"
     ]
     
-    # Military & Leadership competencies
+    # 2. Military Leadership & Command Competencies
     leadership_keywords = [
         "executive briefings", "cross-functional leadership", "mission planning",
         "risk management", "opsec", "link analysis", "operations management",
         "crisis decision making", "inter-agency coordination", "team sergeant",
         "squad leader", "platoon sergeant", "command", "process optimization",
-        "standard operating procedures", "personnel accountability", "logistics"
+        "standard operating procedures", "personnel accountability", "after-action reviews",
+        "force protection", "situational awareness", "mentorship", "inspections"
+    ]
+    
+    # 3. General Operations, Logistics & Project Skills
+    ops_keywords = [
+        "supply chain", "inventory management", "logistics", "procurement",
+        "quality control", "fleet maintenance", "preventive maintenance",
+        "vendor management", "budget reconciliation", "access control", "physical security",
+        "investigations", "scheduling", "training & development", "customer service"
     ]
     
     detected_tech = [skill for skill in tech_keywords if skill in text_lower]
     detected_leadership = [lead for lead in leadership_keywords if lead in text_lower]
+    detected_ops = [op for op in ops_keywords if op in text_lower]
     
     # Add MOS-specific transferable skills
     mos_info = lookup_mos(mos_code)
@@ -272,18 +297,19 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     # Estimate years of experience
     years_pattern = r'(\d+)\+?\s*years?'
     years_matches = re.findall(years_pattern, text_lower)
-    total_years = max([int(y) for y in years_matches], default=5)
+    total_years = max([int(y) for y in years_matches], default=6)
     
-    if total_years >= 10:
-        seniority = "Senior / Executive Lead"
-    elif total_years >= 5:
+    if total_years >= 12:
+        seniority = "Senior / Executive Leader"
+    elif total_years >= 6:
         seniority = "Mid-to-Senior Professional"
     else:
-        seniority = "Associate / Entry Specialist"
+        seniority = "Associate / Specialist"
         
     return {
         "technical_skills": list(set(detected_tech)),
         "leadership_skills": list(set(detected_leadership)),
+        "ops_skills": list(set(detected_ops)),
         "mos_skills": mos_skills,
         "total_years": total_years,
         "seniority": seniority
@@ -296,59 +322,62 @@ def calculate_veteran_match_score(
     extracted_skills: Dict
 ) -> Tuple[float, List[str]]:
     """
-    Calculate semantic match score (0-100) and generate 'Why You Match' reasons.
+    Calculate match score (0-100) and generate 'Why You Match' reasons.
+    Works universally across combat arms, logistics, mechanics, tech, and medical.
     """
     score = 0.0
     reasons = []
     
-    job_text = f"{job.get('title', '')} {job.get('description', '')}".lower()
-    user_skills = set(extracted_skills.get("technical_skills", []))
-    leadership_skills = set(extracted_skills.get("leadership_skills", []))
+    job_text = f"{job.get('title', '')} {job.get('description', '')} {job.get('category', '')}".lower()
+    user_tech = set(extracted_skills.get("technical_skills", []))
+    user_leadership = set(extracted_skills.get("leadership_skills", []))
+    user_ops = set(extracted_skills.get("ops_skills", []))
+    all_user_skills = user_tech.union(user_leadership).union(user_ops)
     
-    # 1. Technical Skills Match (Max 35 pts)
+    # 1. Skills & Competencies Match (Max 35 pts)
     job_req_skills = [s.lower() for s in job.get("skills", [])]
     if job_req_skills:
-        matched_req = [s for s in job_req_skills if s in user_skills or s in job_text]
+        matched_req = [s for s in job_req_skills if s in all_user_skills or s in job_text]
         skill_pct = min(1.0, len(matched_req) / max(1, len(job_req_skills)))
-        tech_score = skill_pct * 35
-        score += tech_score
+        score += skill_pct * 35
         if matched_req:
-            reasons.append(f"Technical Match: {', '.join([s.title() for s in matched_req[:4]])}")
+            reasons.append(f"Skill Alignment: Matched on {', '.join([s.title() for s in matched_req[:4]])}")
     else:
-        matched_in_text = [s for s in user_skills if s in job_text]
-        tech_score = min(35.0, len(matched_in_text) * 7.0)
-        score += tech_score
+        matched_in_text = [s for s in all_user_skills if s in job_text]
+        score += min(35.0, len(matched_in_text) * 6.0)
         if matched_in_text:
-            reasons.append(f"Skills Found: {', '.join([s.title() for s in matched_in_text[:4]])}")
+            reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_in_text[:4]])}")
 
-    # 2. MOS & Military Experience Crosswalk (Max 25 pts)
+    # 2. MOS / Branch Specialty Crosswalk (Max 25 pts)
     mos_info = lookup_mos(veteran_profile.get("mos", ""))
     if mos_info:
         mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
         job_title_lower = job.get("title", "").lower()
         
-        # Check if job title matches civilian title mappings
         if any(ct in job_title_lower or job_title_lower in ct for ct in mos_civilian_titles):
             score += 25
-            reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']}")
+            reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
         elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
-            score += 18
-            reasons.append(f"Military Experience Match: Transferable {mos_info.get('branch')} skill fit")
+            score += 20
+            reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
         else:
-            score += 10
+            score += 12
+    else:
+        score += 10
             
     # 3. Security Clearance Alignment (Max 15 pts)
     job_clearance = str(job.get("clearance_required", "None")).strip()
     vet_clearance = str(veteran_profile.get("clearance", "None")).strip()
     
     clearance_hierarchy = {
-        "None": 0,
+        "None / Public Trust": 0,
         "Public Trust": 1,
-        "Secret": 2,
-        "Top Secret": 3,
-        "Top Secret / SCI": 4,
-        "TS / SCI with CI Poly": 5,
-        "TS / SCI with Full Scope Poly": 6
+        "Confidential": 2,
+        "Secret": 3,
+        "Top Secret": 4,
+        "Top Secret / SCI": 5,
+        "TS / SCI with CI Poly": 6,
+        "TS / SCI with Full Scope Poly": 7
     }
     
     job_clr_level = clearance_hierarchy.get(job_clearance, 0)
@@ -356,9 +385,9 @@ def calculate_veteran_match_score(
     
     if job_clr_level > 0 and vet_clr_level >= job_clr_level:
         score += 15
-        reasons.append(f"Clearance Advantage: Active {vet_clearance} satisfies requirement")
+        reasons.append(f"Security Clearance: Active {vet_clearance} qualifies for defense requirement")
     elif job_clr_level == 0:
-        score += 10
+        score += 12
     else:
         score += 0
         
@@ -370,8 +399,8 @@ def calculate_veteran_match_score(
     
     if job_sal_max >= vet_sal_min and job_sal_min <= vet_sal_max:
         score += 15
-        reasons.append("Compensation: Perfectly meets desired salary target")
-    elif job_sal_max >= vet_sal_min * 0.9:
+        reasons.append("Compensation: Perfectly aligns with your target salary")
+    elif job_sal_max >= vet_sal_min * 0.85:
         score += 10
     else:
         score += 5
@@ -382,19 +411,19 @@ def calculate_veteran_match_score(
     
     if "remote" in job.get("location_display", "").lower() or veteran_profile.get("remote_ok", False):
         score += 10
-        reasons.append("Location: Remote / Flexible location match")
+        reasons.append("Location: Flexible / Remote or regional match")
     elif vet_state and (vet_state == job_state):
         score += 10
         reasons.append(f"Location: Local match in {vet_state}")
     else:
         score += 5
         
-    final_score = min(100.0, max(25.0, score))
+    final_score = min(100.0, max(30.0, score))
     return round(final_score, 1), reasons
 
 
 # ============================================================================
-# SIDEBAR: NAVIGATION, DEMO PROFILE & PLATFORM STATUS
+# SIDEBAR: NAVIGATION, MULTI-BRANCH DEMO PROFILES & SYSTEM STATUS
 # ============================================================================
 
 with st.sidebar:
@@ -408,39 +437,53 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.markdown("### 🚀 Fast Demo Profile")
-    st.markdown("Test the entire pipeline in **1 click** with Lead Developer Free Hall's profile (18F / Solutions Architect):")
+    st.markdown("### 🚀 Fast Demo Profiles")
+    st.markdown("Test the pipeline across different military specialties in **1 click**:")
     
-    if st.button("🇺🇸 Load Demo Profile (18F)", use_container_width=True):
-        st.session_state["demo_loaded"] = True
-        st.session_state["form_name"] = DEMO_VETERAN_PROFILE["name"]
-        st.session_state["form_email"] = DEMO_VETERAN_PROFILE["email"]
-        st.session_state["form_phone"] = DEMO_VETERAN_PROFILE["phone"]
-        st.session_state["form_branch"] = DEMO_VETERAN_PROFILE["branch"]
-        st.session_state["form_rank"] = DEMO_VETERAN_PROFILE["rank"]
-        st.session_state["form_mos"] = DEMO_VETERAN_PROFILE["mos"]
-        st.session_state["form_clearance"] = DEMO_VETERAN_PROFILE["clearance"]
-        st.session_state["form_status"] = DEMO_VETERAN_PROFILE["service_status"]
-        st.session_state["form_city"] = DEMO_VETERAN_PROFILE["target_city"]
-        st.session_state["form_state"] = DEMO_VETERAN_PROFILE["target_state"]
-        st.session_state["form_sal_min"] = DEMO_VETERAN_PROFILE["salary_min"]
-        st.session_state["form_sal_max"] = DEMO_VETERAN_PROFILE["salary_max"]
-        st.session_state["form_resume"] = DEMO_VETERAN_PROFILE["resume_text"]
-        st.toast("✅ Demo Veteran Profile Loaded!", icon="🎖️")
+    col_d1, col_d2 = st.columns(2)
+    with col_d1:
+        if st.button("🪖 18F SF Lead", use_container_width=True, help="Army Special Forces / Cloud Architect"):
+            p = DEMO_VETERAN_PROFILES["18F"]
+            for k, v in p.items():
+                st.session_state[f"form_{k}"] = v
+            st.toast("✅ Loaded Army 18F Special Forces Profile!", icon="🎖️")
+            st.rerun()
+            
+        if st.button("🪖 88M Logistics", use_container_width=True, help="Army Motor Transport & CDL"):
+            p = DEMO_VETERAN_PROFILES["88M"]
+            for k, v in p.items():
+                st.session_state[f"form_{k}"] = v
+            st.toast("✅ Loaded Army 88M Logistics Profile!", icon="🎖️")
+            st.rerun()
+
+    with col_d2:
+        if st.button("🪖 11B Infantry", use_container_width=True, help="Army Infantry Squad Leader"):
+            p = DEMO_VETERAN_PROFILES["11B"]
+            for k, v in p.items():
+                st.session_state[f"form_{k}"] = v
+            st.toast("✅ Loaded Army 11B Infantry Profile!", icon="🎖️")
+            st.rerun()
+
+        if st.button("⚓ Navy IT / Cyber", use_container_width=True, help="Navy IT Systems Administrator"):
+            p = DEMO_VETERAN_PROFILES["25B"]
+            for k, v in p.items():
+                st.session_state[f"form_{k}"] = v
+            st.toast("✅ Loaded Navy IT Profile!", icon="🎖️")
+            st.rerun()
         
     st.markdown("---")
-    st.markdown("### ⚙️ Compute & Lakehouse Mode")
+    st.markdown("### ⚙️ Engine Status")
     if SPARK_AVAILABLE:
         st.success("🟢 Databricks Serverless Active\n\nConnected to Unity Catalog")
     else:
-        st.info("🔵 Zero-Cost Local / Free Tier\n\nRunning in local mode with cached job datasets (100% Free)")
+        st.info("🔵 Zero-Cost Free Tier / Local\n\nRunning in local mode with 100% free resume parsing & job matching")
         
     st.markdown("---")
     st.markdown(
         """
         <div style='font-size: 0.8rem; color: #64748b; text-align: center;'>
             <strong>For Your Service</strong><br>
-            Designed & Built by Veterans for Veterans<br>
+            Universal Platform for All Military Service Members<br>
             Free Hall • 18Z / 18F US Army Special Forces (Ret.)
         </div>
         """,
@@ -455,237 +498,268 @@ with st.sidebar:
 st.markdown("""
 <div class="hero-banner">
     <div class="hero-title">🇺🇸 FOR YOUR SERVICE</div>
-    <div class="hero-subtitle">AI-Powered Veteran Career Intake & Military-to-Civilian Job Matching Platform</div>
-    <div class="hero-badge">🎖️ Partner: 7 Eagle Group | Serving Those Who Served</div>
+    <div class="hero-subtitle">Universal Veteran Career Intake & AI Military-to-Civilian Job Matching Platform</div>
+    <div class="hero-badge">🎖️ Serving ALL Branches • Any Rank • Any Specialty • 100% Free</div>
 </div>
 """, unsafe_allow_html=True)
 
 
 # ============================================================================
-# VIEW 1: VETERAN INTAKE & JOB MATCHING
+# VIEW 1: UNIVERSAL VETERAN INTAKE & MATCHING
 # ============================================================================
 
 if nav_selection == "📋 Veteran Intake & Match":
 
-    # Quick summary metrics banner
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown("<div class='branch-card'><strong>🪖 U.S. Army</strong><br><small>Infantry, Special Forces, Cyber, Intel</small></div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown("<div class='branch-card'><strong>⚓ U.S. Navy</strong><br><small>IT, Cryptologic, Engineering, Medical</small></div>", unsafe_allow_html=True)
-    with col3:
-        st.markdown("<div class='branch-card'><strong>✈️ U.S. Air Force</strong><br><small>Cyber Warfare, Space, Operations</small></div>", unsafe_allow_html=True)
-    with col4:
-        st.markdown("<div class='branch-card'><strong>🦅 U.S. Marines & CG</strong><br><small>Data Systems, Leadership, Logistics</small></div>", unsafe_allow_html=True)
+    # Branch Insignia Overview Cards
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    with c1:
+        st.markdown("<div class='branch-card'><strong>🪖 U.S. Army</strong><br><small>All MOS Specialties</small></div>", unsafe_allow_html=True)
+    with c2:
+        st.markdown("<div class='branch-card'><strong>⚓ U.S. Navy</strong><br><small>All Ratings</small></div>", unsafe_allow_html=True)
+    with c3:
+        st.markdown("<div class='branch-card'><strong>✈️ U.S. Air Force</strong><br><small>All AFSCs</small></div>", unsafe_allow_html=True)
+    with c4:
+        st.markdown("<div class='branch-card'><strong>🦅 U.S. Marine Corps</strong><br><small>All MOS Codes</small></div>", unsafe_allow_html=True)
+    with c5:
+        st.markdown("<div class='branch-card'><strong>🚢 U.S. Coast Guard</strong><br><small>All Maritime Ratings</small></div>", unsafe_allow_html=True)
+    with c6:
+        st.markdown("<div class='branch-card'><strong>🚀 U.S. Space Force</strong><br><small>All Space & Cyber</small></div>", unsafe_allow_html=True)
 
     st.markdown("")
 
-    # Form Container
-    with st.form("veteran_intake_form", clear_on_submit=False):
-        
-        # --------------------------------------------------------------------
-        # STEP 1: MILITARY SERVICE & BACKGROUND
-        # --------------------------------------------------------------------
-        st.markdown("### 🎖️ Step 1: Military Service & Specialty")
-        
-        col_m1, col_m2, col_m3 = st.columns(3)
-        
-        with col_m1:
-            branches = ["Army", "Navy", "Air Force", "Marine Corps", "Coast Guard", "Space Force"]
-            branch_default_idx = 0
-            if "form_branch" in st.session_state and st.session_state["form_branch"] in branches:
-                branch_default_idx = branches.index(st.session_state["form_branch"])
-                
-            service_branch = st.selectbox(
-                "Branch of Service *",
-                branches,
-                index=branch_default_idx,
-                help="Select the military branch you served in"
-            )
-            
-        with col_m2:
-            ranks = [
-                "E-1 to E-4 (Junior Enlisted)",
-                "E-5 to E-6 (NCO / Team Leader)",
-                "E-7 to E-9 (Senior NCO / Master Sgt / First Sgt / SGM)",
-                "W-1 to W-5 (Warrant Officer)",
-                "O-1 to O-3 (Company Grade Officer)",
-                "O-4 to O-6 (Field Grade Officer)",
-                "O-7+ (General / Flag Officer)"
-            ]
-            rank_default_idx = 2
-            if "form_rank" in st.session_state:
-                for idx, r in enumerate(ranks):
-                    if "E-7" in r or "E-8" in r:
-                        rank_default_idx = idx
-                        break
-            pay_grade = st.selectbox("Rank / Pay Grade Category *", ranks, index=rank_default_idx)
-            
-        with col_m3:
-            service_statuses = [
-                "Veteran (Separated / Discharged)",
-                "Veteran (Retired)",
-                "Active Duty (Transitioning / ETS soon)",
-                "National Guard / Reserve"
-            ]
-            status_default_idx = 1 if "form_status" in st.session_state and "Retired" in st.session_state["form_status"] else 0
-            service_status = st.selectbox("Current Service Status *", service_statuses, index=status_default_idx)
+    # ------------------------------------------------------------------------
+    # STEP 1: RESUME UPLOAD CENTER (CENTERPIECE OF INTAKE)
+    # ------------------------------------------------------------------------
+    st.markdown("### 📄 Step 1: Upload Your Military Resume / Service Record")
+    st.markdown(
+        "Upload your resume in **PDF, Word (.docx), or Text (.txt)** format. "
+        "Our free AI parser will automatically extract your technical skills, leadership qualifications, "
+        "and military accomplishments to match you with top civilian opportunities."
+    )
 
-        # MOS / AFSC / Rating Code Input
-        col_mos1, col_mos2 = st.columns([1, 2])
-        with col_mos1:
-            mos_default = st.session_state.get("form_mos", "18F")
-            mos_code = st.text_input(
-                "MOS / AFSC / Rating Code *",
-                value=mos_default,
-                placeholder="e.g., 18Z, 18F, 25B, IT, 1D7X1, 0651",
-                help="Enter your primary Military Specialty code"
-            ).strip().upper()
-            
-        with col_mos2:
-            clearances = [
-                "None / Public Trust",
-                "Secret",
-                "Top Secret",
-                "Top Secret / SCI",
-                "TS / SCI with CI Poly",
-                "TS / SCI with Full Scope Poly"
-            ]
-            clr_default_idx = 3 if "form_clearance" in st.session_state and "Top Secret / SCI" in st.session_state["form_clearance"] else 1
-            clearance_level = st.selectbox("Active Security Clearance *", clearances, index=clr_default_idx)
+    uploaded_file = st.file_uploader(
+        "Choose a Resume File (.pdf, .docx, .txt)",
+        type=["pdf", "docx", "txt"],
+        help="Upload your civilian resume, military VMET, or ERB/ORB record"
+    )
 
-        # Dynamic MOS Crosswalk Preview Box
-        if mos_code:
-            mos_preview = lookup_mos(mos_code)
-            if mos_preview:
+    resume_content = st.session_state.get("form_resume_text", "")
+    if uploaded_file is not None:
+        extracted_text = extract_text_from_file(uploaded_file)
+        if extracted_text:
+            resume_content = extracted_text
+            st.session_state["form_resume_text"] = extracted_text
+            st.success(f"✅ Successfully parsed `{uploaded_file.name}` ({len(extracted_text):,} characters extracted)")
+
+    # ------------------------------------------------------------------------
+    # STEP 2: MILITARY SERVICE & CLEARANCE DETAILS
+    # ------------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("### 🎖️ Step 2: Military Background & Security Clearance")
+
+    col_b1, col_b2, col_b3 = st.columns(3)
+
+    with col_b1:
+        branches = ["Army", "Navy", "Air Force", "Marine Corps", "Coast Guard", "Space Force"]
+        branch_default_idx = 0
+        if "form_branch" in st.session_state and st.session_state["form_branch"] in branches:
+            branch_default_idx = branches.index(st.session_state["form_branch"])
+
+        selected_branch = st.selectbox(
+            "Military Service Branch *",
+            branches,
+            index=branch_default_idx,
+            key="branch_selector",
+            help="Select the military branch you served in"
+        )
+
+    # Dynamic Ranks for the selected branch
+    with col_b2:
+        available_ranks = BRANCH_RANKS.get(selected_branch, BRANCH_RANKS["Army"])
+        rank_default_idx = 0
+        if "form_rank" in st.session_state:
+            for idx, r in enumerate(available_ranks):
+                if st.session_state["form_rank"].split("|")[0].strip() in r:
+                    rank_default_idx = idx
+                    break
+
+        selected_rank = st.selectbox(
+            f"Rank / Pay Grade ({selected_branch}) *",
+            available_ranks,
+            index=rank_default_idx,
+            help="Select your current or separation rank"
+        )
+
+    with col_b3:
+        service_statuses = [
+            "Active Duty (Transitioning / ETS soon)",
+            "Veteran (Separated / Discharged)",
+            "Veteran (Retired)",
+            "National Guard / Reserve",
+            "Military Spouse / Family"
+        ]
+        status_default_idx = 0
+        if "form_service_status" in st.session_state:
+            for idx, s in enumerate(service_statuses):
+                if st.session_state["form_service_status"] in s:
+                    status_default_idx = idx
+                    break
+
+        selected_status = st.selectbox(
+            "Service Status *",
+            service_statuses,
+            index=status_default_idx
+        )
+
+    # MOS / Specialty & Security Clearance
+    col_m1, col_m2 = st.columns([1, 1])
+
+    with col_m1:
+        mos_default = st.session_state.get("form_mos", "11B")
+        mos_input = st.text_input(
+            "MOS / AFSC / Rating Code or Role Title *",
+            value=mos_default,
+            placeholder="e.g., 11B, 18F, 88M, 92Y, 68W, IT, CTN, 1D7X1, 0311, BM...",
+            help="Enter your military occupational code or duty title"
+        ).strip().upper()
+
+        # Real-time MOS crosswalk preview
+        if mos_input:
+            mos_info = lookup_mos(mos_input)
+            if mos_info:
                 st.info(
-                    f"**🎖️ MOS Crosswalk Identified:** `{mos_code}` — **{mos_preview['title']}** ({mos_preview['branch']})\n\n"
-                    f"• **Civilian Career Paths:** {', '.join(mos_preview['civilian_titles'])}\n\n"
-                    f"• **Transferable Strengths:** {', '.join(mos_preview['transferable_skills'][:6])}"
+                    f"**🎖️ Military Specialty Identified:** `{mos_input}` — **{mos_info['title']}** ({mos_info['branch']})\n\n"
+                    f"• **Civilian Equivalents:** {', '.join(mos_info['civilian_titles'][:3])}\n\n"
+                    f"• **Key Transferable Skills:** {', '.join(mos_info['transferable_skills'][:5])}"
                 )
 
-        st.markdown("---")
+    with col_m2:
+        clearance_options = [
+            "None / Public Trust",
+            "Confidential",
+            "Secret",
+            "Top Secret",
+            "Top Secret / SCI",
+            "TS / SCI with CI Poly",
+            "TS / SCI with Full Scope Poly"
+        ]
+        clr_default_idx = 2
+        if "form_clearance" in st.session_state:
+            for idx, c in enumerate(clearance_options):
+                if st.session_state["form_clearance"] in c:
+                    clr_default_idx = idx
+                    break
 
-        # --------------------------------------------------------------------
-        # STEP 2: CONTACT & CIVILIAN PREFERENCES
-        # --------------------------------------------------------------------
-        st.markdown("### 📋 Step 2: Contact Info & Civilian Career Goals")
-        
-        col_c1, col_c2, col_c3 = st.columns(3)
-        with col_c1:
-            name_val = st.session_state.get("form_name", "")
-            full_name = st.text_input("Full Name *", value=name_val, placeholder="William Free Hall")
-        with col_c2:
-            email_val = st.session_state.get("form_email", "")
-            email_addr = st.text_input("Email Address *", value=email_val, placeholder="veteran@example.com")
-        with col_c3:
-            phone_val = st.session_state.get("form_phone", "")
-            phone_num = st.text_input("Phone Number", value=phone_val, placeholder="(910) 584-3843")
-
-        col_l1, col_l2, col_l3 = st.columns(3)
-        with col_l1:
-            city_val = st.session_state.get("form_city", "Greenville")
-            target_city = st.text_input("Target City *", value=city_val, placeholder="Greenville")
-        with col_l2:
-            state_val = st.session_state.get("form_state", "SC")
-            target_state = st.text_input("Target State (2-letter code) *", value=state_val, max_chars=2, placeholder="SC").upper()
-        with col_l3:
-            remote_pref = st.checkbox("Open to Remote / Hybrid Roles", value=True)
-            relocate_pref = st.checkbox("Willing to Relocate for Right Opportunity", value=True)
-
-        col_s1, col_s2 = st.columns(2)
-        with col_s1:
-            sal_min_val = st.session_state.get("form_sal_min", 90000)
-            salary_min = st.slider(
-                "Minimum Desired Annual Salary ($)",
-                min_value=40000,
-                max_value=220000,
-                value=int(sal_min_val),
-                step=5000,
-                format="$%d"
-            )
-        with col_s2:
-            sal_max_val = st.session_state.get("form_sal_max", 160000)
-            salary_max = st.slider(
-                "Target / Maximum Annual Salary ($)",
-                min_value=50000,
-                max_value=250000,
-                value=int(sal_max_val),
-                step=5000,
-                format="$%d"
-            )
-
-        st.markdown("---")
-
-        # --------------------------------------------------------------------
-        # STEP 3: RESUME & EXPERIENCE INGESTION
-        # --------------------------------------------------------------------
-        st.markdown("### 📄 Step 3: Resume & Military Experience Ingestion")
-        st.markdown(
-            "*Upload your resume in PDF, DOCX, or TXT format, or paste your resume text below. "
-            "Our 100% free parser will extract your technical skills, leadership competencies, and military accomplishments.*"
+        selected_clearance = st.selectbox(
+            "Active Security Clearance Level *",
+            clearance_options,
+            index=clr_default_idx,
+            help="Select your highest active or recent security clearance"
         )
 
-        uploaded_file = st.file_uploader("Upload Resume File (.pdf, .docx, .txt)", type=["pdf", "docx", "txt"])
-        
-        # Determine resume text from upload or session
-        resume_default_text = st.session_state.get("form_resume", "")
-        if uploaded_file is not None:
-            extracted_file_text = extract_text_from_file(uploaded_file)
-            if extracted_file_text:
-                resume_default_text = extracted_file_text
-                st.success(f"✅ Successfully extracted text from `{uploaded_file.name}` ({len(extracted_file_text)} characters)")
+    # ------------------------------------------------------------------------
+    # STEP 3: CONTACT & TARGET CIVILIAN PREFERENCES
+    # ------------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("### 📋 Step 3: Contact Info & Civilian Career Targets")
 
-        resume_text = st.text_area(
-            "Resume Text / Work History & Certifications *",
-            value=resume_default_text,
-            height=250,
-            placeholder="Paste your complete resume or military summary here...\n\nInclude military awards, specialties, technical tools (AWS, Python, Kubernetes, Cisco), and leadership achievements."
+    col_c1, col_c2, col_c3 = st.columns(3)
+    with col_c1:
+        name_default = st.session_state.get("form_name", "")
+        full_name = st.text_input("Full Name *", value=name_default, placeholder="e.g., John Miller")
+    with col_c2:
+        email_default = st.session_state.get("form_email", "")
+        email_addr = st.text_input("Email Address *", value=email_default, placeholder="veteran@example.com")
+    with col_c3:
+        phone_default = st.session_state.get("form_phone", "")
+        phone_num = st.text_input("Phone Number", value=phone_default, placeholder="(555) 123-4567")
+
+    col_t1, col_t2, col_t3 = st.columns(3)
+    with col_t1:
+        city_default = st.session_state.get("form_target_city", "Greenville")
+        target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="Greenville")
+    with col_t2:
+        state_default = st.session_state.get("form_target_state", "SC")
+        target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="SC").upper()
+    with col_t3:
+        remote_ok = st.checkbox("Open to Remote / Hybrid Opportunities", value=True)
+        relocate_ok = st.checkbox("Willing to Relocate for the Right Opportunity", value=True)
+
+    col_sal1, col_sal2 = st.columns(2)
+    with col_sal1:
+        sal_min_default = st.session_state.get("form_salary_min", 70000)
+        salary_min = st.slider(
+            "Minimum Desired Annual Salary ($)",
+            min_value=35000,
+            max_value=220000,
+            value=int(sal_min_default),
+            step=5000,
+            format="$%d"
+        )
+    with col_sal2:
+        sal_max_default = st.session_state.get("form_salary_max", 130000)
+        salary_max = st.slider(
+            "Target / Ceiling Annual Salary ($)",
+            min_value=45000,
+            max_value=250000,
+            value=int(sal_max_default),
+            step=5000,
+            format="$%d"
         )
 
-        st.markdown("")
-        submit_btn = st.form_submit_button("🚀 Find Matching Opportunities & Register Profile", use_container_width=True)
+    # Resume Text Area (Editable & Auto-Populated)
+    st.markdown("#### 📝 Resume / Military Summary Text")
+    resume_text = st.text_area(
+        "Resume Text (Auto-filled if file uploaded above, or paste here) *",
+        value=resume_content,
+        height=220,
+        placeholder="Paste your complete resume, military evaluation bullets, awards, specialties, and experience here...\n\nExample:\n- Commanded 9-person squad in high-tempo field operations\n- Maintained 100% accountability for $1.5M in sensitive equipment\n- Supervised preventive maintenance, safety audits, and operational readiness"
+    )
+
+    st.markdown("")
+    launch_btn = st.button("🚀 Launch AI Matching Pipeline & Find Opportunities", use_container_width=True)
 
     # ------------------------------------------------------------------------
-    # FORM SUBMISSION & MATCHING EXECUTION
+    # EXECUTION: AI MATCHING PIPELINE
     # ------------------------------------------------------------------------
-    if submit_btn:
+    if launch_btn:
         if not full_name or not email_addr or not target_city or not target_state or not resume_text:
-            st.error("🚨 Please fill out all required fields (*) before submitting.")
+            st.error("🚨 Please fill out all required fields (*) or upload a resume before launching the pipeline.")
         elif len(target_state) != 2:
-            st.error("🚨 Target State must be a 2-letter state abbreviation (e.g., SC, NC, FL, TX).")
+            st.error("🚨 Target State must be a 2-letter state code (e.g., SC, NC, FL, TX, GA, VA).")
         elif salary_min >= salary_max:
-            st.error("🚨 Minimum desired salary must be less than the target maximum salary.")
-        elif len(resume_text.strip()) < 80:
-            st.error("🚨 Resume text is too short. Please provide a complete resume or work summary (at least 80 characters).")
+            st.error("🚨 Minimum desired salary must be less than the target salary.")
+        elif len(resume_text.strip()) < 50:
+            st.error("🚨 Resume text is too short. Please provide a complete resume or military summary (at least 50 characters).")
         else:
-            with st.spinner("🔄 Parsing veteran profile, extracting military-to-civilian skills, and computing matches..."):
+            with st.spinner("⚡ Setting AI pipeline in motion: Parsing military experience, evaluating MOS crosswalk, and matching jobs..."):
                 veteran_id = str(uuid.uuid4())
                 
                 # 1. Parse Skills
-                extracted = parse_veteran_skills(resume_text, mos_code)
+                extracted = parse_veteran_skills(resume_text, mos_input)
                 
-                # 2. Build Profile Object
+                # 2. Build Veteran Profile Object
                 veteran_profile = {
                     "veteran_id": veteran_id,
                     "name": full_name,
                     "email": email_addr,
                     "phone": phone_num,
-                    "branch": service_branch,
-                    "rank": pay_grade,
-                    "mos": mos_code,
-                    "clearance": clearance_level,
-                    "service_status": service_status,
+                    "branch": selected_branch,
+                    "rank": selected_rank,
+                    "mos": mos_input,
+                    "clearance": selected_clearance,
+                    "service_status": selected_status,
                     "target_city": target_city,
                     "target_state": target_state,
-                    "remote_ok": remote_pref,
-                    "relocation": relocate_pref,
+                    "remote_ok": remote_ok,
+                    "relocation": relocate_ok,
                     "salary_min": salary_min,
                     "salary_max": salary_max,
                     "total_years": extracted["total_years"],
                     "seniority": extracted["seniority"],
                     "technical_skills": extracted["technical_skills"],
-                    "leadership_skills": extracted["leadership_skills"]
+                    "leadership_skills": extracted["leadership_skills"],
+                    "ops_skills": extracted["ops_skills"]
                 }
                 
                 # 3. Store in Unity Catalog if Spark is available
@@ -695,10 +769,10 @@ if nav_selection == "📋 Veteran Intake & Match":
                             "veteran_id": veteran_id,
                             "name": full_name,
                             "email": email_addr,
-                            "branch": service_branch,
-                            "rank": pay_grade,
-                            "mos_code": mos_code,
-                            "clearance": clearance_level,
+                            "branch": selected_branch,
+                            "rank": selected_rank,
+                            "mos_code": mos_input,
+                            "clearance": selected_clearance,
                             "target_city": target_city,
                             "target_state": target_state,
                             "total_years": extracted["total_years"],
@@ -709,17 +783,14 @@ if nav_selection == "📋 Veteran Intake & Match":
                             "created_at": datetime.now()
                         }])
                         profile_df.write.format("delta").mode("append").saveAsTable("workspace.fys_silver.veteran_profiles")
-                    except Exception as e:
-                        pass  # Gracefully continue to local matching
+                    except Exception:
+                        pass
 
-                # 4. Load Job Postings
+                # 4. Load Job Postings & Compute Semantic Matches
                 all_jobs = load_cached_scraped_jobs()
-                
-                # 5. Compute Matches
                 matches = []
                 for job in all_jobs:
                     score, reasons = calculate_veteran_match_score(job, veteran_profile, extracted)
-                    # Filter: Match score threshold or location
                     matches.append({
                         **job,
                         "match_score": score,
@@ -729,15 +800,17 @@ if nav_selection == "📋 Veteran Intake & Match":
                 # Sort by score descending
                 matches = sorted(matches, key=lambda x: x["match_score"], reverse=True)
                 
-                # Save to session state for display
+                # Save to session state
+                st.session_state["pipeline_executed"] = True
                 st.session_state["current_matches"] = matches
                 st.session_state["current_profile"] = veteran_profile
                 st.session_state["current_extracted"] = extracted
+                st.toast("✅ AI Matching Pipeline complete!", icon="🎯")
 
     # ------------------------------------------------------------------------
-    # MATCH RESULTS DISPLAY
+    # OUTPUT: COMPREHENSIVE VETERAN TRANSITION DASHBOARD
     # ------------------------------------------------------------------------
-    if "current_matches" in st.session_state and st.session_state["current_matches"]:
+    if st.session_state.get("pipeline_executed") and "current_matches" in st.session_state:
         matches = st.session_state["current_matches"]
         profile = st.session_state["current_profile"]
         extracted = st.session_state["current_extracted"]
@@ -745,31 +818,49 @@ if nav_selection == "📋 Veteran Intake & Match":
         st.markdown("---")
         st.markdown(f"## 🎯 Career Match Results for **{profile['name']}**")
         
-        # Profile Summary Header
-        summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
-        with summary_col1:
-            st.metric("Top Match Score", f"{matches[0]['match_score']:.0f}%")
-        with summary_col2:
+        # Profile Summary Badge
+        st.markdown(f"""
+        <div style="background: white; border-radius: 10px; padding: 1.25rem; border: 1px solid #cbd5e1; margin-bottom: 1.25rem; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div><strong>Branch:</strong> {profile['branch']}</div>
+                <div><strong>Rank:</strong> {profile['rank']}</div>
+                <div><strong>Specialty:</strong> {profile['mos']}</div>
+                <div><span class="clearance-badge">🛡️ {profile['clearance']}</span></div>
+                <div><strong>Experience:</strong> {profile['seniority']} (~{extracted['total_years']} yrs)</div>
+                <div><strong>Target:</strong> {profile['target_city']}, {profile['target_state']} (${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f})</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Key Metrics Row
+        m1, m2, m3, m4 = st.columns(4)
+        with m1:
+            st.metric("Top Match Score", f"{matches[0]['match_score']:.0f}% Fit")
+        with m2:
             st.metric("Total Jobs Evaluated", f"{len(matches)}")
-        with summary_col3:
-            st.metric("Experience Level", f"{profile['seniority'].split('/')[0].strip()}")
-        with summary_col4:
-            st.metric("Active Clearance", f"{profile['clearance'].split('/')[0].strip()}")
-            
+        with m3:
+            high_matches = len([m for m in matches if m['match_score'] >= 75])
+            st.metric("High Compatibility Matches", f"{high_matches}")
+        with m4:
+            avg_top_salary = np.mean([m['salary_max'] for m in matches[:5]])
+            st.metric("Avg Top Target Salary", f"${avg_top_salary:,.0f}")
+
         # Extracted Skills Tag Cloud
-        st.markdown("#### 🔍 Extracted Candidate Skills & Military Competencies")
+        st.markdown("#### 🔍 Extracted Military & Civilian Strengths")
         skills_html = ""
-        for s in extracted["technical_skills"][:12]:
+        for s in extracted["technical_skills"][:10]:
             skills_html += f"<span class='skill-chip'>💻 {s.upper()}</span>"
         for l in extracted["leadership_skills"][:6]:
             skills_html += f"<span class='mil-skill-chip'>🎖️ {l.title()}</span>"
+        for o in extracted["ops_skills"][:6]:
+            skills_html += f"<span class='ops-skill-chip'>⚙️ {o.title()}</span>"
         if extracted.get("mos_skills"):
             for m in extracted["mos_skills"][:4]:
                 skills_html += f"<span class='mil-skill-chip'>🪖 {m.title()}</span>"
         st.markdown(skills_html, unsafe_allow_html=True)
         st.markdown("")
 
-        # Match Cards
+        # Top Matching Job Cards
         st.markdown("### 💼 Top Matching Opportunities")
         top_matches = matches[:8]
         
@@ -790,29 +881,28 @@ if nav_selection == "📋 Veteran Intake & Match":
                     <div style="margin-bottom: 0.75rem;">
                         <span class="clearance-badge">🛡️ Clearance: {job.get('clearance_required', 'None')}</span>
                         &nbsp;<span style="font-size: 0.85rem; color: #166534; font-weight: 700;">🎖️ Veteran-Friendly Employer</span>
-                        &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Source: {job.get('source', 'Adzuna')})</span>
+                        &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Category: {job.get('category', 'General')})</span>
                     </div>
                     <p style="color: #334155; font-size: 0.95rem; margin-bottom: 0.75rem;">
-                        {job.get('description', '')[:300]}...
+                        {job.get('description', '')[:320]}...
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Match reasons & action buttons
                 col_btn1, col_btn2 = st.columns([2, 1])
                 with col_btn1:
                     with st.expander(f"🔍 Why this matches your military background"):
                         for r in job.get("match_reasons", []):
                             st.markdown(f"• **{r}**")
                 with col_btn2:
-                    st.link_button("🔗 Apply Directly", job.get("url", "https://adzuna.com"), use_container_width=True)
-                    if st.button(f"🦅 Request 7 Eagle Intro", key=f"intro_{idx}", use_container_width=True):
-                        st.toast(f"✅ Recruiter Intro requested for {job['title']} at {job['company']}! A 7 Eagle Group coordinator will reach out to {profile['email']}.", icon="🦅")
+                    st.link_button("🔗 Apply Directly", job.get("url", "https://7eaglegroup.com"), use_container_width=True)
+                    if st.button(f"🦅 Request 7 Eagle Recruiter Intro", key=f"intro_req_{idx}", use_container_width=True):
+                        st.success(f"✅ Recruiter Intro requested for **{job['title']}** at **{job['company']}**! A 7 Eagle Group coordinator will contact {profile['email']}.")
 
         # Download / Export Section
         st.markdown("---")
-        col_d1, col_d2 = st.columns(2)
-        with col_d1:
+        col_exp1, col_exp2 = st.columns(2)
+        with col_exp1:
             export_df = pd.DataFrame(top_matches)[['title', 'company', 'location_display', 'salary_min', 'salary_max', 'match_score', 'url']]
             st.download_button(
                 label="📥 Download Top Job Matches (CSV)",
@@ -821,27 +911,27 @@ if nav_selection == "📋 Veteran Intake & Match":
                 mime="text/csv",
                 use_container_width=True
             )
-        with col_d2:
+        with col_exp2:
             summary_txt = f"""FOR YOUR SERVICE - VETERAN TRANSITION REPORT
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-Partner: 7 Eagle Group
+Partner: 7 Eagle Group (https://7eaglegroup.com)
 
 VETERAN PROFILE:
 - Name: {profile['name']}
 - Branch: {profile['branch']}
 - Rank: {profile['rank']}
-- MOS: {profile['mos']}
+- MOS / Specialty: {profile['mos']}
 - Clearance: {profile['clearance']}
 - Target Location: {profile['target_city']}, {profile['target_state']}
 - Target Salary: ${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f}
 
-TOP MATCHING OPPORTUNITIES:
+TOP MATCHING CAREER OPPORTUNITIES:
 """
             for i, j in enumerate(top_matches, 1):
                 summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | URL: {j['url']}\n"
                 
             st.download_button(
-                label="📄 Download Veteran Transition Summary (TXT)",
+                label="📄 Download Full Veteran Transition Summary (TXT)",
                 data=summary_txt,
                 file_name=f"veteran_transition_summary_{profile['name'].replace(' ', '_').lower()}.txt",
                 mime="text/plain",
@@ -856,33 +946,32 @@ TOP MATCHING OPPORTUNITIES:
 elif nav_selection == "🗺️ MOS Career Crosswalk Explorer":
     st.markdown("## 🗺️ Military Occupational Specialty (MOS) Career Crosswalk")
     st.markdown(
-        "Explore how military specialties across the **Army, Navy, Air Force, Marine Corps, Space Force, and Coast Guard** "
-        "translate directly into civilian job titles, transferable skills, and compensation benchmarks."
+        "Explore how military specialties across the **Army, Navy, Air Force, Marine Corps, Coast Guard, and Space Force** "
+        "translate directly into high-paying civilian career paths, transferable skills, and compensation benchmarks."
     )
     
     col_s1, col_s2 = st.columns([1, 2])
     with col_s1:
         branch_filter = st.selectbox("Filter by Service Branch:", ["All Branches", "Army", "Navy", "Air Force", "Marine Corps", "Coast Guard", "Space Force"])
     with col_s2:
-        search_query = st.text_input("🔍 Search MOS Code, Title, or Civilian Keyword:", placeholder="e.g., 18Z, Cyber, Intelligence, Logistics, 25B, Cloud")
+        search_query = st.text_input("🔍 Search MOS Code, Title, or Civilian Keyword:", placeholder="e.g., 11B, 18F, 88M, 92Y, 68W, IT, Cyber, Logistics, Police...")
         
     filtered_mos = {}
     for code, data in MOS_DATABASE.items():
-        # Branch match
         if branch_filter != "All Branches" and data["branch"] != branch_filter:
             continue
-        # Search match
         if search_query:
             q = search_query.lower()
             in_code = q in code.lower()
             in_title = q in data["title"].lower()
             in_civ = any(q in c.lower() for c in data["civilian_titles"])
             in_skills = any(q in s.lower() for s in data["transferable_skills"])
-            if not (in_code or in_title or in_civ or in_skills):
+            in_cat = q in data.get("category", "").lower()
+            if not (in_code or in_title or in_civ or in_skills or in_cat):
                 continue
         filtered_mos[code] = data
 
-    st.markdown(f"**Found {len(filtered_mos)} matching military specialties:**")
+    st.markdown(f"**Showing {len(filtered_mos)} military specialties:**")
     
     for code, data in filtered_mos.items():
         with st.expander(f"**{code} — {data['title']}** ({data['branch']})"):
@@ -894,7 +983,7 @@ elif nav_selection == "🗺️ MOS Career Crosswalk Explorer":
                 for ct in data["civilian_titles"]:
                     st.markdown(f"• **{ct}**")
             with col2:
-                st.markdown("**💼 Core Transferable Skills:**")
+                st.markdown("**💼 Core Transferable Strengths:**")
                 for ts in data["transferable_skills"]:
                     st.markdown(f"• {ts.title()}")
                 if data.get("tech_skills"):
