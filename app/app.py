@@ -1034,7 +1034,7 @@ if nav_selection == "📋 Veteran Intake & Match":
     col_m1, col_m2 = st.columns([1, 1])
 
     with col_m1:
-        mos_default = st.session_state.get("form_mos", "11B")
+        mos_default = st.session_state.get("form_mos", "")
         mos_input = st.text_input(
             "MOS / AFSC / Rating Code or Role Title *",
             value=mos_default,
@@ -1062,7 +1062,7 @@ if nav_selection == "📋 Veteran Intake & Match":
             "TS / SCI with CI Poly",
             "TS / SCI with Full Scope Poly"
         ]
-        clr_default_idx = 2
+        clr_default_idx = 0
         if "form_clearance" in st.session_state:
             for idx, c in enumerate(clearance_options):
                 if st.session_state["form_clearance"] in c:
@@ -1095,11 +1095,11 @@ if nav_selection == "📋 Veteran Intake & Match":
 
     col_t1, col_t2, col_t3 = st.columns([1.2, 0.8, 1.2])
     with col_t1:
-        city_default = st.session_state.get("form_target_city", "Greenville")
-        target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="Greenville")
+        city_default = st.session_state.get("form_target_city", "")
+        target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="e.g., Dallas, Greenville, Tampa, San Diego...")
     with col_t2:
-        state_default = st.session_state.get("form_target_state", "SC")
-        target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="SC").upper()
+        state_default = st.session_state.get("form_target_state", "")
+        target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="e.g., TX, SC, FL, CA...").upper()
     with col_t3:
         radius_options = ["10 miles", "20 miles", "50 miles", "100 miles", "Any Distance / Nationwide"]
         radius_default_idx = 2  # 50 miles
@@ -1122,23 +1122,9 @@ if nav_selection == "📋 Veteran Intake & Match":
     col_track1, col_track2 = st.columns([1, 1])
     with col_track1:
         track_options = list(CAREER_TRACKS.keys())
-        track_default_idx = 2  # Default to Operations
+        track_default_idx = 0
         if "form_career_track" in st.session_state and st.session_state["form_career_track"] in track_options:
             track_default_idx = track_options.index(st.session_state["form_career_track"])
-        elif "form_mos" in st.session_state:
-            mos_val = st.session_state["form_mos"]
-            if mos_val in ["18F", "18Z", "25B", "1D7X1", "IT"]:
-                track_default_idx = 0  # Cloud / DevOps
-            elif mos_val in ["25D", "17C", "1B4X1", "CTN", "0689"]:
-                track_default_idx = 1  # Cyber
-            elif mos_val in ["88M", "92A", "92Y", "LS", "2T2X1", "0431"]:
-                track_default_idx = 3  # Logistics
-            elif mos_val in ["91B", "91X", "15T", "2A6X1", "MK"]:
-                track_default_idx = 4  # Mechanics
-            elif mos_val in ["31B", "31D", "3P0X1", "MA", "5811", "ME"]:
-                track_default_idx = 5  # Law Enforcement
-            elif mos_val in ["68W", "HM", "4N0X1", "18D"]:
-                track_default_idx = 6  # Healthcare
 
         selected_career_track = st.selectbox(
             "🎯 Primary Target Career Field / Industry Track *",
@@ -1150,7 +1136,7 @@ if nav_selection == "📋 Veteran Intake & Match":
         desired_role_custom = st.text_input(
             "Specific Desired Job Title(s) (Optional)",
             value=st.session_state.get("form_desired_role", ""),
-            placeholder="e.g., Solutions Architect, Operations Supervisor, Fleet Dispatcher...",
+            placeholder="e.g., Solutions Architect, Operations Supervisor, Fleet Dispatcher, Site Superintendent...",
             help="Enter any specific job titles you are looking for"
         )
 
