@@ -49,44 +49,61 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Patriotic CSS (Navy, Crimson, Gold, Clean Modern White)
+# Custom Responsive Patriotic CSS (iOS, Android, Mac Safari, Chrome, Edge Compatible)
 st.markdown("""
 <style>
-    /* Global Base */
+    /* Viewport & Cross-Platform Typography */
+    html, body, [class*="css"] {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+    }
+    
     .stApp {
         background-color: #f8fafc;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+
+    /* iOS Safari Input Zoom Fix */
+    input, select, textarea, .stTextInput input, .stSelectbox select {
+        font-size: 16px !important;
+    }
     
-    /* Hero Banner */
+    /* Responsive Hero Banner */
     .hero-banner {
+        background: -webkit-linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 50%, #13315c 100%);
         background: linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 50%, #13315c 100%);
         color: white;
-        padding: 2rem 2.5rem;
+        padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 4vw, 2.5rem);
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(11, 29, 58, 0.25);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         border-bottom: 5px solid #c81d25;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     .hero-title {
-        font-size: 2.4rem;
+        font-size: clamp(1.4rem, 5vw, 2.3rem);
         font-weight: 800;
         letter-spacing: -0.5px;
         margin: 0;
         color: #ffffff;
         text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        line-height: 1.2;
     }
     .hero-subtitle {
-        font-size: 1.15rem;
+        font-size: clamp(0.9rem, 2.5vw, 1.15rem);
         color: #e2e8f0;
         margin-top: 0.5rem;
         font-weight: 400;
+        line-height: 1.35;
     }
     .hero-badge {
         display: inline-block;
         background: #d4af37;
         color: #0b1d3a;
-        font-size: 0.85rem;
+        font-size: clamp(0.75rem, 2vw, 0.85rem);
         font-weight: 700;
         padding: 0.3rem 0.85rem;
         border-radius: 20px;
@@ -95,47 +112,55 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* Branch Cards */
+    /* Responsive Branch Grid */
+    .branch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+    }
     .branch-card {
         background: white;
         border: 1px solid #e2e8f0;
         border-top: 4px solid #1e3a8a;
         border-radius: 8px;
-        padding: 0.75rem 0.5rem;
+        padding: 0.75rem 0.4rem;
         text-align: center;
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
     
     /* Match Badges */
     .match-badge-high {
         background-color: #15803d;
         color: white;
-        padding: 0.35rem 0.9rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 20px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.95rem;
         display: inline-block;
     }
     .match-badge-med {
         background-color: #d97706;
         color: white;
-        padding: 0.35rem 0.9rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 20px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.95rem;
         display: inline-block;
     }
     
-    /* Job Card */
+    /* Responsive Job Cards */
     .job-card {
         background: white;
         border: 1px solid #cbd5e1;
         border-left: 6px solid #1e3a8a;
         border-radius: 10px;
-        padding: 1.25rem;
+        padding: clamp(0.85rem, 2.5vw, 1.25rem);
         margin-bottom: 1rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     /* Skill Chips */
@@ -143,11 +168,11 @@ st.markdown("""
         display: inline-block;
         background: #e0e7ff;
         color: #1e3a8a;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        padding: 0.25rem 0.65rem;
+        padding: 0.25rem 0.6rem;
         border-radius: 12px;
-        margin-right: 0.35rem;
+        margin-right: 0.3rem;
         margin-bottom: 0.35rem;
         border: 1px solid #c7d2fe;
     }
@@ -155,11 +180,11 @@ st.markdown("""
         display: inline-block;
         background: #fef3c7;
         color: #92400e;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        padding: 0.25rem 0.65rem;
+        padding: 0.25rem 0.6rem;
         border-radius: 12px;
-        margin-right: 0.35rem;
+        margin-right: 0.3rem;
         margin-bottom: 0.35rem;
         border: 1px solid #fde68a;
     }
@@ -167,11 +192,11 @@ st.markdown("""
         display: inline-block;
         background: #dcfce7;
         color: #166534;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        padding: 0.25rem 0.65rem;
+        padding: 0.25rem 0.6rem;
         border-radius: 12px;
-        margin-right: 0.35rem;
+        margin-right: 0.3rem;
         margin-bottom: 0.35rem;
         border: 1px solid #bbf7d0;
     }
@@ -180,27 +205,54 @@ st.markdown("""
     .clearance-badge {
         background: #0f172a;
         color: #f8fafc;
-        padding: 0.25rem 0.65rem;
+        padding: 0.25rem 0.6rem;
         border-radius: 6px;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         border: 1px solid #475569;
+        display: inline-block;
     }
 
-    /* Buttons */
+    /* Mobile & Touch Optimized Buttons */
     .stButton>button {
         background-color: #1e3a8a;
         color: white;
         font-weight: 700;
         border-radius: 8px;
         border: none;
-        padding: 0.55rem 1.2rem;
+        padding: 0.6rem 1.2rem;
+        min-height: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
-    .stButton>button:hover {
+    .stButton>button:hover, .stButton>button:active {
         background-color: #0b1d3a;
         color: #ffffff;
+    }
+
+    /* Media Queries for Mobile Screens (Phones < 768px) */
+    @media (max-width: 768px) {
+        .branch-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem;
+        }
+        .branch-card {
+            padding: 0.5rem 0.25rem;
+            font-size: 0.8rem;
+        }
+        .hero-banner {
+            padding: 1rem 0.85rem;
+            border-radius: 8px;
+        }
+        .job-card {
+            padding: 0.85rem 0.75rem;
+        }
+        .stButton>button {
+            width: 100% !important;
+            margin-bottom: 0.35rem;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -512,20 +564,49 @@ st.markdown("""
 
 if nav_selection == "📋 Veteran Intake & Match":
 
-    # Branch Insignia Overview Cards
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
-    with c1:
-        st.markdown("<div class='branch-card'><strong>🪖 U.S. Army</strong><br><small>All MOS Specialties</small></div>", unsafe_allow_html=True)
-    with c2:
-        st.markdown("<div class='branch-card'><strong>⚓ U.S. Navy</strong><br><small>All Ratings</small></div>", unsafe_allow_html=True)
-    with c3:
-        st.markdown("<div class='branch-card'><strong>✈️ U.S. Air Force</strong><br><small>All AFSCs</small></div>", unsafe_allow_html=True)
-    with c4:
-        st.markdown("<div class='branch-card'><strong>🦅 U.S. Marine Corps</strong><br><small>All MOS Codes</small></div>", unsafe_allow_html=True)
-    with c5:
-        st.markdown("<div class='branch-card'><strong>🚢 U.S. Coast Guard</strong><br><small>All Maritime Ratings</small></div>", unsafe_allow_html=True)
-    with c6:
-        st.markdown("<div class='branch-card'><strong>🚀 U.S. Space Force</strong><br><small>All Space & Cyber</small></div>", unsafe_allow_html=True)
+    # Responsive Branch Insignia Grid
+    st.markdown("""
+    <div class="branch-grid">
+        <div class="branch-card"><strong>🪖 U.S. Army</strong><br><small>All MOS Specialties</small></div>
+        <div class="branch-card"><strong>⚓ U.S. Navy</strong><br><small>All Ratings</small></div>
+        <div class="branch-card"><strong>✈️ U.S. Air Force</strong><br><small>All AFSCs</small></div>
+        <div class="branch-card"><strong>🦅 U.S. Marine Corps</strong><br><small>All MOS Codes</small></div>
+        <div class="branch-card"><strong>🚢 U.S. Coast Guard</strong><br><small>All Maritime Ratings</small></div>
+        <div class="branch-card"><strong>🚀 U.S. Space Force</strong><br><small>All Space & Cyber</small></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Mobile & Quick Demo Selector (Accessible on all screens)
+    with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):
+        m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+        with m_col1:
+            if st.button("🪖 18F SF Lead", key="mob_demo_18f", use_container_width=True, help="Army Special Forces / Cloud Architect"):
+                p = DEMO_VETERAN_PROFILES["18F"]
+                for k, v in p.items():
+                    st.session_state[f"form_{k}"] = v
+                st.toast("✅ Loaded Army 18F Special Forces Profile!", icon="🎖️")
+                st.rerun()
+        with m_col2:
+            if st.button("🪖 11B Infantry", key="mob_demo_11b", use_container_width=True, help="Army Infantry Squad Leader"):
+                p = DEMO_VETERAN_PROFILES["11B"]
+                for k, v in p.items():
+                    st.session_state[f"form_{k}"] = v
+                st.toast("✅ Loaded Army 11B Infantry Profile!", icon="🎖️")
+                st.rerun()
+        with m_col3:
+            if st.button("🪖 88M Logistics", key="mob_demo_88m", use_container_width=True, help="Army Motor Transport & CDL"):
+                p = DEMO_VETERAN_PROFILES["88M"]
+                for k, v in p.items():
+                    st.session_state[f"form_{k}"] = v
+                st.toast("✅ Loaded Army 88M Logistics Profile!", icon="🎖️")
+                st.rerun()
+        with m_col4:
+            if st.button("⚓ Navy IT / Cyber", key="mob_demo_it", use_container_width=True, help="Navy IT Systems Administrator"):
+                p = DEMO_VETERAN_PROFILES["25B"]
+                for k, v in p.items():
+                    st.session_state[f"form_{k}"] = v
+                st.toast("✅ Loaded Navy IT Profile!", icon="🎖️")
+                st.rerun()
 
     st.markdown("")
 
