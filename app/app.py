@@ -551,9 +551,9 @@ def calculate_veteran_match_score(
     extracted_skills: Dict
 ) -> Tuple[float, List[str], Dict]:
     """
-    Calculate match score (0-100), 'Why You Match' reasons, and a Glassdoor-style
-    factor breakdown with self-improvement projected success metrics.
-    Gives primary priority to the specific job titles, career tracks, and commute radius requested.
+    Calculate match score (0-100), 'Why You Match' reasons, and an individual
+    Key Match Factors breakdown with self-improvement projected success metrics.
+    Gives absolute top priority to the specific job titles, career tracks, and commute radius requested.
     """
     score = 0.0
     reasons = []
@@ -574,64 +574,78 @@ def calculate_veteran_match_score(
     # Parse multiple comma/slash/pipe separated desired titles
     desired_roles = [r.strip() for r in re.split(r'[,;/|]+', desired_role_raw) if len(r.strip()) >= 2]
     
-    # 1. SPECIFIC DESIRED JOB TITLE & TARGET TRACK ALIGNMENT (Max 50 pts)
+    # 1. SPECIFIC DESIRED JOB TITLE & TARGET TRACK ALIGNMENT (Max 60 pts)
     title_matched_name = None
-    role_priority = 4  # 1: Direct Title Match, 2: Keyword Match, 3: Track Match, 4+: Secondary Field
+    role_priority = 5  # Default
     
-    # Check exact / substring match against desired roles
-    for dr in desired_roles:
-        if dr in job_title or job_title in dr:
-            title_matched_name = dr
-            role_priority = 1
-            break
-        # Word-level token match (e.g. "solutions" and "architect" in job_title)
-        dr_words = [w for w in dr.split() if len(w) > 3 and w not in ["and", "the", "for", "with"]]
-        if dr_words and all(w in job_title for w in dr_words):
-            title_matched_name = dr
-            role_priority = 1
-            break
-        elif dr_words and any(w in job_title for w in dr_words):
-            title_matched_name = dr
-            role_priority = 2
-            
+    if desired_roles:
+        # Check exact / substring match against desired roles
+        for dr in desired_roles:
+            if dr in job_title or job_title in dr:
+                title_matched_name = dr
+                role_priority = 1
+                break
+            # Word-level token match (e.g. "solutions" and "architect" in job_title)
+            dr_words = [w for w in dr.split() if len(w) > 2 and w not in ["and", "the", "for", "with", "all"]]
+            if dr_words and all(w in job_title for w in dr_words):
+                title_matched_name = dr
+                role_priority = 1
+                break
+            elif dr_words and any(w in job_title for w in dr_words):
+                title_matched_name = dr
+                role_priority = 2
+                
+        # If not matched in title, check if desired role keyword is in job category or description
+        if role_priority > 2:
+            for dr in desired_roles:
+                if dr in job_category or dr in job_desc:
+                    title_matched_name = dr
+                    role_priority = 3
+                    break
+    
     track_alignment = False
     if target_track:
         if "cloud" in target_track or "devops" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect", "infrastructure", "platform"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect", "infrastructure", "platform", "systems engineer"])
         elif "cyber" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat", "information security"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat", "information security", "soc", "infosec"])
         elif "logistics" in target_track or "supply" in target_track or "fleet" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight", "dispatcher", "fleet"])
+            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight", "dispatcher", "fleet", "cdl", "distribution"])
         elif "maintenance" in target_track or "mechanic" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel", "technician"])
+            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel", "technician", "hvac", "machinist"])
         elif "operations" in target_track or "program" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager", "superintendent", "director"])
+            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager", "superintendent", "director", "supervisor"])
         elif "construction" in target_track or "infrastructure" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["construction", "superintendent", "civil", "field", "infrastructure", "project manager", "site"])
+            track_alignment = any(w in job_category or w in job_text for w in ["construction", "superintendent", "civil", "field", "infrastructure", "project manager", "site", "estimator"])
         elif "law enforcement" in target_track or "security" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police", "patrol", "compliance"])
+            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police", "patrol", "compliance", "guard"])
         elif "health" in target_track or "medical" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage", "nurse", "paramedic", "ehs"])
+            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage", "nurse", "paramedic", "ehs", "emt"])
 
     if role_priority == 1:
-        score += 50
+        score += 60
         role_status = "pass"
-        role_detail = f"Direct match for requested title '{title_matched_name.title()}'"
-        reasons.append(f"🎯 Target Title Priority: Direct match for requested role '{title_matched_name.title()}'")
+        role_detail = f"Exact match for requested title '{title_matched_name.title()}'"
+        reasons.append(f"🎯 Requested Job Title: Exact match for '{title_matched_name.title()}'")
     elif role_priority == 2:
-        score += 40
+        score += 48
         role_status = "pass"
         role_detail = f"Keyword match for requested role '{title_matched_name.title()}'"
-        reasons.append(f"🎯 Target Role Alignment: Position title matches your requested interest '{title_matched_name.title()}'")
-    elif track_alignment:
-        role_priority = 3
-        score += 32
+        reasons.append(f"🎯 Requested Role Alignment: Matches keywords for '{title_matched_name.title()}'")
+    elif role_priority == 3:
+        score += 38
         role_status = "pass"
-        role_detail = f"Direct match for {veteran_profile.get('target_track')}"
+        role_detail = f"Aligned with requested specialty '{title_matched_name.title()}'"
+        reasons.append(f"🎯 Requested Role Focus: Context match for '{title_matched_name.title()}'")
+    elif track_alignment:
+        role_priority = 4 if desired_roles else 1
+        score += 30 if desired_roles else 45
+        role_status = "pass"
+        role_detail = f"Direct match for {veteran_profile.get('target_track', 'Target Track')}"
         reasons.append(f"🎯 Target Career Track: Aligns with your selected industry track ({veteran_profile.get('target_track')})")
     else:
-        role_priority = 5
-        score -= 35
+        role_priority = 6 if desired_roles else 4
+        score -= 40
         role_status = "warn"
         role_detail = f"Secondary Field (Outside {veteran_profile.get('target_track', 'Target Track')})"
 
@@ -1356,12 +1370,16 @@ if nav_selection == "📋 Veteran Intake & Match":
                 clr_req = job.get('clearance_required', 'None')
                 clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
                 
-                prio = factors.get("role_priority", 4)
+                prio = factors.get("role_priority", 5)
                 prio_badge = ""
                 if prio == 1:
-                    prio_badge = '&nbsp;<span style="background: #fef08a; color: #854d0e; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Title Match</span>'
+                    prio_badge = '&nbsp;<span style="background: #fef08a; color: #854d0e; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Title Match</span>'
                 elif prio == 2:
-                    prio_badge = '&nbsp;<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Keyword Match</span>'
+                    prio_badge = '&nbsp;<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Keyword Match</span>'
+                elif prio == 3:
+                    prio_badge = '&nbsp;<span style="background: #ede9fe; color: #5b21b6; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Role Specialty</span>'
+                elif prio == 4:
+                    prio_badge = '&nbsp;<span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Career Track</span>'
                 
                 with st.container():
                     st.markdown(f"""
@@ -1386,14 +1404,14 @@ if nav_selection == "📋 Veteran Intake & Match":
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    # GLASSDOOR KEY FACTORS SCORECARD & PROJECTED SELF-IMPROVEMENT
-                    with st.expander(f"📊 Key Match Factors & Projected Success Breakdown (Glassdoor Scorecard)"):
+                    # KEY FACTORS SCORECARD & PROJECTED SELF-IMPROVEMENT
+                    with st.expander(f"📊 Key Match Factors & Projected Success Breakdown"):
                         col_fc1, col_fc2 = st.columns(2)
                         with col_fc1:
-                            st.markdown("#### 📋 Fit Factor Scorecard")
+                            st.markdown("#### 📋 Individual Key Match Factors")
                             # Role
                             r_st = "✅" if factors.get("role", {}).get("status") == "pass" else "⚠️"
-                            st.markdown(f"**🎯 Career Track Alignment:** {r_st} {factors.get('role', {}).get('detail', 'N/A')}")
+                            st.markdown(f"**🎯 Role & Track Alignment:** {r_st} {factors.get('role', {}).get('detail', 'N/A')}")
                             # Clearance
                             c_st = "✅" if factors.get("clearance", {}).get("status") == "pass" else "⛔"
                             st.markdown(f"**🛡️ Security Clearance:** {c_st} {factors.get('clearance', {}).get('detail', 'N/A')}")
@@ -1405,7 +1423,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                             st.markdown(f"**💰 Compensation Fit:** {sal_st} {factors.get('salary', {}).get('detail', 'N/A')}")
                             # Location
                             l_st = "✅" if factors.get("location", {}).get("status") == "pass" else "⚠️"
-                            st.markdown(f"**📍 Location & Mode:** {l_st} {factors.get('location', {}).get('detail', 'N/A')}")
+                            st.markdown(f"**📍 Location & Travel Distance:** {l_st} {factors.get('location', {}).get('detail', 'N/A')}")
 
                         with col_fc2:
                             st.markdown("#### 📈 Projected Success with Self-Improvement")
