@@ -414,55 +414,89 @@ def calculate_veteran_match_score(
     """
     Calculate match score (0-100), 'Why You Match' reasons, and a Glassdoor-style
     factor breakdown with self-improvement projected success metrics.
-    Strictly penalizes clearance shortfalls and heavily weights target career tracks.
+    Gives primary priority to the specific job titles and career tracks the veteran requested.
     """
     score = 0.0
     reasons = []
     
-    job_text = f"{job.get('title', '')} {job.get('description', '')} {job.get('category', '')}".lower()
+    job_title = job.get('title', '').lower().strip()
+    job_desc = job.get('description', '').lower()
     job_category = job.get('category', '').lower()
+    job_text = f"{job_title} {job_desc} {job_category}"
+    
     user_tech = set(extracted_skills.get("technical_skills", []))
     user_leadership = set(extracted_skills.get("leadership_skills", []))
     user_ops = set(extracted_skills.get("ops_skills", []))
     all_user_skills = user_tech.union(user_leadership).union(user_ops)
     
-    target_track = veteran_profile.get("target_track", "").lower()
-    desired_role = veteran_profile.get("desired_role", "").lower()
+    target_track = veteran_profile.get("target_track", "").lower().strip()
+    desired_role_raw = veteran_profile.get("desired_role", "").lower().strip()
     
-    # 1. Target Career Track & Desired Role Alignment (Max 35 pts)
+    # Parse multiple comma/slash/pipe separated desired titles
+    desired_roles = [r.strip() for r in re.split(r'[,;/|]+', desired_role_raw) if len(r.strip()) >= 2]
+    
+    # 1. SPECIFIC DESIRED JOB TITLE & TARGET TRACK ALIGNMENT (Max 50 pts)
+    title_matched_name = None
+    role_priority = 4  # 1: Direct Title Match, 2: Keyword Match, 3: Track Match, 4+: Secondary Field
+    
+    # Check exact / substring match against desired roles
+    for dr in desired_roles:
+        if dr in job_title or job_title in dr:
+            title_matched_name = dr
+            role_priority = 1
+            break
+        # Word-level token match (e.g. "solutions" and "architect" in job_title)
+        dr_words = [w for w in dr.split() if len(w) > 3 and w not in ["and", "the", "for", "with"]]
+        if dr_words and all(w in job_title for w in dr_words):
+            title_matched_name = dr
+            role_priority = 1
+            break
+        elif dr_words and any(w in job_title for w in dr_words):
+            title_matched_name = dr
+            role_priority = 2
+            
     track_alignment = False
     if target_track:
         if "cloud" in target_track or "devops" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect", "infrastructure", "platform"])
         elif "cyber" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat", "information security"])
         elif "logistics" in target_track or "supply" in target_track or "fleet" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight"])
+            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight", "dispatcher", "fleet"])
         elif "maintenance" in target_track or "mechanic" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel"])
+            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel", "technician"])
         elif "operations" in target_track or "program" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager"])
+            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager", "superintendent", "director"])
+        elif "construction" in target_track or "infrastructure" in target_track:
+            track_alignment = any(w in job_category or w in job_text for w in ["construction", "superintendent", "civil", "field", "infrastructure", "project manager", "site"])
         elif "law enforcement" in target_track or "security" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police"])
+            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police", "patrol", "compliance"])
         elif "health" in target_track or "medical" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage"])
-            
-    if desired_role and (desired_role in job_text or job.get("title", "").lower() in desired_role):
-        score += 35
+            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage", "nurse", "paramedic", "ehs"])
+
+    if role_priority == 1:
+        score += 50
         role_status = "pass"
-        role_detail = f"Direct match for '{desired_role.title()}'"
-        reasons.append(f"🎯 Target Role Alignment: Direct match for '{desired_role.title()}'")
+        role_detail = f"Direct match for requested title '{title_matched_name.title()}'"
+        reasons.append(f"🎯 Target Title Priority: Direct match for requested role '{title_matched_name.title()}'")
+    elif role_priority == 2:
+        score += 40
+        role_status = "pass"
+        role_detail = f"Keyword match for requested role '{title_matched_name.title()}'"
+        reasons.append(f"🎯 Target Role Alignment: Position title matches your requested interest '{title_matched_name.title()}'")
     elif track_alignment:
-        score += 30
+        role_priority = 3
+        score += 32
         role_status = "pass"
         role_detail = f"Direct match for {veteran_profile.get('target_track')}"
-        reasons.append(f"🎯 Career Track Fit: Aligns with your target field ({veteran_profile.get('target_track')})")
+        reasons.append(f"🎯 Target Career Track: Aligns with your selected industry track ({veteran_profile.get('target_track')})")
     else:
-        score -= 20
+        role_priority = 5
+        score -= 35
         role_status = "warn"
         role_detail = f"Secondary Field (Outside {veteran_profile.get('target_track', 'Target Track')})"
 
-    # 2. Skills & Competencies Match (Max 30 pts)
+    # 2. Skills & Competencies Match (Max 25 pts)
     job_req_skills = [s.lower() for s in job.get("skills", [])]
     matched_skills = []
     missing_skills = []
@@ -470,7 +504,7 @@ def calculate_veteran_match_score(
         matched_skills = [s for s in job_req_skills if s in all_user_skills]
         missing_skills = [s for s in job_req_skills if s not in all_user_skills]
         skill_pct = len(matched_skills) / max(1, len(job_req_skills))
-        score += skill_pct * 30
+        score += skill_pct * 25
         if matched_skills:
             reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_skills[:4]])}")
         else:
@@ -481,28 +515,27 @@ def calculate_veteran_match_score(
     else:
         matched_skills = [s for s in all_user_skills if s in job_text]
         missing_skills = []
-        score += min(30.0, len(matched_skills) * 5.0)
+        score += min(25.0, len(matched_skills) * 5.0)
         skills_status = "pass" if matched_skills else "warn"
         skills_detail = f"{len(matched_skills)} Relevant Strengths Identified"
         if matched_skills:
             reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_skills[:4]])}")
 
-    # 3. MOS / Branch Specialty Crosswalk (Max 20 pts)
+    # 3. MOS / Branch Specialty Crosswalk (Max 15 pts)
     mos_info = lookup_mos(veteran_profile.get("mos", ""))
     if mos_info:
         mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
-        job_title_lower = job.get("title", "").lower()
         
-        if any(ct in job_title_lower or job_title_lower in ct for ct in mos_civilian_titles):
-            score += 20
+        if any(ct in job_title or job_title in ct for ct in mos_civilian_titles):
+            score += 15
             reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
         elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
-            score += 15
+            score += 10
             reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
         else:
-            score += 8
+            score += 5
     else:
-        score += 6
+        score += 4
             
     # 4. Security Clearance Alignment (Max 15 pts or Strict Ineligibility Penalty)
     job_clearance = str(job.get("clearance_required", "None")).strip()
@@ -590,6 +623,7 @@ def calculate_veteran_match_score(
     projected_salary_gain = min(30000, max(12000, len(missing_skills) * 6000)) if missing_skills else 12000
     
     factors = {
+        "role_priority": role_priority,
         "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail},
         "clearance": {"label": "Security Clearance", "status": clearance_status, "detail": clearance_detail},
         "skills": {"label": "Skills Alignment", "status": skills_status, "detail": skills_detail, "matched": matched_skills, "missing": missing_skills},
@@ -1051,8 +1085,17 @@ if nav_selection == "📋 Veteran Intake & Match":
                         "factors": factors
                     })
                 
-                # Sort by score descending
-                matches = sorted(matches, key=lambda x: x["match_score"], reverse=True)
+                # Sort by:
+                # 1. role_priority (1: direct requested title match, 2: keyword match, 3: target track match, 5: secondary)
+                # 2. clearance eligibility (eligible first)
+                # 3. match_score descending
+                def match_sort_key(item):
+                    f = item.get("factors", {})
+                    prio = f.get("role_priority", 4)
+                    clr_pass = 1 if f.get("clearance", {}).get("status") == "pass" else 0
+                    return (prio, -clr_pass, -item["match_score"])
+
+                matches = sorted(matches, key=match_sort_key)
                 
                 # 5. Compute Career Readiness & Skill Gap Analysis
                 all_user_skills = extracted["technical_skills"] + extracted["leadership_skills"] + extracted["ops_skills"] + extracted.get("mos_skills", [])
@@ -1142,11 +1185,18 @@ if nav_selection == "📋 Veteran Intake & Match":
                 clr_req = job.get('clearance_required', 'None')
                 clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
                 
+                prio = factors.get("role_priority", 4)
+                prio_badge = ""
+                if prio == 1:
+                    prio_badge = '&nbsp;<span style="background: #fef08a; color: #854d0e; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Title Match</span>'
+                elif prio == 2:
+                    prio_badge = '&nbsp;<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Keyword Match</span>'
+                
                 with st.container():
                     st.markdown(f"""
                     <div class="job-card" style="border-left: 6px solid {'#dc2626' if clr_is_fail else '#0b2545'};">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
-                            <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']}</h3>
+                            <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']} {prio_badge}</h3>
                             <span class="{badge_class}">{score:.0f}% Fit</span>
                         </div>
                         <div style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">
