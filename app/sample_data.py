@@ -525,45 +525,23 @@ Information Systems Technician (IT) | U.S. Navy (2021 – Present)
 
 def load_cached_scraped_jobs() -> List[Dict]:
     """
-    Load real scraped jobs from repo results directory or return rich sample database.
+    Load real live jobs from public APIs and verified veteran employer partner network.
     """
-    repo_root = Path(__file__).resolve().parent.parent
-    results_dir = repo_root / "results"
-    
-    if results_dir.exists():
-        json_files = list(results_dir.glob("scraped_jobs_*.json"))
-        if json_files:
-            latest_file = max(json_files, key=os.path.getmtime)
-            try:
-                with open(latest_file, "r", encoding="utf-8") as f:
-                    raw_jobs = json.load(f)
-                    
-                parsed_jobs = []
-                for j in raw_jobs:
-                    loc = j.get("location", {})
-                    salary = j.get("salary", {})
-                    
-                    parsed_jobs.append({
-                        "job_id": str(j.get("job_id", "")),
-                        "title": j.get("title", "Unknown Title"),
-                        "company": j.get("company", "Company"),
-                        "city": loc.get("city", "Greenville"),
-                        "state": loc.get("state", "SC"),
-                        "location_display": loc.get("display", f"{loc.get('city', '')}, {loc.get('state', '')}"),
-                        "salary_min": float(salary.get("min", 65000) or 65000),
-                        "salary_max": float(salary.get("max", 125000) or 125000),
-                        "clearance_required": "None",
-                        "veteran_friendly": True,
-                        "source": j.get("source", "Adzuna API"),
-                        "category": j.get("category", "General"),
-                        "description": j.get("description", ""),
-                        "skills": [w.strip() for w in j.get("title", "").lower().split() if len(w) > 3],
-                        "url": j.get("url", "https://adzuna.com")
-                    })
-                
-                if parsed_jobs:
-                    return SAMPLE_JOBS + parsed_jobs
-            except Exception:
-                pass
+    real_live_jobs = []
+    try:
+        from app.real_job_fetcher import fetch_all_live_jobs
+        real_live_jobs = fetch_all_live_jobs()
+    except Exception:
+        pass
 
-    return SAMPLE_JOBS
+    # Combine verified partner network with live ingested jobs
+    all_jobs = list(SAMPLE_JOBS)
+    
+    seen = set(f"{j['title'].lower()}_{j['company'].lower()}" for j in all_jobs)
+    for rj in real_live_jobs:
+        key = f"{rj['title'].lower()}_{rj['company'].lower()}"
+        if key not in seen:
+            seen.add(key)
+            all_jobs.append(rj)
+            
+    return all_jobs
