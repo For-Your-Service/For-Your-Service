@@ -410,11 +410,11 @@ def calculate_veteran_match_score(
     job: Dict,
     veteran_profile: Dict,
     extracted_skills: Dict
-) -> Tuple[float, List[str]]:
+) -> Tuple[float, List[str], Dict]:
     """
-    Calculate match score (0-100) and generate 'Why You Match' reasons.
-    Accurately tailors matches across Combat Arms, Logistics, Mechanics, Construction,
-    Law Enforcement, Healthcare, and IT based on real skills, MOS, and target career track.
+    Calculate match score (0-100), 'Why You Match' reasons, and a Glassdoor-style
+    factor breakdown with self-improvement projected success metrics.
+    Strictly penalizes clearance shortfalls and heavily weights target career tracks.
     """
     score = 0.0
     reasons = []
@@ -429,75 +429,88 @@ def calculate_veteran_match_score(
     target_track = veteran_profile.get("target_track", "").lower()
     desired_role = veteran_profile.get("desired_role", "").lower()
     
-    # 1. Target Career Track & Role Alignment (Max 25 pts)
+    # 1. Target Career Track & Desired Role Alignment (Max 35 pts)
     track_alignment = False
     if target_track:
         if "cloud" in target_track or "devops" in target_track:
-            track_alignment = any(w in job_category for w in ["cloud", "information technology", "software"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect"])
         elif "cyber" in target_track:
-            track_alignment = any(w in job_category for w in ["cyber", "intelligence", "security"])
+            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat"])
         elif "logistics" in target_track or "supply" in target_track or "fleet" in target_track:
-            track_alignment = any(w in job_category for w in ["logistics", "supply chain", "transportation", "port"])
+            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight"])
         elif "maintenance" in target_track or "mechanic" in target_track:
-            track_alignment = any(w in job_category for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy"])
+            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel"])
         elif "operations" in target_track or "program" in target_track:
-            track_alignment = any(w in job_category for w in ["operations", "leadership", "project", "construction"])
+            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager"])
         elif "law enforcement" in target_track or "security" in target_track:
-            track_alignment = any(w in job_category for w in ["law enforcement", "security", "protection"])
+            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police"])
         elif "health" in target_track or "medical" in target_track:
-            track_alignment = any(w in job_category for w in ["health", "medical", "safety"])
+            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage"])
             
     if desired_role and (desired_role in job_text or job.get("title", "").lower() in desired_role):
-        score += 25
+        score += 35
+        role_status = "pass"
+        role_detail = f"Direct match for '{desired_role.title()}'"
         reasons.append(f"🎯 Target Role Alignment: Direct match for '{desired_role.title()}'")
     elif track_alignment:
-        score += 22
+        score += 30
+        role_status = "pass"
+        role_detail = f"Direct match for {veteran_profile.get('target_track')}"
         reasons.append(f"🎯 Career Track Fit: Aligns with your target field ({veteran_profile.get('target_track')})")
     else:
-        score += 8
+        score -= 20
+        role_status = "warn"
+        role_detail = f"Secondary Field (Outside {veteran_profile.get('target_track', 'Target Track')})"
 
     # 2. Skills & Competencies Match (Max 30 pts)
-    # ONLY count skills that the candidate actually possesses!
     job_req_skills = [s.lower() for s in job.get("skills", [])]
+    matched_skills = []
+    missing_skills = []
     if job_req_skills:
-        matched_req = [s for s in job_req_skills if s in all_user_skills]
-        skill_pct = len(matched_req) / max(1, len(job_req_skills))
+        matched_skills = [s for s in job_req_skills if s in all_user_skills]
+        missing_skills = [s for s in job_req_skills if s not in all_user_skills]
+        skill_pct = len(matched_skills) / max(1, len(job_req_skills))
         score += skill_pct * 30
-        if matched_req:
-            reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_req[:4]])}")
+        if matched_skills:
+            reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_skills[:4]])}")
         else:
-            # If job is heavy tech and candidate has 0 tech skills, apply mismatch penalty
             if any(w in job_category for w in ["information technology", "cloud", "software", "cyber"]) and len(user_tech) == 0:
                 score -= 15
+        skills_status = "pass" if skill_pct >= 0.5 else "warn"
+        skills_detail = f"{len(matched_skills)} of {len(job_req_skills)} Core Competencies Matched"
     else:
-        matched_in_text = [s for s in all_user_skills if s in job_text]
-        score += min(30.0, len(matched_in_text) * 5.0)
-        if matched_in_text:
-            reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_in_text[:4]])}")
+        matched_skills = [s for s in all_user_skills if s in job_text]
+        missing_skills = []
+        score += min(30.0, len(matched_skills) * 5.0)
+        skills_status = "pass" if matched_skills else "warn"
+        skills_detail = f"{len(matched_skills)} Relevant Strengths Identified"
+        if matched_skills:
+            reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_skills[:4]])}")
 
-    # 3. MOS / Branch Specialty Crosswalk (Max 25 pts)
+    # 3. MOS / Branch Specialty Crosswalk (Max 20 pts)
     mos_info = lookup_mos(veteran_profile.get("mos", ""))
     if mos_info:
         mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
         job_title_lower = job.get("title", "").lower()
         
         if any(ct in job_title_lower or job_title_lower in ct for ct in mos_civilian_titles):
-            score += 25
+            score += 20
             reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
         elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
-            score += 18
+            score += 15
             reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
         else:
-            score += 10
+            score += 8
     else:
-        score += 8
+        score += 6
             
-    # 4. Security Clearance Alignment (Max 10 pts)
+    # 4. Security Clearance Alignment (Max 15 pts or Strict Ineligibility Penalty)
     job_clearance = str(job.get("clearance_required", "None")).strip()
     vet_clearance = str(veteran_profile.get("clearance", "None")).strip()
     
     clearance_hierarchy = {
         "None / Public Trust": 0,
+        "None": 0,
         "Public Trust": 1,
         "Confidential": 2,
         "Secret": 3,
@@ -510,13 +523,24 @@ def calculate_veteran_match_score(
     job_clr_level = clearance_hierarchy.get(job_clearance, 0)
     vet_clr_level = clearance_hierarchy.get(vet_clearance, 0)
     
-    if job_clr_level > 0 and vet_clr_level >= job_clr_level:
-        score += 10
-        reasons.append(f"Security Clearance: Active {vet_clearance} qualifies for defense requirement")
-    elif job_clr_level == 0:
-        score += 8
+    if job_clr_level > 0:
+        if vet_clr_level >= job_clr_level:
+            score += 15
+            clearance_status = "pass"
+            clearance_detail = f"Active {vet_clearance} satisfies requirement ({job_clearance})"
+            reasons.append(f"🛡️ Security Clearance: Active {vet_clearance} qualifies for defense requirement")
+        else:
+            # Candidate does NOT have the required clearance! Apply severe demotion
+            score -= 40
+            clearance_status = "fail"
+            clearance_detail = f"Requires active {job_clearance} (You indicated: {vet_clearance})"
+            reasons.append(f"⛔ Clearance Ineligible: Requires active {job_clearance} (You indicated: {vet_clearance})")
     else:
-        score += 0
+        # Job requires NO clearance (direct civilian entry)
+        score += 15
+        clearance_status = "pass"
+        clearance_detail = "No clearance required (Direct civilian entry)"
+        reasons.append("🛡️ Security Clearance: No clearance required (Direct civilian entry)")
         
     # 5. Salary Alignment (Max 10 pts)
     job_sal_min = float(job.get("salary_min", 0) or 0)
@@ -526,27 +550,57 @@ def calculate_veteran_match_score(
     
     if job_sal_max >= vet_sal_min and job_sal_min <= vet_sal_max:
         score += 10
+        salary_status = "pass"
+        salary_detail = f"${job_sal_min:,.0f} - ${job_sal_max:,.0f} (Within target ${vet_sal_min:,.0f} - ${vet_sal_max:,.0f})"
         reasons.append("Compensation: Perfectly aligns with your target salary")
     elif job_sal_max >= vet_sal_min * 0.85:
         score += 6
+        salary_status = "warn"
+        salary_detail = f"${job_sal_min:,.0f} - ${job_sal_max:,.0f} (Near target ${vet_sal_min:,.0f})"
     else:
         score += 2
+        salary_status = "warn"
+        salary_detail = f"${job_sal_min:,.0f} - ${job_sal_max:,.0f}"
         
-    # 5. Location & Remote Flexibility (Max 10 pts)
+    # 6. Location & Remote Flexibility (Max 10 pts)
     vet_state = veteran_profile.get("target_state", "").upper()
     job_state = job.get("state", "").upper()
     
     if "remote" in job.get("location_display", "").lower() or veteran_profile.get("remote_ok", False):
         score += 10
+        loc_status = "pass"
+        loc_detail = "Remote / Flexible location"
         reasons.append("Location: Flexible / Remote or regional match")
     elif vet_state and (vet_state == job_state):
         score += 10
+        loc_status = "pass"
+        loc_detail = f"Local match in {vet_state}"
         reasons.append(f"Location: Local match in {vet_state}")
     else:
         score += 5
+        loc_status = "warn"
+        loc_detail = job.get("location_display", "Regional")
         
-    final_score = min(100.0, max(30.0, score))
-    return round(final_score, 1), reasons
+    final_score = min(100.0, max(20.0, score))
+    final_score = round(final_score, 1)
+    
+    # Self-improvement projected success math
+    score_uplift = min(25.0, max(8.0, len(missing_skills) * 8.0)) if missing_skills else 8.0
+    projected_score = min(98.0, round(final_score + score_uplift, 1))
+    projected_salary_gain = min(30000, max(12000, len(missing_skills) * 6000)) if missing_skills else 12000
+    
+    factors = {
+        "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail},
+        "clearance": {"label": "Security Clearance", "status": clearance_status, "detail": clearance_detail},
+        "skills": {"label": "Skills Alignment", "status": skills_status, "detail": skills_detail, "matched": matched_skills, "missing": missing_skills},
+        "salary": {"label": "Compensation Range", "status": salary_status, "detail": salary_detail},
+        "location": {"label": "Location & Work Mode", "status": loc_status, "detail": loc_detail},
+        "projected_score": projected_score,
+        "score_delta": round(projected_score - final_score, 1),
+        "projected_salary_gain": projected_salary_gain
+    }
+    
+    return final_score, reasons, factors
 
 
 # ============================================================================
@@ -989,11 +1043,12 @@ if nav_selection == "📋 Veteran Intake & Match":
                 all_jobs = load_cached_scraped_jobs()
                 matches = []
                 for job in all_jobs:
-                    score, reasons = calculate_veteran_match_score(job, veteran_profile, extracted)
+                    score, reasons, factors = calculate_veteran_match_score(job, veteran_profile, extracted)
                     matches.append({
                         **job,
                         "match_score": score,
-                        "match_reasons": reasons
+                        "match_reasons": reasons,
+                        "factors": factors
                     })
                 
                 # Sort by score descending
@@ -1082,11 +1137,15 @@ if nav_selection == "📋 Veteran Intake & Match":
             for idx, job in enumerate(top_matches, 1):
                 score = job["match_score"]
                 badge_class = "match-badge-high" if score >= 75 else "match-badge-med"
+                factors = job.get("factors", {})
+                
+                clr_req = job.get('clearance_required', 'None')
+                clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
                 
                 with st.container():
                     st.markdown(f"""
-                    <div class="job-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div class="job-card" style="border-left: 6px solid {'#dc2626' if clr_is_fail else '#0b2545'};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
                             <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']}</h3>
                             <span class="{badge_class}">{score:.0f}% Fit</span>
                         </div>
@@ -1094,7 +1153,9 @@ if nav_selection == "📋 Veteran Intake & Match":
                             🏢 {job['company']} &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
                         </div>
                         <div style="margin-bottom: 0.75rem;">
-                            <span class="clearance-badge">🛡️ Clearance: {job.get('clearance_required', 'None')}</span>
+                            <span class="clearance-badge" style="background: {'#fee2e2; color: #991b1b' if clr_is_fail else '#f1f5f9; color: #1e3a8a'};">
+                                🛡️ Clearance: {clr_req} {'(⛔ INELIGIBLE)' if clr_is_fail else ''}
+                            </span>
                             &nbsp;<span style="font-size: 0.85rem; color: #166534; font-weight: 700;">🎖️ Veteran-Friendly Employer</span>
                             &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Category: {job.get('category', 'General')})</span>
                         </div>
@@ -1104,6 +1165,56 @@ if nav_selection == "📋 Veteran Intake & Match":
                     </div>
                     """, unsafe_allow_html=True)
                     
+                    # GLASSDOOR KEY FACTORS SCORECARD & PROJECTED SELF-IMPROVEMENT
+                    with st.expander(f"📊 Key Match Factors & Projected Success Breakdown (Glassdoor Scorecard)"):
+                        col_fc1, col_fc2 = st.columns(2)
+                        with col_fc1:
+                            st.markdown("#### 📋 Fit Factor Scorecard")
+                            # Role
+                            r_st = "✅" if factors.get("role", {}).get("status") == "pass" else "⚠️"
+                            st.markdown(f"**🎯 Career Track Alignment:** {r_st} {factors.get('role', {}).get('detail', 'N/A')}")
+                            # Clearance
+                            c_st = "✅" if factors.get("clearance", {}).get("status") == "pass" else "⛔"
+                            st.markdown(f"**🛡️ Security Clearance:** {c_st} {factors.get('clearance', {}).get('detail', 'N/A')}")
+                            # Skills
+                            s_st = "✅" if factors.get("skills", {}).get("status") == "pass" else "⚠️"
+                            st.markdown(f"**💼 Skills Coverage:** {s_st} {factors.get('skills', {}).get('detail', 'N/A')}")
+                            # Salary
+                            sal_st = "✅" if factors.get("salary", {}).get("status") == "pass" else "⚠️"
+                            st.markdown(f"**💰 Compensation Fit:** {sal_st} {factors.get('salary', {}).get('detail', 'N/A')}")
+                            # Location
+                            l_st = "✅" if factors.get("location", {}).get("status") == "pass" else "⚠️"
+                            st.markdown(f"**📍 Location & Mode:** {l_st} {factors.get('location', {}).get('detail', 'N/A')}")
+
+                        with col_fc2:
+                            st.markdown("#### 📈 Projected Success with Self-Improvement")
+                            cur_sc = score
+                            proj_sc = factors.get("projected_score", min(98.0, cur_sc + 15.0))
+                            sc_gain = factors.get("score_delta", round(proj_sc - cur_sc, 1))
+                            sal_gain = factors.get("projected_salary_gain", 15000)
+                            
+                            st.markdown(f"""
+                            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem;">
+                                <div style="font-size: 0.95rem; margin-bottom: 6px;">
+                                    <strong>Current Compatibility:</strong> <span style="font-weight: 700; color: #0b2545;">{cur_sc:.0f}%</span>
+                                </div>
+                                <div style="font-size: 0.95rem; margin-bottom: 6px;">
+                                    <strong>Projected Match with Skill Bridge:</strong> <span style="font-weight: 700; color: #166534;">{proj_sc:.0f}% (+{sc_gain:.0f}% Uplift)</span>
+                                </div>
+                                <div style="font-size: 0.95rem; margin-bottom: 6px;">
+                                    <strong>Estimated Annual Compensation Gain:</strong> <span style="font-weight: 700; color: #0284c7;">+${sal_gain:,.0f}/yr</span>
+                                </div>
+                                <div style="font-size: 0.85rem; color: #64748b; margin-top: 8px;">
+                                    <em>Tip: Check Tab 2 for 100% free veteran funding links for these certifications.</em>
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            
+                            # Missing skills tags
+                            miss_list = factors.get("skills", {}).get("missing", [])
+                            if miss_list:
+                                st.markdown(f"**Missing Target Competencies:** {', '.join([s.title() for s in miss_list[:4]])}")
+
                     col_btn1, col_btn2 = st.columns([2, 1])
                     with col_btn1:
                         with st.expander(f"🔍 Why this matches your military background"):
@@ -1175,12 +1286,56 @@ TOP MATCHING CAREER OPPORTUNITIES:
 
             st.markdown("---")
 
+            # INTERACTIVE WHAT-IF CAREER & CREDENTIAL SIMULATOR
+            st.markdown("### 🔮 Interactive 'What-If' Career & Credential Simulator")
+            st.markdown("Select credentials you are interested in acquiring to see your live projected match score, interview probability, and salary growth:")
+            
+            sim_certs = readiness.get("recommended_certs", [])
+            selected_sim_certs = []
+            
+            if sim_certs:
+                sim_cols = st.columns(len(sim_certs))
+                for idx, c in enumerate(sim_certs):
+                    with sim_cols[idx]:
+                        if st.checkbox(f"Add {c['name'].split('(')[0].strip()}", key=f"sim_chk_{idx}"):
+                            selected_sim_certs.append(c)
+                            
+                # Simulator Real-Time Math
+                base_score = readiness.get('current_score', 70.0)
+                sim_score_boost = sum([c['score_uplift'] for c in selected_sim_certs])
+                simulated_score = min(99.0, base_score + sim_score_boost)
+                sim_salary_boost = sum([c['salary_uplift'] for c in selected_sim_certs])
+                
+                prob_label = "Very High (90%+)" if simulated_score >= 88 else ("High (75-89%)" if simulated_score >= 75 else "Moderate (60-74%)")
+                prob_color = "#16a34a" if simulated_score >= 88 else ("#0284c7" if simulated_score >= 75 else "#d97706")
+                
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, #0b2545 0%, #134074 100%); color: white; border-radius: 10px; padding: 1.25rem; margin: 1rem 0; box-shadow: 0 4px 12px rgba(11,37,69,0.15);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                            <div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Simulated Profile Fit</div>
+                            <div style="font-size: 2rem; font-weight: 800; color: #f8fafc;">{simulated_score:.0f}% Compatibility</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Interview Probability</div>
+                            <div style="font-size: 1.4rem; font-weight: 700; color: {prob_color};">{prob_label}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Projected Value Uplift</div>
+                            <div style="font-size: 1.6rem; font-weight: 800; color: #d4af37;">+${sim_salary_boost:,.0f}/yr</div>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("---")
+
             # 1. Skill Gap Analysis
             col_g1, col_g2 = st.columns(2)
             with col_g1:
                 st.markdown("#### ✅ Skills You Already Have")
                 if readiness.get("matching_skills"):
-                    match_html = "".join([f"<span class='ops-skill-chip'>✓ {s.upper()}</span>" for s in readiness["matching_skills"]])
+                    match_html = "".join([f"<span class='ops-skill-chip'>✓ {s.upper()}</span> " for s in readiness["matching_skills"]])
                     st.markdown(match_html, unsafe_allow_html=True)
                 else:
                     st.info("Upload your full resume to highlight all matching strengths.")
@@ -1188,7 +1343,7 @@ TOP MATCHING CAREER OPPORTUNITIES:
             with col_g2:
                 st.markdown("#### 🎯 Target Skills to Add / Highlight")
                 if readiness.get("missing_skills"):
-                    miss_html = "".join([f"<span class='skill-chip'>+ {s.upper()}</span>" for s in readiness["missing_skills"]])
+                    miss_html = "".join([f"<span class='skill-chip'>+ {s.upper()}</span> " for s in readiness["missing_skills"]])
                     st.markdown(miss_html, unsafe_allow_html=True)
                 else:
                     st.success("Great job! You have strong coverage of the core skills for this track.")

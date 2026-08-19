@@ -95,9 +95,10 @@ def test_calculate_veteran_match_score_all_profiles():
     for mos_key, profile in DEMO_VETERAN_PROFILES.items():
         extracted = parse_veteran_skills(profile["resume_text"], profile["mos"])
         sample_job = SAMPLE_JOBS[0]
-        score, reasons = calculate_veteran_match_score(sample_job, profile, extracted)
-        assert 30.0 <= score <= 100.0
+        score, reasons, factors = calculate_veteran_match_score(sample_job, profile, extracted)
+        assert 20.0 <= score <= 100.0
         assert len(reasons) > 0
+        assert "projected_score" in factors
 
 
 def test_load_cached_jobs_diversity():
