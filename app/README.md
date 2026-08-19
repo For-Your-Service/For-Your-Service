@@ -54,8 +54,11 @@ This Streamlit application provides a production-ready web interface for the For
 
 ```
 app/
-├── app.py              # Main Streamlit application
+├── __init__.py         # Package initialization
+├── app.py              # Main Streamlit patriotic application
 ├── app.yaml            # Databricks App configuration
+├── mos_data.py         # Military MOS/AFSC/Rating database & crosswalk
+├── sample_data.py      # Zero-cost local fallback dataset & demo profile
 ├── requirements.txt    # Python dependencies
 └── README.md          # This file
 ```
