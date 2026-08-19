@@ -13,6 +13,7 @@ import json
 import re
 import io
 import os
+import math
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
@@ -406,6 +407,144 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     }
 
 
+# ============================================================================
+# GEOGRAPHIC DISTANCE & COMMUTE RADIUS ENGINE
+# ============================================================================
+
+CITY_COORDINATES = {
+    # South Carolina
+    ("greenville", "sc"): (34.8526, -82.3940),
+    ("spartanburg", "sc"): (34.9496, -81.9320),
+    ("columbia", "sc"): (34.0007, -81.0348),
+    ("charleston", "sc"): (32.7765, -79.9311),
+    ("north charleston", "sc"): (32.8546, -79.9748),
+    ("anderson", "sc"): (34.5034, -82.6501),
+    ("rock hill", "sc"): (34.9249, -81.0259),
+    ("myrtle beach", "sc"): (33.6891, -78.8867),
+    ("florence", "sc"): (34.1954, -79.7626),
+    ("aiken", "sc"): (33.5604, -81.7196),
+    ("greer", "sc"): (34.9387, -82.2271),
+    ("simpsonville", "sc"): (34.7371, -82.2543),
+    ("clemson", "sc"): (34.6834, -82.8374),
+    
+    # North Carolina
+    ("charlotte", "nc"): (35.2271, -80.8431),
+    ("raleigh", "nc"): (35.7796, -78.6382),
+    ("durham", "nc"): (35.9940, -78.8986),
+    ("greensboro", "nc"): (36.0726, -79.7920),
+    ("winston-salem", "nc"): (36.0999, -80.2442),
+    ("fayetteville", "nc"): (35.0527, -78.8784),
+    ("asheville", "nc"): (35.5951, -82.5515),
+    ("wilmington", "nc"): (34.2257, -77.9447),
+    
+    # Georgia
+    ("atlanta", "ga"): (33.7490, -84.3880),
+    ("augusta", "ga"): (33.4735, -82.0105),
+    ("savannah", "ga"): (32.0809, -81.0912),
+    ("columbus", "ga"): (32.4610, -84.9877),
+    ("macon", "ga"): (32.8407, -83.6324),
+    
+    # Florida
+    ("tampa", "fl"): (27.9506, -82.4572),
+    ("orlando", "fl"): (28.5383, -81.3792),
+    ("jacksonville", "fl"): (30.3322, -81.6557),
+    ("miami", "fl"): (25.7617, -80.1918),
+    ("pensacola", "fl"): (30.4213, -87.2169),
+    ("tallahassee", "fl"): (30.4383, -84.2807),
+    
+    # Virginia & DC
+    ("washington", "dc"): (38.9072, -77.0369),
+    ("arlington", "va"): (38.8799, -77.1067),
+    ("alexandria", "va"): (38.8048, -77.0469),
+    ("richmond", "va"): (37.5407, -77.4360),
+    ("norfolk", "va"): (36.8508, -76.2859),
+    ("virginia beach", "va"): (36.8529, -75.9780),
+    ("reston", "va"): (38.9586, -77.3570),
+    ("mclean", "va"): (38.9339, -77.1773),
+    
+    # Texas
+    ("dallas", "tx"): (32.7767, -96.7970),
+    ("austin", "tx"): (30.2672, -97.7431),
+    ("houston", "tx"): (29.7604, -95.3698),
+    ("san antonio", "tx"): (29.4241, -98.4936),
+    ("fort worth", "tx"): (32.7555, -97.3308),
+    ("el paso", "tx"): (31.7619, -106.4850),
+    
+    # Tennessee & Alabama
+    ("nashville", "tn"): (36.1627, -86.7816),
+    ("knoxville", "tn"): (35.9606, -83.9207),
+    ("memphis", "tn"): (35.1495, -90.0490),
+    ("chattanooga", "tn"): (35.0456, -85.3097),
+    ("huntsville", "al"): (34.7304, -86.5861),
+    ("birmingham", "al"): (33.5186, -86.8104),
+    
+    # National Metros
+    ("denver", "co"): (39.7392, -104.9903),
+    ("colorado springs", "co"): (38.8339, -104.8214),
+    ("seattle", "wa"): (47.6062, -122.3321),
+    ("san diego", "ca"): (32.7157, -117.1611),
+    ("los angeles", "ca"): (34.0522, -118.2437),
+    ("san francisco", "ca"): (37.7749, -122.4194),
+    ("chicago", "il"): (41.8781, -87.6298),
+    ("new york", "ny"): (40.7128, -74.0060),
+    ("boston", "ma"): (42.3601, -71.0589),
+    ("phoenix", "az"): (33.4484, -112.0740),
+    ("las vegas", "nv"): (36.1699, -115.1398)
+}
+
+
+def haversine_distance_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Calculate distance in miles between two latitude/longitude coordinates."""
+    R = 3958.8  # Earth radius in miles
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = (math.sin(dlat / 2) ** 2 +
+         math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return round(R * c, 1)
+
+
+def get_city_coordinates(city: str, state: str) -> Optional[Tuple[float, float]]:
+    """Lookup coordinates for a given city and state."""
+    c = city.lower().strip()
+    s = state.lower().strip()
+    if (c, s) in CITY_COORDINATES:
+        return CITY_COORDINATES[(c, s)]
+    for (k_city, k_state), coords in CITY_COORDINATES.items():
+        if k_state == s and (k_city in c or c in k_city):
+            return coords
+    return None
+
+
+def estimate_job_distance(
+    candidate_city: str,
+    candidate_state: str,
+    job_city: str,
+    job_state: str,
+    job_location_display: str
+) -> Optional[float]:
+    """Estimate distance in miles between candidate target city and job location."""
+    loc_lower = f"{job_city} {job_state} {job_location_display}".lower()
+    if "remote" in loc_lower or "anywhere" in loc_lower or "virtual" in loc_lower:
+        return 0.0
+        
+    c_coords = get_city_coordinates(candidate_city, candidate_state)
+    j_coords = get_city_coordinates(job_city, job_state)
+    
+    if c_coords and j_coords:
+        return haversine_distance_miles(c_coords[0], c_coords[1], j_coords[0], j_coords[1])
+        
+    # Same city/metro
+    if candidate_city.lower().strip() == job_city.lower().strip() and candidate_state.lower().strip() == job_state.lower().strip():
+        return 5.0
+        
+    # Same state
+    if candidate_state.lower().strip() == job_state.lower().strip():
+        return 35.0
+        
+    return 120.0
+
+
 def calculate_veteran_match_score(
     job: Dict,
     veteran_profile: Dict,
@@ -414,7 +553,7 @@ def calculate_veteran_match_score(
     """
     Calculate match score (0-100), 'Why You Match' reasons, and a Glassdoor-style
     factor breakdown with self-improvement projected success metrics.
-    Gives primary priority to the specific job titles and career tracks the veteran requested.
+    Gives primary priority to the specific job titles, career tracks, and commute radius requested.
     """
     score = 0.0
     reasons = []
@@ -595,24 +734,55 @@ def calculate_veteran_match_score(
         salary_status = "warn"
         salary_detail = f"${job_sal_min:,.0f} - ${job_sal_max:,.0f}"
         
-    # 6. Location & Remote Flexibility (Max 10 pts)
-    vet_state = veteran_profile.get("target_state", "").upper()
-    job_state = job.get("state", "").upper()
+    # 6. Location, Commute & Travel Radius (Max 10 pts)
+    vet_city = veteran_profile.get("target_city", "Greenville").strip()
+    vet_state = veteran_profile.get("target_state", "SC").strip().upper()
+    max_radius_str = str(veteran_profile.get("target_radius", "50 miles")).lower()
+    remote_ok = veteran_profile.get("remote_ok", True)
+    relocate_ok = veteran_profile.get("relocate_ok", True)
     
-    if "remote" in job.get("location_display", "").lower() or veteran_profile.get("remote_ok", False):
+    # Parse max radius integer
+    if "10" in max_radius_str:
+        max_radius = 10.0
+    elif "20" in max_radius_str:
+        max_radius = 20.0
+    elif "100" in max_radius_str:
+        max_radius = 100.0
+    elif "any" in max_radius_str or "nationwide" in max_radius_str:
+        max_radius = 9999.0
+    else:
+        max_radius = 50.0  # Default 50 miles
+        
+    job_city = job.get("city", "").strip()
+    job_state = job.get("state", "").strip().upper()
+    job_loc_display = job.get("location_display", "")
+    
+    dist = estimate_job_distance(vet_city, vet_state, job_city, job_state, job_loc_display)
+    
+    if "remote" in job_loc_display.lower() or "remote" in job_city.lower():
         score += 10
         loc_status = "pass"
         loc_detail = "Remote / Flexible location"
-        reasons.append("Location: Flexible / Remote or regional match")
-    elif vet_state and (vet_state == job_state):
+        reasons.append("📍 Location: Remote / Flexible work mode")
+    elif dist is not None and dist <= max_radius:
         score += 10
         loc_status = "pass"
-        loc_detail = f"Local match in {vet_state}"
-        reasons.append(f"Location: Local match in {vet_state}")
-    else:
-        score += 5
+        loc_detail = f"Local ({dist:.0f} mi from {vet_city.title()}, {vet_state} — within {int(max_radius)} mi radius)"
+        reasons.append(f"📍 Commute Radius: {dist:.0f} miles from {vet_city.title()} (Within your {int(max_radius)}-mile preference)")
+    elif dist is not None and dist <= max_radius * 1.5:
+        score += 6
         loc_status = "warn"
-        loc_detail = job.get("location_display", "Regional")
+        loc_detail = f"Regional ({dist:.0f} mi from {vet_city.title()}, {vet_state} — near {int(max_radius)} mi radius)"
+        reasons.append(f"📍 Commute: Regional opportunity ({dist:.0f} miles from {vet_city.title()})")
+    else:
+        if remote_ok or relocate_ok:
+            score += 4
+            loc_status = "warn"
+            loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Open to relocation/travel)" if dist else f"{job_loc_display} (Relocation match)"
+        else:
+            score -= 10
+            loc_status = "warn"
+            loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Outside {int(max_radius)} mi radius)" if dist else f"{job_loc_display} (Outside radius)"
         
     final_score = min(100.0, max(20.0, score))
     final_score = round(final_score, 1)
@@ -628,7 +798,7 @@ def calculate_veteran_match_score(
         "clearance": {"label": "Security Clearance", "status": clearance_status, "detail": clearance_detail},
         "skills": {"label": "Skills Alignment", "status": skills_status, "detail": skills_detail, "matched": matched_skills, "missing": missing_skills},
         "salary": {"label": "Compensation Range", "status": salary_status, "detail": salary_detail},
-        "location": {"label": "Location & Work Mode", "status": loc_status, "detail": loc_detail},
+        "location": {"label": "Location & Travel Distance", "status": loc_status, "detail": loc_detail, "distance_miles": dist},
         "projected_score": projected_score,
         "score_delta": round(projected_score - final_score, 1),
         "projected_salary_gain": projected_salary_gain
@@ -923,7 +1093,7 @@ if nav_selection == "📋 Veteran Intake & Match":
         phone_default = st.session_state.get("form_phone", "")
         phone_num = st.text_input("Phone Number", value=phone_default, placeholder="(555) 123-4567")
 
-    col_t1, col_t2, col_t3 = st.columns(3)
+    col_t1, col_t2, col_t3 = st.columns([1.2, 0.8, 1.2])
     with col_t1:
         city_default = st.session_state.get("form_target_city", "Greenville")
         target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="Greenville")
@@ -931,7 +1101,21 @@ if nav_selection == "📋 Veteran Intake & Match":
         state_default = st.session_state.get("form_target_state", "SC")
         target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="SC").upper()
     with col_t3:
+        radius_options = ["10 miles", "20 miles", "50 miles", "100 miles", "Any Distance / Nationwide"]
+        radius_default_idx = 2  # 50 miles
+        if "form_target_radius" in st.session_state and st.session_state["form_target_radius"] in radius_options:
+            radius_default_idx = radius_options.index(st.session_state["form_target_radius"])
+        target_radius = st.selectbox(
+            "Max Commute / Travel Radius *",
+            radius_options,
+            index=radius_default_idx,
+            help="Choose maximum travel distance from city center: 10 miles, 20 miles, 50 miles, 100 miles, etc."
+        )
+
+    col_flex1, col_flex2 = st.columns(2)
+    with col_flex1:
         remote_ok = st.checkbox("Open to Remote / Hybrid Opportunities", value=True)
+    with col_flex2:
         relocate_ok = st.checkbox("Willing to Relocate for the Right Opportunity", value=True)
 
     # Target Career Track Selection
@@ -1038,6 +1222,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                     "desired_role": desired_role_custom,
                     "target_city": target_city,
                     "target_state": target_state,
+                    "target_radius": target_radius,
                     "remote_ok": remote_ok,
                     "relocation": relocate_ok,
                     "salary_min": salary_min,
@@ -1132,7 +1317,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 <div><span class="clearance-badge">🛡️ {profile['clearance']}</span></div>
                 <div><strong>Target Track:</strong> {profile.get('target_track', 'Operations')}</div>
                 <div><strong>Experience:</strong> {profile['seniority']} (~{extracted['total_years']} yrs)</div>
-                <div><strong>Target:</strong> {profile['target_city']}, {profile['target_state']} (${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f})</div>
+                <div><strong>Target:</strong> {profile['target_city']}, {profile['target_state']} ({profile.get('target_radius', '50 miles')} radius) (${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f})</div>
             </div>
         </div>
         """, unsafe_allow_html=True)

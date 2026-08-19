@@ -106,3 +106,28 @@ def test_load_cached_jobs_diversity():
     assert len(jobs) >= len(SAMPLE_JOBS)
     categories = set(j.get("category", "") for j in jobs)
     assert len(categories) >= 3
+
+
+def test_commute_distance_and_radius():
+    from app.app import haversine_distance_miles, estimate_job_distance
+    
+    # Distance between Greenville, SC and Spartanburg, SC is ~28-30 miles
+    dist = estimate_job_distance("Greenville", "SC", "Spartanburg", "SC", "Spartanburg, SC")
+    assert 20.0 <= dist <= 35.0
+    
+    # Remote jobs should have 0.0 distance
+    remote_dist = estimate_job_distance("Greenville", "SC", "Remote", "US", "USA (Remote)")
+    assert remote_dist == 0.0
+    
+    # Test match score factor with 10 vs 50 mile radius
+    profile_10 = dict(DEMO_VETERAN_PROFILES["18F"], target_city="Greenville", target_state="SC", target_radius="10 miles", remote_ok=False, relocate_ok=False)
+    profile_50 = dict(DEMO_VETERAN_PROFILES["18F"], target_city="Greenville", target_state="SC", target_radius="50 miles", remote_ok=False, relocate_ok=False)
+    
+    spartanburg_job = {"title": "Field Supervisor", "company": "BMW", "city": "Spartanburg", "state": "SC", "location_display": "Spartanburg, SC", "skills": ["leadership"], "salary_min": 75000, "salary_max": 95000, "clearance_required": "None", "category": "Operations"}
+    extracted = parse_veteran_skills(profile_10["resume_text"], profile_10["mos"])
+    
+    sc_10, _, f_10 = calculate_veteran_match_score(spartanburg_job, profile_10, extracted)
+    sc_50, _, f_50 = calculate_veteran_match_score(spartanburg_job, profile_50, extracted)
+    
+    assert f_50["location"]["status"] == "pass"
+    assert f_10["location"]["status"] == "warn"
