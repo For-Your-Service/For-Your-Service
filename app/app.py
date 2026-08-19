@@ -305,39 +305,75 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     """
     text_lower = resume_text.lower()
     
-    # 1. Technical & Trade Skills Taxonomy
+    # 1. Technical & Software Skills Taxonomy
     tech_keywords = [
         "aws", "azure", "gcp", "kubernetes", "docker", "terraform", "python", "java",
         "javascript", "sql", "bash", "powershell", "jenkins", "github", "gitlab",
         "ci/cd", "devops", "linux", "windows", "windows server", "ansible", "cisco",
         "active directory", "palantir", "databricks", "spark", "pyspark", "delta lake",
         "networking", "cybersecurity", "siem", "splunk", "wireshark", "penetration testing",
-        "security+", "cissp", "vmware", "tableau", "power bi", "excel", "satcom", "cryptography",
-        "diesel mechanics", "hydraulics", "pneumatics", "cdl", "dot compliance", "telematics",
-        "emr", "triage", "paramedic", "cpr", "bls", "cad", "sap", "erp", "osha", "hazmat"
+        "security+", "cissp", "vmware", "tableau", "power bi", "excel", "satcom", "cryptography"
     ]
     
-    # 2. Military Leadership & Command Competencies
+    # 2. Trades, Mechanics & Industrial Engineering Skills
+    trades_keywords = [
+        "diesel mechanics", "diesel engine", "hydraulics", "pneumatics", "welding",
+        "fabrication", "engine overhaul", "electrical troubleshooting", "blueprint reading",
+        "cnc machining", "machining", "lathe", "mill", "hvac", "plumbing", "carpentry",
+        "rigging", "crane operation", "preventive maintenance", "diagnostic testing",
+        "heavy equipment", "a&p license", "aviation maintenance", "turbine engine",
+        "rotor systems", "precision torque", "switchgear", "substation", "transformer"
+    ]
+    
+    # 3. Logistics, Supply Chain & Transportation Skills
+    logistics_keywords = [
+        "supply chain", "inventory management", "logistics", "procurement", "property accountability",
+        "cdl", "class a cdl", "dot compliance", "telematics", "warehouse management",
+        "shipping & receiving", "freight dispatch", "convoy operations", "forklift",
+        "material handling", "sap", "erp", "fleet tracking", "asset tracking", "cargo rigging"
+    ]
+    
+    # 4. Construction & Infrastructure Skills
+    construction_keywords = [
+        "earthmoving", "excavating", "surveying", "asphalt", "concrete", "framing",
+        "osha 30", "osha compliance", "site supervision", "subcontractor management",
+        "project scheduling", "blueprint interpretation", "heavy civil", "demolition"
+    ]
+    
+    # 5. Law Enforcement, Security & Protection Skills
+    security_keywords = [
+        "force protection", "perimeter security", "access control", "cctv", "physical security",
+        "felony investigations", "incident investigation", "conflict de-escalation",
+        "emergency response", "evidence handling", "debriefing", "interpersonal interviewing",
+        "case file preparation", "background checks", "security audits"
+    ]
+    
+    # 6. Healthcare, Emergency Medicine & Safety
+    healthcare_keywords = [
+        "emergency trauma care", "patient triage", "vital signs assessment", "medical documentation",
+        "emr", "critical decision making", "cpr", "bls", "acls", "paramedic", "patient care",
+        "wound care", "field sanitation", "medevac", "pharmacology", "hazmat compliance"
+    ]
+    
+    # 7. Military Leadership & Command Competencies
     leadership_keywords = [
         "executive briefings", "cross-functional leadership", "mission planning",
         "risk management", "opsec", "link analysis", "operations management",
         "crisis decision making", "inter-agency coordination", "team sergeant",
         "squad leader", "platoon sergeant", "command", "process optimization",
         "standard operating procedures", "personnel accountability", "after-action reviews",
-        "force protection", "situational awareness", "mentorship", "inspections"
+        "situational awareness", "mentorship", "inspections", "training & development"
     ]
     
-    # 3. General Operations, Logistics & Project Skills
-    ops_keywords = [
-        "supply chain", "inventory management", "logistics", "procurement",
-        "quality control", "fleet maintenance", "preventive maintenance",
-        "vendor management", "budget reconciliation", "access control", "physical security",
-        "investigations", "scheduling", "training & development", "customer service"
-    ]
+    detected_tech = [s for s in tech_keywords if s in text_lower]
+    detected_trades = [s for s in trades_keywords if s in text_lower]
+    detected_logistics = [s for s in logistics_keywords if s in text_lower]
+    detected_construction = [s for s in construction_keywords if s in text_lower]
+    detected_security = [s for s in security_keywords if s in text_lower]
+    detected_healthcare = [s for s in healthcare_keywords if s in text_lower]
+    detected_leadership = [s for s in leadership_keywords if s in text_lower]
     
-    detected_tech = [skill for skill in tech_keywords if skill in text_lower]
-    detected_leadership = [lead for lead in leadership_keywords if lead in text_lower]
-    detected_ops = [op for op in ops_keywords if op in text_lower]
+    detected_ops = list(set(detected_trades + detected_logistics + detected_construction + detected_security + detected_healthcare))
     
     # Add MOS-specific transferable skills
     mos_info = lookup_mos(mos_code)
@@ -345,7 +381,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     if mos_info:
         mos_skills = mos_info.get("transferable_skills", [])
         for ts in mos_info.get("tech_skills", []):
-            if ts not in detected_tech:
+            if ts not in detected_tech and ts not in detected_ops:
                 detected_tech.append(ts)
                 
     # Estimate years of experience
@@ -377,32 +413,69 @@ def calculate_veteran_match_score(
 ) -> Tuple[float, List[str]]:
     """
     Calculate match score (0-100) and generate 'Why You Match' reasons.
-    Works universally across combat arms, logistics, mechanics, tech, and medical.
+    Accurately tailors matches across Combat Arms, Logistics, Mechanics, Construction,
+    Law Enforcement, Healthcare, and IT based on real skills, MOS, and target career track.
     """
     score = 0.0
     reasons = []
     
     job_text = f"{job.get('title', '')} {job.get('description', '')} {job.get('category', '')}".lower()
+    job_category = job.get('category', '').lower()
     user_tech = set(extracted_skills.get("technical_skills", []))
     user_leadership = set(extracted_skills.get("leadership_skills", []))
     user_ops = set(extracted_skills.get("ops_skills", []))
     all_user_skills = user_tech.union(user_leadership).union(user_ops)
     
-    # 1. Skills & Competencies Match (Max 35 pts)
+    target_track = veteran_profile.get("target_track", "").lower()
+    desired_role = veteran_profile.get("desired_role", "").lower()
+    
+    # 1. Target Career Track & Role Alignment (Max 25 pts)
+    track_alignment = False
+    if target_track:
+        if "cloud" in target_track or "devops" in target_track:
+            track_alignment = any(w in job_category for w in ["cloud", "information technology", "software"])
+        elif "cyber" in target_track:
+            track_alignment = any(w in job_category for w in ["cyber", "intelligence", "security"])
+        elif "logistics" in target_track or "supply" in target_track or "fleet" in target_track:
+            track_alignment = any(w in job_category for w in ["logistics", "supply chain", "transportation", "port"])
+        elif "maintenance" in target_track or "mechanic" in target_track:
+            track_alignment = any(w in job_category for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy"])
+        elif "operations" in target_track or "program" in target_track:
+            track_alignment = any(w in job_category for w in ["operations", "leadership", "project", "construction"])
+        elif "law enforcement" in target_track or "security" in target_track:
+            track_alignment = any(w in job_category for w in ["law enforcement", "security", "protection"])
+        elif "health" in target_track or "medical" in target_track:
+            track_alignment = any(w in job_category for w in ["health", "medical", "safety"])
+            
+    if desired_role and (desired_role in job_text or job.get("title", "").lower() in desired_role):
+        score += 25
+        reasons.append(f"🎯 Target Role Alignment: Direct match for '{desired_role.title()}'")
+    elif track_alignment:
+        score += 22
+        reasons.append(f"🎯 Career Track Fit: Aligns with your target field ({veteran_profile.get('target_track')})")
+    else:
+        score += 8
+
+    # 2. Skills & Competencies Match (Max 30 pts)
+    # ONLY count skills that the candidate actually possesses!
     job_req_skills = [s.lower() for s in job.get("skills", [])]
     if job_req_skills:
-        matched_req = [s for s in job_req_skills if s in all_user_skills or s in job_text]
-        skill_pct = min(1.0, len(matched_req) / max(1, len(job_req_skills)))
-        score += skill_pct * 35
+        matched_req = [s for s in job_req_skills if s in all_user_skills]
+        skill_pct = len(matched_req) / max(1, len(job_req_skills))
+        score += skill_pct * 30
         if matched_req:
-            reasons.append(f"Skill Alignment: Matched on {', '.join([s.title() for s in matched_req[:4]])}")
+            reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_req[:4]])}")
+        else:
+            # If job is heavy tech and candidate has 0 tech skills, apply mismatch penalty
+            if any(w in job_category for w in ["information technology", "cloud", "software", "cyber"]) and len(user_tech) == 0:
+                score -= 15
     else:
         matched_in_text = [s for s in all_user_skills if s in job_text]
-        score += min(35.0, len(matched_in_text) * 6.0)
+        score += min(30.0, len(matched_in_text) * 5.0)
         if matched_in_text:
             reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_in_text[:4]])}")
 
-    # 2. MOS / Branch Specialty Crosswalk (Max 25 pts)
+    # 3. MOS / Branch Specialty Crosswalk (Max 25 pts)
     mos_info = lookup_mos(veteran_profile.get("mos", ""))
     if mos_info:
         mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
@@ -412,14 +485,14 @@ def calculate_veteran_match_score(
             score += 25
             reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
         elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
-            score += 20
+            score += 18
             reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
         else:
-            score += 12
+            score += 10
     else:
-        score += 10
+        score += 8
             
-    # 3. Security Clearance Alignment (Max 15 pts)
+    # 4. Security Clearance Alignment (Max 10 pts)
     job_clearance = str(job.get("clearance_required", "None")).strip()
     vet_clearance = str(veteran_profile.get("clearance", "None")).strip()
     
@@ -438,26 +511,26 @@ def calculate_veteran_match_score(
     vet_clr_level = clearance_hierarchy.get(vet_clearance, 0)
     
     if job_clr_level > 0 and vet_clr_level >= job_clr_level:
-        score += 15
+        score += 10
         reasons.append(f"Security Clearance: Active {vet_clearance} qualifies for defense requirement")
     elif job_clr_level == 0:
-        score += 12
+        score += 8
     else:
         score += 0
         
-    # 4. Salary Alignment (Max 15 pts)
+    # 5. Salary Alignment (Max 10 pts)
     job_sal_min = float(job.get("salary_min", 0) or 0)
     job_sal_max = float(job.get("salary_max", 0) or 0)
     vet_sal_min = float(veteran_profile.get("salary_min", 0) or 0)
     vet_sal_max = float(veteran_profile.get("salary_max", 0) or 0)
     
     if job_sal_max >= vet_sal_min and job_sal_min <= vet_sal_max:
-        score += 15
+        score += 10
         reasons.append("Compensation: Perfectly aligns with your target salary")
     elif job_sal_max >= vet_sal_min * 0.85:
-        score += 10
+        score += 6
     else:
-        score += 5
+        score += 2
         
     # 5. Location & Remote Flexibility (Max 10 pts)
     vet_state = veteran_profile.get("target_state", "").upper()
