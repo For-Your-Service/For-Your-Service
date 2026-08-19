@@ -20,9 +20,11 @@ from typing import Dict, List, Optional, Tuple
 try:
     from mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
     from sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
+    from readiness_engine import CAREER_TRACKS, analyze_career_readiness
 except ImportError:
     from app.mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
     from app.sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
+    from app.readiness_engine import CAREER_TRACKS, analyze_career_readiness
 
 # Check for Databricks / PySpark compute availability safely
 SPARK_AVAILABLE = False
@@ -685,6 +687,42 @@ if nav_selection == "📋 Veteran Intake & Match":
         remote_ok = st.checkbox("Open to Remote / Hybrid Opportunities", value=True)
         relocate_ok = st.checkbox("Willing to Relocate for the Right Opportunity", value=True)
 
+    # Target Career Track Selection
+    col_track1, col_track2 = st.columns([1, 1])
+    with col_track1:
+        track_options = list(CAREER_TRACKS.keys())
+        track_default_idx = 2  # Default to Operations
+        if "form_career_track" in st.session_state and st.session_state["form_career_track"] in track_options:
+            track_default_idx = track_options.index(st.session_state["form_career_track"])
+        elif "form_mos" in st.session_state:
+            mos_val = st.session_state["form_mos"]
+            if mos_val in ["18F", "18Z", "25B", "1D7X1", "IT"]:
+                track_default_idx = 0  # Cloud / DevOps
+            elif mos_val in ["25D", "17C", "1B4X1", "CTN", "0689"]:
+                track_default_idx = 1  # Cyber
+            elif mos_val in ["88M", "92A", "92Y", "LS", "2T2X1", "0431"]:
+                track_default_idx = 3  # Logistics
+            elif mos_val in ["91B", "91X", "15T", "2A6X1", "MK"]:
+                track_default_idx = 4  # Mechanics
+            elif mos_val in ["31B", "31D", "3P0X1", "MA", "5811", "ME"]:
+                track_default_idx = 5  # Law Enforcement
+            elif mos_val in ["68W", "HM", "4N0X1", "18D"]:
+                track_default_idx = 6  # Healthcare
+
+        selected_career_track = st.selectbox(
+            "🎯 Primary Target Career Field / Industry Track *",
+            track_options,
+            index=track_default_idx,
+            help="Choose the civilian career track you want to target so we can analyze skill gaps and recommend certifications"
+        )
+    with col_track2:
+        desired_role_custom = st.text_input(
+            "Specific Desired Job Title(s) (Optional)",
+            value=st.session_state.get("form_desired_role", ""),
+            placeholder="e.g., Solutions Architect, Operations Supervisor, Fleet Dispatcher...",
+            help="Enter any specific job titles you are looking for"
+        )
+
     col_sal1, col_sal2 = st.columns(2)
     with col_sal1:
         sal_min_default = st.session_state.get("form_salary_min", 70000)
@@ -717,7 +755,7 @@ if nav_selection == "📋 Veteran Intake & Match":
     )
 
     st.markdown("")
-    launch_btn = st.button("🚀 Launch AI Matching Pipeline & Find Opportunities", use_container_width=True)
+    launch_btn = st.button("🚀 Launch AI Matching Pipeline & Career Optimizer", use_container_width=True)
 
     # ------------------------------------------------------------------------
     # EXECUTION: AI MATCHING PIPELINE
@@ -749,6 +787,8 @@ if nav_selection == "📋 Veteran Intake & Match":
                     "mos": mos_input,
                     "clearance": selected_clearance,
                     "service_status": selected_status,
+                    "target_track": selected_career_track,
+                    "desired_role": desired_role_custom,
                     "target_city": target_city,
                     "target_state": target_state,
                     "remote_ok": remote_ok,
@@ -800,12 +840,18 @@ if nav_selection == "📋 Veteran Intake & Match":
                 # Sort by score descending
                 matches = sorted(matches, key=lambda x: x["match_score"], reverse=True)
                 
+                # 5. Compute Career Readiness & Skill Gap Analysis
+                all_user_skills = extracted["technical_skills"] + extracted["leadership_skills"] + extracted["ops_skills"] + extracted.get("mos_skills", [])
+                top_score = matches[0]["match_score"] if matches else 70.0
+                readiness_data = analyze_career_readiness(selected_career_track, all_user_skills, top_score)
+                
                 # Save to session state
                 st.session_state["pipeline_executed"] = True
                 st.session_state["current_matches"] = matches
                 st.session_state["current_profile"] = veteran_profile
                 st.session_state["current_extracted"] = extracted
-                st.toast("✅ AI Matching Pipeline complete!", icon="🎯")
+                st.session_state["current_readiness"] = readiness_data
+                st.toast("✅ AI Matching & Skill Gap Analysis complete!", icon="🎯")
 
     # ------------------------------------------------------------------------
     # OUTPUT: COMPREHENSIVE VETERAN TRANSITION DASHBOARD
@@ -814,6 +860,7 @@ if nav_selection == "📋 Veteran Intake & Match":
         matches = st.session_state["current_matches"]
         profile = st.session_state["current_profile"]
         extracted = st.session_state["current_extracted"]
+        readiness = st.session_state.get("current_readiness", {})
         
         st.markdown("---")
         st.markdown(f"## 🎯 Career Match Results for **{profile['name']}**")
@@ -826,25 +873,13 @@ if nav_selection == "📋 Veteran Intake & Match":
                 <div><strong>Rank:</strong> {profile['rank']}</div>
                 <div><strong>Specialty:</strong> {profile['mos']}</div>
                 <div><span class="clearance-badge">🛡️ {profile['clearance']}</span></div>
+                <div><strong>Target Track:</strong> {profile.get('target_track', 'Operations')}</div>
                 <div><strong>Experience:</strong> {profile['seniority']} (~{extracted['total_years']} yrs)</div>
                 <div><strong>Target:</strong> {profile['target_city']}, {profile['target_state']} (${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f})</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Key Metrics Row
-        m1, m2, m3, m4 = st.columns(4)
-        with m1:
-            st.metric("Top Match Score", f"{matches[0]['match_score']:.0f}% Fit")
-        with m2:
-            st.metric("Total Jobs Evaluated", f"{len(matches)}")
-        with m3:
-            high_matches = len([m for m in matches if m['match_score'] >= 75])
-            st.metric("High Compatibility Matches", f"{high_matches}")
-        with m4:
-            avg_top_salary = np.mean([m['salary_max'] for m in matches[:5]])
-            st.metric("Avg Top Target Salary", f"${avg_top_salary:,.0f}")
-
         # Extracted Skills Tag Cloud
         st.markdown("#### 🔍 Extracted Military & Civilian Strengths")
         skills_html = ""
@@ -860,59 +895,65 @@ if nav_selection == "📋 Veteran Intake & Match":
         st.markdown(skills_html, unsafe_allow_html=True)
         st.markdown("")
 
-        # Top Matching Job Cards
-        st.markdown("### 💼 Top Matching Opportunities")
-        top_matches = matches[:8]
-        
-        for idx, job in enumerate(top_matches, 1):
-            score = job["match_score"]
-            badge_class = "match-badge-high" if score >= 75 else "match-badge-med"
-            
-            with st.container():
-                st.markdown(f"""
-                <div class="job-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']}</h3>
-                        <span class="{badge_class}">{score:.0f}% Fit</span>
-                    </div>
-                    <div style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">
-                        🏢 {job['company']} &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
-                    </div>
-                    <div style="margin-bottom: 0.75rem;">
-                        <span class="clearance-badge">🛡️ Clearance: {job.get('clearance_required', 'None')}</span>
-                        &nbsp;<span style="font-size: 0.85rem; color: #166534; font-weight: 700;">🎖️ Veteran-Friendly Employer</span>
-                        &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Category: {job.get('category', 'General')})</span>
-                    </div>
-                    <p style="color: #334155; font-size: 0.95rem; margin-bottom: 0.75rem;">
-                        {job.get('description', '')[:320]}...
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                col_btn1, col_btn2 = st.columns([2, 1])
-                with col_btn1:
-                    with st.expander(f"🔍 Why this matches your military background"):
-                        for r in job.get("match_reasons", []):
-                            st.markdown(f"• **{r}**")
-                with col_btn2:
-                    st.link_button("🔗 Apply Directly", job.get("url", "https://7eaglegroup.com"), use_container_width=True)
-                    if st.button(f"🦅 Request 7 Eagle Recruiter Intro", key=f"intro_req_{idx}", use_container_width=True):
-                        st.success(f"✅ Recruiter Intro requested for **{job['title']}** at **{job['company']}**! A 7 Eagle Group coordinator will contact {profile['email']}.")
+        # TABS: JOB MATCHES vs CAREER READINESS & SKILL GAP OPTIMIZER
+        tab_jobs, tab_readiness = st.tabs([
+            f"💼 Top Matching Opportunities ({len(matches[:8])})",
+            f"🚀 Career Readiness & Skill Gap Optimizer ({readiness.get('target_track', 'Target Track')})"
+        ])
 
-        # Download / Export Section
-        st.markdown("---")
-        col_exp1, col_exp2 = st.columns(2)
-        with col_exp1:
-            export_df = pd.DataFrame(top_matches)[['title', 'company', 'location_display', 'salary_min', 'salary_max', 'match_score', 'url']]
-            st.download_button(
-                label="📥 Download Top Job Matches (CSV)",
-                data=export_df.to_csv(index=False),
-                file_name=f"veteran_matches_{profile['name'].replace(' ', '_').lower()}.csv",
-                mime="text/csv",
-                use_container_width=True
-            )
-        with col_exp2:
-            summary_txt = f"""FOR YOUR SERVICE - VETERAN TRANSITION REPORT
+        with tab_jobs:
+            st.markdown("### 💼 Top Matching Opportunities")
+            top_matches = matches[:8]
+            
+            for idx, job in enumerate(top_matches, 1):
+                score = job["match_score"]
+                badge_class = "match-badge-high" if score >= 75 else "match-badge-med"
+                
+                with st.container():
+                    st.markdown(f"""
+                    <div class="job-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']}</h3>
+                            <span class="{badge_class}">{score:.0f}% Fit</span>
+                        </div>
+                        <div style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">
+                            🏢 {job['company']} &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
+                        </div>
+                        <div style="margin-bottom: 0.75rem;">
+                            <span class="clearance-badge">🛡️ Clearance: {job.get('clearance_required', 'None')}</span>
+                            &nbsp;<span style="font-size: 0.85rem; color: #166534; font-weight: 700;">🎖️ Veteran-Friendly Employer</span>
+                            &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Category: {job.get('category', 'General')})</span>
+                        </div>
+                        <p style="color: #334155; font-size: 0.95rem; margin-bottom: 0.75rem;">
+                            {job.get('description', '')[:320]}...
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    col_btn1, col_btn2 = st.columns([2, 1])
+                    with col_btn1:
+                        with st.expander(f"🔍 Why this matches your military background"):
+                            for r in job.get("match_reasons", []):
+                                st.markdown(f"• **{r}**")
+                    with col_btn2:
+                        st.link_button("🔗 Apply Directly", job.get("url", "https://7eaglegroup.com"), use_container_width=True)
+                        if st.button(f"🦅 Request 7 Eagle Recruiter Intro", key=f"intro_req_{idx}", use_container_width=True):
+                            st.success(f"✅ Recruiter Intro requested for **{job['title']}** at **{job['company']}**! A 7 Eagle Group coordinator will contact {profile['email']}.")
+
+            # Download / Export Section
+            st.markdown("---")
+            col_exp1, col_exp2 = st.columns(2)
+            with col_exp1:
+                export_df = pd.DataFrame(top_matches)[['title', 'company', 'location_display', 'salary_min', 'salary_max', 'match_score', 'url']]
+                st.download_button(
+                    label="📥 Download Top Job Matches (CSV)",
+                    data=export_df.to_csv(index=False),
+                    file_name=f"veteran_matches_{profile['name'].replace(' ', '_').lower()}.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+            with col_exp2:
+                summary_txt = f"""FOR YOUR SERVICE - VETERAN TRANSITION REPORT
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Partner: 7 Eagle Group (https://7eaglegroup.com)
 
@@ -922,21 +963,101 @@ VETERAN PROFILE:
 - Rank: {profile['rank']}
 - MOS / Specialty: {profile['mos']}
 - Clearance: {profile['clearance']}
+- Target Track: {profile.get('target_track', 'Operations')}
 - Target Location: {profile['target_city']}, {profile['target_state']}
 - Target Salary: ${profile['salary_min']:,.0f} - ${profile['salary_max']:,.0f}
 
 TOP MATCHING CAREER OPPORTUNITIES:
 """
-            for i, j in enumerate(top_matches, 1):
-                summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | URL: {j['url']}\n"
-                
-            st.download_button(
-                label="📄 Download Full Veteran Transition Summary (TXT)",
-                data=summary_txt,
-                file_name=f"veteran_transition_summary_{profile['name'].replace(' ', '_').lower()}.txt",
-                mime="text/plain",
-                use_container_width=True
+                for i, j in enumerate(top_matches, 1):
+                    summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | URL: {j['url']}\n"
+                    
+                st.download_button(
+                    label="📄 Download Full Veteran Transition Summary (TXT)",
+                    data=summary_txt,
+                    file_name=f"veteran_transition_summary_{profile['name'].replace(' ', '_').lower()}.txt",
+                    mime="text/plain",
+                    use_container_width=True
+                )
+
+        # TAB 2: CAREER READINESS & SKILL GAP OPTIMIZER
+        with tab_readiness:
+            st.markdown(f"### 🚀 Career Readiness & Skill Gap Analysis: **{readiness.get('target_track', '')}**")
+            st.markdown(
+                "Our Siamese Neural Network analyzes the vector distance between your profile and top job requirements "
+                "in your chosen career track. Here is your personalized action plan to maximize your competitiveness and compensation."
             )
+
+            # Uplift Metrics Banner
+            r_col1, r_col2, r_col3 = st.columns(3)
+            with r_col1:
+                st.metric("Current Match Compatibility", f"{readiness.get('current_score', 0):.0f}%")
+            with r_col2:
+                gain = readiness.get('score_gain', 0)
+                st.metric("Projected Compatibility", f"{readiness.get('projected_score', 0):.0f}%", delta=f"+{gain:.0f}% Uplift")
+            with r_col3:
+                sal_gain = readiness.get('est_salary_uplift', 15000)
+                st.metric("Projected Salary Growth", f"+${sal_gain:,.0f}/yr", delta="Target Potential")
+
+            st.markdown("---")
+
+            # 1. Skill Gap Analysis
+            col_g1, col_g2 = st.columns(2)
+            with col_g1:
+                st.markdown("#### ✅ Skills You Already Have")
+                if readiness.get("matching_skills"):
+                    match_html = "".join([f"<span class='ops-skill-chip'>✓ {s.upper()}</span>" for s in readiness["matching_skills"]])
+                    st.markdown(match_html, unsafe_allow_html=True)
+                else:
+                    st.info("Upload your full resume to highlight all matching strengths.")
+
+            with col_g2:
+                st.markdown("#### 🎯 Target Skills to Add / Highlight")
+                if readiness.get("missing_skills"):
+                    miss_html = "".join([f"<span class='skill-chip'>+ {s.upper()}</span>" for s in readiness["missing_skills"]])
+                    st.markdown(miss_html, unsafe_allow_html=True)
+                else:
+                    st.success("Great job! You have strong coverage of the core skills for this track.")
+
+            st.markdown("---")
+
+            # 2. Recommended High-Impact Certifications (Free for Veterans)
+            st.markdown("#### 🏆 Recommended High-Impact Certifications & Free Funding")
+            st.markdown(
+                "These industry-recognized credentials bridge the gap for your target role. "
+                "**All certifications below have free funding programs for military veterans!**"
+            )
+
+            for cert in readiness.get("recommended_certs", []):
+                with st.container():
+                    st.markdown(f"""
+                    <div style="background: white; border: 1px solid #cbd5e1; border-left: 6px solid #d4af37; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h4 style="margin: 0; color: #0b1d3a;">🎓 {cert['name']}</h4>
+                            <span style="background: #fef3c7; color: #92400e; font-weight: 700; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 12px;">
+                                +{cert['score_uplift']}% Match • +${cert['salary_uplift']:,}/yr
+                            </span>
+                        </div>
+                        <p style="margin: 0.5rem 0; color: #475569; font-size: 0.9rem;">
+                            <strong>Provider:</strong> {cert['provider']}<br>
+                            <strong>🎖️ Free Veteran Access:</strong> {cert['free_for_veterans']}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.link_button(f"🛡️ Access Free Training / Exam Voucher ({cert['name']})", cert["url"], use_container_width=True)
+
+            st.markdown("---")
+
+            # 3. Military-to-Civilian Resume Phrasing Recommendations
+            st.markdown("#### 📝 Military-to-Civilian Resume Translation Tips")
+            st.markdown("Civilian hiring managers and ATS algorithms respond best to civilianized terminology:")
+
+            for military_phrase, civilian_phrase in readiness.get("resume_tips", []):
+                col_p1, col_p2 = st.columns(2)
+                with col_p1:
+                    st.error(f"❌ **Military Phrasing:** {military_phrase}")
+                with col_p2:
+                    st.success(f"✅ **Civilian Recommendation:** {civilian_phrase}")
 
 
 # ============================================================================
