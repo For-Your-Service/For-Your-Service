@@ -1,0 +1,46 @@
+# File: terraform/terraform.tfvars.example
+# Description: Example Master Multi-Cloud Terraform Variables
+# Lead Architect: Free Hall <whall4.wh@gmail.com>
+# Organization: 7 Eagle Group
+
+# -----------------------------------------------------------------------------
+# Global Deployment Config
+# -----------------------------------------------------------------------------
+environment  = "dev"
+project_name = "foryourservice"
+owner_email  = "whall4.wh@gmail.com"
+organization = "7 Eagle Group"
+
+# -----------------------------------------------------------------------------
+# Feature Flags (Enable/Disable individual cloud providers)
+# -----------------------------------------------------------------------------
+enable_aws         = true
+enable_gcp         = true
+enable_databricks  = true
+enable_huggingface = true
+
+# -----------------------------------------------------------------------------
+# AWS Credentials & Settings
+# -----------------------------------------------------------------------------
+aws_region                 = "us-east-1"
+aws_databricks_account_id  = "414351767826"
+aws_databricks_external_id = "fys-pipeline-external-id"
+
+# -----------------------------------------------------------------------------
+# GCP Settings
+# -----------------------------------------------------------------------------
+gcp_project_id = "for-your-service-prod"
+gcp_region     = "us-central1"
+
+# -----------------------------------------------------------------------------
+# Databricks Settings
+# -----------------------------------------------------------------------------
+databricks_host  = "https://dbc-3e95d032-684c.cloud.databricks.com"
+databricks_token = "dapi_example_replace_with_your_token"
+
+# -----------------------------------------------------------------------------
+# Hugging Face Settings
+# -----------------------------------------------------------------------------
+hf_token          = "hf_example_replace_with_your_token"
+hf_space_name     = "fys-matching-api"
+hf_space_hardware = "cpu-basic"
