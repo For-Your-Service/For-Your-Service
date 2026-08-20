@@ -1578,6 +1578,13 @@ if nav_selection == "📋 Veteran Intake & Match":
                 clr_req = job.get('clearance_required', 'None')
                 clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
                 
+                # Outbound Application URL
+                app_url = job.get("application_url") or job.get("url")
+                if not app_url or app_url == "#" or not str(app_url).startswith("http"):
+                    co_q = str(job.get("company", "")).replace(" ", "+")
+                    ti_q = str(job.get("title", "")).replace(" ", "+")
+                    app_url = f"https://www.google.com/search?q={co_q}+{ti_q}+careers+jobs"
+                
                 prio = factors.get("role_priority", 5)
                 prio_badge = ""
                 if prio == 1:
@@ -1592,12 +1599,19 @@ if nav_selection == "📋 Veteran Intake & Match":
                 with st.container():
                     st.markdown(f"""
                     <div class="job-card" style="border-left: 6px solid {'#dc2626' if clr_is_fail else '#0b2545'};">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
-                            <h3 style="margin: 0; color: #0b1d3a;">#{idx} — {job['title']} {prio_badge}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <h3 style="margin: 0; color: #0b1d3a; font-size: 1.25rem;">
+                                    <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #0b1d3a; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                        #{idx} — {job['title']} 🔗
+                                    </a>
+                                    {prio_badge}
+                                </h3>
+                                <div style="color: #475569; font-weight: 600; font-size: 1.0rem; margin-top: 4px;">
+                                    🏢 <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #1e3a8a; text-decoration: underline; font-weight: 700;">{job['company']}</a> &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
+                                </div>
+                            </div>
                             <span class="{badge_class}">{score:.0f}% Fit</span>
-                        </div>
-                        <div style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">
-                            🏢 {job['company']} &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
                         </div>
                         <div style="margin-bottom: 0.75rem;">
                             <span class="clearance-badge" style="background: {'#fee2e2; color: #991b1b' if clr_is_fail else '#f1f5f9; color: #1e3a8a'};">
@@ -1668,7 +1682,12 @@ if nav_selection == "📋 Veteran Intake & Match":
                             for r in job.get("match_reasons", []):
                                 st.markdown(f"• **{r}**")
                     with col_btn2:
-                        st.link_button("🔗 Apply Directly", job.get("url", "https://7eaglegroup.com"), use_container_width=True)
+                        st.link_button(
+                            "🚀 Apply Direct on Official Portal",
+                            app_url,
+                            help=f"Opens direct application page for {job['title']} at {job['company']} in a new tab",
+                            use_container_width=True
+                        )
                         if st.button(f"🦅 Request 7 Eagle Recruiter Intro", key=f"intro_req_{idx}", use_container_width=True):
                             st.success(f"✅ Recruiter Intro requested for **{job['title']}** at **{job['company']}**! A 7 Eagle Group coordinator will contact {profile['email']}.")
 
@@ -1676,7 +1695,19 @@ if nav_selection == "📋 Veteran Intake & Match":
             st.markdown("---")
             col_exp1, col_exp2 = st.columns(2)
             with col_exp1:
-                export_df = pd.DataFrame(top_matches)[['title', 'company', 'location_display', 'salary_min', 'salary_max', 'match_score', 'url']]
+                export_cols = ['title', 'company', 'location_display', 'salary_min', 'salary_max', 'match_score', 'application_url']
+                export_data = []
+                for j in top_matches:
+                    export_data.append({
+                        'title': j.get('title'),
+                        'company': j.get('company'),
+                        'location_display': j.get('location_display'),
+                        'salary_min': j.get('salary_min'),
+                        'salary_max': j.get('salary_max'),
+                        'match_score': j.get('match_score'),
+                        'application_url': j.get('application_url') or j.get('url')
+                    })
+                export_df = pd.DataFrame(export_data)
                 st.download_button(
                     label="📥 Download Top Job Matches (CSV)",
                     data=export_df.to_csv(index=False),
@@ -1702,7 +1733,8 @@ VETERAN PROFILE:
 TOP MATCHING CAREER OPPORTUNITIES:
 """
                 for i, j in enumerate(top_matches, 1):
-                    summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | URL: {j['url']}\n"
+                    j_url = j.get('application_url') or j.get('url')
+                    summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | Apply: {j_url}\n"
                     
                 st.download_button(
                     label="📄 Download Full Veteran Transition Summary (TXT)",

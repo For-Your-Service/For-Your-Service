@@ -526,6 +526,7 @@ Information Systems Technician (IT) | U.S. Navy (2021 – Present)
 def load_cached_scraped_jobs() -> List[Dict]:
     """
     Load real live jobs from public APIs and verified veteran employer partner network.
+    Guarantees every job has a valid outbound application_url.
     """
     real_live_jobs = []
     try:
@@ -543,5 +544,14 @@ def load_cached_scraped_jobs() -> List[Dict]:
         if key not in seen:
             seen.add(key)
             all_jobs.append(rj)
+            
+    for job in all_jobs:
+        app_url = job.get("application_url") or job.get("url")
+        if not app_url or app_url == "#" or not str(app_url).startswith("http"):
+            company_clean = job.get("company", "").replace(" ", "+")
+            title_clean = job.get("title", "").replace(" ", "+")
+            app_url = f"https://www.google.com/search?q={company_clean}+{title_clean}+careers+jobs"
+        job["application_url"] = app_url
+        job["url"] = app_url
             
     return all_jobs

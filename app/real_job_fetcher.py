@@ -95,6 +95,7 @@ def fetch_from_the_muse() -> List[Dict]:
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
                 
+                landing_url = item.get("refs", {}).get("landing_page", "https://www.themuse.com")
                 jobs.append({
                     "job_id": f"muse_{item.get('id', hash(title))}",
                     "title": title,
@@ -110,7 +111,8 @@ def fetch_from_the_muse() -> List[Dict]:
                     "category": category,
                     "description": desc_clean[:600],
                     "skills": skills if skills else [w for w in title.lower().split() if len(w) > 3],
-                    "url": item.get("refs", {}).get("landing_page", "https://www.themuse.com")
+                    "url": landing_url,
+                    "application_url": landing_url
                 })
     except Exception as e:
         logger.warning(f"Note fetching from The Muse API: {e}")
@@ -137,6 +139,7 @@ def fetch_from_jobicy() -> List[Dict]:
                 
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
+                job_url = item.get("url", "https://jobicy.com")
                 
                 jobs.append({
                     "job_id": f"jobicy_{item.get('id', hash(title))}",
@@ -153,7 +156,8 @@ def fetch_from_jobicy() -> List[Dict]:
                     "category": category,
                     "description": desc_clean[:600],
                     "skills": skills if skills else [w for w in title.lower().split() if len(w) > 3],
-                    "url": item.get("url", "https://jobicy.com")
+                    "url": job_url,
+                    "application_url": job_url
                 })
     except Exception as e:
         logger.warning(f"Note fetching from Jobicy API: {e}")
@@ -177,6 +181,7 @@ def fetch_from_remotive() -> List[Dict]:
                 
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
+                job_url = item.get("url", "https://remotive.com")
                 
                 jobs.append({
                     "job_id": f"remotive_{item.get('id', hash(title))}",
@@ -193,7 +198,8 @@ def fetch_from_remotive() -> List[Dict]:
                     "category": category,
                     "description": desc_clean[:600],
                     "skills": skills if skills else [w for w in title.lower().split() if len(w) > 3],
-                    "url": item.get("url", "https://remotive.com")
+                    "url": job_url,
+                    "application_url": job_url
                 })
     except Exception as e:
         logger.warning(f"Note fetching from Remotive API: {e}")
