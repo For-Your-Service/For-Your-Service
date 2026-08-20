@@ -105,7 +105,9 @@ class USAJobsIngestor:
     def transform_to_bronze(self, raw_items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Transform raw USAJOBS search items into workspace.fys_bronze.job_postings schema
+        with official USAJOBS URL routing, referral attribution, and sanitized text.
         """
+        import re
         bronze_records = []
         now_ts = datetime.now()
         
@@ -133,18 +135,38 @@ class USAJobsIngestor:
             # Extract clearance
             clearance_code = descriptor.get("UserArea", {}).get("Details", {}).get("SecurityClearance", "None")
 
+            # Format Official USAJOBS Link with Referral Tracking Attribution
+            raw_uri = descriptor.get("PositionURI") or f"https://www.usajobs.gov/job/{position_id}"
+            clean_uri = raw_uri.replace(":443", "")
+            if "usajobs.gov" in clean_uri:
+                sep = "&" if "?" in clean_uri else "?"
+                official_url = f"{clean_uri}{sep}utm_source=for_your_service&utm_medium=veteran_platform&utm_campaign=7_eagle_group"
+            else:
+                official_url = clean_uri
+
+            # Clean and sanitize raw HTML from job summary
+            raw_summary = descriptor.get("UserArea", {}).get("Details", {}).get("JobSummary", "")
+            clean_summary = re.sub(r'<[^>]+>', ' ', raw_summary).strip()
+            clean_summary = re.sub(r'\s+', ' ', clean_summary)
+
+            raw_title = descriptor.get("PositionTitle", "Untitled Role")
+            clean_title = re.sub(r'<[^>]+>', '', raw_title).strip()
+
+            raw_agency = descriptor.get("OrganizationName", descriptor.get("DepartmentName", "Federal Agency"))
+            clean_agency = re.sub(r'<[^>]+>', '', raw_agency).strip()
+
             record = {
                 "job_id": f"usajobs_{position_id}",
                 "source": "usajobs",
                 "raw_json": json.dumps(item),
-                "title": descriptor.get("PositionTitle", "Untitled Role"),
-                "company": descriptor.get("OrganizationName", descriptor.get("DepartmentName", "Federal Agency")),
-                "description": descriptor.get("UserArea", {}).get("Details", {}).get("JobSummary", ""),
+                "title": clean_title,
+                "company": clean_agency,
+                "description": clean_summary,
                 "location": loc_display or "United States",
                 "salary_min": sal_min,
                 "salary_max": sal_max,
                 "clearance_required": clearance_code,
-                "application_url": descriptor.get("PositionURI", ""),
+                "application_url": official_url,
                 "posted_date": descriptor.get("PublicationStartDate"),
                 "fetched_at": now_ts.isoformat(),
                 "ingestion_date": now_ts.strftime("%Y-%m-%d")

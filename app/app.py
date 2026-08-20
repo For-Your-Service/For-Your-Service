@@ -1590,12 +1590,25 @@ if nav_selection == "📋 Veteran Intake & Match":
                 clr_req = job.get('clearance_required', 'None')
                 clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
                 
-                # Outbound Application URL
-                app_url = job.get("application_url") or job.get("url")
-                if not app_url or app_url == "#" or not str(app_url).startswith("http"):
+                # Outbound Application URL with Official Referral Attribution
+                raw_url = str(job.get("application_url") or job.get("url") or "")
+                if not raw_url or raw_url == "#" or not raw_url.startswith("http"):
                     co_q = str(job.get("company", "")).replace(" ", "+")
                     ti_q = str(job.get("title", "")).replace(" ", "+")
                     app_url = f"https://www.google.com/search?q={co_q}+{ti_q}+careers+jobs"
+                else:
+                    app_url = raw_url.replace(":443", "")
+                    if "usajobs.gov" in app_url and "utm_source" not in app_url:
+                        sep = "&" if "?" in app_url else "?"
+                        app_url = f"{app_url}{sep}utm_source=for_your_service&utm_medium=veteran_platform&utm_campaign=7_eagle_group"
+
+                # Sanitize all string fields to prevent broken/unclosed HTML tags
+                card_title = re.sub(r'<[^>]+>', '', str(job.get('title', 'Untitled Role'))).strip()
+                card_company = re.sub(r'<[^>]+>', '', str(job.get('company', 'Employer'))).strip()
+                card_location = re.sub(r'<[^>]+>', '', str(job.get('location_display', 'Location'))).strip()
+                raw_desc = re.sub(r'<[^>]+>', ' ', str(job.get('description', ''))).strip()
+                raw_desc = re.sub(r'\s+', ' ', raw_desc)
+                card_desc = raw_desc[:320] + ("..." if len(raw_desc) > 320 else "")
                 
                 prio = factors.get("role_priority", 5)
                 prio_badge = ""
@@ -1615,12 +1628,12 @@ if nav_selection == "📋 Veteran Intake & Match":
                             <div style="flex: 1;">
                                 <h3 style="margin: 0; font-size: 1.25rem;">
                                     <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #1e3a8a; text-decoration: none; font-weight: 700;">
-                                        #{idx} — {job['title']} 🔗
+                                        #{idx} — {card_title} 🔗
                                     </a>
                                     {prio_badge}
                                 </h3>
                                 <div style="color: #475569; font-weight: 600; font-size: 1.0rem; margin-top: 6px;">
-                                    🏢 <strong>{job['company']}</strong> &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
+                                    🏢 <strong>{card_company}</strong> &nbsp;•&nbsp; 📍 {card_location} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
                                 </div>
                             </div>
                             <span class="{badge_class}">{score:.0f}% Fit</span>
@@ -1633,7 +1646,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                             &nbsp;<span style="font-size: 0.85rem; color: #64748b;">(Category: {job.get('category', 'General')})</span>
                         </div>
                         <p style="color: #334155; font-size: 0.95rem; margin-bottom: 0.75rem;">
-                            {job.get('description', '')[:320]}...
+                            {card_desc}
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
