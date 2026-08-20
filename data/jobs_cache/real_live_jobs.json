@@ -17,7 +17,32 @@
       "account",
       "manager"
     ],
-    "url": "https://www.themuse.com/jobs/cleanharbors/ske-account-manager-ff84b8"
+    "url": "https://www.themuse.com/jobs/cleanharbors/ske-account-manager-ff84b8",
+    "application_url": "https://www.themuse.com/jobs/cleanharbors/ske-account-manager-ff84b8"
+  },
+  {
+    "job_id": "muse_22081284",
+    "title": "Subcontract Specialist",
+    "company": "Bechtel",
+    "city": "Houston",
+    "state": "TX",
+    "location_display": "Houston, TX",
+    "salary_min": 75000.0,
+    "salary_max": 125000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "The Muse Live API",
+    "category": "Operations & Leadership",
+    "description": "Requisition ID: 294803 Relocation Authorized: None Telework Type: Part-Time Telework Work Location: Houston, TX Extraordinary teams building inspiring projects: Since 1898, we have helped customers complete more than 25,000 projects in 160 countries on all seven continents that have created jobs, grown economies, improved the resiliency of the world's infrastructure, increased access to energy, resources, and vital services, and made the world a safer, cleaner place. Differentiated by the quality of our people and our relentless drive to deliver the most successful outcomes, we align our capab",
+    "skills": [
+      "leadership",
+      "project management",
+      "operations",
+      "supply chain",
+      "procurement"
+    ],
+    "url": "https://www.themuse.com/jobs/bechtel/subcontract-specialist-300c9e",
+    "application_url": "https://www.themuse.com/jobs/bechtel/subcontract-specialist-300c9e"
   },
   {
     "job_id": "muse_22038674",
@@ -36,7 +61,8 @@
     "skills": [
       "operations"
     ],
-    "url": "https://www.themuse.com/jobs/bechtel/mechanical-superintendent-5c0f00"
+    "url": "https://www.themuse.com/jobs/bechtel/mechanical-superintendent-5c0f00",
+    "application_url": "https://www.themuse.com/jobs/bechtel/mechanical-superintendent-5c0f00"
   },
   {
     "job_id": "muse_21985333",
@@ -58,7 +84,8 @@
       "procurement",
       "electrical"
     ],
-    "url": "https://www.themuse.com/jobs/bechtel/lead-electrical-superintendent-fab-62"
+    "url": "https://www.themuse.com/jobs/bechtel/lead-electrical-superintendent-fab-62",
+    "application_url": "https://www.themuse.com/jobs/bechtel/lead-electrical-superintendent-fab-62"
   },
   {
     "job_id": "muse_18186470",
@@ -80,7 +107,8 @@
       "client",
       "associate"
     ],
-    "url": "https://www.themuse.com/jobs/bankofamerica/wealth-management-client-associate-3873a1"
+    "url": "https://www.themuse.com/jobs/bankofamerica/wealth-management-client-associate-3873a1",
+    "application_url": "https://www.themuse.com/jobs/bankofamerica/wealth-management-client-associate-3873a1"
   },
   {
     "job_id": "muse_18151567",
@@ -99,7 +127,8 @@
     "skills": [
       "cpr"
     ],
-    "url": "https://www.themuse.com/jobs/thriveskilledpediatriccarellc/pediatric-private-duty-rn-lvn-7c964a"
+    "url": "https://www.themuse.com/jobs/thriveskilledpediatriccarellc/pediatric-private-duty-rn-lvn-7c964a",
+    "application_url": "https://www.themuse.com/jobs/thriveskilledpediatriccarellc/pediatric-private-duty-rn-lvn-7c964a"
   },
   {
     "job_id": "muse_17860968",
@@ -120,7 +149,8 @@
       "inventory",
       "triage"
     ],
-    "url": "https://www.themuse.com/jobs/freseniusmedicalcare/acute-dialysis-charge-nurse-good-samaritan-hospital-258a47"
+    "url": "https://www.themuse.com/jobs/freseniusmedicalcare/acute-dialysis-charge-nurse-good-samaritan-hospital-258a47",
+    "application_url": "https://www.themuse.com/jobs/freseniusmedicalcare/acute-dialysis-charge-nurse-good-samaritan-hospital-258a47"
   },
   {
     "job_id": "muse_18058780",
@@ -139,7 +169,8 @@
     "skills": [
       "inventory"
     ],
-    "url": "https://www.themuse.com/jobs/theretailodysseycompany/travel-retail-sales-merchandiser-e97b66"
+    "url": "https://www.themuse.com/jobs/theretailodysseycompany/travel-retail-sales-merchandiser-e97b66",
+    "application_url": "https://www.themuse.com/jobs/theretailodysseycompany/travel-retail-sales-merchandiser-e97b66"
   },
   {
     "job_id": "muse_21832126",
@@ -158,7 +189,8 @@
     "skills": [
       "inventory"
     ],
-    "url": "https://www.themuse.com/jobs/equitylifestyleproperties/maintenance-level-i-bb269f"
+    "url": "https://www.themuse.com/jobs/equitylifestyleproperties/maintenance-level-i-bb269f",
+    "application_url": "https://www.themuse.com/jobs/equitylifestyleproperties/maintenance-level-i-bb269f"
   },
   {
     "job_id": "muse_17979410",
@@ -180,7 +212,8 @@
       "python",
       "sql"
     ],
-    "url": "https://www.themuse.com/jobs/uber/senior-scientist-driver-incentives"
+    "url": "https://www.themuse.com/jobs/uber/senior-scientist-driver-incentives",
+    "application_url": "https://www.themuse.com/jobs/uber/senior-scientist-driver-incentives"
   },
   {
     "job_id": "muse_20406944",
@@ -202,7 +235,8 @@
       "python",
       "ci/cd"
     ],
-    "url": "https://www.themuse.com/jobs/uber/sr-staff-engineer-genai"
+    "url": "https://www.themuse.com/jobs/uber/sr-staff-engineer-genai",
+    "application_url": "https://www.themuse.com/jobs/uber/sr-staff-engineer-genai"
   },
   {
     "job_id": "muse_21280689",
@@ -223,7 +257,8 @@
       "logistics",
       "supply chain"
     ],
-    "url": "https://www.themuse.com/jobs/celonis/strategic-account-executive-client-partner-manufacturing-2d814f"
+    "url": "https://www.themuse.com/jobs/celonis/strategic-account-executive-client-partner-manufacturing-2d814f",
+    "application_url": "https://www.themuse.com/jobs/celonis/strategic-account-executive-client-partner-manufacturing-2d814f"
   },
   {
     "job_id": "muse_18084768",
@@ -242,7 +277,8 @@
     "skills": [
       "psychiatrist"
     ],
-    "url": "https://www.themuse.com/jobs/optum/psychiatrist-md-or-do-44c4c0"
+    "url": "https://www.themuse.com/jobs/optum/psychiatrist-md-or-do-44c4c0",
+    "application_url": "https://www.themuse.com/jobs/optum/psychiatrist-md-or-do-44c4c0"
   },
   {
     "job_id": "muse_21438636",
@@ -261,7 +297,8 @@
     "skills": [
       "cpr"
     ],
-    "url": "https://www.themuse.com/jobs/optum/speech-therapist-prn-f2328e"
+    "url": "https://www.themuse.com/jobs/optum/speech-therapist-prn-f2328e",
+    "application_url": "https://www.themuse.com/jobs/optum/speech-therapist-prn-f2328e"
   },
   {
     "job_id": "muse_20027014",
@@ -281,7 +318,8 @@
       "leadership",
       "operations"
     ],
-    "url": "https://www.themuse.com/jobs/crowncorksealusa/industrial-mechanic-assembly-line-maintainer-must-be-open-to-all-shifts-77f2e6"
+    "url": "https://www.themuse.com/jobs/crowncorksealusa/industrial-mechanic-assembly-line-maintainer-must-be-open-to-all-shifts-77f2e6",
+    "application_url": "https://www.themuse.com/jobs/crowncorksealusa/industrial-mechanic-assembly-line-maintainer-must-be-open-to-all-shifts-77f2e6"
   },
   {
     "job_id": "muse_21435676",
@@ -301,7 +339,8 @@
       "investigations",
       "cpr"
     ],
-    "url": "https://www.themuse.com/jobs/aulaniadisneyresortspa/security-hosthostess-fulltime-2900hour-8217ab"
+    "url": "https://www.themuse.com/jobs/aulaniadisneyresortspa/security-hosthostess-fulltime-2900hour-8217ab",
+    "application_url": "https://www.themuse.com/jobs/aulaniadisneyresortspa/security-hosthostess-fulltime-2900hour-8217ab"
   },
   {
     "job_id": "muse_22009629",
@@ -325,7 +364,8 @@
       "python",
       "linux"
     ],
-    "url": "https://www.themuse.com/jobs/spacex/space-lasers-engineer-satellites-starlink-9bb646"
+    "url": "https://www.themuse.com/jobs/spacex/space-lasers-engineer-satellites-starlink-9bb646",
+    "application_url": "https://www.themuse.com/jobs/spacex/space-lasers-engineer-satellites-starlink-9bb646"
   },
   {
     "job_id": "muse_21370144",
@@ -345,7 +385,8 @@
       "physician",
       "cardiology"
     ],
-    "url": "https://www.themuse.com/jobs/christushealth/physician-cardiology-27e5ed"
+    "url": "https://www.themuse.com/jobs/christushealth/physician-cardiology-27e5ed",
+    "application_url": "https://www.themuse.com/jobs/christushealth/physician-cardiology-27e5ed"
   },
   {
     "job_id": "muse_21966952",
@@ -365,7 +406,8 @@
       "leadership",
       "operations"
     ],
-    "url": "https://www.themuse.com/jobs/bankofamerica/product-specialist-lease-pricing-specialist-analyst"
+    "url": "https://www.themuse.com/jobs/bankofamerica/product-specialist-lease-pricing-specialist-analyst",
+    "application_url": "https://www.themuse.com/jobs/bankofamerica/product-specialist-lease-pricing-specialist-analyst"
   },
   {
     "job_id": "muse_17767981",
@@ -387,26 +429,753 @@
       "logistics",
       "cdl"
     ],
-    "url": "https://www.themuse.com/jobs/cleanharbors/service-delivery-manager-ae730b"
+    "url": "https://www.themuse.com/jobs/cleanharbors/service-delivery-manager-ae730b",
+    "application_url": "https://www.themuse.com/jobs/cleanharbors/service-delivery-manager-ae730b"
   },
   {
-    "job_id": "muse_18123419",
-    "title": "Resort Naturalist- Full Time, Disney's Hilton Head Island Resort",
-    "company": "Disney",
-    "city": "Hilton Head",
-    "state": "SC",
-    "location_display": "Hilton Head, SC",
-    "salary_min": 75000.0,
-    "salary_max": 125000.0,
+    "job_id": "jobicy_150046",
+    "title": "Senior Product Designer - Benefits Servicing",
+    "company": "Humana",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
     "clearance_required": "None",
     "veteran_friendly": true,
-    "source": "The Muse Live API",
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Become a part of our caring community As a Senior Product Designer \u2013 Benefits Servicing, you will help shape the end-to-end medical benefits experience across Humana\u2019s digital ecosystem, enabling members to understand, access, and maximize their healthcare coverage with confidence. Through exceptional design execution, user-centered thinking, and cross-functional collaboration, you will create intuitive experiences that simplify complex benefits information, support informed healthcare decisions, and improve members\u2019 ability to navigate care. In this role, you will partner closely with product",
+    "skills": [
+      "senior",
+      "product",
+      "designer",
+      "benefits",
+      "servicing"
+    ],
+    "url": "https://jobicy.com/jobs/150046-senior-product-designer-benefits-servicing",
+    "application_url": "https://jobicy.com/jobs/150046-senior-product-designer-benefits-servicing"
+  },
+  {
+    "job_id": "jobicy_150341",
+    "title": "Manager, Customer Success Operations",
+    "company": "AlphaSense",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "About AlphaSense: The world\u2019s most sophisticated companies rely on AlphaSense to remove uncertainty from decision-making. With market intelligence and search built on proven AI, AlphaSense delivers insights that matter from content you can trust. Our universe of public and private content includes equity research, company filings, event transcripts, expert calls, news, trade journals, and clients\u2019 own research content. The acquisition of Tegus by AlphaSense in 2024 advances our shared mission to empower professionals to make smarter decisions through AI-driven market intelligence. Together, Al",
+    "skills": [
+      "leadership",
+      "operations",
+      "sql"
+    ],
+    "url": "https://jobicy.com/jobs/150341-manager-customer-success-operations",
+    "application_url": "https://jobicy.com/jobs/150341-manager-customer-success-operations"
+  },
+  {
+    "job_id": "jobicy_150340",
+    "title": "Senior Manager, Customer Success Operations",
+    "company": "AlphaSense",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "About AlphaSense: The world\u2019s most sophisticated companies rely on AlphaSense to remove uncertainty from decision-making. With market intelligence and search built on proven AI, AlphaSense delivers insights that matter from content you can trust. Our universe of public and private content includes equity research, company filings, event transcripts, expert calls, news, trade journals, and clients\u2019 own research content. The acquisition of Tegus by AlphaSense in 2024 advances our shared mission to empower professionals to make smarter decisions through AI-driven market intelligence. Together, Al",
+    "skills": [
+      "leadership",
+      "operations",
+      "sql"
+    ],
+    "url": "https://jobicy.com/jobs/150340-senior-manager-customer-success-operations",
+    "application_url": "https://jobicy.com/jobs/150340-senior-manager-customer-success-operations"
+  },
+  {
+    "job_id": "jobicy_150339",
+    "title": "Senior Analyst, Customer Success Operations",
+    "company": "AlphaSense",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "About AlphaSense: The world\u2019s most sophisticated companies rely on AlphaSense to remove uncertainty from decision-making. With market intelligence and search built on proven AI, AlphaSense delivers insights that matter from content you can trust. Our universe of public and private content includes equity research, company filings, event transcripts, expert calls, news, trade journals, and clients\u2019 own research content. The acquisition of Tegus by AlphaSense in 2024 advances our shared mission to empower professionals to make smarter decisions through AI-driven market intelligence. Together, Al",
+    "skills": [
+      "leadership",
+      "operations",
+      "sql"
+    ],
+    "url": "https://jobicy.com/jobs/150339-senior-analyst-customer-success-operations",
+    "application_url": "https://jobicy.com/jobs/150339-senior-analyst-customer-success-operations"
+  },
+  {
+    "job_id": "jobicy_146614",
+    "title": "Database Engineer",
+    "company": "Ruby Labs",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Europe,  T\u00fcrkiye (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About us Ruby Labs is a leading tech company that creates and operates innovative consumer products. We offer a diverse range of opportunities across the health, education, and entertainment industries. Our innovative teams are driving the future of consumer-led products, and we're always looking for passionate individuals to join us. Learn more about our story at: https://rubylabs.com/about-us/ About the role We are building a high-scale payment orchestration system that processes millions of financial transactions every month across multiple payment providers, regions, and products. Our plat",
+    "skills": [
+      "operations",
+      "aws",
+      "networking"
+    ],
+    "url": "https://jobicy.com/jobs/146614-database-engineer",
+    "application_url": "https://jobicy.com/jobs/146614-database-engineer"
+  },
+  {
+    "job_id": "jobicy_143808",
+    "title": "Area Schedule Lead - Data Center Design, Engineering and Construction",
+    "company": "Meta",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Construction & Infrastructure",
+    "description": "We are seeking a candidate for a key leadership role in scheduling for a portfolio of Data Center projects of strategic importance to Meta. The Schedule lead will act as a technical Schedule subject matter expert overseeing all schedule management and reporting for their portfolio of projects. The successful candidate will have focus on speed to market and be a critical partner for the Delivery Team and the Project Controls Lead to forecast and help mitigate schedule related risks and issues on the project, enable commercial accountability, manage schedule health reporting/escalation, and ensu",
+    "skills": [
+      "leadership",
+      "project management",
+      "operations",
+      "risk management",
+      "electrical",
+      "networking"
+    ],
+    "url": "https://jobicy.com/jobs/143808-area-schedule-lead-data-center-design-engineering-and-construction-3",
+    "application_url": "https://jobicy.com/jobs/143808-area-schedule-lead-data-center-design-engineering-and-construction-3"
+  },
+  {
+    "job_id": "jobicy_143979",
+    "title": "Senior Data Analyst",
+    "company": "Ruby Labs",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Europe (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About us Ruby Labs is a leading tech company that creates and operates innovative consumer products. We offer a diverse range of opportunities across the health, education, and entertainment industries. Our innovative teams are driving the future of consumer-led products, and we're always looking for passionate individuals to join us. Learn more about our story at: https://rubylabs.com/about-us/ About the role Join Ruby Labs as a Senior Data Analyst and become a key part of our fast-paced, rapidly growing team working on a new product \u2013 a job application platform that streamlines the hiring jo",
+    "skills": [
+      "leadership",
+      "python",
+      "sql",
+      "networking"
+    ],
+    "url": "https://jobicy.com/jobs/143979-senior-data-analyst-4",
+    "application_url": "https://jobicy.com/jobs/143979-senior-data-analyst-4"
+  },
+  {
+    "job_id": "jobicy_143967",
+    "title": "VP Analyst - Analyst Relations Strategy",
+    "company": "Gartner",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
     "category": "Logistics & Supply Chain",
-    "description": "This is an hourly role at Disney's Hilton Head Island Resort (DVC-Disney Vacation Club). The Naturalist\u2019s Role is designed to engage Guests of all ages in fun, interactive ways and excite them about South Carolina\u2019s nature, scientific features and history. The naturalist's is to research, develop, and present educational programs. As the resort naturalist, you are the ambassador responsible for positively influencing our Guests' and Cast Members' knowledge, attitudes, and behaviors about Nature and encouraging them to explore the outdoors. Responsibilities : Responsible for completion of proje",
+    "description": "About the role: Gartner Analysts are industry thought leaders who create must-have insights, market predictions and best practices for a broad range of world-leading organizations. A Vice President serves as a leader within Gartner\u2019s Business and Technology Insights (BTI) group, establishing oneself as a credible voice within their designated market at local, regional and global levels. Utilizing exceptional research and analytical skills, a Vice President plays a significant role in producing pragmatic and provocative insights which Gartner clients consume and apply to propel their business t",
     "skills": [
       "leadership"
     ],
-    "url": "https://www.themuse.com/jobs/disney/resort-naturalist-full-time-disneys-hilton-head-island-resort-868b0e"
+    "url": "https://jobicy.com/jobs/143967-vp-analyst-analyst-relations-remote-western-europe",
+    "application_url": "https://jobicy.com/jobs/143967-vp-analyst-analyst-relations-remote-western-europe"
+  },
+  {
+    "job_id": "jobicy_144040",
+    "title": "Staff Software Engineer, App Platform",
+    "company": "Fieldguide",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About Us Fieldguide is establishing a new state of trust for global commerce and capital markets by automating and streamlining the work of assurance and audit practitioners\u2014specifically in cybersecurity, privacy, and financial audits. We build software for the people who enable trust between businesses. We're based in San Francisco, CA, and built remote-first. We're backed by Goldman Sachs Alternatives, Bessemer Venture Partners, 8VC, Floodgate, Y Combinator, and more. Over 50 of the top 100 accounting and consulting firms trust Fieldguide to power mission-critical work. About the Role As a S",
+    "skills": [
+      "aws",
+      "kubernetes",
+      "cybersecurity"
+    ],
+    "url": "https://jobicy.com/jobs/144040-staff-software-engineer-app-platform",
+    "application_url": "https://jobicy.com/jobs/144040-staff-software-engineer-app-platform"
+  },
+  {
+    "job_id": "jobicy_143813",
+    "title": "Account Manager - Japan",
+    "company": "Elevenlabs",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Japan (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "About ElevenLabs ElevenLabs is an AI research and product company transforming how we interact with technology. We launched in January 2023 with the first human-like AI voice model. Today, we serve millions of users and thousands of businesses - from fast-growing startups to large enterprises like Deutsche Telekom and Meta. Our investors are some of the world's most prominent, including Andreessen Horowitz, ICONIQ Growth and Sequoia. We've raised $781M in funding and our last valuation was $11B - multiples of 11, always. We have expanded from voice into three main platforms: ElevenAgents enabl",
+    "skills": [
+      "operations"
+    ],
+    "url": "https://jobicy.com/jobs/143813-customer-success-japan",
+    "application_url": "https://jobicy.com/jobs/143813-customer-success-japan"
+  },
+  {
+    "job_id": "jobicy_146992",
+    "title": "Senior Travel Consultant",
+    "company": "BCD Travel",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "LATAM,  USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Start your journey with BCD: Grow, connect, collaborate and celebrate with our global team S enior Travel Agent (Remote) Full time, United States As a Senior Travel Consultant, you are the face of our company. You\u2019ll communicate and respond to requests for current and new clients, helping them travel smart and achieve more. Do you communicate effortlessly and have customer service at heart? \u2013 Read on! As a Senior Travel Agent, you will Search and confirm travel reservations for the customer Have a strong understanding of a client travel policy and can consistently provide consultation to the c",
+    "skills": [
+      "senior",
+      "travel",
+      "consultant"
+    ],
+    "url": "https://jobicy.com/jobs/146992-senior-travel-consultant-4",
+    "application_url": "https://jobicy.com/jobs/146992-senior-travel-consultant-4"
+  },
+  {
+    "job_id": "jobicy_144109",
+    "title": "CX Lab Tech - Removables (UK)",
+    "company": "Dandy",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "UK (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Maintenance & Mechanics",
+    "description": "Dandy is transforming the massive and antiquated dental industry\u2014an industry worth over $400B. Backed by some of the world\u2019s leading venture capital firms, we\u2019re on an ambitious mission to simplify and modernize every function of the dental practice through technology. As we expand our reach globally, Dandy is building the operating system for dental offices around the world\u2014empowering clinicians and their teams with technology, innovation, and world-class support to achieve more for their practices, their people, and their patients. About the Role We're looking for experienced and dedicated C",
+    "skills": [
+      "tech",
+      "removables",
+      "(uk)"
+    ],
+    "url": "https://jobicy.com/jobs/144109-cx-lab-tech-removables-uk",
+    "application_url": "https://jobicy.com/jobs/144109-cx-lab-tech-removables-uk"
+  },
+  {
+    "job_id": "jobicy_143991",
+    "title": "Customer Solution Engineer",
+    "company": "Zuora",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About Zuora At Zuora, we help businesses grow smarter and adapt faster. Our platform powers modern business models \u2014 from subscriptions and usage-based pricing to AI-driven and outcome-based offerings \u2014 helping companies launch new products, automate complex billing, and unlock predictable, recurring revenue. We\u2019ve led the Subscription Economy for more than a decade. Now we\u2019re evolving again by building the definitive platform for quote to cash and helping companies monetize their products and services with an adaptable, AI-ready foundation. The Opportunity At Zuora, our growth story is only j",
+    "skills": [
+      "customer",
+      "solution",
+      "engineer"
+    ],
+    "url": "https://jobicy.com/jobs/143991-customer-solution-engineer",
+    "application_url": "https://jobicy.com/jobs/143991-customer-solution-engineer"
+  },
+  {
+    "job_id": "jobicy_147145",
+    "title": "AI Chatbot Product Manager",
+    "company": "Binance",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "APAC (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Binance is a leading global blockchain ecosystem behind the world\u2019s largest cryptocurrency exchange by trading volume and registered users. We are trusted by 300+ million people in 100+ countries for our industry-leading security, user fund transparency, trading engine speed, deep liquidity, and an unmatched portfolio of digital-asset products. Binance offerings range from trading and finance to education, research, payments, institutional services, Web3 features, and more. We leverage the power of digital assets and blockchain to build an inclusive financial ecosystem to advance the freedom o",
+    "skills": [
+      "operations"
+    ],
+    "url": "https://jobicy.com/jobs/147145-ai-chatbot-product-manager",
+    "application_url": "https://jobicy.com/jobs/147145-ai-chatbot-product-manager"
+  },
+  {
+    "job_id": "jobicy_147119",
+    "title": "APAC Data Privacy Lawyer - Australia (Part-time, Remote)",
+    "company": "Axiom",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Australia (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "Axiom, the premier global provider of on-demand legal talent, is seeking accomplished privacy lawyers to provide contractual support for mid-sized and large Australian or multinational companies. The ideal candidates will possess APAC data privacy experience Responsibilities : Provide legal support on privacy and data protection issues across APAC to ensure robust support Qualifications: Over 5 years of post-qualification experience (PQE), with a preference for those who have gained expertise in an in-house legal setting. Expertise in providing legal support on APAC data privacy matters. Stron",
+    "skills": [
+      "leadership"
+    ],
+    "url": "https://jobicy.com/jobs/147119-apac-data-privacy-lawyer-australia-part-time-remote",
+    "application_url": "https://jobicy.com/jobs/147119-apac-data-privacy-lawyer-australia-part-time-remote"
+  },
+  {
+    "job_id": "jobicy_147122",
+    "title": "Customer Success Advisor - ASEAN",
+    "company": "Autodesk",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "APAC,  Malaysia (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Job Requisition ID # 26WD95701 Customer Success Advisor In the Customer Success Management organization, we transform customers\u2019 vision into realized value. We believe in consistent, connected customer experiences and forging trusted partnerships that fuel adoption, retention, and measurable business outcomes. Our work supports improved revenue and sustainable company growth. As we continue our business model transformation, driving adoption of our technology is key to long-term customer value and partnership. Position Overview: As a Customer Success Advisor you\u2019ll support customer outcomes by",
+    "skills": [
+      "customer",
+      "success",
+      "advisor",
+      "asean"
+    ],
+    "url": "https://jobicy.com/jobs/147122-customer-success-advisor-asean",
+    "application_url": "https://jobicy.com/jobs/147122-customer-success-advisor-asean"
+  },
+  {
+    "job_id": "jobicy_147118",
+    "title": "Senior AI Creative Designer",
+    "company": "OKX",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "APAC (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Healthcare & Medical",
+    "description": "Who We Are At OKX, we believe that the future will be reshaped by crypto, and ultimately contribute to every individual's freedom. OKX is a leading crypto exchange, and the developer of OKX Wallet, giving millions of access to crypto trading and decentralized crypto applications (dApps). OKX is also a trusted brand by hundreds of large institutions seeking access to crypto markets. We are safe and reliable, backed by our Proof of Reserves. Across our multiple offices globally, we are united by our core principles: We Before Me , Do the Right Thing , and Get Things Done . These shared values dr",
+    "skills": [
+      "senior",
+      "creative",
+      "designer"
+    ],
+    "url": "https://jobicy.com/jobs/147118-senior-ai-creative-designer",
+    "application_url": "https://jobicy.com/jobs/147118-senior-ai-creative-designer"
+  },
+  {
+    "job_id": "jobicy_147134",
+    "title": "Customer Engineer",
+    "company": "Nebius",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Canada,  USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About Nebius: Nebius is leading a new era in cloud infrastructure for the global AI economy. We are building a full-stack AI cloud platform that supports developers and enterprises from data and model training through to production deployment, without the cost and complexity of building large in-house AI/ML infrastructure. Built by engineers, for engineers. From large-scale GPU orchestration to inference optimization, we own the hard problems across compute, storage, networking and applied AI. Listed on Nasdaq (NBIS) and headquartered in Amsterdam, we have a global footprint with R D hubs acro",
+    "skills": [
+      "project management",
+      "troubleshooting",
+      "aws",
+      "azure",
+      "kubernetes",
+      "python",
+      "terraform",
+      "networking"
+    ],
+    "url": "https://jobicy.com/jobs/147134-customer-engineer",
+    "application_url": "https://jobicy.com/jobs/147134-customer-engineer"
+  },
+  {
+    "job_id": "jobicy_151180",
+    "title": "Associate Product Operations Manager",
+    "company": "Best Egg",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "We are seeking a proactive and detail-oriented Associate Product Operations Manager to support our Product organization in improving operational efficiency, cross-functional alignment, and consistency in how work moves through the Product Development Lifecycle (PDLC). Working closely with, and at the direction of, the Senior Product Operations Manager and Product Leadership team, this role will execute the day-to-day tactics that keep our Product Operating Model running smoothly, while building the experience and judgment to take on greater ownership over time. Align: work closely with the Pro",
+    "skills": [
+      "leadership",
+      "project management",
+      "operations"
+    ],
+    "url": "https://jobicy.com/jobs/151180-associate-product-operations-manager",
+    "application_url": "https://jobicy.com/jobs/151180-associate-product-operations-manager"
+  },
+  {
+    "job_id": "jobicy_151179",
+    "title": "Account Executive",
+    "company": "Boulevard",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Who is Boulevard? Boulevard provides the first and only client experience platform for appointment-based, self-care businesses. We empower our customers to give their clients more of the magical moments that matter most. Before launching in 2016, our founders spent months interviewing salon managers and working behind front desks to understand their pain points so we could design a modern, user-friendly platform that meets the unique needs of their business. Our roots may be in hair salons, but we are built for the broader self-care industry, including many types of salons, spas, medspa, barbe",
+    "skills": [
+      "account",
+      "executive"
+    ],
+    "url": "https://jobicy.com/jobs/151179-account-executive-6",
+    "application_url": "https://jobicy.com/jobs/151179-account-executive-6"
+  },
+  {
+    "job_id": "jobicy_151178",
+    "title": "Senior Fullstack Engineer",
+    "company": "Dispatch",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "About Us The financial advisory industry is a $80T market in the US, but has seen little technological innovation compared to the self-service market (Robinhood, Betterment, Wealthfront, SoFi). Client data management is a universally painful and expensive problem for financial advisors. Today, advisors manually collect, update, and utilize client data across the 7-10 software tools that they use to run their business. Data transcription and translation across systems is time-consuming and error-prone, leading to costly inefficiencies and embarrassing client-facing problems. Managing data acces",
+    "skills": [
+      "access control",
+      "triage"
+    ],
+    "url": "https://jobicy.com/jobs/151178-senior-fullstack-engineer-2",
+    "application_url": "https://jobicy.com/jobs/151178-senior-fullstack-engineer-2"
+  },
+  {
+    "job_id": "jobicy_151177",
+    "title": "1 on 1 Math Tutor (Grades 5-8)",
+    "company": "Think Academy US",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Anywhere (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "General Operations",
+    "description": "Job type: Part-Time (less than 20hrs/week) Location: Remote Intended Start Date: As soon as possible Who we are: Think Academy US ( www.TheThinkAcademy.com ), a 100% owned subsidiary of TAL Education Group(NYSE: TAL), is recently established education technology (Ed-Tech) company to provide K-12 extra-curricular learning services through science and technology. At Think Academy, we provide full cycle service to foster local children\u2019s ability to think critically, to strengthen their logic skills, and to help them fulfill their goals through innovative teaching techniques. We believe Love and T",
+    "skills": [
+      "math",
+      "tutor",
+      "(grades",
+      "5-8)"
+    ],
+    "url": "https://jobicy.com/jobs/151177-1-on-1-math-tutor-grades-5-8",
+    "application_url": "https://jobicy.com/jobs/151177-1-on-1-math-tutor-grades-5-8"
+  },
+  {
+    "job_id": "jobicy_151176",
+    "title": "Sr. Global Payroll Specialist",
+    "company": "Contentstack",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "What is Contentstack? Contentstack is redefining how modern digital experiences are built and managed. As the pioneer of the Agentic Experience Platform (AXP), Contentstack brings together structured content and brand governance (Content Cloud), real-time customer data, omnichannel personalization (Data Cloud) and autonomous AI orchestration (Agent OS) into one unified system. While many organizations adopted headless CMS or standalone AI tools expecting transformation, they often found themselves managing disconnected systems and manual workflows. Contentstack helps enterprises move beyond th",
+    "skills": [
+      "operations"
+    ],
+    "url": "https://jobicy.com/jobs/151176-sr-global-payroll-specialist",
+    "application_url": "https://jobicy.com/jobs/151176-sr-global-payroll-specialist"
+  },
+  {
+    "job_id": "jobicy_151175",
+    "title": "SEO/AEO Content Specialist (English Native) \u2014 Contract",
+    "company": "Cloudinary",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "UK (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "General Operations",
+    "description": "About the role We're the Growth Marketing team. We move fast, run experiments (a lot of them), and measure everything. SEO + GEO is our engine, and we ship weekly. We're looking for someone who lives in content, thinks in keywords, and treats AI as a teammate. What you'll do Ship content, fast. Upload, publish, and update content at a high, steady cadence. Keep content winning. Refresh existing pages for SEO and GEO/AEO \u2014 AI engines love freshness, and so do we. Do the research. Keyword and cluster research, gap-hunting, and 1:1 position analysis to feed the content engine. Work AI-native. Use",
+    "skills": [
+      "seo/aeo",
+      "content",
+      "specialist",
+      "(english",
+      "native)",
+      "contract"
+    ],
+    "url": "https://jobicy.com/jobs/151175-seo-aeo-content-specialist-english-native-contract",
+    "application_url": "https://jobicy.com/jobs/151175-seo-aeo-content-specialist-english-native-contract"
+  },
+  {
+    "job_id": "jobicy_151174",
+    "title": "SEO/ASO Manager",
+    "company": "Life360",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Maintenance & Mechanics",
+    "description": "About Life360 Life360\u2019s mission is to keep people close to the ones they love. Our category-leading mobile app, Tile tracking devices, and Pet GPS tracker empower members to protect the people, pets, and things they care about most with a range of services, including location sharing, safe driver reports, and crash detection with emergency dispatch. Life360 serves approximately 102.4 million monthly active users (MAU), as of June 30, 2026, across more than 180 countries. Life360 delivers peace of mind and enhances everyday family life with seamless coordination for all the moments that matter,",
+    "skills": [
+      "leadership",
+      "triage"
+    ],
+    "url": "https://jobicy.com/jobs/151174-seo-aso-manager",
+    "application_url": "https://jobicy.com/jobs/151174-seo-aso-manager"
+  },
+  {
+    "job_id": "jobicy_151172",
+    "title": "Bulgarian SEO Specialist",
+    "company": "Welo Global",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Bulgaria,  France,  Germany,  Greece,  Italy,  Romania,  Spain (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "About Adapt Adapt, a Welo Global brand, is an international digital performance marketing agency focused on driving the success of digital content across platforms and markets. We offer our customers a unique combination of global services designed to support their growth from strategy all the way through to execution, production, and performance measurement. With a collaborative and inclusive environment, you will join a unique culture which celebrates difference and embraces diversity. You will play a key role in developing strong relationships and shared ethos, whilst at the same time benef",
+    "skills": [
+      "bulgarian",
+      "specialist"
+    ],
+    "url": "https://jobicy.com/jobs/151172-bulgarian-seo-specialist",
+    "application_url": "https://jobicy.com/jobs/151172-bulgarian-seo-specialist"
+  },
+  {
+    "job_id": "jobicy_151171",
+    "title": "SEO Director",
+    "company": "ClickUp",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "At ClickUp, we're building the future of work: the first truly converged AI workspace unifying tasks, docs, chat, calendar, and enterprise search, all supercharged by context-driven AI. We are an AI-native company. Every team member is expected to leverage AI daily, and we evaluate AI fluency as part of our hiring process. Join us and help redefine what's possible. Overview We are looking for a strategic, hands-on leader to own ClickUp's organic growth engine at the forefront of the AI Search era. You will bring deep SEO fundamentals, but this is not a traditional Director role. The landscape ",
+    "skills": [
+      "leadership"
+    ],
+    "url": "https://jobicy.com/jobs/151171-seo-director",
+    "application_url": "https://jobicy.com/jobs/151171-seo-director"
+  },
+  {
+    "job_id": "jobicy_151169",
+    "title": "Senior Brand Content Manager",
+    "company": "Demandbase, Inc.",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Introduction to Demandbase: Demandbase is the only pipeline AI platform that empowers GTM teams to automate growth at scale. With a unified view of data, insights, actions, and outcomes, B2B enterprises can seamlessly align and execute their account-based GTM strategies with confidence. Thousands of businesses trust Demandbase to maximize revenue, minimize waste, and consolidate their data and tech stacks \u2013 all in one platform. As a company, we\u2019re as committed to growing careers as we are to building world-class technology. We invest heavily in people, our culture, and the community around us.",
+    "skills": [
+      "leadership",
+      "project management"
+    ],
+    "url": "https://jobicy.com/jobs/151169-senior-brand-content-manager",
+    "application_url": "https://jobicy.com/jobs/151169-senior-brand-content-manager"
+  },
+  {
+    "job_id": "jobicy_151168",
+    "title": "Fullstack Engineer",
+    "company": "Monks",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "LATAM,  Brazil (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Information Technology & Cloud",
+    "description": "Please note that we will never request payment or bank account information at any stage of the recruitment process. As we continue to grow our teams, we urge you to be cautious of fraudulent job postings or recruitment activities that misuse our company name and information. Please protect your personal information during any recruitment process. While Monks may contact potential candidates via LinkedIn, all applications must be submitted through our official website ( monks.com/careers ). We\u2019re looking for a Senior Full Stack Engineer to join our team. Whether you\u2019re ready to embed with an es",
+    "skills": [
+      "kubernetes",
+      "docker",
+      "terraform"
+    ],
+    "url": "https://jobicy.com/jobs/151168-fullstack-engineer",
+    "application_url": "https://jobicy.com/jobs/151168-fullstack-engineer"
+  },
+  {
+    "job_id": "jobicy_151167",
+    "title": "Growth Account Director, Enterprise",
+    "company": "Demandbase, Inc.",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Introduction to Demandbase: Demandbase is the only pipeline AI platform that empowers GTM teams to automate growth at scale. With a unified view of data, insights, actions, and outcomes, B2B enterprises can seamlessly align and execute their account-based GTM strategies with confidence. Thousands of businesses trust Demandbase to maximize revenue, minimize waste, and consolidate their data and tech stacks \u2013 all in one platform. As a company, we\u2019re as committed to growing careers as we are to building world-class technology. We invest heavily in people, our culture, and the community around us.",
+    "skills": [
+      "leadership",
+      "operations",
+      "procurement"
+    ],
+    "url": "https://jobicy.com/jobs/151167-growth-account-director-enterprise",
+    "application_url": "https://jobicy.com/jobs/151167-growth-account-director-enterprise"
+  },
+  {
+    "job_id": "jobicy_151166",
+    "title": "Principal Revenue Operations Manager",
+    "company": "Jobber",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "Canada (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Do you want to impact the hardest working people in the world? Then Jobber might be the place for you! We\u2019re looking for a Principal Revenue Operations Manager to be part of our Marketing department. Jobber exists to help people in small businesses be successful. We work with small home service businesses, like your local plumbers, painters, and landscapers, to transform the way service is delivered through technology. With Jobber they can quote, schedule, invoice, and collect payments from their customers while providing an easy and professional customer experience. Running a small business t",
+    "skills": [
+      "leadership",
+      "operations",
+      "strategic planning",
+      "python",
+      "sql"
+    ],
+    "url": "https://jobicy.com/jobs/151166-principal-revenue-operations-manager",
+    "application_url": "https://jobicy.com/jobs/151166-principal-revenue-operations-manager"
+  },
+  {
+    "job_id": "jobicy_151164",
+    "title": "Director of Product Marketing",
+    "company": "ActiveCampaign",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "AI is fundamentally changing how product strategy and market strategy work together. The boundary between building the right product and bringing it to market the right way is disappearing \u2014 and the companies that recognize this will build product marketing functions that operate as strategic growth engines, not service organizations. ActiveCampaign\u2019s Active Intelligence platform \u2014 autonomous AI agents serving 180,000+ growing businesses \u2014 is redefining how marketing works. We need a Director of Product Marketing who shapes how the market understands it through bold storytelling, drives adopti",
+    "skills": [
+      "leadership"
+    ],
+    "url": "https://jobicy.com/jobs/151164-director-of-product-marketing",
+    "application_url": "https://jobicy.com/jobs/151164-director-of-product-marketing"
+  },
+  {
+    "job_id": "jobicy_151163",
+    "title": "Enterprise Growth Account Director \u2013 Financial Services",
+    "company": "Demandbase, Inc.",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Introduction to Demandbase: Demandbase is the only pipeline AI platform that empowers GTM teams to automate growth at scale. With a unified view of data, insights, actions, and outcomes, B2B enterprises can seamlessly align and execute their account-based GTM strategies with confidence. Thousands of businesses trust Demandbase to maximize revenue, minimize waste, and consolidate their data and tech stacks \u2013 all in one platform. As a company, we\u2019re as committed to growing careers as we are to building world-class technology. We invest heavily in people, our culture, and the community around us.",
+    "skills": [
+      "leadership",
+      "procurement"
+    ],
+    "url": "https://jobicy.com/jobs/151163-enterprise-growth-account-director-financial-services",
+    "application_url": "https://jobicy.com/jobs/151163-enterprise-growth-account-director-financial-services"
+  },
+  {
+    "job_id": "jobicy_151162",
+    "title": "Sr. Manager, Product Marketing (Fintech) - US",
+    "company": "Jobber",
+    "city": "Remote",
+    "state": "US",
+    "location_display": "USA (Remote / Hybrid)",
+    "salary_min": 80000.0,
+    "salary_max": 135000.0,
+    "clearance_required": "None",
+    "veteran_friendly": true,
+    "source": "Jobicy Live API",
+    "category": "Operations & Leadership",
+    "description": "Small business owners didn't start their business to become their own bookkeeper, banker, and collections department. Jobber is changing that, building the financial hub for a $400B home-services market, and Fintech is how we get there. The future of financial services is embedded, and we're still early. For decades, small businesses ran their finances through a patchwork: a bank for payments, a lender for capital, a spreadsheet for everything else. That's ending. The next generation of financial services won't live at a bank, it'll live inside the software businesses already use to run their ",
+    "skills": [
+      "leadership",
+      "operations"
+    ],
+    "url": "https://jobicy.com/jobs/151162-sr-manager-product-marketing-fintech-us",
+    "application_url": "https://jobicy.com/jobs/151162-sr-manager-product-marketing-fintech-us"
   },
   {
     "job_id": "jobicy_151160",
@@ -427,7 +1196,8 @@
       "operations",
       "sql"
     ],
-    "url": "https://jobicy.com/jobs/151160-director-revenue-operations"
+    "url": "https://jobicy.com/jobs/151160-director-revenue-operations",
+    "application_url": "https://jobicy.com/jobs/151160-director-revenue-operations"
   },
   {
     "job_id": "jobicy_151159",
@@ -448,7 +1218,8 @@
       "terraform",
       "ci/cd"
     ],
-    "url": "https://jobicy.com/jobs/151159-principal-engineer-platform-data"
+    "url": "https://jobicy.com/jobs/151159-principal-engineer-platform-data",
+    "application_url": "https://jobicy.com/jobs/151159-principal-engineer-platform-data"
   },
   {
     "job_id": "jobicy_151158",
@@ -471,7 +1242,8 @@
       "(german",
       "speaking)"
     ],
-    "url": "https://jobicy.com/jobs/151158-strategic-account-executive-german-speaking"
+    "url": "https://jobicy.com/jobs/151158-strategic-account-executive-german-speaking",
+    "application_url": "https://jobicy.com/jobs/151158-strategic-account-executive-german-speaking"
   },
   {
     "job_id": "jobicy_151157",
@@ -491,7 +1263,8 @@
       "operations",
       "triage"
     ],
-    "url": "https://jobicy.com/jobs/151157-business-development-manager-2"
+    "url": "https://jobicy.com/jobs/151157-business-development-manager-2",
+    "application_url": "https://jobicy.com/jobs/151157-business-development-manager-2"
   },
   {
     "job_id": "jobicy_151156",
@@ -513,7 +1286,8 @@
       "engineer",
       "voice"
     ],
-    "url": "https://jobicy.com/jobs/151156-senior-research-engineer-voice"
+    "url": "https://jobicy.com/jobs/151156-senior-research-engineer-voice",
+    "application_url": "https://jobicy.com/jobs/151156-senior-research-engineer-voice"
   },
   {
     "job_id": "jobicy_151155",
@@ -535,718 +1309,8 @@
       "manager,",
       "trading"
     ],
-    "url": "https://jobicy.com/jobs/151155-senior-product-manager-trading"
-  },
-  {
-    "job_id": "jobicy_151154",
-    "title": "AI Tooling Engineer",
-    "company": "Qventus",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "On this journey for over 12 years, Qventus is leading the transformation of healthcare. We enable hospitals to focus on what matters most: patient care. Our innovative solutions harness the power of machine learning, generative AI, and behavioral science to deliver exceptional outcomes and empower care teams to anticipate and resolve issues before they arise. Our success in rapid scale across the globe is backed by some of the world's leading investors. At Qventus, you will have the opportunity to work with an exceptional, mission-driven team across the globe, and the ability to directly impac",
-    "skills": [
-      "leadership",
-      "operations",
-      "python"
-    ],
-    "url": "https://jobicy.com/jobs/151154-ai-tooling-engineer"
-  },
-  {
-    "job_id": "jobicy_151153",
-    "title": "Technical Lead",
-    "company": "Masabi",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Poland (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "About Us_ // At Masabi, we\u2019re driving the fare payment revolution, powering the journeys of millions all over the world. We build fare collection platforms that allow riders to seamlessly buy and present tickets for public transport either on their mobile phones, from a ticket machine, or even by tapping their bank card to travel. Our Justride platform is used in over 250 locations globally, including some of the largest cities in the world. With our industry-first mobile ticketing SDK, we\u2019ve partnered with large players in the transport space, including Uber, Moovit and Transit. Your own jour",
-    "skills": [
-      "leadership",
-      "ci/cd"
-    ],
-    "url": "https://jobicy.com/jobs/151153-technical-lead"
-  },
-  {
-    "job_id": "jobicy_151152",
-    "title": "Member of the Technical Staff, Internal Agent",
-    "company": "Vercel",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Construction & Infrastructure",
-    "description": "About Vercel: Vercel is the agentic infrastructure company. We free people and agents to ship what\u2019s next. For more than a decade, Vercel has shaped how the web is built. As the team behind Next.js, v0, and AI SDK, we create products that help builders move from idea to production with speed, security, and exceptional developer experience. Now, software is entering a new era, and the next generation of products will not just be used by people. They will be built, extended, and operated by agents. We are building the platform for that future, trusted by companies like OpenAI, PayPal, Ramp, Supr",
-    "skills": [
-      "member",
-      "technical",
-      "staff,",
-      "internal",
-      "agent"
-    ],
-    "url": "https://jobicy.com/jobs/151152-member-of-the-technical-staff-internal-agent"
-  },
-  {
-    "job_id": "jobicy_151151",
-    "title": "Senior Applied Research Engineer - Video Team",
-    "company": "Synthesia",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Europe,  Germany,  Switzerland,  UK (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Synthesia is the world\u2019s leading AI video platform for business, used by over 90% of the Fortune 100. Founded in 2017, the company is headquartered in London, with offices and teams across Europe and the US. As AI continues to shape the way we live and work, Synthesia develops products to enhance visual communication and enterprise skill development, helping people work better and stay at the center of successful organizations. Following our recent Series E funding round, where we raised $200 million, our valuation stands at $4 billion. Our total funding exceeds $530 million from premier inves",
-    "skills": [
-      "aws",
-      "docker",
-      "python",
-      "ci/cd"
-    ],
-    "url": "https://jobicy.com/jobs/151151-senior-applied-research-engineer-video-team"
-  },
-  {
-    "job_id": "jobicy_151150",
-    "title": "Director, Governance, Risk, and Compliance (GRC)",
-    "company": "Clover Health",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "At Clover, the Business Enablement team leads our technological advancement while ensuring robust security and compliance. We deliver user-friendly corporate applications, manage complex data ecosystems, and provide efficient tech solutions across the organization. Our goal is simple: we make it easy for the business to do what\u2019s right for Clover. Clover Health is seeking a Director of Governance, Risk, and Compliance (GRC) to define and execute our security governance and risk strategy in support of Clover\u2019s growth as a public, technology-enabled healthcare company. This role operates at the ",
-    "skills": [
-      "leadership",
-      "operations",
-      "risk management",
-      "cybersecurity"
-    ],
-    "url": "https://jobicy.com/jobs/151150-director-governance-risk-and-compliance-grc"
-  },
-  {
-    "job_id": "jobicy_151149",
-    "title": "Inside Sales Representative - SMB",
-    "company": "Documo Inc.",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Documo is on a mission to help businesses digitize and streamline their document workflows. As a fast-growing B2B SaaS company, our platform makes it easier to handle unstructured files like faxes and forms through tools like Intelligent Document Processing - turning messy paperwork into structured, usable data. We believe great products start with great people. That\u2019s why we invest in top talent, value strong culture, and prioritize customer success and design excellence. If you\u2019re excited to do impactful work and want to grow with a team that values innovation, collaboration, and purpose - w",
-    "skills": [
-      "inside",
-      "sales",
-      "representative"
-    ],
-    "url": "https://jobicy.com/jobs/151149-inside-sales-representative-smb"
-  },
-  {
-    "job_id": "jobicy_151148",
-    "title": "DevOps Engineer",
-    "company": "Launchpad Technologies",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "LATAM (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Who We Are Launchpad Technologies Inc. is a global technology partner connecting top talent with high-impact projects across North America and beyond. We specialize in Staff Augmentation and product development, helping companies scale with agility while empowering professionals to grow in meaningful, remote-first environments. If you\u2019re passionate about automating infrastructure, optimizing CI/CD pipelines, and building scalable, secure environments in the cloud, we\u2019d love to have you in our Talent Pool for upcoming opportunities. Don\u2019t hesitate to apply today! Are you skilled in\u2026? Building a",
-    "skills": [
-      "operations",
-      "aws",
-      "azure",
-      "kubernetes",
-      "docker",
-      "python",
-      "terraform",
-      "networking",
-      "ci/cd"
-    ],
-    "url": "https://jobicy.com/jobs/151148-devops-engineer"
-  },
-  {
-    "job_id": "jobicy_151147",
-    "title": "Customer Success Manager",
-    "company": "SOCi",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Canada,  USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "SOCi, the leader in AI-powered marketing solutions for multi-location businesses, is currently looking for a Customer Success Manager to grow long-term profitable customer relationships by making strategic, operational and measurable contributions to customers\u2019 unique business objectives. As the account owner, quarterback and driver of account enablement, adoption, expansion, and end-user engagement, the Customer Success Team is directly impacting our rapid growth in enterprise social media management. As a member of our Customer Success team, you will proactively build relationships, identify",
-    "skills": [
-      "leadership",
-      "operations"
-    ],
-    "url": "https://jobicy.com/jobs/151147-customer-success-manager-13"
-  },
-  {
-    "job_id": "jobicy_151146",
-    "title": "AWS Data Engineer (Senior)",
-    "company": "Mactores",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Mactores is the agent-native AWS modernization firm. Most modernization work doesn't ship, it stalls in pilots, slips a year, or lands at three times the budget. We exist to ship it: production systems running, legacy retired, outcomes measured. Our delivery is built on Aedeon, the agent platform built by Mactores' founders' sister company, which absorbs the repetitive 60\u201370% of engagement work, discovery, dependency mapping, validation, test generation, that traditional consulting bills human hours against. Forward-deployed engineers own the rest: architecture, judgment, and cutover, on dates",
-    "skills": [
-      "leadership",
-      "inventory",
-      "troubleshooting",
-      "emr",
-      "aws",
-      "sql"
-    ],
-    "url": "https://jobicy.com/jobs/151146-aws-data-engineer-senior"
-  },
-  {
-    "job_id": "jobicy_151145",
-    "title": "Commercial Partnerships & Operations Director",
-    "company": "Clover Health",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "At Counterpart Health (CPH), we are transforming healthcare and improving patient care with our innovative primary care tool, Counterpart Assistant (CA). By supporting Primary Care Physicians (PCPs), we are able to deliver improved outcomes to patients at a lower cost through early diagnosis and longitudinal care management of chronic conditions. We're seeking a Commercial Partnerships Operations Director to shape and drive key commercial initiatives and strategic partnerships. Reporting to the VP of Commercial Innovations Partnerships, you'll partner closely with CPH leadership, owning a port",
-    "skills": [
-      "leadership",
-      "project management",
-      "operations"
-    ],
-    "url": "https://jobicy.com/jobs/151145-commercial-partnerships-operations-director"
-  },
-  {
-    "job_id": "jobicy_151144",
-    "title": "Implementation Consultant",
-    "company": "Documo Inc.",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Documo is on a mission to help businesses digitize and streamline their document workflows. As a fast-growing B2B SaaS company, our platform makes it easier to handle unstructured files like faxes and forms through tools like Intelligent Document Processing - turning messy paperwork into structured, usable data. We believe great products start with great people. That\u2019s why we invest in top talent, value strong culture, and prioritize customer success and design excellence. If you\u2019re excited to do impactful work and want to grow with a team that values innovation, collaboration, and purpose - w",
-    "skills": [
-      "project management",
-      "troubleshooting"
-    ],
-    "url": "https://jobicy.com/jobs/151144-implementation-consultant"
-  },
-  {
-    "job_id": "jobicy_151143",
-    "title": "Business Analyst (Technical Consultant) \u2013 Integrations",
-    "company": "Launchpad Technologies",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "LATAM (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Who We Are Launchpad Technologies Inc. is a global technology partner connecting top talent with high-impact projects across North America and beyond. We specialize in Staff Augmentation and product development, helping companies scale with agility while empowering professionals to grow in meaningful, remote-first environments. What we are looking for We are looking for a Technical Business Analyst specializing in system and API integrations to join our Professional Services team. This is not a traditional Business Analyst role focused primarily on backlog management, user stories, or applicat",
-    "skills": [
-      "operations",
-      "procurement",
-      "troubleshooting",
-      "sql"
-    ],
-    "url": "https://jobicy.com/jobs/151143-business-analyst-technical-consultant-integrations"
-  },
-  {
-    "job_id": "jobicy_151142",
-    "title": "Account Executive",
-    "company": "SOCi",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Healthcare & Medical",
-    "description": "SOCi, the leader in AI-powered marketing solutions for multi-location businesses, is currently looking for experienced Account Executives who have experience selling into multi-location brands to identify new business opportunities in identified regions of North America. We are looking for 10xers who come in and make an immediate impact with our proven sales process. The ideal candidate will be a relentless hunter consistently employing thoughtful sales processes with a consistent track record of sales over-achievement. The primary responsibility of the Account Executive is to drive and grow n",
-    "skills": [
-      "leadership"
-    ],
-    "url": "https://jobicy.com/jobs/151142-account-executive-4"
-  },
-  {
-    "job_id": "jobicy_151141",
-    "title": "AWS Data Engineer (Associate)",
-    "company": "Mactores",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Mactores is the agent-native AWS modernization firm. Most modernization work doesn't ship, it stalls in pilots, slips a year, or lands at three times the budget. We exist to ship it: production systems running, legacy retired, outcomes measured. Our delivery is built on Aedeon, the agent platform built by Mactores' founders' sister company, which absorbs the repetitive 60\u201370% of engagement work, discovery, dependency mapping, validation, test generation, that traditional consulting bills human hours against. Forward-deployed engineers own the rest: architecture, judgment, and cutover, on dates",
-    "skills": [
-      "leadership",
-      "emr",
-      "aws",
-      "sql"
-    ],
-    "url": "https://jobicy.com/jobs/151141-aws-data-engineer-associate"
-  },
-  {
-    "job_id": "jobicy_151139",
-    "title": "Principal Product Designer, Presence",
-    "company": "Reddit",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Healthcare & Medical",
-    "description": "Reddit is a community of communities. It\u2019s built on shared interests, passion, and trust, and is home to the most open and authentic conversations on the internet. Every day, Reddit users submit, vote, and comment on the topics they care most about. With 100,000+ active communities and approximately 130 million daily active unique visitors, Reddit is one of the internet\u2019s largest sources of information. For more information, visit www.redditinc.com . Reddit is continuing to grow our teams with the best talent. This role is completely remote friendly within the United States. If you happen to l",
-    "skills": [
-      "leadership"
-    ],
-    "url": "https://jobicy.com/jobs/151139-principal-product-designer-presence"
-  },
-  {
-    "job_id": "jobicy_151138",
-    "title": "Designer, Brand and Marketing (Part-Time)",
-    "company": "Worldly",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "France,  Italy,  Portugal,  Sweden,  UK,  USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Designer, Brand and Marketing (Part-Time) Location: United States, Europe, or United Kingdom - Remote About Worldly Worldly is the world\u2019s most comprehensive impact intelligence platform \u2014 delivering real data to businesses on impacts within their supply chain. Worldly is trusted by 40,000 global brands, retailers, and manufacturers to provide the single source of ESG intelligence they need to accelerate business and industry transformation. Through strategic and meaningful customer relationships, Worldly provides key insights around supplier performance, product impact, trends analysis, and c",
-    "skills": [
-      "supply chain"
-    ],
-    "url": "https://jobicy.com/jobs/151138-designer-brand-and-marketing-part-time"
-  },
-  {
-    "job_id": "jobicy_151137",
-    "title": "Freelance Graphic Designer",
-    "company": "Mindrift",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Logistics & Supply Chain",
-    "description": "Mindrift is looking for a versatile, highly skilled Graphic Designer to join the Tendem project ( ** https://tendem.ai/** ) andcreate high-quality visual assets for real-world use cases. In this role, you'll apply your expertise in visual communication, layout design, and branding to transform ideas into professional, polished creative assets. This part-time remote opportunity is ideal for creative professionals with hands-on experience in visual communications, layout design, and creating diverse marketing materials. What We Do The Mindrift platform connects specialists with innovative techno",
-    "skills": [
-      "freelance",
-      "graphic",
-      "designer"
-    ],
-    "url": "https://jobicy.com/jobs/151137-freelance-graphic-designer-3"
-  },
-  {
-    "job_id": "jobicy_151136",
-    "title": "Regional Customer Marketing Manager",
-    "company": "Smartsheet",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Healthcare & Medical",
-    "description": "For over 20 years, Smartsheet has empowered teams to manage work seamlessly and scale solutions smarter. Now, in our most ambitious chapter yet, we are uniting human teams with AI agents. By orchestrating the work agents do best, automating manual tasks and uncovering insights at scale, we create the space for people to focus on what truly matters: judgment, creativity, and big thinking. That is magic at work, and it\u2019s what we show up for every day. Smartsheet is a tech company with a human story to tell \u2014 and our customers are the ones who tell it best. We are looking for a Regional Customer ",
-    "skills": [
-      "leadership"
-    ],
-    "url": "https://jobicy.com/jobs/151136-regional-customer-marketing-manager"
-  },
-  {
-    "job_id": "jobicy_151135",
-    "title": "Customer Success - Australia Clients",
-    "company": "Sleek",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Philippines (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Through proprietary software and AI, along with a focus on customer delight, Sleek makes the back-office easy for micro SMEs. We give Entrepreneurs time back to focus on what they love doing - growing their business and being with customers. With a surging number of Entrepreneurs globally, we are innovating in a highly lucrative space. We operate 3 business segments: Corporate Secretary: Automating the company incorporation, secretarial, filing, Nominee Director, mailroom and immigration processes via custom online robots and SleekSign. We are the market leaders in Singapore with ~5% market sh",
-    "skills": [
-      "leadership",
-      "operations",
-      "investigations"
-    ],
-    "url": "https://jobicy.com/jobs/151135-customer-success-australia-clients"
-  },
-  {
-    "job_id": "jobicy_151131",
-    "title": "Senior UICC/eUICC/eSIM Engineer",
-    "company": "emnify",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Austria,  Germany,  Poland,  Switzerland (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Your Role We are looking for a hands-on UICC/eUICC/eSIM specialist to take ownership of the engineering, interoperability, and certification readiness of our Consumer eSIM (SGP.22) and IoT eUICC (SGP.32) products. You will operate across the full lifecycle, from profile design and technical specification to validation and production readiness, working at the intersection of SIM technology, devices, and mobile networks. The role is focused on ensuring our eSIM products meet a high bar for quality, reliability, and interoperability before rollout. Your Impact Own the end-to-end engineering and v",
-    "skills": [
-      "senior",
-      "uicc/euicc/esim",
-      "engineer"
-    ],
-    "url": "https://jobicy.com/jobs/151131-senior-uicc-euicc-esim-engineer"
-  },
-  {
-    "job_id": "jobicy_151130",
-    "title": "Workplace Experience Coordinator",
-    "company": "Emplifi",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Czechia (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "About Emplifi Emplifi is the only Autonomous CX platform unifying social marketing, commerce, and customer care for more than 20,000 brands worldwide. Powered by Fuel AI, built on more than 5T of data, and recognized as a leader by leading industry analysts, Emplifi helps enterprise teams orchestrate connected customer journeys and deliver personalized experiences at scale, turning every customer touchpoint into a competitive advantage. About the Role We're looking for a Workplace Experience Coordinator to join our Facilities team in Prague - Emplifi's largest global hub. This is not a traditi",
-    "skills": [
-      "operations",
-      "logistics",
-      "supply chain",
-      "procurement"
-    ],
-    "url": "https://jobicy.com/jobs/151130-workplace-experience-coordinator"
-  },
-  {
-    "job_id": "jobicy_151129",
-    "title": "Senior Applied AI Engineer",
-    "company": "Pleo",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Denmark,  Portugal,  Spain,  UK (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "About Pleo Messy spend management is tricky business. And tedious processes are a lose-lose situation for all involved, not just finance. At Pleo, we're changing that. We build spend solutions that make managing money seamless, empowering, and surprisingly effective for finance teams and employees alike - with a vision to help all businesses \u2018go beyond\u2019. The word \u2018Pleo\u2019 actually means \u2018more than you\u2019d expect\u2019, and living by that mantra has been the secret to our success over the last 10 years. Now, we\u2019re at a pivotal moment in our journey; every move we make has a direct impact on our 40,000+ ",
-    "skills": [
-      "leadership",
-      "aws",
-      "python"
-    ],
-    "url": "https://jobicy.com/jobs/151129-senior-applied-ai-engineer"
-  },
-  {
-    "job_id": "jobicy_151128",
-    "title": "Sr. Software Engineer",
-    "company": "Socket",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Anywhere (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "About Us Socket helps devs and security teams ship faster by cutting out security busywork. Thousands of orgs use Socket to safely find, audit, and manage open source code. Our customers - from Anthropic to xAI, and Figma to Vercel - love Socket (just check out their tweets to see for yourself!) Founded by Feross Aboukhadijeh , a long-time open source maintainer with software downloaded over a billion times a month, Socket has raised $ 125M in funding from top angels, operators, and security leaders. About the Role Build product : This role will require you to move fast, prioritize ruthlessly,",
-    "skills": [
-      "software",
-      "engineer"
-    ],
-    "url": "https://jobicy.com/jobs/151128-sr-software-engineer"
-  },
-  {
-    "job_id": "jobicy_151127",
-    "title": "Medical Director, Child and Adolescent Psychiatrist",
-    "company": "Brightline",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Medical Director (Child and Adolescent Psychiatrist - Remote) We are searching for a board-certified Child and Adolescent Psychiatrist to serve as Medical Director of our psychiatry service line. Reporting directly to the Chief Medical Officer (CMO), you will own the clinical architecture of psychiatry at Brightline \u2014 ensuring excellence in care quality, provider development, regulatory compliance, and day-to-day operational execution. This is not a traditional medical director role. We are building something different: a hybrid virtual and in-person pediatric mental health practice that uses ",
-    "skills": [
-      "leadership",
-      "operations",
-      "risk management",
-      "quality assurance"
-    ],
-    "url": "https://jobicy.com/jobs/151127-medical-director-child-and-adolescent-psychiatrist"
-  },
-  {
-    "job_id": "jobicy_151126",
-    "title": "Senior Loan Fulfillment Specialist",
-    "company": "Happy Money",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "ABOUT HAPPY MONEY Happy Money is a consumer finance company that empowers people to achieve their goals through simple, transparent loans funded by trusted financial institutions. Through its proprietary lending platform, Hive, Happy Money delivers a fully digital experience that simplifies borrowing for consumers and helps credit unions, banks and asset managers diversify balance sheets and scale with confidence. Happy Money\u2019s end-to-end loan origination and participation programs provide partners with turnkey access to high-performing assets, underpinned by disciplined credit expertise and r",
-    "skills": [
-      "operations",
-      "risk management"
-    ],
-    "url": "https://jobicy.com/jobs/151126-senior-loan-fulfillment-specialist"
-  },
-  {
-    "job_id": "jobicy_151125",
-    "title": "Head of Supply, Operations",
-    "company": "GOAT Group",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "About the Team At GOAT Group, the Business Development team is central to the strategic growth of our company. Composed of individual teams that handle Strategy, New Business Initiatives, Partnerships and Account Management, the department leads a global supply-focused initiative that works with brand partners, retailers and power sellers to secure new inventory and widen exposure for GOAT Group. As our company continues to expand both at home and abroad, you will play an integral part in this exciting next chapter. Role Overview As the Head of Sales Operations, you will be the strategic archi",
-    "skills": [
-      "leadership",
-      "operations",
-      "inventory"
-    ],
-    "url": "https://jobicy.com/jobs/151125-head-of-supply-operations"
-  },
-  {
-    "job_id": "jobicy_151124",
-    "title": "Senior Software Engineer (SmartCard Development)",
-    "company": "emnify",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Germany,  Poland (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "1",
-    "skills": [
-      "senior",
-      "software",
-      "engineer",
-      "(smartcard",
-      "development)"
-    ],
-    "url": "https://jobicy.com/jobs/151124-senior-software-engineer-smartcard-development"
-  },
-  {
-    "job_id": "jobicy_151123",
-    "title": "General Manager - North America",
-    "company": "Emplifi",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "About Emplifi Emplifi is the only Autonomous CX platform unifying social marketing, commerce, and customer care for more than 20,000 brands worldwide. Powered by Fuel AI, built on more than 5T of data, and recognized as a leader by leading industry analysts, Emplifi helps enterprise teams orchestrate connected customer journeys and deliver personalized experiences at scale, turning every customer touchpoint into a competitive advantage. About the Role The General Manager (GM) leads Emplifi's commercial organization within the region, regional P L and driving full-funnel revenue outcomes across",
-    "skills": [
-      "leadership",
-      "operations"
-    ],
-    "url": "https://jobicy.com/jobs/151123-general-manager-north-america"
-  },
-  {
-    "job_id": "jobicy_151122",
-    "title": "Merchandising Operations Manager",
-    "company": "Grove Collaborative",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "Grove Collaborative is a sustainability-focused consumer products company creating household and personal care essentials that are effective, beautifully designed, and healthier for people and the planet. We are a certified B Corp, plastic-neutral, and on a mission to transform the CPG industry for good. Merchandising Operations Manager Grove's merchandising operation is full of good instincts running on manual work. This role exists to fix that: redesign the core processes, then personally build the automation that makes them stick. This is a rare shot at rebuilding how merchandising actually",
-    "skills": [
-      "operations",
-      "inventory"
-    ],
-    "url": "https://jobicy.com/jobs/151122-merchandising-operations-manager"
-  },
-  {
-    "job_id": "jobicy_151121",
-    "title": "Engineering Manager - Employee Spend",
-    "company": "Pleo",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "Denmark,  Portugal,  Spain (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "About Pleo Messy spend management is tricky business. And tedious processes are a lose-lose situation for all involved, not just finance. At Pleo, we're changing that. We build spend solutions that make managing money seamless, empowering, and surprisingly effective for finance teams and employees alike - with a vision to help all businesses \u2018go beyond\u2019. The word \u2018Pleo\u2019 actually means \u2018more than you\u2019d expect\u2019, and living by that mantra has been the secret to our success over the last 10 years. Now, we\u2019re at a pivotal moment in our journey; every move we make has a direct impact on our 40,000+ ",
-    "skills": [
-      "leadership"
-    ],
-    "url": "https://jobicy.com/jobs/151121-engineering-manager-employee-spend"
-  },
-  {
-    "job_id": "jobicy_151120",
-    "title": "Enterprise Account Executive",
-    "company": "Socket",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Law Enforcement & Security",
-    "description": "About Us Socket helps devs and security teams ship faster by cutting out security busywork. Thousands of orgs use Socket to safely find, audit, and manage open source code. Our customers - from Anthropic to xAI, and Figma to Vercel - love Socket (just check out their tweets to see for yourself!) Founded by Feross Aboukhadijeh , a long-time open source maintainer with software downloaded over a billion times a month, Socket has raised $ 125M in funding from top angels, operators, and security leaders. About the Role We are looking for a driven Enterprise Account Executive to join our dynamic an",
-    "skills": [
-      "cybersecurity"
-    ],
-    "url": "https://jobicy.com/jobs/151120-enterprise-account-executive-9"
-  },
-  {
-    "job_id": "jobicy_151119",
-    "title": "Full Stack Ruby on Rails Software Engineer (Principal - Remote)",
-    "company": "Brightline",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Information Technology & Cloud",
-    "description": "Welcome to Brightline! We are seeking a Full Stack Ruby on Rails Principal Software Engineer to drive technical direction across our platform, deepen our domain expertise in healthcare workflows, and raise the bar for the entire engineering team. We are primarily a Ruby on Rails shop and we are bought into keeping our tech stack simple so that we focus on shipping fast and having fun. Instead of betting on exciting new technologies, we favor straightforward solutions and defining standards so that the codebase and ecosystem are a joy to work with. We use Turbo, Tailwind, and ViewComponent to m",
-    "skills": [
-      "operations"
-    ],
-    "url": "https://jobicy.com/jobs/151119-full-stack-ruby-on-rails-software-engineer-principal-remote"
-  },
-  {
-    "job_id": "jobicy_151118",
-    "title": "Head of Acquisition Marketing",
-    "company": "Happy Money",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "ABOUT HAPPY MONEY Happy Money is a consumer finance company that empowers people to achieve their goals through simple, transparent loans funded by trusted financial institutions. Through its proprietary lending platform, Hive, Happy Money delivers a fully digital experience that simplifies borrowing for consumers and helps credit unions, banks and asset managers diversify balance sheets and scale with confidence. Happy Money\u2019s end-to-end loan origination and participation programs provide partners with turnkey access to high-performing assets, underpinned by disciplined credit expertise and r",
-    "skills": [
-      "leadership",
-      "operations",
-      "risk management"
-    ],
-    "url": "https://jobicy.com/jobs/151118-head-of-acquisition-marketing"
-  },
-  {
-    "job_id": "jobicy_151117",
-    "title": "Digital Authentication Associate",
-    "company": "GOAT Group",
-    "city": "Remote",
-    "state": "US",
-    "location_display": "USA (Remote / Hybrid)",
-    "salary_min": 80000.0,
-    "salary_max": 135000.0,
-    "clearance_required": "None",
-    "veteran_friendly": true,
-    "source": "Jobicy Live API",
-    "category": "Operations & Leadership",
-    "description": "About the Team At GOAT Group, our Authentication Operations team is essential in educating, training and supporting the Authenticators in physical and digital operations. With the partnership of the operations and retail leaders they focus on ensuring we are creating the best-in-class authenticators by providing them the tools and training they need to verify every product is accurate and authentic. In this role you will: Authenticate Listings Review and authenticate designer apparel and footwear listings before they are available for sale Remove unsafe listings or listings that do not meet ma",
-    "skills": [
-      "operations",
-      "inventory"
-    ],
-    "url": "https://jobicy.com/jobs/151117-digital-authentication-associate"
+    "url": "https://jobicy.com/jobs/151155-senior-product-manager-trading",
+    "application_url": "https://jobicy.com/jobs/151155-senior-product-manager-trading"
   },
   {
     "job_id": "remotive_2091069",
@@ -1265,7 +1329,8 @@
     "skills": [
       "emr"
     ],
-    "url": "https://remotive.com/remote-jobs/medical/patient-care-specialist-2091069"
+    "url": "https://remotive.com/remote-jobs/medical/patient-care-specialist-2091069",
+    "application_url": "https://remotive.com/remote-jobs/medical/patient-care-specialist-2091069"
   },
   {
     "job_id": "remotive_1919266",
@@ -1287,7 +1352,8 @@
       "engineer",
       "architect"
     ],
-    "url": "https://remotive.com/remote-jobs/software-development/senior-independent-ai-engineer-architect-1919266"
+    "url": "https://remotive.com/remote-jobs/software-development/senior-independent-ai-engineer-architect-1919266",
+    "application_url": "https://remotive.com/remote-jobs/software-development/senior-independent-ai-engineer-architect-1919266"
   },
   {
     "job_id": "remotive_1919265",
@@ -1309,7 +1375,8 @@
       "software",
       "developer"
     ],
-    "url": "https://remotive.com/remote-jobs/software-development/senior-independent-software-developer-1919265"
+    "url": "https://remotive.com/remote-jobs/software-development/senior-independent-software-developer-1919265",
+    "application_url": "https://remotive.com/remote-jobs/software-development/senior-independent-software-developer-1919265"
   },
   {
     "job_id": "remotive_2091068",
@@ -1329,7 +1396,8 @@
       "leadership",
       "project management"
     ],
-    "url": "https://remotive.com/remote-jobs/marketing/head-of-marketing-communications-2091068"
+    "url": "https://remotive.com/remote-jobs/marketing/head-of-marketing-communications-2091068",
+    "application_url": "https://remotive.com/remote-jobs/marketing/head-of-marketing-communications-2091068"
   },
   {
     "job_id": "remotive_2069746",
@@ -1349,7 +1417,8 @@
       "kubernetes",
       "docker"
     ],
-    "url": "https://remotive.com/remote-jobs/software-development/tech-lead-full-stack-rails-engineer-2069746"
+    "url": "https://remotive.com/remote-jobs/software-development/tech-lead-full-stack-rails-engineer-2069746",
+    "application_url": "https://remotive.com/remote-jobs/software-development/tech-lead-full-stack-rails-engineer-2069746"
   },
   {
     "job_id": "remotive_2091093",
@@ -1370,7 +1439,8 @@
       "deduplication",
       "collection"
     ],
-    "url": "https://remotive.com/remote-jobs/all-others/face-deduplication-collection-2091093"
+    "url": "https://remotive.com/remote-jobs/all-others/face-deduplication-collection-2091093",
+    "application_url": "https://remotive.com/remote-jobs/all-others/face-deduplication-collection-2091093"
   },
   {
     "job_id": "remotive_1680495",
@@ -1390,7 +1460,8 @@
       "operations",
       "quality assurance"
     ],
-    "url": "https://remotive.com/remote-jobs/marketing/remote-office-assistant-1680495"
+    "url": "https://remotive.com/remote-jobs/marketing/remote-office-assistant-1680495",
+    "application_url": "https://remotive.com/remote-jobs/marketing/remote-office-assistant-1680495"
   },
   {
     "job_id": "remotive_2086540",
@@ -1411,7 +1482,8 @@
       "sales",
       "contractor"
     ],
-    "url": "https://remotive.com/remote-jobs/sales/inside-sales-contractor-2086540"
+    "url": "https://remotive.com/remote-jobs/sales/inside-sales-contractor-2086540",
+    "application_url": "https://remotive.com/remote-jobs/sales/inside-sales-contractor-2086540"
   },
   {
     "job_id": "remotive_2091045",
@@ -1434,7 +1506,8 @@
       "cisco",
       "active directory"
     ],
-    "url": "https://remotive.com/remote-jobs/information-technology/tier-iii-service-desk-engineer-2091045"
+    "url": "https://remotive.com/remote-jobs/information-technology/tier-iii-service-desk-engineer-2091045",
+    "application_url": "https://remotive.com/remote-jobs/information-technology/tier-iii-service-desk-engineer-2091045"
   },
   {
     "job_id": "remotive_2091088",
@@ -1453,7 +1526,8 @@
     "skills": [
       "operations"
     ],
-    "url": "https://remotive.com/remote-jobs/sales/sales-jedi-2091088"
+    "url": "https://remotive.com/remote-jobs/sales/sales-jedi-2091088",
+    "application_url": "https://remotive.com/remote-jobs/sales/sales-jedi-2091088"
   },
   {
     "job_id": "remotive_2091087",
@@ -1472,7 +1546,8 @@
     "skills": [
       "troubleshooting"
     ],
-    "url": "https://remotive.com/remote-jobs/customer-service/saas-product-support-jedi-2091087"
+    "url": "https://remotive.com/remote-jobs/customer-service/saas-product-support-jedi-2091087",
+    "application_url": "https://remotive.com/remote-jobs/customer-service/saas-product-support-jedi-2091087"
   },
   {
     "job_id": "remotive_1185979",
@@ -1492,7 +1567,8 @@
       "freelance",
       "writer"
     ],
-    "url": "https://remotive.com/remote-jobs/writing/freelance-writer-1185979"
+    "url": "https://remotive.com/remote-jobs/writing/freelance-writer-1185979",
+    "application_url": "https://remotive.com/remote-jobs/writing/freelance-writer-1185979"
   },
   {
     "job_id": "remotive_1749306",
@@ -1512,7 +1588,8 @@
       "freelance",
       "copywriter"
     ],
-    "url": "https://remotive.com/remote-jobs/writing/freelance-copywriter-1749306"
+    "url": "https://remotive.com/remote-jobs/writing/freelance-copywriter-1749306",
+    "application_url": "https://remotive.com/remote-jobs/writing/freelance-copywriter-1749306"
   },
   {
     "job_id": "remotive_2091081",
@@ -1532,7 +1609,8 @@
       "project management",
       "python"
     ],
-    "url": "https://remotive.com/remote-jobs/design/senior-graphic-designer-2091081"
+    "url": "https://remotive.com/remote-jobs/design/senior-graphic-designer-2091081",
+    "application_url": "https://remotive.com/remote-jobs/design/senior-graphic-designer-2091081"
   },
   {
     "job_id": "remotive_2090903",
@@ -1551,7 +1629,8 @@
     "skills": [
       "operations"
     ],
-    "url": "https://remotive.com/remote-jobs/data/data-labeling-specialists-2090903"
+    "url": "https://remotive.com/remote-jobs/data/data-labeling-specialists-2090903",
+    "application_url": "https://remotive.com/remote-jobs/data/data-labeling-specialists-2090903"
   },
   {
     "job_id": "remotive_2091075",
@@ -1570,7 +1649,8 @@
     "skills": [
       "operations"
     ],
-    "url": "https://remotive.com/remote-jobs/sales/business-development-representative-2091075"
+    "url": "https://remotive.com/remote-jobs/sales/business-development-representative-2091075",
+    "application_url": "https://remotive.com/remote-jobs/sales/business-development-representative-2091075"
   },
   {
     "job_id": "remotive_2091074",
@@ -1592,6 +1672,7 @@
       "united",
       "states"
     ],
-    "url": "https://remotive.com/remote-jobs/all-others/content-reviewer-united-states-2091074"
+    "url": "https://remotive.com/remote-jobs/all-others/content-reviewer-united-states-2091074",
+    "application_url": "https://remotive.com/remote-jobs/all-others/content-reviewer-united-states-2091074"
   }
 ]
