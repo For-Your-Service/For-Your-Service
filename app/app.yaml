@@ -9,7 +9,7 @@
 # Date: 2026-08-20
 # ============================================================================
 
-command: ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+command: ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
 
 # ============================================================================
 # Environment Configuration
@@ -17,10 +17,22 @@ command: ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=
 
 env:
   # ---------------------------------------------------------------------------
-  # Streamlit Framework Configuration
+  # Streamlit Framework Configuration (Databricks Apps Proxy Optimized)
   # ---------------------------------------------------------------------------
+  - name: STREAMLIT_SERVER_PORT
+    value: "8080"
+  
+  - name: STREAMLIT_SERVER_ADDRESS
+    value: "0.0.0.0"
+
   - name: STREAMLIT_SERVER_HEADLESS
     value: "true"
+  
+  - name: STREAMLIT_SERVER_ENABLE_CORS
+    value: "false"
+
+  - name: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
+    value: "false"
   
   - name: STREAMLIT_BROWSER_GATHER_USAGE_STATS
     value: "false"
