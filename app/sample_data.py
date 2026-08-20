@@ -31,7 +31,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Operations & Leadership",
         "description": "Lead cross-functional technical and field teams delivering complex operational deployments. Requires seasoned military leadership (Senior NCO E-7+ or Officer O-3+), strategic risk planning, crisis decision-making, and SOP enforcement.",
         "skills": ["executive leadership", "strategic planning", "operations management", "risk mitigation", "cross-functional operations", "crisis management", "personnel accountability"],
-        "url": "https://7eaglegroup.com"
+        "url": "https://7eaglegroup.com/veteran-jobs/director-field-operations",
+        "application_url": "https://7eaglegroup.com/veteran-jobs/director-field-operations"
     },
     {
         "job_id": "fys_ops_002",
@@ -48,7 +49,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Operations & Leadership",
         "description": "Coordinate field execution, workforce scheduling, safety compliance, and operational workflows for large infrastructure initiatives. Military combat arms (11B, 11C, 19D, 0311) and NCOs with squad/platoon leadership excel in this role.",
         "skills": ["team leadership", "operational planning", "safety compliance", "risk assessment", "situational awareness", "standard operating procedures"],
-        "url": "https://www.fluor.com/careers"
+        "url": "https://www.fluor.com/careers/job-search?keyword=Operations+Team+Lead",
+        "application_url": "https://www.fluor.com/careers/job-search?keyword=Operations+Team+Lead"
     },
 
     # -------------------------------------------------------------------------
@@ -69,7 +71,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Logistics & Supply Chain",
         "description": "Oversee complex supply chain operations, fleet management, and production line logistics. Military veterans with logistics, supply, and transportation backgrounds (88M, 92A, 92Y, LS, 2T2X1, 0431) strongly encouraged to apply.",
         "skills": ["supply chain optimization", "inventory auditing", "fleet tracking", "procurement", "shipping & receiving", "warehouse management", "sap", "excel"],
-        "url": "https://www.bmwgroup.jobs"
+        "url": "https://www.bmwgroup.jobs/us/en/jobs.html#location=Spartanburg&keyword=Logistics+Program+Manager",
+        "application_url": "https://www.bmwgroup.jobs/us/en/jobs.html#location=Spartanburg&keyword=Logistics+Program+Manager"
     },
     {
         "job_id": "fys_log_002",
@@ -86,7 +89,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Logistics & Transportation",
         "description": "Manage commercial freight routes, driver scheduling, DOT compliance, and fleet safety inspections. Direct translation for military motor transport operators (88M, 3531) and convoy commanders.",
         "skills": ["heavy vehicle operations", "route planning", "cargo safety", "preventive maintenance", "dot compliance", "telematics"],
-        "url": "https://schneiderjobs.com"
+        "url": "https://schneiderjobs.com/search-jobs?keyword=Fleet+Supervisor+Columbia+SC",
+        "application_url": "https://schneiderjobs.com/search-jobs?keyword=Fleet+Supervisor+Columbia+SC"
     },
     {
         "job_id": "fys_log_003",
@@ -103,7 +107,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Logistics & Supply Chain",
         "description": "Maintain defense asset accountability, warehouse logistics, and inventory auditing for aerospace manufacturing. Direct fit for 92Y, 92A, LS, 0431, SK specialists.",
         "skills": ["property accountability", "asset tracking", "budget reconciliation", "vendor coordination", "erp software", "excel"],
-        "url": "https://www.lockheedmartinjobs.com"
+        "url": "https://www.lockheedmartinjobs.com/search-jobs/Supply%20Chain%20Greenville/694/1",
+        "application_url": "https://www.lockheedmartinjobs.com/search-jobs/Supply%20Chain%20Greenville/694/1"
     },
 
     # -------------------------------------------------------------------------
@@ -124,7 +129,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Maintenance & Mechanics",
         "description": "Supervise diesel fleet maintenance, hydraulic troubleshooting, engine diagnostics, and preventive inspection schedules. Ideal for 91B, 91X, MK, 3531, or mechanical NCOs.",
         "skills": ["diesel engine overhaul", "electrical troubleshooting", "hydraulic repair", "preventive maintenance inspection", "diagnostic testing", "team leadership"],
-        "url": "https://penske.jobs"
+        "url": "https://penske.jobs/greenville-sc/diesel-mechanic-supervisor/jobs/",
+        "application_url": "https://penske.jobs/greenville-sc/diesel-mechanic-supervisor/jobs/"
     },
     {
         "job_id": "fys_mech_002",
@@ -141,7 +147,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Aviation & Maintenance",
         "description": "Perform structural inspections, turbine powerplant maintenance, and flight-line diagnostics. Direct match for Army 15T/15U, Air Force 2A6X1, and Navy Aviation mechanics.",
         "skills": ["turbine engine maintenance", "rotor systems repair", "faa/military aviation standards", "avionics diagnostics", "precision torque tools"],
-        "url": "https://jobs.boeing.com"
+        "url": "https://jobs.boeing.com/job/charleston/aviation-maintenance-technician/185/aviation-jobs",
+        "application_url": "https://jobs.boeing.com/job/charleston/aviation-maintenance-technician/185/aviation-jobs"
     },
 
     # -------------------------------------------------------------------------
@@ -162,7 +169,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Law Enforcement & Security",
         "description": "Oversee physical security operations, access control infrastructure, threat assessments, and emergency response plans for critical energy facilities. Direct fit for 31B, 31D, 5811, 3P0X1, MA, ME.",
         "skills": ["force protection", "perimeter security", "incident investigation", "access control", "cctv", "conflict de-escalation", "emergency response"],
-        "url": "https://duke-energy.com/careers"
+        "url": "https://duke-energy.com/careers/job/corporate-security-manager-charlotte",
+        "application_url": "https://duke-energy.com/careers/job/corporate-security-manager-charlotte"
     },
     {
         "job_id": "fys_sec_002",
@@ -179,7 +187,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Law Enforcement & Security",
         "description": "Conduct investigative interviews, background verifications, and record checks for federal security clearance candidates. Great fit for 31D, 35M, CID agents, NCIS/OSI veterans, or military investigators.",
         "skills": ["felony investigations", "interpersonal interviewing", "debriefing", "case file preparation", "court testimony", "background databases"],
-        "url": "https://careers.caci.com"
+        "url": "https://careers.caci.com/global/en/search-results?keywords=Background+Investigator+Columbia+SC",
+        "application_url": "https://careers.caci.com/global/en/search-results?keywords=Background+Investigator+Columbia+SC"
     },
 
     # -------------------------------------------------------------------------
@@ -200,7 +209,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Healthcare & Medical",
         "description": "Manage clinical workflows, emergency triage protocols, patient intake, and healthcare documentation. Direct fit for military combat medics (68W), Navy Hospital Corpsmen (HM), 4N0X1, or 18D.",
         "skills": ["emergency trauma care", "patient triage", "vital signs assessment", "medical documentation", "critical decision making", "emr", "cpr / bls"],
-        "url": "https://prismahealth.org/careers"
+        "url": "https://prismahealth.org/careers/job-search?keyword=Clinical+Operations+Specialist",
+        "application_url": "https://prismahealth.org/careers/job-search?keyword=Clinical+Operations+Specialist"
     },
     {
         "job_id": "fys_med_002",
@@ -217,7 +227,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Healthcare & Medical",
         "description": "Lead OSHA compliance audits, hazmat protocols, workplace safety training, and incident investigation. Direct match for Coast Guard MST, Army Safety NCOs, and Medical/Hazmat specialists.",
         "skills": ["hazmat compliance", "environmental compliance", "safety enforcement", "incident command", "osha compliance", "risk assessment"],
-        "url": "https://jobs.michelinman.com"
+        "url": "https://jobs.michelinman.com/en/jobs/greenville-sc/ehs-manager",
+        "application_url": "https://jobs.michelinman.com/en/jobs/greenville-sc/ehs-manager"
     },
 
     # -------------------------------------------------------------------------
@@ -238,7 +249,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Human Resources & Administration",
         "description": "Lead talent sourcing, candidate screening, veteran transition mentorship, and HR onboarding. Direct fit for 42A, Navy PS, Air Force 3F0X1, and military recruiters.",
         "skills": ["personnel records management", "talent acquisition", "onboarding / outboarding", "hr compliance", "interviewing", "hris", "excel"],
-        "url": "https://7eaglegroup.com"
+        "url": "https://7eaglegroup.com/veteran-jobs/talent-acquisition-specialist",
+        "application_url": "https://7eaglegroup.com/veteran-jobs/talent-acquisition-specialist"
     },
 
     # -------------------------------------------------------------------------
@@ -259,7 +271,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Information Technology & Cloud",
         "description": "Lead enterprise cloud modernization using AWS, Kubernetes, Terraform, and Databricks. Design zero-trust data architectures and mission-critical pipelines. Prior military communications, cyber, or intelligence experience valued.",
         "skills": ["aws", "kubernetes", "terraform", "python", "databricks", "docker", "ci/cd", "linux", "cloud architecture", "leadership"],
-        "url": "https://www.lockheedmartinjobs.com"
+        "url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1",
+        "application_url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1"
     },
     {
         "job_id": "fys_tech_002",
@@ -276,7 +289,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Intelligence & Analytics",
         "description": "Conduct all-source cyber threat intelligence analysis, threat actor profiling, and link analysis. Utilize Palantir, i2 Analyst's Notebook, and SIEM tools to deliver executive-level intelligence briefings to defense stakeholders.",
         "skills": ["cybersecurity", "threat intelligence", "palantir", "i2 analyst notebook", "link analysis", "siem", "python", "incident response", "executive briefings"],
-        "url": "https://www.boozallen.com/careers"
+        "url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst",
+        "application_url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst"
     },
     {
         "job_id": "fys_tech_003",
@@ -293,7 +307,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Information Technology",
         "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, Cisco network switches, and cloud access. Direct translation for 25B, 25U, Navy IT, 0671, 1D7X1.",
         "skills": ["windows server", "active directory", "cisco", "linux", "tcp/ip", "powershell", "virtualization", "networking", "troubleshooting"],
-        "url": "https://www.fluor.com/careers"
+        "url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville",
+        "application_url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville"
     },
 
     # -------------------------------------------------------------------------
@@ -314,7 +329,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Construction & Infrastructure",
         "description": "Direct large-scale earthmoving, bridge, and highway construction projects. Enforce OSHA safety protocols, subcontractor scheduling, and blueprint execution. Perfect for Army 12B/12N Combat Engineers, Navy Seabees (BU/EO), and Air Force RED HORSE.",
         "skills": ["heavy equipment operations", "site safety enforcement", "subcontractor management", "blueprint reading", "project scheduling", "osha 30", "earthmoving"],
-        "url": "https://kiewit.com/careers"
+        "url": "https://kiewit.com/careers/job-search/?keyword=Heavy+Civil+Site+Superintendent",
+        "application_url": "https://kiewit.com/careers/job-search/?keyword=Heavy+Civil+Site+Superintendent"
     },
 
     # -------------------------------------------------------------------------
@@ -335,7 +351,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Advanced Manufacturing & Machining",
         "description": "Supervise multi-axis CNC machining centers producing high-tolerance turbine components. Direct fit for military machinists, weapons repairers (91F, 91G), Navy Machinery Repairmen (MR), and Air Force Metals Techs.",
         "skills": ["cnc machining", "precision measurement", "quality assurance", "blueprint interpretation", "lean manufacturing", "g-code", "tooling calibration"],
-        "url": "https://geaerospace.com/careers"
+        "url": "https://geaerospace.com/careers/jobs?keyword=CNC+Manufacturing+Supervisor+Greenville",
+        "application_url": "https://geaerospace.com/careers/jobs?keyword=CNC+Manufacturing+Supervisor+Greenville"
     },
 
     # -------------------------------------------------------------------------
@@ -356,7 +373,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Maritime & Port Operations",
         "description": "Oversee container terminal vessel operations, stevedore safety, and maritime cargo handling. Ideal fit for Coast Guard Boatswain's Mates (BM), Marine Science Techs (MST), and Navy Boatswain's Mates / Quartermasters.",
         "skills": ["maritime navigation", "cargo handling", "dock operations", "vessel safety protocols", "twic compliance", "incident response"],
-        "url": "https://scspa.com/careers"
+        "url": "https://scspa.com/careers/job-search?keyword=Port+Operations+Supervisor",
+        "application_url": "https://scspa.com/careers/job-search?keyword=Port+Operations+Supervisor"
     },
 
     # -------------------------------------------------------------------------
@@ -377,7 +395,8 @@ SAMPLE_JOBS: List[Dict] = [
         "category": "Energy & Power Generation",
         "description": "Install, test, and maintain high-voltage transformers, switchgear, and utility substation relays. Direct translation for Army Prime Power Specialists (12P), Tactical Power Gen (91D), and Navy Electrician's Mates (EM).",
         "skills": ["high voltage electrical", "switchgear maintenance", "transformer testing", "schematic reading", "electrical safety (nfpa 70e)", "substation relays"],
-        "url": "https://careers.dominionenergy.com"
+        "url": "https://careers.dominionenergy.com/job-search?keyword=Power+Generation+Plant+Operations",
+        "application_url": "https://careers.dominionenergy.com/job-search?keyword=Power+Generation+Plant+Operations"
     }
 ]
 

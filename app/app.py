@@ -1600,20 +1600,20 @@ if nav_selection == "📋 Veteran Intake & Match":
                     st.markdown(f"""
                     <div class="job-card" style="border-left: 6px solid {'#dc2626' if clr_is_fail else '#0b2545'};">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
-                            <div>
-                                <h3 style="margin: 0; color: #0b1d3a; font-size: 1.25rem;">
-                                    <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #0b1d3a; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                            <div style="flex: 1;">
+                                <h3 style="margin: 0; font-size: 1.25rem;">
+                                    <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #1e3a8a; text-decoration: none; font-weight: 700;">
                                         #{idx} — {job['title']} 🔗
                                     </a>
                                     {prio_badge}
                                 </h3>
-                                <div style="color: #475569; font-weight: 600; font-size: 1.0rem; margin-top: 4px;">
-                                    🏢 <a href="{app_url}" target="_blank" rel="noopener noreferrer" style="color: #1e3a8a; text-decoration: underline; font-weight: 700;">{job['company']}</a> &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
+                                <div style="color: #475569; font-weight: 600; font-size: 1.0rem; margin-top: 6px;">
+                                    🏢 <strong>{job['company']}</strong> &nbsp;•&nbsp; 📍 {job['location_display']} &nbsp;•&nbsp; 💰 ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
                                 </div>
                             </div>
                             <span class="{badge_class}">{score:.0f}% Fit</span>
                         </div>
-                        <div style="margin-bottom: 0.75rem;">
+                        <div style="margin: 0.75rem 0;">
                             <span class="clearance-badge" style="background: {'#fee2e2; color: #991b1b' if clr_is_fail else '#f1f5f9; color: #1e3a8a'};">
                                 🛡️ Clearance: {clr_req} {'(⛔ INELIGIBLE)' if clr_is_fail else ''}
                             </span>
