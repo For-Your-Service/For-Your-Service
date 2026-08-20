@@ -10,7 +10,7 @@ resource "local_file" "space_metadata_file" {
 }
 
 resource "local_file" "space_env_template" {
-  content = <<-EOT
+  content  = <<-EOT
     # Hugging Face Space Environment Configuration (${var.environment})
     SPACE_NAME=${var.space_name}-${var.environment}
     HARDWARE=${var.hardware}

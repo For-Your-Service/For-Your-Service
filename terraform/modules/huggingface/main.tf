@@ -8,7 +8,7 @@ terraform {
 }
 
 locals {
-  space_title = "For Your Service - Matching API (${var.environment})"
+  space_title           = "For Your Service - Matching API (${var.environment})"
   space_readme_metadata = <<-EOT
 ---
 title: ${local.space_title}
