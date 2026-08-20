@@ -545,6 +545,201 @@ def estimate_job_distance(
     return 120.0
 
 
+# ============================================================================
+# CLEARANCE HIERARCHY & EVALUATION ENGINE
+# ============================================================================
+
+CLEARANCE_RANKS = {
+    "none": 0,
+    "none / public trust": 1,
+    "public trust": 1,
+    "confidential": 2,
+    "secret": 3,
+    "active secret": 3,
+    "top secret": 4,
+    "active top secret": 4,
+    "top secret / sci": 5,
+    "ts / sci": 5,
+    "ts/sci": 5,
+    "ts / sci with ci poly": 6,
+    "ts / sci with full scope poly": 7,
+    "poly": 6
+}
+
+
+def get_clearance_rank(clr_str: str) -> int:
+    """Extract normalized numeric rank (0-7) for a security clearance string."""
+    if not clr_str:
+        return 0
+    c = str(clr_str).lower().strip()
+    for k, v in CLEARANCE_RANKS.items():
+        if k == c:
+            return v
+    if "full scope" in c or "fsp" in c:
+        return 7
+    if "ci poly" in c or "poly" in c:
+        return 6
+    if "sci" in c or "ts/sci" in c:
+        return 5
+    if "top secret" in c or "ts" in c:
+        return 4
+    if "secret" in c:
+        return 3
+    if "confidential" in c:
+        return 2
+    if "public trust" in c:
+        return 1
+    return 0
+
+
+def evaluate_clearance(candidate_clearance: str, job_requirement: str) -> Tuple[bool, int, str, str]:
+    """
+    Accurately evaluate candidate's active clearance against job requirement.
+    Returns: (is_eligible, points, status, detail_text)
+    """
+    cand_rank = get_clearance_rank(candidate_clearance)
+    job_rank = get_clearance_rank(job_requirement)
+    
+    if job_rank == 0:
+        # Job requires NO clearance (Direct civilian entry)
+        return True, 15, "pass", "No clearance required (Direct civilian entry)"
+    elif cand_rank >= job_rank:
+        # Candidate clearance satisfies or exceeds requirement
+        return True, 20, "pass", f"Active {candidate_clearance} satisfies requirement ({job_requirement})"
+    else:
+        # Candidate does not hold the required clearance
+        return False, -40, "fail", f"Requires active {job_requirement} (You indicated: {candidate_clearance})"
+
+
+# ============================================================================
+# CAREER TRACK DOMAIN RULES & CROSS-DOMAIN GUARDRAILS
+# ============================================================================
+
+TRACK_DOMAIN_RULES = {
+    "Cloud & DevOps Engineering": {
+        "allowed_categories": [
+            "Information Technology & Cloud",
+            "Information Technology",
+            "Cloud & DevOps",
+            "Software Engineering",
+            "Cybersecurity & Intelligence",
+            "Intelligence & Analytics",
+            "Data Engineering",
+            "Systems Engineering"
+        ],
+        "primary_keywords": ["cloud", "devops", "software", "engineer", "data", "developer", "aws", "azure", "gcp", "python", "kubernetes", "terraform", "platform", "backend", "full-stack", "sysadmin", "infrastructure engineer", "solutions architect", "architect", "technology", "it", "sre", "database", "analytics"],
+        "disallowed_categories": [
+            "Logistics & Supply Chain",
+            "Logistics & Transportation",
+            "Maintenance & Mechanics",
+            "Aviation & Maintenance",
+            "Law Enforcement & Security",
+            "Healthcare & Medical",
+            "Construction & Infrastructure",
+            "Advanced Manufacturing & Machining",
+            "Maritime & Port Operations"
+        ]
+    },
+    "Cybersecurity & Intelligence": {
+        "allowed_categories": [
+            "Cybersecurity & Intelligence",
+            "Intelligence & Analytics",
+            "Information Technology & Cloud",
+            "Information Technology",
+            "Security & Intelligence"
+        ],
+        "primary_keywords": ["cyber", "security", "threat", "soc", "infosec", "penetration", "vulnerability", "incident response", "intelligence", "analyst", "clearance", "cryptography"],
+        "disallowed_categories": [
+            "Logistics & Supply Chain",
+            "Logistics & Transportation",
+            "Maintenance & Mechanics",
+            "Healthcare & Medical",
+            "Construction & Infrastructure"
+        ]
+    },
+    "Logistics, Supply Chain & Fleet Transportation": {
+        "allowed_categories": [
+            "Logistics & Supply Chain",
+            "Logistics & Transportation",
+            "Maritime & Port Operations",
+            "Transportation & Logistics",
+            "Warehouse Operations"
+        ],
+        "primary_keywords": ["logistics", "supply chain", "freight", "transportation", "warehouse", "dispatcher", "fleet", "cdl", "distribution", "inventory", "shipping", "property"],
+        "disallowed_categories": [
+            "Information Technology & Cloud",
+            "Information Technology",
+            "Software Engineering",
+            "Healthcare & Medical"
+        ]
+    },
+    "Operations, Program & Project Management": {
+        "allowed_categories": [
+            "Operations & Leadership",
+            "General Operations",
+            "Program Management",
+            "Project Management",
+            "Field Operations"
+        ],
+        "primary_keywords": ["operations", "project manager", "program manager", "coordinator", "director", "supervisor", "superintendent", "continuous improvement", "pmp", "operational leadership"],
+        "disallowed_categories": [
+            "Healthcare & Medical"
+        ]
+    },
+    "Maintenance, Aviation & Precision Manufacturing": {
+        "allowed_categories": [
+            "Maintenance & Mechanics",
+            "Aviation & Maintenance",
+            "Advanced Manufacturing & Machining",
+            "Energy & Power Generation",
+            "Precision Machining"
+        ],
+        "primary_keywords": ["maintenance", "mechanic", "aviation", "diesel", "technician", "hvac", "machinist", "manufacturing", "cnc", "turbines", "electrical maintenance"],
+        "disallowed_categories": [
+            "Information Technology & Cloud",
+            "Healthcare & Medical"
+        ]
+    },
+    "Law Enforcement, Physical Security & Investigations": {
+        "allowed_categories": [
+            "Law Enforcement & Security",
+            "Physical Security",
+            "Corporate Investigations"
+        ],
+        "primary_keywords": ["law enforcement", "police", "investigator", "physical security", "patrol", "compliance", "guard", "protection officer", "asset protection"],
+        "disallowed_categories": [
+            "Healthcare & Medical",
+            "Information Technology & Cloud"
+        ]
+    },
+    "Healthcare, Emergency Services & Safety": {
+        "allowed_categories": [
+            "Healthcare & Medical",
+            "Emergency Medical Services",
+            "Environmental Health & Safety"
+        ],
+        "primary_keywords": ["nurse", "medical", "paramedic", "emt", "health", "clinical", "triage", "ehs", "patient", "safety officer"],
+        "disallowed_categories": [
+            "Logistics & Supply Chain",
+            "Maintenance & Mechanics",
+            "Information Technology & Cloud"
+        ]
+    },
+    "Heavy Construction & Civil Infrastructure": {
+        "allowed_categories": [
+            "Construction & Infrastructure",
+            "Civil Construction",
+            "Heavy Infrastructure"
+        ],
+        "primary_keywords": ["construction", "civil", "superintendent", "estimator", "field engineer", "site supervisor", "heavy civil", "earthwork"],
+        "disallowed_categories": [
+            "Information Technology & Cloud",
+            "Healthcare & Medical"
+        ]
+    }
+}
+
+
 def calculate_veteran_match_score(
     job: Dict,
     veteran_profile: Dict,
@@ -553,39 +748,41 @@ def calculate_veteran_match_score(
     """
     Calculate match score (0-100), 'Why You Match' reasons, and an individual
     Key Match Factors breakdown with self-improvement projected success metrics.
-    Gives absolute top priority to the specific job titles, career tracks, and commute radius requested.
+    Enforces hard track domain boundaries, accurate clearance hierarchy, and heavy technical stack weighting.
     """
     score = 0.0
     reasons = []
     
     job_title = job.get('title', '').lower().strip()
     job_desc = job.get('description', '').lower()
-    job_category = job.get('category', '').lower()
-    job_text = f"{job_title} {job_desc} {job_category}"
+    job_category = job.get('category', '').strip()
+    job_cat_lower = job_category.lower()
+    job_text = f"{job_title} {job_desc} {job_cat_lower}"
     
     user_tech = set(extracted_skills.get("technical_skills", []))
     user_leadership = set(extracted_skills.get("leadership_skills", []))
     user_ops = set(extracted_skills.get("ops_skills", []))
     all_user_skills = user_tech.union(user_leadership).union(user_ops)
     
-    target_track = veteran_profile.get("target_track", "").lower().strip()
+    target_track = veteran_profile.get("target_track", "").strip()
     desired_role_raw = veteran_profile.get("desired_role", "").lower().strip()
     
     # Parse multiple comma/slash/pipe separated desired titles
     desired_roles = [r.strip() for r in re.split(r'[,;/|]+', desired_role_raw) if len(r.strip()) >= 2]
     
-    # 1. SPECIFIC DESIRED JOB TITLE & TARGET TRACK ALIGNMENT (Max 60 pts)
+    # -------------------------------------------------------------------------
+    # 1. HARD TRACK BOUNDARY & REQUESTED ROLE PRIORITIZATION (Max 40 pts)
+    # -------------------------------------------------------------------------
     title_matched_name = None
     role_priority = 5  # Default
     
+    # Check if candidate explicitly requested a specific title
     if desired_roles:
-        # Check exact / substring match against desired roles
         for dr in desired_roles:
             if dr in job_title or job_title in dr:
                 title_matched_name = dr
                 role_priority = 1
                 break
-            # Word-level token match (e.g. "solutions" and "architect" in job_title)
             dr_words = [w for w in dr.split() if len(w) > 2 and w not in ["and", "the", "for", "with", "all"]]
             if dr_words and all(w in job_title for w in dr_words):
                 title_matched_name = dr
@@ -595,140 +792,131 @@ def calculate_veteran_match_score(
                 title_matched_name = dr
                 role_priority = 2
                 
-        # If not matched in title, check if desired role keyword is in job category or description
         if role_priority > 2:
             for dr in desired_roles:
-                if dr in job_category or dr in job_desc:
+                if dr in job_cat_lower or dr in job_desc:
                     title_matched_name = dr
                     role_priority = 3
                     break
     
-    track_alignment = False
-    if target_track:
-        if "cloud" in target_track or "devops" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cloud", "information technology", "software", "devops", "solutions architect", "infrastructure", "platform", "systems engineer"])
-        elif "cyber" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["cyber", "intelligence", "security", "threat", "information security", "soc", "infosec"])
-        elif "logistics" in target_track or "supply" in target_track or "fleet" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["logistics", "supply chain", "transportation", "port", "warehouse", "freight", "dispatcher", "fleet", "cdl", "distribution"])
-        elif "maintenance" in target_track or "mechanic" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["maintenance", "mechanic", "aviation", "manufacturing", "energy", "diesel", "technician", "hvac", "machinist"])
-        elif "operations" in target_track or "program" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["operations", "leadership", "project", "construction", "coordinator", "manager", "superintendent", "director", "supervisor"])
-        elif "construction" in target_track or "infrastructure" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["construction", "superintendent", "civil", "field", "infrastructure", "project manager", "site", "estimator"])
-        elif "law enforcement" in target_track or "security" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["law enforcement", "security", "protection", "investigator", "police", "patrol", "compliance", "guard"])
-        elif "health" in target_track or "medical" in target_track:
-            track_alignment = any(w in job_category or w in job_text for w in ["health", "medical", "safety", "clinical", "triage", "nurse", "paramedic", "ehs", "emt"])
+    # Check track domain rules (Prevent cross-domain bleed)
+    track_rules = TRACK_DOMAIN_RULES.get(target_track, {})
+    is_disallowed = False
+    is_allowed = False
+    
+    if track_rules:
+        disallowed_cats = track_rules.get("disallowed_categories", [])
+        allowed_cats = track_rules.get("allowed_categories", [])
+        
+        if any(dc.lower() in job_cat_lower for dc in disallowed_cats):
+            is_disallowed = True
+        elif any(ac.lower() in job_cat_lower for ac in allowed_cats):
+            is_allowed = True
+        elif any(kw in job_title or kw in job_cat_lower for kw in track_rules.get("primary_keywords", [])):
+            is_allowed = True
+    else:
+        is_allowed = True
 
-    if role_priority == 1:
-        score += 60
+    # If job is in a disallowed domain and user did NOT explicitly request this title -> Cross-domain block
+    if is_disallowed and role_priority > 2:
+        role_priority = 99  # Disallowed cross-domain job
+        score -= 45
+        role_status = "warn"
+        role_detail = f"Cross-Domain (Outside {target_track})"
+    elif role_priority == 1:
+        score += 40
         role_status = "pass"
         role_detail = f"Exact match for requested title '{title_matched_name.title()}'"
         reasons.append(f"🎯 Requested Job Title: Exact match for '{title_matched_name.title()}'")
     elif role_priority == 2:
-        score += 48
+        score += 32
         role_status = "pass"
         role_detail = f"Keyword match for requested role '{title_matched_name.title()}'"
         reasons.append(f"🎯 Requested Role Alignment: Matches keywords for '{title_matched_name.title()}'")
     elif role_priority == 3:
-        score += 38
+        score += 24
         role_status = "pass"
         role_detail = f"Aligned with requested specialty '{title_matched_name.title()}'"
         reasons.append(f"🎯 Requested Role Focus: Context match for '{title_matched_name.title()}'")
-    elif track_alignment:
+    elif is_allowed:
         role_priority = 4 if desired_roles else 1
-        score += 30 if desired_roles else 45
+        score += 20 if desired_roles else 35
         role_status = "pass"
-        role_detail = f"Direct match for {veteran_profile.get('target_track', 'Target Track')}"
-        reasons.append(f"🎯 Target Career Track: Aligns with your selected industry track ({veteran_profile.get('target_track')})")
+        role_detail = f"Direct match for {target_track}"
+        reasons.append(f"🎯 Target Career Track: Aligns with your selected industry track ({target_track})")
     else:
         role_priority = 6 if desired_roles else 4
-        score -= 40
+        score -= 30
         role_status = "warn"
-        role_detail = f"Secondary Field (Outside {veteran_profile.get('target_track', 'Target Track')})"
+        role_detail = f"Secondary Field (Outside {target_track})"
 
-    # 2. Skills & Competencies Match (Max 25 pts)
+    # -------------------------------------------------------------------------
+    # 2. TECHNICAL & CORE SKILLS OVERLAP (Max 40 pts)
+    # -------------------------------------------------------------------------
     job_req_skills = [s.lower() for s in job.get("skills", [])]
+    is_tech_track = target_track in ["Cloud & DevOps Engineering", "Cybersecurity & Intelligence"]
+    is_tech_job = any(w in job_cat_lower or w in job_title for w in ["information technology", "cloud", "software", "cyber", "data", "devops", "platform", "systems engineer"])
+    
     matched_skills = []
     missing_skills = []
+    
     if job_req_skills:
         matched_skills = [s for s in job_req_skills if s in all_user_skills]
         missing_skills = [s for s in job_req_skills if s not in all_user_skills]
         skill_pct = len(matched_skills) / max(1, len(job_req_skills))
-        score += skill_pct * 25
+        
+        # In tech tracks, technical overlap is weighted heavily (40 pts)
+        score += skill_pct * 40.0
+        
         if matched_skills:
             reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_skills[:4]])}")
         else:
-            if any(w in job_category for w in ["information technology", "cloud", "software", "cyber"]) and len(user_tech) == 0:
-                score -= 15
-        skills_status = "pass" if skill_pct >= 0.5 else "warn"
+            if is_tech_job and len(user_tech) == 0:
+                score -= 25.0
+                
+        skills_status = "pass" if skill_pct >= 0.4 else "warn"
         skills_detail = f"{len(matched_skills)} of {len(job_req_skills)} Core Competencies Matched"
     else:
-        matched_skills = [s for s in all_user_skills if s in job_text]
+        # Evaluate user technical skills in job text
+        tech_in_text = [s for s in user_tech if s in job_text]
+        matched_skills = tech_in_text if is_tech_track else [s for s in all_user_skills if s in job_text]
         missing_skills = []
-        score += min(25.0, len(matched_skills) * 5.0)
-        skills_status = "pass" if matched_skills else "warn"
-        skills_detail = f"{len(matched_skills)} Relevant Strengths Identified"
-        if matched_skills:
-            reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_skills[:4]])}")
-
-    # 3. MOS / Branch Specialty Crosswalk (Max 15 pts)
-    mos_info = lookup_mos(veteran_profile.get("mos", ""))
-    if mos_info:
-        mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
         
-        if any(ct in job_title or job_title in ct for ct in mos_civilian_titles):
-            score += 15
-            reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
-        elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
-            score += 10
-            reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
+        if is_tech_track and tech_in_text:
+            score += min(40.0, len(tech_in_text) * 8.0)
+            reasons.append(f"Technical Stack Alignment: Verified match on {', '.join([s.upper() for s in tech_in_text[:4]])}")
+            skills_status = "pass"
+            skills_detail = f"{len(tech_in_text)} Core Tech Stack Tools Verified"
+        elif is_tech_job and len(user_tech) == 0:
+            score -= 25.0
+            skills_status = "warn"
+            skills_detail = "0 Technical Skills Detected"
         else:
-            score += 5
-    else:
-        score += 4
-            
-    # 4. Security Clearance Alignment (Max 15 pts or Strict Ineligibility Penalty)
+            score += min(25.0, len(matched_skills) * 5.0)
+            skills_status = "pass" if matched_skills else "warn"
+            skills_detail = f"{len(matched_skills)} Relevant Strengths Identified"
+            if matched_skills:
+                reasons.append(f"Key Strengths: {', '.join([s.title() for s in matched_skills[:4]])}")
+
+    # -------------------------------------------------------------------------
+    # 3. SECURITY CLEARANCE EVALUATION (Max 20 pts or -40 pts penalty)
+    # -------------------------------------------------------------------------
     job_clearance = str(job.get("clearance_required", "None")).strip()
     vet_clearance = str(veteran_profile.get("clearance", "None")).strip()
     
-    clearance_hierarchy = {
-        "None / Public Trust": 0,
-        "None": 0,
-        "Public Trust": 1,
-        "Confidential": 2,
-        "Secret": 3,
-        "Top Secret": 4,
-        "Top Secret / SCI": 5,
-        "TS / SCI with CI Poly": 6,
-        "TS / SCI with Full Scope Poly": 7
-    }
-    
-    job_clr_level = clearance_hierarchy.get(job_clearance, 0)
-    vet_clr_level = clearance_hierarchy.get(vet_clearance, 0)
-    
-    if job_clr_level > 0:
-        if vet_clr_level >= job_clr_level:
-            score += 15
-            clearance_status = "pass"
-            clearance_detail = f"Active {vet_clearance} satisfies requirement ({job_clearance})"
-            reasons.append(f"🛡️ Security Clearance: Active {vet_clearance} qualifies for defense requirement")
+    clr_eligible, clr_pts, clr_status, clr_detail = evaluate_clearance(vet_clearance, job_clearance)
+    score += clr_pts
+    if clr_eligible:
+        if job_clearance not in ["None", "None / Public Trust", ""]:
+            reasons.append(f"🛡️ Security Clearance: Active {vet_clearance} qualifies for defense requirement ({job_clearance})")
         else:
-            # Candidate does NOT have the required clearance! Apply severe demotion
-            score -= 40
-            clearance_status = "fail"
-            clearance_detail = f"Requires active {job_clearance} (You indicated: {vet_clearance})"
-            reasons.append(f"⛔ Clearance Ineligible: Requires active {job_clearance} (You indicated: {vet_clearance})")
+            reasons.append("🛡️ Security Clearance: No clearance required (Direct civilian entry)")
     else:
-        # Job requires NO clearance (direct civilian entry)
-        score += 15
-        clearance_status = "pass"
-        clearance_detail = "No clearance required (Direct civilian entry)"
-        reasons.append("🛡️ Security Clearance: No clearance required (Direct civilian entry)")
-        
-    # 5. Salary Alignment (Max 10 pts)
+        reasons.append(f"⛔ Clearance Ineligible: Requires active {job_clearance} (You indicated: {vet_clearance})")
+
+    # -------------------------------------------------------------------------
+    # 4. SALARY ALIGNMENT (Max 10 pts)
+    # -------------------------------------------------------------------------
     job_sal_min = float(job.get("salary_min", 0) or 0)
     job_sal_max = float(job.get("salary_max", 0) or 0)
     vet_sal_min = float(veteran_profile.get("salary_min", 0) or 0)
@@ -747,15 +935,16 @@ def calculate_veteran_match_score(
         score += 2
         salary_status = "warn"
         salary_detail = f"${job_sal_min:,.0f} - ${job_sal_max:,.0f}"
-        
-    # 6. Location, Commute & Travel Radius (Max 10 pts)
-    vet_city = veteran_profile.get("target_city", "Greenville").strip()
-    vet_state = veteran_profile.get("target_state", "SC").strip().upper()
+
+    # -------------------------------------------------------------------------
+    # 5. LOCATION, COMMUTE & TRAVEL RADIUS (Max 10 pts)
+    # -------------------------------------------------------------------------
+    vet_city = veteran_profile.get("target_city", "").strip()
+    vet_state = veteran_profile.get("target_state", "").strip().upper()
     max_radius_str = str(veteran_profile.get("target_radius", "50 miles")).lower()
     remote_ok = veteran_profile.get("remote_ok", True)
-    relocate_ok = veteran_profile.get("relocate_ok", True)
+    relocate_ok = veteran_profile.get("relocation", True)
     
-    # Parse max radius integer
     if "10" in max_radius_str:
         max_radius = 10.0
     elif "20" in max_radius_str:
@@ -765,18 +954,18 @@ def calculate_veteran_match_score(
     elif "any" in max_radius_str or "nationwide" in max_radius_str:
         max_radius = 9999.0
     else:
-        max_radius = 50.0  # Default 50 miles
+        max_radius = 50.0
         
     job_city = job.get("city", "").strip()
     job_state = job.get("state", "").strip().upper()
     job_loc_display = job.get("location_display", "")
     
-    dist = estimate_job_distance(vet_city, vet_state, job_city, job_state, job_loc_display)
+    dist = estimate_job_distance(vet_city, vet_state, job_city, job_state, job_loc_display) if (vet_city and vet_state) else None
     
-    if "remote" in job_loc_display.lower() or "remote" in job_city.lower():
+    if "remote" in job_loc_display.lower() or "remote" in job_city.lower() or remote_ok:
         score += 10
         loc_status = "pass"
-        loc_detail = "Remote / Flexible location"
+        loc_detail = "Remote / Flexible location" if "remote" in job_loc_display.lower() else f"Flexible match ({job_loc_display})"
         reasons.append("📍 Location: Remote / Flexible work mode")
     elif dist is not None and dist <= max_radius:
         score += 10
@@ -789,7 +978,7 @@ def calculate_veteran_match_score(
         loc_detail = f"Regional ({dist:.0f} mi from {vet_city.title()}, {vet_state} — near {int(max_radius)} mi radius)"
         reasons.append(f"📍 Commute: Regional opportunity ({dist:.0f} miles from {vet_city.title()})")
     else:
-        if remote_ok or relocate_ok:
+        if relocate_ok or remote_ok:
             score += 4
             loc_status = "warn"
             loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Open to relocation/travel)" if dist else f"{job_loc_display} (Relocation match)"
@@ -797,6 +986,23 @@ def calculate_veteran_match_score(
             score -= 10
             loc_status = "warn"
             loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Outside {int(max_radius)} mi radius)" if dist else f"{job_loc_display} (Outside radius)"
+
+    # -------------------------------------------------------------------------
+    # 6. MILITARY LEADERSHIP & MOS CROSSWALK (Max 10 pts Supportive Bonus)
+    # -------------------------------------------------------------------------
+    mos_info = lookup_mos(veteran_profile.get("mos", ""))
+    if mos_info:
+        mos_civilian_titles = [t.lower() for t in mos_info.get("civilian_titles", [])]
+        if any(ct in job_title or job_title in ct for ct in mos_civilian_titles):
+            score += 10
+            reasons.append(f"Direct MOS Crosswalk: Aligns with {mos_info['title']} ({mos_info['branch']})")
+        elif any(ts in job_text for ts in mos_info.get("transferable_skills", [])):
+            score += 6
+            reasons.append(f"Military Background Fit: {mos_info.get('branch')} specialty transferable skills")
+        else:
+            score += 3
+    else:
+        score += 2
         
     final_score = min(100.0, max(20.0, score))
     final_score = round(final_score, 1)
@@ -809,7 +1015,7 @@ def calculate_veteran_match_score(
     factors = {
         "role_priority": role_priority,
         "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail},
-        "clearance": {"label": "Security Clearance", "status": clearance_status, "detail": clearance_detail},
+        "clearance": {"label": "Security Clearance", "status": clr_status, "detail": clr_detail, "eligible": clr_eligible},
         "skills": {"label": "Skills Alignment", "status": skills_status, "detail": skills_detail, "matched": matched_skills, "missing": missing_skills},
         "salary": {"label": "Compensation Range", "status": salary_status, "detail": salary_detail},
         "location": {"label": "Location & Travel Distance", "status": loc_status, "detail": loc_detail, "distance_miles": dist},
@@ -1263,20 +1469,22 @@ if nav_selection == "📋 Veteran Intake & Match":
                 matches = []
                 for job in all_jobs:
                     score, reasons, factors = calculate_veteran_match_score(job, veteran_profile, extracted)
-                    matches.append({
-                        **job,
-                        "match_score": score,
-                        "match_reasons": reasons,
-                        "factors": factors
-                    })
+                    # Filter out disallowed cross-domain jobs from primary results
+                    if factors.get("role_priority", 5) < 90:
+                        matches.append({
+                            **job,
+                            "match_score": score,
+                            "match_reasons": reasons,
+                            "factors": factors
+                        })
                 
                 # Sort by:
-                # 1. role_priority (1: direct requested title match, 2: keyword match, 3: target track match, 5: secondary)
+                # 1. role_priority (1: direct requested title match, 2: keyword match, 3: target track match)
                 # 2. clearance eligibility (eligible first)
                 # 3. match_score descending
                 def match_sort_key(item):
                     f = item.get("factors", {})
-                    prio = f.get("role_priority", 4)
+                    prio = f.get("role_priority", 5)
                     clr_pass = 1 if f.get("clearance", {}).get("status") == "pass" else 0
                     return (prio, -clr_pass, -item["match_score"])
 

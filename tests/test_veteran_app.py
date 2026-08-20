@@ -131,3 +131,64 @@ def test_commute_distance_and_radius():
     
     assert f_50["location"]["status"] == "pass"
     assert f_10["location"]["status"] == "warn"
+
+
+def test_clearance_matrix_evaluation():
+    from app.app import evaluate_clearance
+    
+    # Active Secret candidate vs Secret job -> PASS
+    elig, pts, st, det = evaluate_clearance("Secret", "Secret")
+    assert elig is True
+    assert st == "pass"
+    assert pts > 0
+    
+    # Active TS/SCI candidate vs Secret job -> PASS
+    elig, pts, st, det = evaluate_clearance("Top Secret / SCI", "Secret")
+    assert elig is True
+    assert st == "pass"
+    
+    # None candidate vs Secret job -> FAIL
+    elig, pts, st, det = evaluate_clearance("None / Public Trust", "Secret")
+    assert elig is False
+    assert st == "fail"
+    assert pts < 0
+    
+    # None candidate vs None job -> PASS
+    elig, pts, st, det = evaluate_clearance("None / Public Trust", "None")
+    assert elig is True
+    assert st == "pass"
+
+
+def test_hard_track_filtering_no_cross_domain_bleed():
+    profile_cloud = dict(
+        DEMO_VETERAN_PROFILES["18F"],
+        target_track="Cloud & DevOps Engineering",
+        desired_role="",
+        clearance="Secret"
+    )
+    extracted = parse_veteran_skills(profile_cloud["resume_text"], profile_cloud["mos"])
+    
+    # Tech job should pass with role_priority 1
+    tech_job = {
+        "title": "Cloud DevOps Engineer",
+        "company": "Tech Corp",
+        "category": "Information Technology & Cloud",
+        "skills": ["aws", "terraform", "kubernetes", "python"],
+        "clearance_required": "Secret"
+    }
+    sc_tech, _, f_tech = calculate_veteran_match_score(tech_job, profile_cloud, extracted)
+    assert f_tech["role_priority"] == 1
+    assert sc_tech >= 80.0
+    
+    # Non-tech logistics job should be flagged as cross-domain (role_priority = 99)
+    logistics_job = {
+        "title": "Fleet Transportation Supervisor",
+        "company": "Trucking Co",
+        "category": "Logistics & Supply Chain",
+        "skills": ["cdl", "route planning", "heavy vehicle operations"],
+        "clearance_required": "None"
+    }
+    sc_log, _, f_log = calculate_veteran_match_score(logistics_job, profile_cloud, extracted)
+    assert f_log["role_priority"] == 99
+    assert f_log["role"]["status"] == "warn"
+
