@@ -1185,7 +1185,7 @@ with st.sidebar:
 
 
 # ============================================================================
-# HERO BANNER
+# HERO BANNER & PROMINENT VISITOR / IMPACT COUNTER BAR
 # ============================================================================
 
 st.markdown(f"""
@@ -1195,7 +1195,32 @@ st.markdown(f"""
         <span>FOR YOUR SERVICE</span>
     </div>
     <div class="hero-subtitle">Universal Veteran Career Intake & AI Military-to-Civilian Job Matching Platform</div>
-    <div class="hero-badge">🎖️ Serving ALL Branches • 100% Free • {platform_metrics['total_visitors']:,} Platform Visits • {platform_metrics['total_matches_run']:,} AI Optimizations</div>
+    <div class="hero-badge">🎖️ Serving ALL Branches • 100% Free Veteran Transition Platform</div>
+</div>
+
+<div style="background: linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 100%); border-radius: 12px; padding: 1.15rem; margin: 1rem 0 1.25rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.12); color: white;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; text-align: center;">
+        <div style="flex: 1; min-width: 130px; padding: 0.6rem 0.5rem; background: rgba(255,255,255,0.08); border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #93c5fd; font-weight: 700;">👥 Platform Visitors</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: #ffffff; margin-top: 2px;">{platform_metrics['total_visitors']:,}</div>
+            <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">Live Visitor Counter</div>
+        </div>
+        <div style="flex: 1; min-width: 130px; padding: 0.6rem 0.5rem; background: rgba(255,255,255,0.08); border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #86efac; font-weight: 700;">⚡ AI Matches Run</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: #4ade80; margin-top: 2px;">{platform_metrics['total_matches_run']:,}</div>
+            <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">Profiles Evaluated</div>
+        </div>
+        <div style="flex: 1; min-width: 130px; padding: 0.6rem 0.5rem; background: rgba(255,255,255,0.08); border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fde047; font-weight: 700;">🦅 Recruiter Intros</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: #facc15; margin-top: 2px;">{platform_metrics['veterans_connected']:,}</div>
+            <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">7 Eagle Placements</div>
+        </div>
+        <div style="flex: 1; min-width: 130px; padding: 0.6rem 0.5rem; background: rgba(255,255,255,0.08); border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);">
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #f472b6; font-weight: 700;">💼 Active Job Roles</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: #f43f5e; margin-top: 2px;">250+</div>
+            <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">USAJOBS & Industry</div>
+        </div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
