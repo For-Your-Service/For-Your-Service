@@ -138,6 +138,10 @@ Cost per veteran matched: **$0.14-0.24**
 ## 📚 Documentation
 
 - [API Quickstart](docs/API_QUICKSTART.md) - 15-minute setup
+- [Multi-Cloud Terraform Guide](terraform/README.md) - Automated IaC across AWS, GCP, Databricks & HF
+- [Terraform Architecture Whitepaper](docs/TERRAFORM_ARCHITECTURE.md) - Complete multi-cloud infrastructure blueprint
+- [Zero-Downtime Migration Guide](docs/ZERO_DOWNTIME_MIGRATION.md) - Non-destructive resource adoption runbook
+- [Cloud Cost Optimization in IaC](docs/CLOUD_COST_OPTIMIZATION_IAC.md) - Free tier guardrails & budget controls
 - [AWS IAM Security Setup](docs/aws/AWS_IAM_SECURITY_SETUP.md) - AWS infrastructure configuration
 - [Multi-Source Ingestion Spec](docs/MULTI_SOURCE_INGESTION_SPEC.md)
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
