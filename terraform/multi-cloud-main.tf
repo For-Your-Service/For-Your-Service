@@ -132,9 +132,9 @@ resource "aws_iam_role_policy_attachment" "attach_s3" {
 # GCP Resources (Cloud Storage Archive & BigQuery Analytics)
 # ------------------------------------------------------------------------------
 resource "google_storage_bucket" "fys_archive" {
-  name                     = "fys-archive-${random_id.suffix.hex}"
-  location                 = var.gcp_region
-  force_destroy            = true
+  name                        = "fys-archive-${random_id.suffix.hex}"
+  location                    = var.gcp_region
+  force_destroy               = true
   uniform_bucket_level_access = true
 }
 

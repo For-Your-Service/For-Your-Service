@@ -67,11 +67,11 @@ module "databricks" {
   count  = var.enable_databricks ? 1 : 0
   source = "./modules/databricks"
 
-  environment               = var.environment
-  project_name              = var.project_name
-  aws_s3_bucket_arn         = var.enable_aws ? module.aws[0].s3_staging_bucket_arn : ""
-  aws_iam_role_arn          = var.enable_aws ? module.aws[0].databricks_cross_account_role_arn : ""
-  gcp_storage_bucket_name   = var.enable_gcp ? module.gcp[0].archive_bucket_name : ""
+  environment             = var.environment
+  project_name            = var.project_name
+  aws_s3_bucket_arn       = var.enable_aws ? module.aws[0].s3_staging_bucket_arn : ""
+  aws_iam_role_arn        = var.enable_aws ? module.aws[0].databricks_cross_account_role_arn : ""
+  gcp_storage_bucket_name = var.enable_gcp ? module.gcp[0].archive_bucket_name : ""
 }
 
 # -----------------------------------------------------------------------------
