@@ -1,0 +1,12 @@
+# File: terraform/environments/staging/backend.tf.example
+# Description: Example Remote State Backend for Staging Environment
+
+terraform {
+  backend "s3" {
+    bucket         = "foryourservice-tfstate-staging"
+    key            = "environments/staging/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "foryourservice-tflocks-staging"
+    encrypt        = true
+  }
+}
