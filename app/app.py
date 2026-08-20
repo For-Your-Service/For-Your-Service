@@ -1398,20 +1398,28 @@ if nav_selection == "📋 Veteran Intake & Match":
     # EXECUTION: AI MATCHING PIPELINE
     # ------------------------------------------------------------------------
     if launch_btn:
+        print(f"[PIPELINE START] Name: '{full_name}', Email: '{email_addr}', Branch: '{selected_branch}', Rank: '{selected_rank}', MOS: '{mos_input}', Clearance: '{selected_clearance}', Location: '{target_city}, {target_state}'")
         if not full_name or not email_addr or not target_city or not target_state or not resume_text:
+            print("[PIPELINE VALIDATION ERROR] Missing required fields")
             st.error("🚨 Please fill out all required fields (*) or upload a resume before launching the pipeline.")
         elif len(target_state) != 2:
+            print(f"[PIPELINE VALIDATION ERROR] Invalid state code: '{target_state}'")
             st.error("🚨 Target State must be a 2-letter state code (e.g., SC, NC, FL, TX, GA, VA).")
         elif salary_min >= salary_max:
+            print(f"[PIPELINE VALIDATION ERROR] Salary min ({salary_min}) >= max ({salary_max})")
             st.error("🚨 Minimum desired salary must be less than the target salary.")
         elif len(resume_text.strip()) < 50:
+            print(f"[PIPELINE VALIDATION ERROR] Resume text too short ({len(resume_text.strip())} chars)")
             st.error("🚨 Resume text is too short. Please provide a complete resume or military summary (at least 50 characters).")
         else:
             with st.spinner("⚡ Setting AI pipeline in motion: Parsing military experience, evaluating MOS crosswalk, and matching jobs..."):
                 veteran_id = str(uuid.uuid4())
+                print(f"[PIPELINE] Processing veteran_id: {veteran_id}")
                 
                 # 1. Parse Skills
+                print(f"[PIPELINE] Parsing skills from resume ({len(resume_text)} chars) with MOS '{mos_input}'...")
                 extracted = parse_veteran_skills(resume_text, mos_input)
+                print(f"[PIPELINE] Extracted {len(extracted.get('technical_skills', []))} tech skills, {len(extracted.get('leadership_skills', []))} leadership skills, {len(extracted.get('ops_skills', []))} ops skills. Seniority: {extracted.get('seniority')}")
                 
                 # 2. Build Veteran Profile Object
                 veteran_profile = {
@@ -1430,7 +1438,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                     "target_state": target_state,
                     "target_radius": target_radius,
                     "remote_ok": remote_ok,
-                    "relocation": relocate_ok,
+                    "relocate": relocate_ok,
                     "salary_min": salary_min,
                     "salary_max": salary_max,
                     "total_years": extracted["total_years"],
@@ -1443,6 +1451,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 # 3. Store in Unity Catalog if Spark is available
                 if SPARK_AVAILABLE and spark:
                     try:
+                        print("[PIPELINE] Writing veteran profile to Unity Catalog: workspace.fys_silver.veteran_profiles...")
                         profile_df = spark.createDataFrame([{
                             "veteran_id": veteran_id,
                             "name": full_name,
@@ -1461,11 +1470,13 @@ if nav_selection == "📋 Veteran Intake & Match":
                             "created_at": datetime.now()
                         }])
                         profile_df.write.format("delta").mode("append").saveAsTable("workspace.fys_silver.veteran_profiles")
-                    except Exception:
-                        pass
+                        print("[PIPELINE] Successfully wrote profile to Unity Catalog")
+                    except Exception as e:
+                        print(f"[PIPELINE WARNING] Unity Catalog write skipped/failed: {e}")
 
                 # 4. Load Job Postings & Compute Semantic Matches
                 all_jobs = load_cached_scraped_jobs()
+                print(f"[PIPELINE] Loaded {len(all_jobs)} candidate job postings. Running scoring engine...")
                 matches = []
                 for job in all_jobs:
                     score, reasons, factors = calculate_veteran_match_score(job, veteran_profile, extracted)
@@ -1489,6 +1500,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                     return (prio, -clr_pass, -item["match_score"])
 
                 matches = sorted(matches, key=match_sort_key)
+                print(f"[PIPELINE COMPLETE] Generated {len(matches)} ranked matches for {full_name}. Top match: '{matches[0]['title'] if matches else 'N/A'}' ({matches[0]['match_score'] if matches else 0}%)")
                 
                 # 5. Compute Career Readiness & Skill Gap Analysis
                 all_user_skills = extracted["technical_skills"] + extracted["leadership_skills"] + extracted["ops_skills"] + extracted.get("mos_skills", [])
