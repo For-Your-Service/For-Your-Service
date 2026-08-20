@@ -41,11 +41,11 @@ def main():
         return
         
     items = raw_data.get("SearchResult", {}).get("SearchResultItems", [])
-    print(f"\n[✓] Received {len(items)} raw listings.")
+    print(f"\n[OK] Received {len(items)} raw listings.")
     
     # 2. Transform to Bronze Layer Schema
     bronze_records = ingestor.transform_to_bronze(items)
-    print(f"[✓] Transformed {len(bronze_records)} records to workspace.fys_bronze.job_postings format.\n")
+    print(f"[OK] Transformed {len(bronze_records)} records to workspace.fys_bronze.job_postings format.\n")
     
     for idx, job in enumerate(bronze_records[:3], 1):
         print(f"--- [Job #{idx}] ---")
