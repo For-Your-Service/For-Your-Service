@@ -84,7 +84,7 @@ def update_profile():
     with open(README_PATH, "w", encoding="utf-8") as f:
         f.write(final_content)
 
-    print(f"[✓] Successfully updated {README_PATH}")
+    print(f"[OK] Successfully updated {README_PATH}")
 
     # 4. Commit and push
     subprocess.run(["git", "-C", PROFILE_DIR, "add", "README.md"], check=True)
@@ -92,7 +92,7 @@ def update_profile():
     subprocess.run(["git", "-C", PROFILE_DIR, "commit", "-m", commit_msg], check=True)
     subprocess.run(["git", "-C", PROFILE_DIR, "push", "origin", "main"], check=True)
 
-    print("[🚀] Successfully pushed profile update to GitHub!")
+    print("[SUCCESS] Successfully pushed profile update to GitHub!")
 
 if __name__ == "__main__":
     update_profile()
