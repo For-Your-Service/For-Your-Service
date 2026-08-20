@@ -16,12 +16,12 @@ resource "aws_secretsmanager_secret" "fys_secrets" {
 resource "aws_secretsmanager_secret_version" "fys_secrets_default" {
   secret_id = aws_secretsmanager_secret.fys_secrets.id
   secret_string = jsonencode({
-    USAJOBS_API_KEY     = ""
-    USAJOBS_USER_AGENT  = "whall4.wh@gmail.com"
-    JSEARCH_API_KEY     = ""
-    ADZUNA_APP_ID       = ""
-    ADZUNA_APP_KEY      = ""
-    DATABRICKS_TOKEN    = ""
+    USAJOBS_API_KEY    = ""
+    USAJOBS_USER_AGENT = "whall4.wh@gmail.com"
+    JSEARCH_API_KEY    = ""
+    ADZUNA_APP_ID      = ""
+    ADZUNA_APP_KEY     = ""
+    DATABRICKS_TOKEN   = ""
   })
 
   lifecycle {

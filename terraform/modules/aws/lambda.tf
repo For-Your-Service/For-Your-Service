@@ -47,11 +47,11 @@ resource "aws_lambda_function" "match_api" {
 
   environment {
     variables = {
-      ENVIRONMENT         = var.environment
-      DYNAMODB_VETERANS   = var.enable_dynamodb ? aws_dynamodb_table.veterans[0].name : ""
-      DYNAMODB_JOBS       = var.enable_dynamodb ? aws_dynamodb_table.jobs[0].name : ""
-      S3_DATA_BUCKET      = aws_s3_bucket.data_prod.id
-      S3_MODELS_BUCKET    = aws_s3_bucket.models.id
+      ENVIRONMENT       = var.environment
+      DYNAMODB_VETERANS = var.enable_dynamodb ? aws_dynamodb_table.veterans[0].name : ""
+      DYNAMODB_JOBS     = var.enable_dynamodb ? aws_dynamodb_table.jobs[0].name : ""
+      S3_DATA_BUCKET    = aws_s3_bucket.data_prod.id
+      S3_MODELS_BUCKET  = aws_s3_bucket.models.id
     }
   }
 

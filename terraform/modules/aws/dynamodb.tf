@@ -23,9 +23,9 @@ resource "aws_dynamodb_table" "veterans" {
   }
 
   global_secondary_index {
-    name               = "email-index"
-    hash_key           = "email"
-    projection_type    = "ALL"
+    name            = "email-index"
+    hash_key        = "email"
+    projection_type = "ALL"
   }
 
   point_in_time_recovery {
@@ -67,10 +67,10 @@ resource "aws_dynamodb_table" "jobs" {
   }
 
   global_secondary_index {
-    name               = "source-date-index"
-    hash_key           = "source"
-    range_key          = "posted_date"
-    projection_type    = "ALL"
+    name            = "source-date-index"
+    hash_key        = "source"
+    range_key       = "posted_date"
+    projection_type = "ALL"
   }
 
   point_in_time_recovery {

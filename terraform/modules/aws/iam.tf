@@ -86,11 +86,11 @@ resource "aws_iam_role" "databricks_s3_role" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect    = "Allow"
+        Effect = "Allow"
         Principal = {
           AWS = "arn:aws:iam::${var.databricks_aws_account_id}:root"
         }
-        Action    = "sts:AssumeRole"
+        Action = "sts:AssumeRole"
         Condition = {
           StringEquals = {
             "sts:ExternalId" = var.databricks_external_id
@@ -149,8 +149,8 @@ resource "aws_iam_role" "lambda_exec_role" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action    = "sts:AssumeRole"
-        Effect    = "Allow"
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
         Principal = {
           Service = "lambda.amazonaws.com"
         }
