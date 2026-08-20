@@ -1032,7 +1032,7 @@ def calculate_veteran_match_score(
 # ============================================================================
 
 with st.sidebar:
-    st.image("https://img.shields.io/badge/7_Eagle_Group-Veteran_Placement-blue?style=for-the-badge&logo=shield", use_container_width=True)
+    st.image("https://img.shields.io/badge/7_Eagle_Group-Veteran_Placement-blue?style=for-the-badge&logo=shield", width="stretch")
     
     st.markdown("### 🎖️ Veteran Portal Navigation")
     nav_selection = st.radio(
