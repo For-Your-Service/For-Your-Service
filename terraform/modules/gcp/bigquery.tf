@@ -33,45 +33,45 @@ resource "google_bigquery_table" "ingested_jobs" {
 
   schema = jsonencode([
     {
-      name = "job_id",
-      type = "STRING",
-      mode = "REQUIRED",
+      name        = "job_id",
+      type        = "STRING",
+      mode        = "REQUIRED",
       description = "Unique Job ID from source"
     },
     {
-      name = "title",
-      type = "STRING",
-      mode = "REQUIRED",
+      name        = "title",
+      type        = "STRING",
+      mode        = "REQUIRED",
       description = "Job Title"
     },
     {
-      name = "company",
-      type = "STRING",
-      mode = "NULLABLE",
+      name        = "company",
+      type        = "STRING",
+      mode        = "NULLABLE",
       description = "Company Name"
     },
     {
-      name = "source",
-      type = "STRING",
-      mode = "REQUIRED",
+      name        = "source",
+      type        = "STRING",
+      mode        = "REQUIRED",
       description = "Source platform (USAJOBS, JSearch, Adzuna)"
     },
     {
-      name = "location",
-      type = "STRING",
-      mode = "NULLABLE",
+      name        = "location",
+      type        = "STRING",
+      mode        = "NULLABLE",
       description = "Job Location"
     },
     {
-      name = "career_track",
-      type = "STRING",
-      mode = "NULLABLE",
+      name        = "career_track",
+      type        = "STRING",
+      mode        = "NULLABLE",
       description = "Inferred Career Track"
     },
     {
-      name = "ingestion_timestamp",
-      type = "TIMESTAMP",
-      mode = "REQUIRED",
+      name        = "ingestion_timestamp",
+      type        = "TIMESTAMP",
+      mode        = "REQUIRED",
       description = "Timestamp when job was ingested"
     }
   ])

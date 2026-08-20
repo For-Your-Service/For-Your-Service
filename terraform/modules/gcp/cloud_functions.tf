@@ -80,9 +80,9 @@ resource "google_cloudfunctions_function" "veteran_intake" {
   service_account_email = google_service_account.pipeline_sa.email
 
   environment_variables = {
-    ENVIRONMENT     = var.environment
-    PROJECT_ID      = var.project_id
-    ARCHIVE_BUCKET  = google_storage_bucket.archive.name
+    ENVIRONMENT      = var.environment
+    PROJECT_ID       = var.project_id
+    ARCHIVE_BUCKET   = google_storage_bucket.archive.name
     BIGQUERY_DATASET = var.enable_bigquery ? google_bigquery_dataset.fys_analytics[0].dataset_id : ""
   }
 
