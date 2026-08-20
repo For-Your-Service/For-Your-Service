@@ -12,7 +12,7 @@ variable "environment" {
   type        = string
   default     = "dev"
   description = "Deployment environment (dev, staging, prod)"
-  
+
   validation {
     condition     = contains(["dev", "staging", "prod"], var.environment)
     error_message = "Environment must be dev, staging, or prod"
@@ -29,7 +29,7 @@ variable "databricks_external_id" {
   type        = string
   description = "Unique External ID from your Databricks storage credential configuration"
   sensitive   = true
-  
+
   validation {
     condition     = length(var.databricks_external_id) > 0
     error_message = "Databricks External ID must not be empty"

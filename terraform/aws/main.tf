@@ -59,10 +59,10 @@ resource "aws_s3_bucket" "fys_databricks_staging" {
   force_destroy = true
 
   tags = {
-    Project     = "ForYourService"
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = "Free Hall"
+    Project      = "ForYourService"
+    Environment  = var.environment
+    ManagedBy    = "Terraform"
+    Owner        = "Free Hall"
     Organization = "7 Eagle Group"
   }
 }

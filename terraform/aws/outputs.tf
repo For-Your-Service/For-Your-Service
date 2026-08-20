@@ -39,7 +39,7 @@ output "databricks_external_id" {
 }
 
 output "setup_complete" {
-  value = <<-EOT
+  value       = <<-EOT
     ✅ AWS Infrastructure Deployed Successfully!
     
     Next Steps for Databricks Integration:
