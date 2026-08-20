@@ -1,0 +1,12 @@
+# File: terraform/environments/prod/backend.tf.example
+# Description: Example Remote State Backend for Production Environment
+
+terraform {
+  backend "s3" {
+    bucket         = "foryourservice-tfstate-prod"
+    key            = "environments/prod/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "foryourservice-tflocks-prod"
+    encrypt        = true
+  }
+}

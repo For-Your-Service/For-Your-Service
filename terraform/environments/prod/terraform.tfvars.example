@@ -1,0 +1,15 @@
+# File: terraform/environments/prod/terraform.tfvars.example
+# Description: Production Environment Variable Values Template
+
+project_name               = "foryourservice"
+owner_email                = "whall4.wh@gmail.com"
+organization               = "7 Eagle Group"
+aws_region                 = "us-east-1"
+aws_databricks_account_id  = "414351767826"
+aws_databricks_external_id = "fys-pipeline-external-id"
+gcp_project_id             = "for-your-service-prod"
+gcp_region                 = "us-central1"
+databricks_host            = "https://dbc-3e95d032-684c.cloud.databricks.com"
+databricks_token           = "dapi_example_replace_with_token"
+hf_token                   = "hf_example_replace_with_token"
+hf_space_name              = "fys-matching-api"
