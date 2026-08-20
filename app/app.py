@@ -1974,7 +1974,7 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
 st.markdown("---")
 
 with st.expander("⚙️ Backend Architecture & Data Engineering Tech Stack Summary"):
-    st.markdown("""
+    st.markdown(r"""
     ### 🏗️ Backend System Architecture & Data Engineering Stack
     **Lead Architect & Developer:** **Free Hall** — *Cloud Engineer • DevOps Analyst • Data Architect* (18Z / 18F, US Army Special Forces, Ret.)
 
