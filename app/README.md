@@ -219,9 +219,9 @@ CREATE TABLE IF NOT EXISTS workspace.fys_silver.veteran_profiles (
 
 ## 📞 Support
 
-**Developer**: Free Hall (whall4.wh@gmail.com)  
-**Organization**: 7 Eagle Group  
-**Project**: For Your Service - AI-Powered Veteran Placement  
+**Developer**: Free Hall (whall4.wh@gmail.com)
+**Organization**: 7 Eagle Group
+**Project**: For Your Service - AI-Powered Veteran Placement
 **GitHub**: https://github.com/For-Your-Service/For-Your-Service
 
 ---
