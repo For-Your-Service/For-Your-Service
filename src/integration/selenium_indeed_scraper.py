@@ -1,4 +1,4 @@
-﻿"""
+"""
 Selenium Indeed Scraper
 
 Bypasses 403 blocks using headless Chrome automation.
