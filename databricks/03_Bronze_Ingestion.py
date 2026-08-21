@@ -26,7 +26,7 @@ expected_schema = StructType([
     StructField("veteran_id", StringType(), False),
     StructField("intake_id", StringType(), False),
     StructField("timestamp", StringType(), False),
-    
+
     # Demographics (anonymized)
     StructField("demographics", StructType([
         StructField("birth_year", IntegerType()),
@@ -39,21 +39,21 @@ expected_schema = StructType([
         ])),
         StructField("email_hash", StringType())
     ])),
-    
+
     # Military service (nested struct)
     StructField("military_service", MapType(StringType(), StringType())),
-    
+
     # Skills, education, certifications (arrays/maps)
     StructField("skills", MapType(StringType(), StringType())),
     StructField("education", ArrayType(MapType(StringType(), StringType()))),
     StructField("certifications", ArrayType(MapType(StringType(), StringType()))),
-    
+
     # Job preferences
     StructField("job_preferences", MapType(StringType(), StringType())),
-    
+
     # Transition info
     StructField("transition_info", MapType(StringType(), StringType())),
-    
+
     # Metadata
     StructField("metadata", MapType(StringType(), StringType())),
     StructField("processing", MapType(StringType(), StringType()))
@@ -90,7 +90,7 @@ except:
     print("\nTo create it, we need either:")
     print("  1. GCS credentials configured to read from gs://fys-veteran-intake-raw/")
     print("  2. Or sample data uploaded for testing")
-    
+
     # For now, show the Auto Loader pattern that will be used:
     print("\n" + "="*70)
     print("📝 AUTO LOADER PATTERN (When GCS is configured)")
