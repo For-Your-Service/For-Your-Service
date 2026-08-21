@@ -1,4 +1,4 @@
-﻿class PipelineHealthTriad:
+class PipelineHealthTriad:
     def __init__(self, ingestion_source, build_engine, output_sink):
         self.in_bound = ingestion_source
         self.build_engine = build_engine
