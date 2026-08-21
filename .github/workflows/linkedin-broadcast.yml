@@ -2,8 +2,8 @@ name: Daily LinkedIn Telemetry Broadcast
 
 on:
   schedule:
-    # Runs daily at 09:00 UTC
-    - cron: '0 9 * * *'
+    # Runs daily at 08:00 UTC (03:00 EST)
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 jobs:
@@ -27,6 +27,6 @@ jobs:
       - name: Broadcast Dynamic Telemetry to LinkedIn
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
-          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN || secrets.LINKEDIN_PERSON_URN }}
         run: |
-          python scripts/broadcast_linkedin_telemetry.py
+          python scripts/broadcast_linkedin_update.py
