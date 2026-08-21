@@ -1,0 +1,35 @@
+name: Deploy Databricks App (fys-matching-app)
+
+on:
+  workflow_dispatch: # Allows manual 1-click re-deployment
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - 'scripts/deploy_databricks_app.py'
+
+jobs:
+  deploy-to-databricks:
+    name: Sync Code & Deploy Databricks App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Databricks SDK
+        run: |
+          pip install databricks-sdk requests
+
+      - name: Deploy App to Databricks Serverless Apps
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          python scripts/deploy_databricks_app.py
