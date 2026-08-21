@@ -19,8 +19,8 @@ This document tracks all testing performed on the veteran intake pipeline to ens
 
 ## Test 1: Basic Cloud Function Deployment Test
 
-**Date:** August 5, 2026  
-**Tester:** Development Team  
+**Date:** August 5, 2026
+**Tester:** Development Team
 **Environment:** GCP Project `for-your-service-2026`
 
 ### Test Configuration
@@ -136,8 +136,8 @@ gsutil cat gs://fys-veteran-intake-raw/intake/<filename>.json
 
 ### ✅ Status: **SUCCESS** 🎉
 
-**Test Executed:** August 5, 2026 at 19:02:12 UTC  
-**Tester:** Development Team (Cloud Shell)  
+**Test Executed:** August 5, 2026 at 19:02:12 UTC
+**Tester:** Development Team (Cloud Shell)
 **Result:** All checks passed
 
 ---
