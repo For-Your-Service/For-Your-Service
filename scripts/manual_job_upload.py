@@ -272,13 +272,13 @@ def quick_demo():
         description="""
         We are seeking a Senior DevOps Engineer with strong Kubernetes and AWS experience.
         Work with our hybrid cloud infrastructure supporting manufacturing operations.
-        
+
         Requirements:
         - 5+ years DevOps experience
         - Kubernetes, Docker, AWS
         - Terraform, Python, CI/CD
         - Strong automation skills
-        
+
         Veterans encouraged to apply!
         """,
         salary_range="$125K-$155K",
