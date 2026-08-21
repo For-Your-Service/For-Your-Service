@@ -255,7 +255,7 @@ test_secrets_setup()
 
 ```python
 # Hardcoded API key
-RAPIDAPI_KEY = "17b44289e8mshad90d5f48c66ab8p1b2d12jsn5c62a950b550"
+RAPIDAPI_KEY = "YOUR_RAPIDAPI_KEY_NEVER_HARDCODE"
 
 # Committed to git → public → compromised
 headers = {"X-RapidAPI-Key": RAPIDAPI_KEY}
