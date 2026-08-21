@@ -1,8 +1,8 @@
 # Multi-Cloud Terraform Deployment & Adoption Guide 🇺🇸 ☁️
 
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service  
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
+**Project:** For Your Service
 
 ---
 
@@ -36,13 +36,13 @@ This guide details how to manage, spin up, and maintain all cloud infrastructure
 
 ## 🛡️ How We Avoid Breaking the Working Build
 
-1. **Decoupled Module Design:**  
+1. **Decoupled Module Design:**
    Each cloud provider is completely encapsulated in `terraform/modules/<provider>`. Provider failures or missing credentials in one cloud do not block deployment of another.
 
-2. **Zero-Downtime Resource Importing:**  
+2. **Zero-Downtime Resource Importing:**
    Existing resources already running in production (e.g. S3 buckets, Databricks tables) are linked to Terraform using `terraform import` without destroying or recreating them.
 
-3. **Feature Toggles (`enable_*` flags):**  
+3. **Feature Toggles (`enable_*` flags):**
    Control which clouds or services are active:
    ```hcl
    enable_aws         = true
@@ -51,10 +51,10 @@ This guide details how to manage, spin up, and maintain all cloud infrastructure
    enable_huggingface = true
    ```
 
-4. **Isolated State per Environment:**  
+4. **Isolated State per Environment:**
    Separate state files for `dev`, `staging`, and `prod` prevent accidental modifications across stages.
 
-5. **Dry-Run Plan Inspection:**  
+5. **Dry-Run Plan Inspection:**
    Always run `terraform plan` to confirm `0 to destroy` before running `terraform apply`.
 
 ---
