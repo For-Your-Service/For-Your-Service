@@ -1,7 +1,7 @@
 # 🔑 API Registration Guide - For Your Service
 
-**Time Required:** ~15 minutes  
-**Cost:** $0 (all FREE)  
+**Time Required:** ~15 minutes
+**Cost:** $0 (all FREE)
 **Email:** whall4.wh@gmail.com
 
 ---
@@ -10,7 +10,7 @@
 
 ### Why First?
 - Easiest registration
-- Instant approval  
+- Instant approval
 - 1M+ job listings
 - Most valuable for MVP
 
