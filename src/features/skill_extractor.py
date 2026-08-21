@@ -1,4 +1,4 @@
-﻿from typing import Dict
+from typing import Dict
 
 """
 Extract and normalize skills from job descriptions
