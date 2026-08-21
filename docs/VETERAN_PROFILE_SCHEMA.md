@@ -196,7 +196,7 @@ CREATE TABLE veterans (
     zip VARCHAR(10),
     willing_to_relocate BOOLEAN DEFAULT FALSE,
     remote_preference VARCHAR(20),
-    
+
     -- Military
     military_branch VARCHAR(50),
     mos_afsc VARCHAR(100),
@@ -207,18 +207,18 @@ CREATE TABLE veterans (
     clearance_level VARCHAR(20),
     clearance_status VARCHAR(20),
     deployments INTEGER,
-    
+
     -- Professional
     total_civilian_years INTEGER,
     current_title VARCHAR(255),
     current_company VARCHAR(255),
     seniority_level VARCHAR(20),
-    
+
     -- Preferences
     salary_min INTEGER,
     salary_max INTEGER,
     work_authorization VARCHAR(50),
-    
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -226,6 +226,6 @@ CREATE TABLE veterans (
 
 ---
 
-**Created:** August 10, 2026  
-**Author:** William Free Hall <whall4.wh@gmail.com>  
+**Created:** August 10, 2026
+**Author:** William Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
