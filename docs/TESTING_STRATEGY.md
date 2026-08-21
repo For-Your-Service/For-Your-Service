@@ -67,7 +67,7 @@ def test_write_to_bronze_layer():
         'source': 'test'
     }])
     test_df.write.mode('append').saveAsTable('veteran_intake.bronze_jobs')
-    
+
     result = spark.table('veteran_intake.bronze_jobs') \
         .filter("job_id = 'TEST001'") \
         .count()
@@ -79,14 +79,14 @@ def test_write_to_bronze_layer():
 ```python
 def test_veteran_matching_pipeline():
     """Full pipeline: intake → bronze → silver → gold → matches"""
-    
+
     # 1. Ingest test data
     test_veteran = create_test_veteran()
     test_jobs = create_test_jobs(count=100)
-    
+
     # 2. Run matching engine
     matches = run_matching_engine(test_veteran, test_jobs)
-    
+
     # 3. Validate results
     assert len(matches) == 10  # Top 10
     assert matches[0]['score'] >= matches[-1]['score']  # Descending order
@@ -102,16 +102,16 @@ def test_matching_latency():
     start = time.time()
     matches = generate_matches(veteran_profile, job_pool=10000)
     duration = time.time() - start
-    
+
     assert duration < 1.0  # Must complete in <1 second
     assert len(matches) == 10
 
 def test_api_rate_limiting():
     limiter = RateLimiter(rate_per_minute=100)
-    
+
     # Attempt 150 requests
     allowed = sum(1 for _ in range(150) if limiter.allow_request())
-    
+
     assert allowed <= 100  # Should block excess requests
 ```
 
@@ -180,5 +180,5 @@ pytest tests/unit/test_matching_engine.py -v
 
 ---
 
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
