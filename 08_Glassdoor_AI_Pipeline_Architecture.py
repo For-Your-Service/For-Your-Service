@@ -50,7 +50,7 @@
 # MAGIC ## Pipeline Stages
 # MAGIC
 # MAGIC 1. **Bronze**: Raw job data from Indeed/LinkedIn/Adzuna
-# MAGIC 2. **Silver**: MOS-enriched + clearance-tagged jobs  
+# MAGIC 2. **Silver**: MOS-enriched + clearance-tagged jobs
 # MAGIC 3. **Gold**: Vector embeddings + semantic search index
 # MAGIC 4. **RAG**: Context-aware veteran matching assistant
 # MAGIC
@@ -244,7 +244,7 @@ print("   3. Test access with: spark.read.json('s3://...')")
 # MAGIC
 # MAGIC **They should match**:
 # MAGIC * 18F → DevOps Engineer, Solutions Architect, Security Engineer
-# MAGIC * 35T → Network Engineer, Systems Administrator, Cybersecurity Analyst  
+# MAGIC * 35T → Network Engineer, Systems Administrator, Cybersecurity Analyst
 # MAGIC * 68W → Registered Nurse, Emergency Medical Technician, Healthcare Administrator
 # MAGIC
 # MAGIC ---
@@ -266,7 +266,7 @@ print("   3. Test access with: spark.read.json('s3://...')")
 # MAGIC   clearance_level STRING COMMENT 'Typical clearance: TS/SCI, Secret, Confidential',
 # MAGIC   seniority_mapping STRING COMMENT 'E1-E4=Junior, E5-E7=Mid, E8-E9=Senior, O1-O3=Mid, O4+=Senior',
 # MAGIC   description STRING COMMENT 'Full operational description for embedding'
-# MAGIC ) 
+# MAGIC )
 # MAGIC COMMENT 'Military to civilian skill translation knowledge base';
 # MAGIC ```
 # MAGIC
@@ -282,7 +282,7 @@ print("   3. Test access with: spark.read.json('s3://...')")
 # MAGIC         "title": "Special Forces Intelligence Sergeant",
 # MAGIC         "civilian_roles": [
 # MAGIC             "DevOps Engineer",
-# MAGIC             "Solutions Architect", 
+# MAGIC             "Solutions Architect",
 # MAGIC             "Cloud Engineer",
 # MAGIC             "Site Reliability Engineer",
 # MAGIC             "Security Engineer",
@@ -300,12 +300,12 @@ print("   3. Test access with: spark.read.json('s3://...')")
 # MAGIC         ],
 # MAGIC         "clearance_level": "TS/SCI",
 # MAGIC         "seniority_mapping": "E7-E8 (18 years) = Senior/Lead level",
-# MAGIC         "description": """Special Forces Intelligence Sergeant (18F) responsible for 
-# MAGIC         intelligence collection, analysis, and dissemination in support of special 
-# MAGIC         operations. Manages tactical and strategic intelligence operations, oversees 
-# MAGIC         team of intelligence analysts, coordinates with joint/coalition forces, 
-# MAGIC         maintains TS/SCI clearance. Expert in SIGINT, HUMINT, geospatial intelligence, 
-# MAGIC         counterintelligence operations. Leads small teams in high-pressure, ambiguous 
+# MAGIC         "description": """Special Forces Intelligence Sergeant (18F) responsible for
+# MAGIC         intelligence collection, analysis, and dissemination in support of special
+# MAGIC         operations. Manages tactical and strategic intelligence operations, oversees
+# MAGIC         team of intelligence analysts, coordinates with joint/coalition forces,
+# MAGIC         maintains TS/SCI clearance. Expert in SIGINT, HUMINT, geospatial intelligence,
+# MAGIC         counterintelligence operations. Leads small teams in high-pressure, ambiguous
 # MAGIC         environments requiring rapid decision-making and technical innovation."""
 # MAGIC     }
 # MAGIC ]
@@ -431,7 +431,7 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 def match_veteran_to_jobs(veteran_profile: dict, top_k: int = 10) -> pd.DataFrame:
     """
     Glassdoor-style AI assistant for veteran job matching.
-    
+
     Args:
         veteran_profile: Dict with keys:
             - name: str
@@ -443,31 +443,31 @@ def match_veteran_to_jobs(veteran_profile: dict, top_k: int = 10) -> pd.DataFram
             - salary_min: int
             - salary_max: int
         top_k: Number of top matches to return
-    
+
     Returns:
         DataFrame with ranked job matches and explanations
     """
-    
+
     print(f"\n👤 Matching veteran: {veteran_profile['name']}")
     print(f"   📍 Location: {veteran_profile['target_city']}, {veteran_profile['target_state']}")
     print(f"   🎖️ MOS: {veteran_profile['mos_code']}")
     print(f"   🔐 Clearance: {veteran_profile['clearance_level']}")
-    
+
     # Step 1: Look up MOS translation
     print("\n🔍 Step 1: Translating military experience to civilian skills...")
-    
-    mos_query = f"""{veteran_profile['mos_code']} {veteran_profile.get('military_branch', '')} 
+
+    mos_query = f"""{veteran_profile['mos_code']} {veteran_profile.get('military_branch', '')}
     {veteran_profile['years_experience']} years experience {veteran_profile['clearance_level']}"""
-    
+
     mos_embedding = model.encode([mos_query])[0]
-    
+
     # Search MOS translation index
     mos_results = vsc.get_index("workspace.fys_gold.mos_embeddings_index").similarity_search(
         query_vector=mos_embedding.tolist(),
         columns=["mos_code", "title", "civilian_roles", "core_skills", "clearance_level"],
         num_results=3
     )
-    
+
     if mos_results and 'result' in mos_results and 'data_array' in mos_results['result']:
         top_mos = mos_results['result']['data_array'][0]
         civilian_roles = top_mos[2]  # civilian_roles column
@@ -478,10 +478,10 @@ def match_veteran_to_jobs(veteran_profile: dict, top_k: int = 10) -> pd.DataFram
         print("⚠️ No MOS match found, using generic profile")
         civilian_roles = ["Software Engineer", "DevOps Engineer"]
         core_skills = ["Python", "AWS", "Linux"]
-    
+
     # Step 2: Build enriched veteran profile for embedding
     print("\n🧠 Step 2: Generating veteran profile embedding...")
-    
+
     veteran_text = f"""
     Veteran Profile:
     - Name: {veteran_profile['name']}
@@ -493,58 +493,58 @@ def match_veteran_to_jobs(veteran_profile: dict, top_k: int = 10) -> pd.DataFram
     - Location: {veteran_profile['target_city']}, {veteran_profile['target_state']}
     - Salary Range: ${veteran_profile['salary_min']:,} - ${veteran_profile['salary_max']:,}
     """
-    
+
     veteran_embedding = model.encode([veteran_text])[0]
-    
+
     # Step 3: Search job embeddings index
     print("\n🔍 Step 3: Searching {top_k} best matching jobs...")
-    
+
     job_results = vsc.get_index("workspace.fys_gold.job_embeddings_index").similarity_search(
         query_vector=veteran_embedding.tolist(),
-        columns=["job_id", "title", "company", "location", "salary_min", "salary_max", 
+        columns=["job_id", "title", "company", "location", "salary_min", "salary_max",
                  "clearance_required", "description"],
         num_results=top_k * 3,  # Get extra for filtering
         filters={
             "location": f"{veteran_profile['target_city']}, {veteran_profile['target_state']}"
         }
     )
-    
+
     # Step 4: Post-filter and rank
     print("\n🎯 Step 4: Applying clearance and salary filters...")
-    
+
     if not job_results or 'result' not in job_results:
         print("❌ No jobs found matching criteria")
         return pd.DataFrame()
-    
+
     jobs_df = pd.DataFrame(
         job_results['result']['data_array'],
-        columns=["job_id", "title", "company", "location", "salary_min", 
+        columns=["job_id", "title", "company", "location", "salary_min",
                  "salary_max", "clearance_required", "description", "similarity_score"]
     )
-    
+
     # Filter by clearance (match or lower)
     clearance_hierarchy = {"None": 0, "Confidential": 1, "Secret": 2, "TS": 3, "TS/SCI": 4}
     veteran_clearance_level = clearance_hierarchy.get(veteran_profile['clearance_level'], 0)
-    
+
     jobs_df['clearance_level'] = jobs_df['clearance_required'].map(
         lambda x: clearance_hierarchy.get(x, 0)
     )
     jobs_df = jobs_df[jobs_df['clearance_level'] <= veteran_clearance_level]
-    
+
     # Filter by salary
     jobs_df = jobs_df[
         (jobs_df['salary_min'] >= veteran_profile['salary_min'] * 0.8) &  # Allow 20% below
         (jobs_df['salary_max'] <= veteran_profile['salary_max'] * 1.2)    # Allow 20% above
     ]
-    
+
     # Take top K after filtering
     jobs_df = jobs_df.head(top_k)
-    
+
     print(f"✅ Found {len(jobs_df)} matching jobs")
-    
+
     # Step 5: Generate explanations (Glassdoor-style)
     print("\n📝 Step 5: Generating match explanations...")
-    
+
     def generate_explanation(row):
         reasons = []
         if row['similarity_score'] > 0.85:
@@ -556,10 +556,10 @@ def match_veteran_to_jobs(veteran_profile: dict, top_k: int = 10) -> pd.DataFram
         if row['salary_min'] >= veteran_profile['salary_min']:
             reasons.append(f"💰 Meets salary target (${row['salary_min']:,} - ${row['salary_max']:,})")
         return " | ".join(reasons)
-    
+
     jobs_df['match_explanation'] = jobs_df.apply(generate_explanation, axis=1)
-    
-    return jobs_df[['title', 'company', 'location', 'salary_min', 'salary_max', 
+
+    return jobs_df[['title', 'company', 'location', 'salary_min', 'salary_max',
                     'clearance_required', 'similarity_score', 'match_explanation']]
 
 print("\n" + "="*70)
@@ -602,12 +602,12 @@ print("="*70)
 # Run the matching function
 try:
     matches = match_veteran_to_jobs(free_hall_profile, top_k=10)
-    
+
     if len(matches) > 0:
         print("\n" + "="*70)
         print("🏆 TOP 10 VETERAN JOB MATCHES")
         print("="*70)
-        
+
         for idx, row in matches.iterrows():
             print(f"\n{idx + 1}. {row['title']} @ {row['company']}")
             print(f"   📍 {row['location']}")
@@ -621,7 +621,7 @@ try:
         print("   2. No jobs in target location (Greenville, SC)")
         print("   3. Job embeddings table is empty")
         print("\n💡 Run the Silver → Gold pipeline first to populate embeddings.")
-        
+
 except Exception as e:
     print(f"\n❌ Error running RAG pipeline: {e}")
     print("\n🔧 Troubleshooting steps:")
