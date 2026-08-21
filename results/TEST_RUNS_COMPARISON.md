@@ -6,12 +6,12 @@ This document tracks test runs of the job matching pipeline with different appli
 ---
 
 ## Test Run #1: Free Hall (Developer/Original Test)
-**Date:** August 7, 2026  
-**Location:** Greenville, SC  
-**Experience:** 18 years (Army Green Beret, Team Sergeant)  
-**Target Roles:** DevOps Engineer, Solutions Architect, Cloud Engineer  
-**Salary Range:** $120,000 - $180,000  
-**Top Skills:** AWS, Azure, Kubernetes, Docker, Terraform, Python  
+**Date:** August 7, 2026
+**Location:** Greenville, SC
+**Experience:** 18 years (Army Green Beret, Team Sergeant)
+**Target Roles:** DevOps Engineer, Solutions Architect, Cloud Engineer
+**Salary Range:** $120,000 - $180,000
+**Top Skills:** AWS, Azure, Kubernetes, Docker, Terraform, Python
 
 ### Results
 - **Jobs Scraped:** [See job_matching_results_2026-08-07.md]
@@ -22,13 +22,13 @@ This document tracks test runs of the job matching pipeline with different appli
 ---
 
 ## Test Run #2: Stephen D. Porterfield
-**Date:** August 7, 2026  
-**Run ID:** test_20260807_180856  
-**Location:** Kingwood, TX  
-**Experience:** 4 years (mid-level)  
-**Target Roles:** Azure, Cloud Engineer, DevOps, Infrastructure as Code  
-**Salary Range:** $90,000 - $140,000  
-**Top Skills:** Go, Rust, Azure, Kubernetes, Terraform, GitHub, CI/CD, DevOps  
+**Date:** August 7, 2026
+**Run ID:** test_20260807_180856
+**Location:** Kingwood, TX
+**Experience:** 4 years (mid-level)
+**Target Roles:** Azure, Cloud Engineer, DevOps, Infrastructure as Code
+**Salary Range:** $90,000 - $140,000
+**Top Skills:** Go, Rust, Azure, Kubernetes, Terraform, GitHub, CI/CD, DevOps
 
 ### Results Summary
 - **Jobs Scraped:** 17 (Kingwood, TX area)
@@ -55,11 +55,11 @@ This document tracks test runs of the job matching pipeline with different appli
 - **Recommendations:** 1 (use more action verbs)
 
 ### Observations
-✅ Pipeline successfully processed resume with employment dates  
-✅ Auto-detection correctly identified location and years of experience  
-✅ Semantic matching found relevant tech roles  
-⚠️ Seniority detection marked as "Junior" despite 4 years experience (algorithm threshold)  
-⚠️ Some top matches are construction/manufacturing vs. pure tech roles  
+✅ Pipeline successfully processed resume with employment dates
+✅ Auto-detection correctly identified location and years of experience
+✅ Semantic matching found relevant tech roles
+⚠️ Seniority detection marked as "Junior" despite 4 years experience (algorithm threshold)
+⚠️ Some top matches are construction/manufacturing vs. pure tech roles
 
 ### Files
 - PDF Report: `results/pdfs/Stephen_D._Porterfield_Job_Match_Report_20260807_181814.pdf`
@@ -90,5 +90,5 @@ This document tracks test runs of the job matching pipeline with different appli
 
 ---
 
-**Last Updated:** August 7, 2026  
+**Last Updated:** August 7, 2026
 **Maintained by:** 7 Eagle Group Development Team
