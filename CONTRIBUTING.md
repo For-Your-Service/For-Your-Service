@@ -4,7 +4,7 @@ Thank you for your interest in contributing! This project helps military veteran
 
 ## Partner Organization
 
-**7 Eagle Group** - Veteran placement organization  
+**7 Eagle Group** - Veteran placement organization
 **Project Lead:** William Free Hall <whall4.wh@gmail.com>
 
 ## How to Contribute
