@@ -26,4 +26,3 @@ TBLPROPERTIES (
 CREATE INDEX IF NOT EXISTS idx_job_location ON main.fys_bronze.job_postings(location);
 CREATE INDEX IF NOT EXISTS idx_posted_date ON main.fys_bronze.job_postings(posted_date);
 
-
