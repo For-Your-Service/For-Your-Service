@@ -1,4 +1,4 @@
-﻿# Import the built-in json module to handle serialization of Python dictionaries to JSON strings and files.
+# Import the built-in json module to handle serialization of Python dictionaries to JSON strings and files.
 import json
 
 # Import the built-in os module to interact with the underlying operating system and read environment variables.
