@@ -1243,6 +1243,24 @@ if nav_selection == "📋 Veteran Intake & Match":
     </div>
     """, unsafe_allow_html=True)
 
+    # Mission Statement & Value Comparison
+    with st.expander("🎖️ The Mission & What For Your Service Does (Why We Built This)", expanded=False):
+        st.markdown("""
+        **The Mission**  
+        The military gives you elite operational experience. Civilian tech applications don't always know how to read it. Raw service records, MOS codes, and leadership tours sit in static PDFs rather than working for you. **For Your Service** learns the patterns in your background, maps your service profile against live industry demand, and surfaces what matters: targeted role matching, resume translation, and automated transition insights.
+
+        ---
+
+        **What For Your Service Does**
+
+        | Without For Your Service | With For Your Service |
+        | :--- | :--- |
+        | Translating your military experience into resume bullet points is manual and frustrating | Automated MOS/AFSC-to-industry role mapping and tensor matching |
+        | Federal and defense job boards are scattered and hard to track | Live integrated USAJOBS and defense contractor feed ingestion |
+        | Finding the right technical team or mentor is a guessing game | Data-driven introductions based on peer transition paths |
+        | Tracking your application pipeline is messy | Unified pipeline tracking through Databricks and a local dashboard |
+        """)
+
     # Mobile & Quick Demo Selector (Accessible on all screens)
     with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):
         m_col1, m_col2, m_col3, m_col4 = st.columns(4)

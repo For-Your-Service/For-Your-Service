@@ -2,16 +2,27 @@
 
 AI-powered veteran job matching platform using neural networks.
 
-## Mission
+## The Mission
 
-Help veterans transition from military to civilian careers by matching their unique skills and experience with the right opportunities.
+The military gives you elite operational experience. Civilian tech applications don't always know how to read it. Raw service records, MOS codes, and leadership tours sit in static PDFs rather than working for you. **For Your Service** learns the patterns in your background, maps your service profile against live industry demand, and surfaces what matters: targeted role matching, resume translation, and automated transition insights.
 
-**Partner:** 7 Eagle Group
+**Partner:** 7 Eagle Group  
 **Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
 
 ---
 
-## 🎯 What It Does
+## What For Your Service Does
+
+| Without For Your Service | With For Your Service |
+| :--- | :--- |
+| Translating your military experience into resume bullet points is manual and frustrating | Automated MOS/AFSC-to-industry role mapping and tensor matching |
+| Federal and defense job boards are scattered and hard to track | Live integrated USAJOBS and defense contractor feed ingestion |
+| Finding the right technical team or mentor is a guessing game | Data-driven introductions based on peer transition paths |
+| Tracking your application pipeline is messy | Unified pipeline tracking through Databricks and a local dashboard |
+
+---
+
+## 🎯 Key Features
 
 - **Streamlit Web Interface:** Production-ready veteran intake portal with real-time job matching across all 6 military branches.
 - **Live Impact & Visitor Analytics:** Real-time 4-card metric tracker showing active service members connected and AI matches run.
@@ -26,7 +37,29 @@ Help veterans transition from military to civilian careers by matching their uni
 
 ## 🚀 Quick Start & Hosting Options
 
-### 1. Enterprise Cloud Host: Databricks Apps (Serverless)
+### 1. Clone & Setup (Local Development)
+```bash
+git clone https://github.com/For-Your-Service/For-Your-Service.git
+cd For-Your-Service
+python3.12 -m venv .venv
+# On Linux/macOS:
+source .venv/bin/activate
+# On Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+
+pip install -e "."
+pip install -r app/requirements.txt
+```
+
+### 2. Launch the Streamlit Portal
+```bash
+streamlit run app/app.py
+```
+Open **`http://localhost:8501`** (or `http://192.168.50.203:8501` for LAN) in your browser.
+
+---
+
+### 3. Enterprise Cloud Host: Databricks Apps (Serverless)
 The production veteran intake portal is deployed serverless on Databricks Apps:
 * **Live App URL:** [https://fys-matching-app-7474643734871839.aws.databricksapps.com](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
 * **Databricks Workspace:** `https://dbc-3e95d032-684c.cloud.databricks.com`
@@ -35,24 +68,7 @@ The production veteran intake portal is deployed serverless on Databricks Apps:
 
 ---
 
-### 2. Run the Streamlit Veteran Portal (100% Free & Local)
-The fastest way to run and test the platform offline:
-```bash
-# Clone and enter repo
-git clone https://github.com/For-Your-Service/For-Your-Service.git
-cd For-Your-Service
-
-# Install app dependencies
-pip install -r app/requirements.txt
-
-# Launch the Streamlit Portal
-streamlit run app/app.py
-```
-Open **`http://localhost:8501`** (or `http://192.168.50.203:8501` for LAN) in your browser.
-
----
-
-### 3. Deploy 24/7 to Streamlit Community Cloud (100% Free)
+### 4. Deploy 24/7 to Streamlit Community Cloud (100% Free)
 1. Go to **[share.streamlit.io](https://share.streamlit.io)** and log in with GitHub.
 2. Click **"New app"**.
 3. Select `For-Your-Service/For-Your-Service`, branch `main`, and main file path `app/app.py`.
@@ -62,13 +78,13 @@ See [docs/STREAMLIT_GUIDE.md](docs/STREAMLIT_GUIDE.md) and [app/README.md](app/R
 
 ---
 
-### 4. Deploy to Hugging Face Spaces (Free CPU Tier)
+### 5. Deploy to Hugging Face Spaces (Free CPU Tier)
 1. Go to **[huggingface.co/spaces](https://huggingface.co/spaces)** → Create new Space (Docker SDK).
 2. Uses [`huggingface/Dockerfile`](huggingface/Dockerfile) and [`huggingface/app.py`](huggingface/app.py) (FastAPI backend on port 7860).
 
 ---
 
-### 5. Set Up Data Ingestion & API Keys (Databricks / Cloud)
+### 6. Set Up Data Ingestion & API Keys (Databricks / Cloud)
 Follow [docs/API_QUICKSTART.md](docs/API_QUICKSTART.md) to register for:
 - USAJOBS API
 - JSearch (RapidAPI)
@@ -169,9 +185,9 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📧 Contact
 
-**Free Hall**
-Email: whall4.wh@gmail.com
-Organization: 7 Eagle Group
+**Free Hall**  
+Email: whall4.wh@gmail.com  
+Organization: 7 Eagle Group  
 GitHub: https://github.com/For-Your-Service
 
 ---
