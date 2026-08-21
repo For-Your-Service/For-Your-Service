@@ -24,7 +24,7 @@ async def ingest_candidate(payload: CandidatePayload):
         bucket = client.bucket("fys-landing-dev")
         blob = bucket.blob(f"candidates/{payload.candidate_id}.json")
         blob.upload_from_string(payload.model_dump_json(), content_type="application/json")
-        
+
         return {
             "status": "success",
             "message": f"Candidate {payload.candidate_id} ingested and stored successfully.",
