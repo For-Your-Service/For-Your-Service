@@ -33,16 +33,16 @@ def handle_api_error(response, provider):
 ```python
 def validate_veteran_profile(profile):
     errors = []
-    
+
     if not profile.get('military_branch'):
         errors.append("Missing military_branch")
-    
+
     if not profile.get('clearance_level'):
         errors.append("Missing clearance_level")
-    
+
     if not profile.get('target_location'):
         errors.append("Missing target_location")
-    
+
     if errors:
         raise ValidationError(f"Profile incomplete: {', '.join(errors)}")
 ```
@@ -89,16 +89,16 @@ def send_to_dlq(record, error, source):
         'error': str(error),
         'retry_count': record.get('retry_count', 0)
     }
-    
+
     spark.createDataFrame([dlq_record]).write \
         .mode('append') \
         .saveAsTable('veteran_intake.dead_letter_queue')
-    
+
     # Alert on high DLQ volume
     dlq_count = spark.table('veteran_intake.dead_letter_queue') \
         .filter(F.col('timestamp') > F.current_date()) \
         .count()
-    
+
     if dlq_count > 100:
         send_slack_alert(f"⚠️ DLQ has {dlq_count} records today")
 ```
@@ -113,14 +113,14 @@ class CircuitBreaker:
         self.timeout = timeout
         self.last_failure_time = None
         self.state = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
-    
+
     def call(self, func, *args, **kwargs):
         if self.state == "OPEN":
             if time.time() - self.last_failure_time > self.timeout:
                 self.state = "HALF_OPEN"
             else:
                 raise CircuitBreakerOpen(f"Circuit open for {func.__name__}")
-        
+
         try:
             result = func(*args, **kwargs)
             self.on_success()
@@ -128,11 +128,11 @@ class CircuitBreaker:
         except Exception as e:
             self.on_failure()
             raise e
-    
+
     def on_success(self):
         self.failure_count = 0
         self.state = "CLOSED"
-    
+
     def on_failure(self):
         self.failure_count += 1
         self.last_failure_time = time.time()
@@ -153,7 +153,7 @@ def log_error(error_type, message, context):
         'context': json.dumps(context),
         'stack_trace': traceback.format_exc()
     }
-    
+
     spark.createDataFrame([error_record]).write \
         .mode('append') \
         .saveAsTable('veteran_intake.error_log')
@@ -176,5 +176,5 @@ def log_error(error_type, message, context):
 
 ---
 
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
