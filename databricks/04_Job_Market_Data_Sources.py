@@ -1576,11 +1576,11 @@ print("="*70)
 # ==========================================
 
 # Adzuna API (https://developer.adzuna.com/) ✅ CONFIGURED
-ADZUNA_APP_ID = "ea966e18"  # Your Adzuna App ID
-ADZUNA_API_KEY = "d59477241791ac51feb5df5b2b676654"  # Your Adzuna API Key
+ADZUNA_APP_ID = os.getenv("ADZUNA_APP_ID", "ea966e18")  # Your Adzuna App ID
+ADZUNA_API_KEY = os.getenv("ADZUNA_API_KEY", "")  # Your Adzuna API Key
 
 # USAJobs API (https://developer.usajobs.gov/) ✅ CONFIGURED
-USAJOBS_API_KEY = "Sy03OfX4/5qL70b+vVT42P7bTysIjAUT//nkUe4tEHU="  # Your USAJobs Authorization Key
+USAJOBS_API_KEY = os.getenv("USAJOBS_API_KEY", "")  # Your USAJobs Authorization Key
 USAJOBS_USER_AGENT = "whall4.wh@gmail.com"  # Your email
 
 # ==========================================
