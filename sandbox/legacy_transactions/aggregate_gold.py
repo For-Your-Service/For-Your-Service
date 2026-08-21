@@ -1,4 +1,4 @@
-﻿# Import SparkSession to initialize the distributed processing context.
+# Import SparkSession to initialize the distributed processing context.
 from pyspark.sql import SparkSession
 
 # Import aggregation and date functions from pyspark.sql.functions to build metrics.
@@ -10,7 +10,7 @@ def run_gold_aggregations():
 
     # Define the source path of the trusted Silver Delta table.
     silver_table_path = "dbfs:/mnt/lakehouse/silver/transactions"
-    
+
     # Load cleaned records from the Silver Delta table into a Spark DataFrame.
     df_silver = spark.read.format("delta").load(silver_table_path)
 
@@ -25,10 +25,10 @@ def run_gold_aggregations():
 
     # Define the target Delta storage path for the Gold analytical layer.
     gold_table_path = "dbfs:/mnt/lakehouse/gold/transaction_summary"
-    
+
     # Write the aggregated analytical metrics into the Gold Delta table using overwrite mode.
     df_gold.write.format("delta").mode("overwrite").save(gold_table_path)
-    
+
     # Print a confirmation message indicating successful Gold tier aggregation.
     print(f"Successfully generated analytical metrics into Gold Delta table at {gold_table_path}")
 
