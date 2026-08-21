@@ -57,5 +57,5 @@ if response.status_code == 429:
 * Alumni filters for service academies
 
 ---
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
