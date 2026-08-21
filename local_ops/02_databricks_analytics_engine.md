@@ -1,4 +1,4 @@
-﻿# [DONE] Databricks Analytics Engine - PySpark vector transform, tensor match, Delta exporter
+# [DONE] Databricks Analytics Engine - PySpark vector transform, tensor match, Delta exporter
 
 ## 🏗️ Architecture & Execution Story: COMPLETED
 Engineered the core PySpark analytics transformation pipeline designed to consume structured payloads, execute vector operations, and load clean data into Delta Lake tables.
