@@ -2,8 +2,8 @@
 
 # Production Data Pipeline Status
 
-**Project:** For Your Service  
-**Organization:** 7 Eagle Group  
+**Project:** For Your Service
+**Organization:** 7 Eagle Group
 **Author:** Free Hall <whall4.wh@gmail.com>
 
 ---
@@ -150,9 +150,9 @@ result = ingest_from_uc_volume_files()
 
 ## 📈 Progress Metrics
 
-**Commits Today:** 41  
-**Total Commits:** 392  
-**Production Assets:** 3 (Volume, Schema, Pipeline)  
+**Commits Today:** 41
+**Total Commits:** 392
+**Production Assets:** 3 (Volume, Schema, Pipeline)
 **Real Jobs Ingested:** 0 (awaiting credentials or manual upload)
 
 ---
@@ -175,8 +175,8 @@ result = ingest_from_uc_volume_files()
 
 ## 📞 Contact
 
-**Free Hall**  
-Email: whall4.wh@gmail.com  
-Organization: 7 Eagle Group  
+**Free Hall**
+Email: whall4.wh@gmail.com
+Organization: 7 Eagle Group
 Role: Army Special Forces (Ret.) → DevOps/Cloud Engineer
 
