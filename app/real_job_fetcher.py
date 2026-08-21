@@ -45,15 +45,15 @@ def detect_job_category(title: str, description: str) -> str:
     """Categorize job based on title and description keywords."""
     combined = f"{title} {description}".lower()
     title_lower = title.lower()
-    
+
     for cat, kws in CATEGORY_KEYWORDS.items():
         if any(kw in title_lower for kw in kws):
             return cat
-            
+
     for cat, kws in CATEGORY_KEYWORDS.items():
         if any(kw in combined for kw in kws):
             return cat
-            
+
     return "General Operations"
 
 
@@ -87,14 +87,14 @@ def fetch_from_the_muse() -> List[Dict]:
                 company = item.get("company", {}).get("name", "Partner Employer")
                 locs = item.get("locations", [])
                 loc_name = locs[0].get("name", "USA / Remote") if locs else "USA / Remote"
-                
+
                 parts = loc_name.split(",")
                 city = parts[0].strip() if len(parts) > 0 else "Remote"
                 state = parts[1].strip()[:2] if len(parts) > 1 else "US"
-                
+
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
-                
+
                 landing_url = item.get("refs", {}).get("landing_page", "https://www.themuse.com")
                 jobs.append({
                     "job_id": f"muse_{item.get('id', hash(title))}",
@@ -133,14 +133,14 @@ def fetch_from_jobicy() -> List[Dict]:
                 desc_clean = clean_html_text(desc_html)
                 company = item.get("companyName", "Company")
                 loc_name = item.get("jobGeo", "USA / Remote")
-                
+
                 sal_min = float(item.get("annualSalaryMin") or 80000.0)
                 sal_max = float(item.get("annualSalaryMax") or 135000.0)
-                
+
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
                 job_url = item.get("url", "https://jobicy.com")
-                
+
                 jobs.append({
                     "job_id": f"jobicy_{item.get('id', hash(title))}",
                     "title": title,
@@ -178,11 +178,11 @@ def fetch_from_remotive() -> List[Dict]:
                 desc_clean = clean_html_text(desc_html)
                 company = item.get("company_name", "Company")
                 loc_name = item.get("candidate_required_location", "USA / Remote")
-                
+
                 category = detect_job_category(title, desc_clean)
                 skills = extract_skills_from_text(f"{title} {desc_clean}")
                 job_url = item.get("url", "https://remotive.com")
-                
+
                 jobs.append({
                     "job_id": f"remotive_{item.get('id', hash(title))}",
                     "title": title,
@@ -212,7 +212,7 @@ def fetch_all_live_jobs(force_refresh: bool = False) -> List[Dict]:
     If cached within 6 hours and not forced, return cached jobs.
     """
     os.makedirs(CACHE_DIR, exist_ok=True)
-    
+
     if not force_refresh and CACHE_FILE.exists():
         try:
             mtime = os.path.getmtime(CACHE_FILE)
@@ -224,12 +224,12 @@ def fetch_all_live_jobs(force_refresh: bool = False) -> List[Dict]:
                         return cached
         except Exception:
             pass
-            
+
     all_jobs = []
     all_jobs.extend(fetch_from_the_muse())
     all_jobs.extend(fetch_from_jobicy())
     all_jobs.extend(fetch_from_remotive())
-    
+
     seen = set()
     unique_jobs = []
     for j in all_jobs:
@@ -237,7 +237,7 @@ def fetch_all_live_jobs(force_refresh: bool = False) -> List[Dict]:
         if key not in seen:
             seen.add(key)
             unique_jobs.append(j)
-            
+
     if unique_jobs:
         try:
             with open(CACHE_FILE, "w", encoding="utf-8") as f:
@@ -245,12 +245,12 @@ def fetch_all_live_jobs(force_refresh: bool = False) -> List[Dict]:
         except Exception:
             pass
         return unique_jobs
-        
+
     if CACHE_FILE.exists():
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             pass
-            
+
     return []
