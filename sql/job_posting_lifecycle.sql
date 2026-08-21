@@ -1,7 +1,7 @@
 -- Track job posting lifecycle and fill rates
 -- How long jobs stay open (indicator of difficulty filling)
 
-SELECT 
+SELECT
   company,
   COUNT(*) as total_postings,
   AVG(DATEDIFF(CURRENT_DATE, TO_DATE(created_date))) as avg_days_open,
