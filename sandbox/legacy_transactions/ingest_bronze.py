@@ -1,4 +1,4 @@
-﻿# Import SparkSession from pyspark.sql to initialize our distributed processing engine context.
+# Import SparkSession from pyspark.sql to initialize our distributed processing engine context.
 from pyspark.sql import SparkSession
 
 def run_bronze_ingestion():
@@ -16,7 +16,7 @@ def run_bronze_ingestion():
 
     # Write the uncleaned raw DataFrame into Delta format using append mode so historical records are preserved.
     df_raw.write.format("delta").mode("append").save(bronze_table_path)
-    
+
     # Print a confirmation message to standard output indicating successful raw ingestion.
     print(f"Successfully ingested raw records into Bronze Delta table at {bronze_table_path}")
 
