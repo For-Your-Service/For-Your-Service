@@ -72,5 +72,5 @@ headers = {'Authorization': f'Basic {auth_string}'}
 
 ---
 
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
