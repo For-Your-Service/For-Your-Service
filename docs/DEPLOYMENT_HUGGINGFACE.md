@@ -3,9 +3,9 @@
 ## Overview
 FREE deployment strategy for For Your Service platform using Hugging Face Spaces.
 
-**Cost:** $0/month  
-**Compute:** 2 vCPU, 16 GB RAM (free tier)  
-**Uptime:** 48-hour sleep after inactivity  
+**Cost:** $0/month
+**Compute:** 2 vCPU, 16 GB RAM (free tier)
+**Uptime:** 48-hour sleep after inactivity
 
 ---
 
@@ -64,13 +64,13 @@ with st.form("veteran_profile"):
     mos = st.text_input("MOS/AFSC")
     skills = st.text_area("Skills (comma-separated)")
     location = st.text_input("Target Location")
-    
+
     submitted = st.form_submit_button("Find Matches")
-    
+
     if submitted:
         # Run matching algorithm
         matches = find_matches(name, skills, location, model)
-        
+
         # Display results
         st.subheader(f"Top Matches for {name}")
         st.dataframe(matches)
@@ -191,14 +191,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Download from Databricks
         run: |
           # Databricks API call to export data
           curl -H "Authorization: Bearer ${{ secrets.DATABRICKS_TOKEN }}" \
                "${{ secrets.DATABRICKS_HOST }}/api/2.0/dbfs/read?path=/exports/jobs.csv" \
                -o data/jobs.csv
-      
+
       - name: Commit to repo
         run: |
           git config user.name "GitHub Actions"
@@ -213,24 +213,24 @@ jobs:
 ## Limitations of FREE Tier
 
 ### What Works:
-✅ Inference on pre-trained models  
-✅ Small-scale data (< 100 MB)  
-✅ Basic web interface  
-✅ Resume parsing  
-✅ Vector similarity search  
+✅ Inference on pre-trained models
+✅ Small-scale data (< 100 MB)
+✅ Basic web interface
+✅ Resume parsing
+✅ Vector similarity search
 
 ### What Doesn't Work:
-❌ Real-time database access  
-❌ Large-scale training  
-❌ High-traffic loads  
-❌ Persistent storage (resets after 48h sleep)  
-❌ Background jobs  
+❌ Real-time database access
+❌ Large-scale training
+❌ High-traffic loads
+❌ Persistent storage (resets after 48h sleep)
+❌ Background jobs
 
 ---
 
 ## Migration Path to Production
 
-**When to migrate:** 
+**When to migrate:**
 - > 1,000 users
 - Need real-time data
 - Require 99.9% uptime
@@ -293,6 +293,6 @@ def log_interaction(veteran_name, num_matches):
 
 ---
 
-**Created:** August 10, 2026  
-**Author:** William Free Hall <whall4.wh@gmail.com>  
+**Created:** August 10, 2026
+**Author:** William Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
