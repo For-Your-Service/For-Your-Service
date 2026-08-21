@@ -22,7 +22,12 @@ def deploy_app():
     print(f" Deploying {APP_NAME} to Databricks Apps")
     print("=================================================================")
 
-    host = os.getenv("DATABRICKS_SERVER_HOSTNAME", os.getenv("DATABRICKS_HOST", DEFAULT_HOST))
+    env_host = (os.getenv("DATABRICKS_SERVER_HOSTNAME") or os.getenv("DATABRICKS_HOST") or "").strip()
+    if not env_host or "your-databricks-instance" in env_host or "example" in env_host:
+        host = DEFAULT_HOST
+    else:
+        host = env_host
+
     if not host.startswith("https://"):
         host = f"https://{host}"
 
