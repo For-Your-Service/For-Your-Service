@@ -1,4 +1,4 @@
-﻿# Resume Test Manifest: William Free Hall
+# Resume Test Manifest: William Free Hall
 # Protocol: Gunslinger Clean-Core (The man in black fled across the desert...)
 # Target Sandbox: Project Test Sector 19
 
