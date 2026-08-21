@@ -1,4 +1,4 @@
-﻿# [IN PROGRESS] GCP Cloud Function Deployment - Deploy src/ingestion to GCP and create gcs bucket
+# [IN PROGRESS] GCP Cloud Function Deployment - Deploy src/ingestion to GCP and create gcs bucket
 
 ## 🏗️ Architecture & Execution Roadmap: IN PROGRESS
 Provisions the live serverless infrastructure on Google Cloud Platform, creating the GCS storage bucket and deploying the ingestion service code.
