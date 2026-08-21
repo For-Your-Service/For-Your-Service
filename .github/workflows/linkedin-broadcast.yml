@@ -2,8 +2,8 @@ name: Daily LinkedIn Telemetry Broadcast
 
 on:
   schedule:
-    # Runs daily at 08:00 UTC (03:00 EST)
-    - cron: '0 8 * * *'
+    # Runs daily at 21:00 UTC (4:00 PM Central / 5:00 PM Eastern)
+    - cron: '0 21 * * *'
   workflow_dispatch:
 
 jobs:
