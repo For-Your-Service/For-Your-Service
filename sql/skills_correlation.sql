@@ -2,7 +2,7 @@
 -- Which skills commonly appear together
 
 WITH skill_matrix AS (
-  SELECT 
+  SELECT
     job_id,
     CASE WHEN LOWER(description) LIKE '%aws%' THEN 1 ELSE 0 END as has_aws,
     CASE WHEN LOWER(description) LIKE '%azure%' THEN 1 ELSE 0 END as has_azure,
@@ -14,19 +14,19 @@ WITH skill_matrix AS (
   FROM workspace.fys_bronze.job_postings
   WHERE scrape_date >= CURRENT_DATE - INTERVAL 7 DAYS
 )
-SELECT 
+SELECT
   'AWS + Kubernetes' as skill_pair,
   SUM(has_aws * has_k8s) as co_occurrence,
   ROUND(100.0 * SUM(has_aws * has_k8s) / SUM(has_aws), 2) as pct_of_aws_jobs
 FROM skill_matrix
 UNION ALL
-SELECT 
+SELECT
   'AWS + Terraform',
   SUM(has_aws * has_terraform),
   ROUND(100.0 * SUM(has_aws * has_terraform) / SUM(has_aws), 2)
 FROM skill_matrix
 UNION ALL
-SELECT 
+SELECT
   'Docker + Kubernetes',
   SUM(has_docker * has_k8s),
   ROUND(100.0 * SUM(has_docker * has_k8s) / SUM(has_docker), 2)
