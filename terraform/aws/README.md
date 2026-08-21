@@ -1,7 +1,7 @@
 # AWS Infrastructure for For Your Service
 
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service - Veteran Job Matching Platform  
+**Organization:** 7 Eagle Group
+**Project:** For Your Service - Veteran Job Matching Platform
 **Maintainer:** Free Hall (whall4.wh@gmail.com)
 
 ## Overview
@@ -358,6 +358,6 @@ aws iam list-attached-role-policies --role-name fys-databricks-cross-account-rol
 
 ---
 
-**Last Updated:** 2026-08-13  
-**Maintained By:** Free Hall <whall4.wh@gmail.com>  
+**Last Updated:** 2026-08-13
+**Maintained By:** Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
