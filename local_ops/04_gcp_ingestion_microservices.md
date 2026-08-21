@@ -1,4 +1,4 @@
-﻿# [DONE] GCP Ingestion Microservices - Built main.py, anonymizer.py, and validator.py
+# [DONE] GCP Ingestion Microservices - Built main.py, anonymizer.py, and validator.py
 
 ## 🏗️ Architecture & Execution Story: COMPLETED
 Developed the serverless ingestion microservice responsible for handling external API/HTTP webhooks, sanitizing payloads, and preparing them for cloud storage.
