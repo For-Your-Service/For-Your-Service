@@ -1,7 +1,7 @@
 -- Regional coverage analysis
 -- For Your Service - 7 Eagle Group
 
-SELECT 
+SELECT
   location.city,
   location.state,
   COUNT(*) as job_count,
