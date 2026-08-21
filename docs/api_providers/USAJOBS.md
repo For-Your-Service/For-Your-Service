@@ -66,5 +66,5 @@ USAJobs supports veteran hiring preferences:
 * Top Secret/SCI
 
 ---
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
