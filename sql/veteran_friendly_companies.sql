@@ -1,7 +1,7 @@
 -- Identify veteran-friendly companies
 -- Based on hiring patterns and job descriptions
 
-SELECT 
+SELECT
   company,
   COUNT(*) as total_postings,
   SUM(CASE WHEN LOWER(description) LIKE '%veteran%' THEN 1 ELSE 0 END) as veteran_mentioned,
