@@ -50,7 +50,7 @@ def test_databricks():
     print_header("3. Testing Databricks API Connectivity")
     host = os.getenv("DATABRICKS_SERVER_HOSTNAME", "dbc-3e95d032-684c.cloud.databricks.com")
     token = os.getenv("DATABRICKS_TOKEN", "")
-    
+
     if not token:
         print("ℹ️  DATABRICKS_TOKEN not set in environment (skipping live request)")
         return None
@@ -88,14 +88,14 @@ def main():
     print("================================================================")
     print(" For Your Service - Multi-Cloud Pre-Flight Connectivity Check")
     print("================================================================")
-    
+
     results = {
         "AWS": test_aws(),
         "GCP": test_gcp(),
         "Databricks": test_databricks(),
         "Hugging Face": test_huggingface()
     }
-    
+
     print_header("Summary of Pre-Flight Checks")
     for cloud, status in results.items():
         status_str = "✅ PASS" if status is True else ("⚠️  SKIPPED" if status is None else "❌ FAIL")
