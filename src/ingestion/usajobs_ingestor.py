@@ -24,7 +24,7 @@ class USAJobsIngestor:
     ):
         self.api_key = api_key or os.getenv("USAJOBS_API_KEY")
         self.email = email or os.getenv("USAJOBS_EMAIL", "whall4.wh@gmail.com")
-        
+
         if not self.api_key:
             print("[!] WARNING: USAJOBS_API_KEY is not set. API calls will require an active key.")
 
@@ -47,7 +47,7 @@ class USAJobsIngestor:
     ) -> Optional[Dict[str, Any]]:
         """
         Fetch live job postings from USAJOBS API
-        
+
         Args:
             keyword: Job title or skill keywords
             location: City, State or Zip (e.g. 'Greenville, SC')
@@ -55,7 +55,7 @@ class USAJobsIngestor:
             results_per_page: Batch size (1-500)
             page: Pagination index
             hiring_path: Filter by hiring path ('vet', 'fed', 'public', etc.)
-            
+
         Returns:
             JSON response payload or None on error
         """
@@ -64,11 +64,11 @@ class USAJobsIngestor:
             "ResultsPerPage": str(results_per_page),
             "Page": str(page)
         }
-        
+
         if location:
             params["LocationName"] = location
             params["Radius"] = str(radius)
-            
+
         if hiring_path:
             params["HiringPath"] = hiring_path
 
@@ -80,9 +80,9 @@ class USAJobsIngestor:
                 params=params,
                 timeout=15
             )
-            
+
             print(f"[{response.status_code}] USAJOBS Search API Response")
-            
+
             if response.status_code == 200:
                 data = response.json()
                 items = data.get("SearchResult", {}).get("SearchResultItems", [])
@@ -95,9 +95,9 @@ class USAJobsIngestor:
                 print(" [ERROR 429] Rate Limit Exceeded (USAJOBS allows up to 250 requests/day).")
             else:
                 print(f" [ERROR {response.status_code}] {response.text}")
-                
+
             return None
-            
+
         except requests.exceptions.RequestException as e:
             print(f"[!] Network / Request Error: {e}")
             return None
@@ -110,11 +110,11 @@ class USAJobsIngestor:
         import re
         bronze_records = []
         now_ts = datetime.now()
-        
+
         for item in raw_items:
             descriptor = item.get("MatchedObjectDescriptor", {})
             position_id = item.get("MatchedObjectId") or descriptor.get("PositionID", "unknown")
-            
+
             # Extract compensation
             remuneration = descriptor.get("PositionRemuneration", [{}])
             sal_min = 0.0
@@ -125,13 +125,13 @@ class USAJobsIngestor:
                     sal_max = float(remuneration[0].get("MaximumRange", 0.0) or 0.0)
                 except (ValueError, TypeError):
                     sal_min, sal_max = 0.0, 0.0
-                    
+
             # Extract location
             locations = descriptor.get("PositionLocation", [{}])
             loc_display = descriptor.get("PositionLocationDisplay")
             if not loc_display and locations:
                 loc_display = locations[0].get("LocationName", "United States")
-                
+
             # Extract clearance
             clearance_code = descriptor.get("UserArea", {}).get("Details", {}).get("SecurityClearance", "None")
 
@@ -172,5 +172,5 @@ class USAJobsIngestor:
                 "ingestion_date": now_ts.strftime("%Y-%m-%d")
             }
             bronze_records.append(record)
-            
+
         return bronze_records
