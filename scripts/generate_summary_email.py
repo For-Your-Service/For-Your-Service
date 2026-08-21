@@ -9,7 +9,7 @@ def generate_summary_html(spark):
 
     # Yesterday's stats
     stats_df = spark.sql("""
-        SELECT 
+        SELECT
           source,
           COUNT(*) as job_count,
           COUNT(DISTINCT company) as companies,
@@ -39,7 +39,7 @@ def generate_summary_html(spark):
             <p><strong>Status:</strong> ✅ Successful</p>
             <p><strong>Total Jobs:</strong> {sum(row['job_count'] for row in stats)}</p>
         </div>
-        
+
         <h2>Per-Source Breakdown</h2>
         <table>
             <tr>
