@@ -1,6 +1,6 @@
 # 🎖️ Streamlit Veteran Portal Guide & Deployment Notes
 ## For Your Service — 7 Eagle Group
-**Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)  
+**Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
 **Repository:** [https://github.com/For-Your-Service/For-Your-Service](https://github.com/For-Your-Service/For-Your-Service)
 
 ---
