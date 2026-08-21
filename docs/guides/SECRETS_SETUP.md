@@ -61,10 +61,10 @@ except:
 
 ## Current Status
 
-✅ Adzuna - Keys registered, working in scraper  
-⏸️ USAJobs - Pending registration  
-⏸️ BLS - Pending registration  
-⏸️ CareerOneStop - Pending registration  
+✅ Adzuna - Keys registered, working in scraper
+⏸️ USAJobs - Pending registration
+⏸️ BLS - Pending registration
+⏸️ CareerOneStop - Pending registration
 
 ---
 
