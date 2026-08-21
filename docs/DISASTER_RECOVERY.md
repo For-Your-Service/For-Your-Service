@@ -98,11 +98,11 @@ Ensure business continuity for For Your Service platform.
 
 ## Contact Information
 
-**Primary:** Free Hall  
-Email: whall4.wh@gmail.com  
+**Primary:** Free Hall
+Email: whall4.wh@gmail.com
 Phone: [TBD]
 
-**Backup:** 7 Eagle Group Operations  
+**Backup:** 7 Eagle Group Operations
 Email: [TBD]
 
 ---
