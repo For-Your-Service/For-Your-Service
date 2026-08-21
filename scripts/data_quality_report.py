@@ -19,7 +19,7 @@ def generate_report(spark):
 
     # Completeness checks
     completeness_df = spark.sql("""
-        SELECT 
+        SELECT
           ROUND(100.0 * SUM(CASE WHEN title IS NOT NULL AND title != '' THEN 1 ELSE 0 END) / COUNT(*), 2) as title_completeness,
           ROUND(100.0 * SUM(CASE WHEN company IS NOT NULL AND company != '' THEN 1 ELSE 0 END) / COUNT(*), 2) as company_completeness,
           ROUND(100.0 * SUM(CASE WHEN salary.min IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*), 2) as salary_completeness,
