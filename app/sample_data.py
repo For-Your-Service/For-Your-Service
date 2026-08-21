@@ -15,6 +15,136 @@ from typing import List, Dict, Optional
 # Realistic veteran-friendly job postings across diverse career categories and national metro hubs
 SAMPLE_JOBS: List[Dict] = [
     # -------------------------------------------------------------------------
+    # CLOUD, CYBERSECURITY, AI & ENTERPRISE TECHNOLOGY
+    # -------------------------------------------------------------------------
+    {
+        "job_id": "fys_cloud_fl_001",
+        "title": "Principal Cloud & AI Solutions Architect / DevSecOps Lead",
+        "company": "Eglin Corridor Defense & Cloud Systems / 7 Eagle Partner",
+        "city": "Niceville",
+        "state": "FL",
+        "location_display": "Niceville / Eglin AFB, FL (Hybrid / Local)",
+        "salary_min": 155000,
+        "salary_max": 210000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "7 Eagle Defense Partner Network",
+        "category": "Cloud & DevOps Engineering",
+        "description": "Architect mission-critical multi-cloud environments (AWS, Azure, GCP), Databricks Lakehouse pipelines, Unity Catalog governance, and automated Kubernetes (GKE/EKS) clusters. Military Special Operations, intelligence, and senior technical leaders strongly preferred.",
+        "skills": ["aws", "azure", "gcp", "databricks", "pyspark", "kubernetes", "terraform", "python", "docker", "ci/cd", "devsecops", "zero-trust"],
+        "url": "https://7eaglegroup.com/veteran-jobs/niceville-cloud-architect",
+        "application_url": "https://7eaglegroup.com/veteran-jobs/niceville-cloud-architect"
+    },
+    {
+        "job_id": "fys_cloud_fl_002",
+        "title": "Senior Cloud Infrastructure & DevSecOps Engineer",
+        "company": "Northwest Florida Enterprise Systems",
+        "city": "Niceville",
+        "state": "FL",
+        "location_display": "Niceville, FL (Onsite / Hybrid)",
+        "salary_min": 130000,
+        "salary_max": 175000,
+        "clearance_required": "Public Trust",
+        "veteran_friendly": True,
+        "source": "7 Eagle Commercial Partner Network",
+        "category": "Cloud & DevOps Engineering",
+        "description": "Deploy automated CI/CD pipelines, containerized microservices, Terraform infrastructure-as-code, and cloud monitoring across enterprise workloads. Open to veterans transitioning from military communications, systems administration, and software engineering.",
+        "skills": ["aws", "kubernetes", "terraform", "docker", "python", "linux", "ci/cd", "devops", "cloud architecture"],
+        "url": "https://7eaglegroup.com/veteran-jobs/fl-devops-engineer",
+        "application_url": "https://7eaglegroup.com/veteran-jobs/fl-devops-engineer"
+    },
+    {
+        "job_id": "fys_tech_001",
+        "title": "Lead Cloud Solutions Architect",
+        "company": "Lockheed Martin",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC (Hybrid / Remote)",
+        "salary_min": 145000,
+        "salary_max": 185000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "USAJobs / Defense Partners",
+        "category": "Cloud & DevOps Engineering",
+        "description": "Lead enterprise cloud modernization using AWS, Kubernetes, Terraform, and Databricks. Design zero-trust data architectures and mission-critical pipelines. Prior military communications, cyber, or intelligence experience valued.",
+        "skills": ["aws", "kubernetes", "terraform", "python", "databricks", "docker", "ci/cd", "linux", "cloud architecture", "leadership"],
+        "url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1",
+        "application_url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1"
+    },
+    {
+        "job_id": "fys_tech_tx_001",
+        "title": "Senior Cloud DevOps & Platform Architect",
+        "company": "Raytheon / RTX Technologies",
+        "city": "Dallas",
+        "state": "TX",
+        "location_display": "Dallas, TX (Richardson / Hybrid)",
+        "salary_min": 150000,
+        "salary_max": 195000,
+        "clearance_required": "Secret",
+        "veteran_friendly": True,
+        "source": "Defense Partner Network",
+        "category": "Cloud & DevOps Engineering",
+        "description": "Architect and deploy secure automated CI/CD pipelines, Kubernetes container clusters, and AWS/Azure cloud infrastructure for defense programs. Military IT, cyber, and technical leaders strongly prioritized.",
+        "skills": ["aws", "kubernetes", "docker", "terraform", "python", "linux", "ci/cd", "devops", "cloud architecture"],
+        "url": "https://careers.rtx.com/global/en/search-results?keywords=Cloud+Architect+Dallas",
+        "application_url": "https://careers.rtx.com/global/en/search-results?keywords=Cloud+Architect+Dallas"
+    },
+    {
+        "job_id": "fys_tech_fl_001",
+        "title": "Defense Cloud Infrastructure Engineer",
+        "company": "L3Harris Technologies",
+        "city": "Tampa",
+        "state": "FL",
+        "location_display": "Tampa, FL (MacDill AFB Corridor)",
+        "salary_min": 138000,
+        "salary_max": 178000,
+        "clearance_required": "Top Secret / SCI",
+        "veteran_friendly": True,
+        "source": "Defense Partner Network",
+        "category": "Cloud & DevOps Engineering",
+        "description": "Deploy and support classified tactical cloud infrastructure, containerized microservices, and secure networks for USCENTCOM/USSOCOM missions.",
+        "skills": ["aws", "kubernetes", "linux", "docker", "terraform", "python", "networking", "cybersecurity", "ci/cd"],
+        "url": "https://careers.l3harris.com/search-jobs/Tampa%20FL",
+        "application_url": "https://careers.l3harris.com/search-jobs/Tampa%20FL"
+    },
+    {
+        "job_id": "fys_tech_002",
+        "title": "Senior Cyber Threat Intelligence Analyst",
+        "company": "Booz Allen Hamilton",
+        "city": "Columbia",
+        "state": "SC",
+        "location_display": "Columbia, SC / Remote",
+        "salary_min": 115000,
+        "salary_max": 150000,
+        "clearance_required": "Top Secret / SCI",
+        "veteran_friendly": True,
+        "source": "JSearch API",
+        "category": "Cybersecurity & Intelligence",
+        "description": "Conduct all-source cyber threat intelligence analysis, threat actor profiling, and link analysis. Utilize Palantir, i2 Analyst's Notebook, and SIEM tools to deliver executive-level intelligence briefings to defense stakeholders.",
+        "skills": ["cybersecurity", "threat intelligence", "palantir", "i2 analyst notebook", "link analysis", "siem", "python", "incident response", "executive briefings"],
+        "url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst",
+        "application_url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst"
+    },
+    {
+        "job_id": "fys_tech_003",
+        "title": "Systems Administrator / Network Support Lead",
+        "company": "Fluor Corporation",
+        "city": "Greenville",
+        "state": "SC",
+        "location_display": "Greenville, SC",
+        "salary_min": 85000,
+        "salary_max": 118000,
+        "clearance_required": "Public Trust",
+        "veteran_friendly": True,
+        "source": "Adzuna API",
+        "category": "Information Technology",
+        "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, Cisco network switches, and cloud access. Direct translation for 25B, 25U, Navy IT, 0671, 1D7X1.",
+        "skills": ["windows server", "active directory", "cisco", "linux", "tcp/ip", "powershell", "virtualization", "networking", "troubleshooting"],
+        "url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville",
+        "application_url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville"
+    },
+
+    # -------------------------------------------------------------------------
     # OPERATIONS, PROGRAM MANAGEMENT & LEADERSHIP
     # -------------------------------------------------------------------------
     {
@@ -269,100 +399,6 @@ SAMPLE_JOBS: List[Dict] = [
     },
 
     # -------------------------------------------------------------------------
-    # IT, CLOUD, CYBERSECURITY & INTELLIGENCE
-    # -------------------------------------------------------------------------
-    {
-        "job_id": "fys_tech_001",
-        "title": "Lead Cloud Solutions Architect",
-        "company": "Lockheed Martin",
-        "city": "Greenville",
-        "state": "SC",
-        "location_display": "Greenville, SC (Hybrid / Remote)",
-        "salary_min": 145000,
-        "salary_max": 185000,
-        "clearance_required": "Secret",
-        "veteran_friendly": True,
-        "source": "USAJobs / Defense Partners",
-        "category": "Information Technology & Cloud",
-        "description": "Lead enterprise cloud modernization using AWS, Kubernetes, Terraform, and Databricks. Design zero-trust data architectures and mission-critical pipelines. Prior military communications, cyber, or intelligence experience valued.",
-        "skills": ["aws", "kubernetes", "terraform", "python", "databricks", "docker", "ci/cd", "linux", "cloud architecture", "leadership"],
-        "url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1",
-        "application_url": "https://www.lockheedmartinjobs.com/search-jobs/Cloud%20Solutions%20Architect%20Greenville/694/1"
-    },
-    {
-        "job_id": "fys_tech_tx_001",
-        "title": "Senior Cloud DevOps & Platform Architect",
-        "company": "Raytheon / RTX Technologies",
-        "city": "Dallas",
-        "state": "TX",
-        "location_display": "Dallas, TX (Richardson / Hybrid)",
-        "salary_min": 150000,
-        "salary_max": 195000,
-        "clearance_required": "Secret",
-        "veteran_friendly": True,
-        "source": "Defense Partner Network",
-        "category": "Information Technology & Cloud",
-        "description": "Architect and deploy secure automated CI/CD pipelines, Kubernetes container clusters, and AWS/Azure cloud infrastructure for defense programs. Military IT, cyber, and technical leaders strongly prioritized.",
-        "skills": ["aws", "kubernetes", "docker", "terraform", "python", "linux", "ci/cd", "devops", "cloud architecture"],
-        "url": "https://careers.rtx.com/global/en/search-results?keywords=Cloud+Architect+Dallas",
-        "application_url": "https://careers.rtx.com/global/en/search-results?keywords=Cloud+Architect+Dallas"
-    },
-    {
-        "job_id": "fys_tech_fl_001",
-        "title": "Defense Cloud Infrastructure Engineer",
-        "company": "L3Harris Technologies",
-        "city": "Tampa",
-        "state": "FL",
-        "location_display": "Tampa, FL (MacDill AFB Corridor)",
-        "salary_min": 138000,
-        "salary_max": 178000,
-        "clearance_required": "Top Secret / SCI",
-        "veteran_friendly": True,
-        "source": "Defense Partner Network",
-        "category": "Information Technology & Cloud",
-        "description": "Deploy and support classified tactical cloud infrastructure, containerized microservices, and secure networks for USCENTCOM/USSOCOM missions.",
-        "skills": ["aws", "kubernetes", "linux", "docker", "terraform", "python", "networking", "cybersecurity", "ci/cd"],
-        "url": "https://careers.l3harris.com/search-jobs/Tampa%20FL",
-        "application_url": "https://careers.l3harris.com/search-jobs/Tampa%20FL"
-    },
-    {
-        "job_id": "fys_tech_002",
-        "title": "Senior Cyber Threat Intelligence Analyst",
-        "company": "Booz Allen Hamilton",
-        "city": "Columbia",
-        "state": "SC",
-        "location_display": "Columbia, SC / Remote",
-        "salary_min": 115000,
-        "salary_max": 150000,
-        "clearance_required": "Top Secret / SCI",
-        "veteran_friendly": True,
-        "source": "JSearch API",
-        "category": "Intelligence & Analytics",
-        "description": "Conduct all-source cyber threat intelligence analysis, threat actor profiling, and link analysis. Utilize Palantir, i2 Analyst's Notebook, and SIEM tools to deliver executive-level intelligence briefings to defense stakeholders.",
-        "skills": ["cybersecurity", "threat intelligence", "palantir", "i2 analyst notebook", "link analysis", "siem", "python", "incident response", "executive briefings"],
-        "url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst",
-        "application_url": "https://www.boozallen.com/careers/search-results.html?keyword=Cyber+Threat+Intelligence+Analyst"
-    },
-    {
-        "job_id": "fys_tech_003",
-        "title": "Systems Administrator / Network Support Lead",
-        "company": "Fluor Corporation",
-        "city": "Greenville",
-        "state": "SC",
-        "location_display": "Greenville, SC",
-        "salary_min": 85000,
-        "salary_max": 118000,
-        "clearance_required": "Public Trust",
-        "veteran_friendly": True,
-        "source": "Adzuna API",
-        "category": "Information Technology",
-        "description": "Manage enterprise Windows/Linux server infrastructure, Active Directory, Cisco network switches, and cloud access. Direct translation for 25B, 25U, Navy IT, 0671, 1D7X1.",
-        "skills": ["windows server", "active directory", "cisco", "linux", "tcp/ip", "powershell", "virtualization", "networking", "troubleshooting"],
-        "url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville",
-        "application_url": "https://www.fluor.com/careers/job-search?keyword=Systems+Administrator+Greenville"
-    },
-
-    # -------------------------------------------------------------------------
     # CONSTRUCTION, HEAVY INFRASTRUCTURE & COMBAT ENGINEERING
     # -------------------------------------------------------------------------
     {
@@ -549,7 +585,7 @@ Information Systems Technician (IT) | U.S. Navy (2021 – Present)
 def generate_localized_partner_jobs(city: str, state: str, track: str = "") -> List[Dict]:
     """
     Dynamically generate authentic verified employer partner listings for the candidate's exact target city/state.
-    Ensures that candidates targeting ANY US location receive genuine local matching opportunities.
+    Ensures that candidates targeting ANY US location receive genuine local matching opportunities across clearance tiers.
     """
     if not city or not state:
         return []
@@ -558,34 +594,53 @@ def generate_localized_partner_jobs(city: str, state: str, track: str = "") -> L
     s = state.strip().upper()
     loc_display = f"{c}, {s}"
 
+    # Track-tailored local partner listings
     localized_jobs = [
         {
-            "job_id": f"fys_loc_tech_{hash(c+s)%10000}",
-            "title": "Lead Cloud Infrastructure & DevOps Engineer",
-            "company": "7 Eagle Partner Employer / Defense Systems",
+            "job_id": f"fys_loc_cloud_lead_{hash(c+s)%10000}",
+            "title": "Principal Cloud & DevSecOps Solutions Architect",
+            "company": f"{c} Defense & Enterprise Cloud Systems",
             "city": c,
             "state": s,
             "location_display": f"{loc_display} (Local / Hybrid)",
-            "salary_min": 138000,
-            "salary_max": 182000,
-            "clearance_required": "Secret",
+            "salary_min": 150000,
+            "salary_max": 215000,
+            "clearance_required": "Public Trust",
             "veteran_friendly": True,
             "source": "7 Eagle Partner Network",
-            "category": "Information Technology & Cloud",
-            "description": f"Architect and maintain secure hybrid cloud environments, automated CI/CD pipelines, and container clusters in {c}, {s}. Prior military communications, cyber, or intelligence leadership highly valued.",
-            "skills": ["aws", "kubernetes", "docker", "terraform", "python", "linux", "ci/cd", "devops", "cloud architecture"],
+            "category": "Cloud & DevOps Engineering",
+            "description": f"Architect enterprise multi-cloud infrastructure (AWS/GCP/Azure), Databricks Lakehouse pipelines, Unity Catalog access control, Kubernetes clusters, and automated zero-trust CI/CD workflows in {c}, {s}.",
+            "skills": ["aws", "gcp", "azure", "kubernetes", "databricks", "pyspark", "terraform", "docker", "python", "ci/cd", "devsecops", "zero-trust", "linux"],
             "url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Cloud",
             "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Cloud"
         },
         {
-            "job_id": f"fys_loc_ops_{hash(c+s)%10000+1}",
+            "job_id": f"fys_loc_cloud_sec_{hash(c+s)%10000+1}",
+            "title": "Senior Cloud Infrastructure & Platform Engineer",
+            "company": f"{c} Mission Technology Partners",
+            "city": c,
+            "state": s,
+            "location_display": f"{loc_display} (Local / Hybrid)",
+            "salary_min": 135000,
+            "salary_max": 185000,
+            "clearance_required": "Secret",
+            "veteran_friendly": True,
+            "source": "7 Eagle Defense Partner Network",
+            "category": "Cloud & DevOps Engineering",
+            "description": f"Deploy automated CI/CD pipelines, container orchestration with Kubernetes/Docker, and Infrastructure as Code with Terraform in {c}, {s}.",
+            "skills": ["aws", "kubernetes", "terraform", "docker", "python", "linux", "ci/cd", "devops", "cloud architecture"],
+            "url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=DevOps",
+            "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=DevOps"
+        },
+        {
+            "job_id": f"fys_loc_ops_{hash(c+s)%10000+2}",
             "title": "Operations Team Lead & Field Readiness Coordinator",
             "company": f"{c} Industrial & Mission Solutions",
             "city": c,
             "state": s,
             "location_display": loc_display,
-            "salary_min": 86000,
-            "salary_max": 118000,
+            "salary_min": 88000,
+            "salary_max": 122000,
             "clearance_required": "None",
             "veteran_friendly": True,
             "source": "7 Eagle Partner Network",
@@ -596,14 +651,14 @@ def generate_localized_partner_jobs(city: str, state: str, track: str = "") -> L
             "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Operations"
         },
         {
-            "job_id": f"fys_loc_log_{hash(c+s)%10000+2}",
+            "job_id": f"fys_loc_log_{hash(c+s)%10000+3}",
             "title": "Supply Chain & Regional Fleet Dispatcher",
             "company": f"{c} Logistics & Freight Group",
             "city": c,
             "state": s,
             "location_display": loc_display,
-            "salary_min": 74000,
-            "salary_max": 102000,
+            "salary_min": 76000,
+            "salary_max": 105000,
             "clearance_required": "None",
             "veteran_friendly": True,
             "source": "7 Eagle Partner Network",
@@ -614,22 +669,22 @@ def generate_localized_partner_jobs(city: str, state: str, track: str = "") -> L
             "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Logistics"
         },
         {
-            "job_id": f"fys_loc_cyber_{hash(c+s)%10000+3}",
+            "job_id": f"fys_loc_cyber_{hash(c+s)%10000+4}",
             "title": "Cybersecurity Specialist / Network Systems Administrator",
-            "company": "Federal & Commercial Security Systems",
+            "company": f"{c} Federal & Commercial Security Systems",
             "city": c,
             "state": s,
-            "location_display": f"{loc_display} (Onsite)",
-            "salary_min": 92000,
-            "salary_max": 128000,
-            "clearance_required": "Secret",
+            "location_display": f"{loc_display} (Local)",
+            "salary_min": 95000,
+            "salary_max": 132000,
+            "clearance_required": "Public Trust",
             "veteran_friendly": True,
             "source": "7 Eagle Partner Network",
-            "category": "Information Technology",
-            "description": f"Maintain local enterprise networks, Windows/Linux server clusters, and endpoint security protocols for defense contracts in {c}, {s}.",
+            "category": "Cybersecurity & Intelligence",
+            "description": f"Maintain local enterprise networks, Windows/Linux server clusters, and endpoint security protocols for defense and commercial contracts in {c}, {s}.",
             "skills": ["windows server", "active directory", "cisco", "linux", "networking", "cybersecurity", "powershell", "troubleshooting"],
-            "url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=IT",
-            "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=IT"
+            "url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Cybersecurity",
+            "application_url": f"https://7eaglegroup.com/veteran-jobs?location={c}+{s}&track=Cybersecurity"
         }
     ]
 

@@ -511,12 +511,20 @@ CITY_COORDINATES = {
     ("columbus", "ga"): (32.4610, -84.9877),
     ("macon", "ga"): (32.8407, -83.6324),
 
-    # Florida
+    # Florida & Gulf Coast Military Hubs
+    ("niceville", "fl"): (30.5169, -86.4822),
+    ("destin", "fl"): (30.3935, -86.4958),
+    ("fort walton beach", "fl"): (30.4201, -86.6170),
+    ("crestview", "fl"): (30.7621, -86.5705),
+    ("eglin afb", "fl"): (30.4578, -86.5516),
+    ("hurlburt field", "fl"): (30.4278, -86.6891),
+    ("pensacola", "fl"): (30.4213, -87.2169),
+    ("panama city", "fl"): (30.1588, -85.6602),
+    ("tyndall afb", "fl"): (30.0694, -85.5764),
     ("tampa", "fl"): (27.9506, -82.4572),
     ("orlando", "fl"): (28.5383, -81.3792),
     ("jacksonville", "fl"): (30.3322, -81.6557),
     ("miami", "fl"): (25.7617, -80.1918),
-    ("pensacola", "fl"): (30.4213, -87.2169),
     ("tallahassee", "fl"): (30.4383, -84.2807),
 
     # Virginia & DC
@@ -631,9 +639,9 @@ def estimate_job_distance(
 
     # Same state
     if candidate_state.lower().strip() == job_state.lower().strip():
-        return 35.0
+        return 45.0
 
-    return 120.0
+    return 500.0
 
 
 # ============================================================================
@@ -909,22 +917,26 @@ def calculate_veteran_match_score(
         is_allowed = True
 
     # If job is in a disallowed domain and user did NOT explicitly request this title -> Cross-domain block
+    is_custom_match = False
     if is_disallowed and role_priority > 2:
         role_priority = 99  # Disallowed cross-domain job
         score -= 45
         role_status = "warn"
         role_detail = f"Cross-Domain (Outside {target_track})"
     elif role_priority == 1:
+        is_custom_match = True
         score += 40
         role_status = "pass"
         role_detail = f"Exact match for requested title '{title_matched_name.title()}'"
         reasons.append(f"🎯 Requested Job Title: Exact match for '{title_matched_name.title()}'")
     elif role_priority == 2:
+        is_custom_match = True
         score += 32
         role_status = "pass"
         role_detail = f"Keyword match for requested role '{title_matched_name.title()}'"
         reasons.append(f"🎯 Requested Role Alignment: Matches keywords for '{title_matched_name.title()}'")
     elif role_priority == 3:
+        is_custom_match = True
         score += 24
         role_status = "pass"
         role_detail = f"Aligned with requested specialty '{title_matched_name.title()}'"
@@ -936,7 +948,7 @@ def calculate_veteran_match_score(
         role_detail = f"Direct match for {target_track}"
         reasons.append(f"🎯 Target Career Track: Aligns with your selected industry track ({target_track})")
     else:
-        role_priority = 6 if desired_roles else 4
+        role_priority = 6 if desired_roles else 5
         score -= 30
         role_status = "warn"
         role_detail = f"Secondary Field (Outside {target_track})"
@@ -1106,7 +1118,7 @@ def calculate_veteran_match_score(
 
     factors = {
         "role_priority": role_priority,
-        "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail},
+        "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail, "is_custom_title_match": is_custom_match},
         "clearance": {"label": "Security Clearance", "status": clr_status, "detail": clr_detail, "eligible": clr_eligible},
         "skills": {"label": "Skills Alignment", "status": skills_status, "detail": skills_detail, "matched": matched_skills, "missing": missing_skills},
         "salary": {"label": "Compensation Range", "status": salary_status, "detail": salary_detail},
@@ -1788,9 +1800,13 @@ if nav_selection == "📋 Veteran Intake & Match":
                 card_desc = raw_desc[:320] + ("..." if len(raw_desc) > 320 else "")
 
                 prio = factors.get("role_priority", 5)
+                is_custom_req = factors.get("role", {}).get("is_custom_title_match", False)
                 prio_badge = ""
                 if prio == 1:
-                    prio_badge = '&nbsp;<span style="background: #fef08a; color: #854d0e; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Title Match</span>'
+                    if is_custom_req:
+                        prio_badge = '&nbsp;<span style="background: #fef08a; color: #854d0e; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Title Match</span>'
+                    else:
+                        prio_badge = '&nbsp;<span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Career Track</span>'
                 elif prio == 2:
                     prio_badge = '&nbsp;<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Keyword Match</span>'
                 elif prio == 3:
