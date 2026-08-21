@@ -1,4 +1,4 @@
-﻿name: Automated Dead Code & Static Analysis
+name: Automated Dead Code & Static Analysis
 
 on:
   schedule:
