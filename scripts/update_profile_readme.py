@@ -44,8 +44,8 @@ def update_profile():
 
 ### ☁️ Multi-Cloud Terraform Architecture Milestone – `{now_date} ({now_time})`
 
-**Repository:** [`For-Your-Service/For-Your-Service`](https://github.com/For-Your-Service/For-Your-Service)  
-**Status:** ✅ Production Ready • 66+ Atomic Commits • 126/126 Unit & Integration Tests Passing  
+**Repository:** [`For-Your-Service/For-Your-Service`](https://github.com/For-Your-Service/For-Your-Service)
+**Status:** ✅ Production Ready • 66+ Atomic Commits • 126/126 Unit & Integration Tests Passing
 
 **Core Accomplishments:**
 - **AWS Module:** S3 Data Lake, Staging, Resume & Model buckets (AES-256, 14d auto-expiry), DynamoDB On-Demand tables, Lambda matching API, Databricks STS cross-account trust role, and AWS Budgets $5/mo zero-spend alert.
