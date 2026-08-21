@@ -65,7 +65,8 @@ def broadcast_to_linkedin(dry_run=False):
     author_urn = (
         os.getenv("LINKEDIN_AUTHOR_URN", "").strip() or 
         os.getenv("LINKEDIN_PERSON_URN", "").strip() or 
-        os.getenv("LINKEDIN_ORGANIZATION_URN", "").strip()
+        os.getenv("LINKEDIN_ORGANIZATION_URN", "").strip() or
+        "urn:li:person:78947570"
     )
 
     # Dynamic telemetry pull
