@@ -22,7 +22,7 @@ Indeed has 3 different API offerings:
 
 ### 3. Indeed Apply API (PAID)
 - **Purpose:** Integrate Indeed Apply button
-- **Cost:** $$$ 
+- **Cost:** $$$
 - **Not what we need**
 
 ---
@@ -108,10 +108,10 @@ response = requests.get(
 
 if response.status_code == 200:
     data = response.json()
-    
+
     results = data.get("results", [])
     print(f"Found {len(results)} jobs")
-    
+
     for job in results[:5]:
         print(f"\nTitle: {job['jobtitle']}")
         print(f"Company: {job['company']}")
