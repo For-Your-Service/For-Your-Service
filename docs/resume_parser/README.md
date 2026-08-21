@@ -75,5 +75,5 @@ Main structured resume data:
 
 ## Author
 
-**Free Hall** <whall4.wh@gmail.com>  
+**Free Hall** <whall4.wh@gmail.com>
 7 Eagle Group
