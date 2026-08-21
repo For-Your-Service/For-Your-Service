@@ -1,8 +1,8 @@
 # For Your Service - Team Quick Start Guide
 
-**Organization:** 7 Eagle Group  
-**Project Lead:** Free Hall (whall4.wh@gmail.com)  
-**Repository:** https://github.com/For-Your-Service/For-Your-Service  
+**Organization:** 7 Eagle Group
+**Project Lead:** Free Hall (whall4.wh@gmail.com)
+**Repository:** https://github.com/For-Your-Service/For-Your-Service
 **Mission:** Helping veterans find meaningful employment through AI-powered job matching
 
 ---
@@ -219,7 +219,7 @@ Together, we're making a difference in veterans' lives. 🎖️
 
 ---
 
-**Last Updated:** 2026-08-13  
-**Version:** 1.0  
-**Maintained By:** Free Hall <whall4.wh@gmail.com>  
+**Last Updated:** 2026-08-13
+**Version:** 1.0
+**Maintained By:** Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
