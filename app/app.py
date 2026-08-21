@@ -56,7 +56,7 @@ def get_platform_metrics(increment_visit=False, increment_match=False, increment
         "veterans_connected": 218,
         "last_updated": datetime.now().isoformat()
     }
-    
+
     target_file = METRICS_FILE
     try:
         target_file.parent.mkdir(parents=True, exist_ok=True)
@@ -84,7 +84,7 @@ def get_platform_metrics(increment_visit=False, increment_match=False, increment
         metrics["total_matches_run"] += 1
     if increment_intro:
         metrics["veterans_connected"] += 1
-        
+
     if increment_visit or increment_match or increment_intro:
         metrics["last_updated"] = datetime.now().isoformat()
         try:
@@ -96,7 +96,7 @@ def get_platform_metrics(increment_visit=False, increment_match=False, increment
                     json.dump(metrics, f, indent=2)
             except Exception:
                 pass
-                
+
     return metrics
 
 # Session Tracking: Increment visit count once per unique browser session
@@ -127,7 +127,7 @@ st.markdown("""
         -webkit-text-size-adjust: 100%;
         text-rendering: optimizeLegibility;
     }
-    
+
     .stApp {
         background-color: #f8fafc;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -137,7 +137,7 @@ st.markdown("""
     input, select, textarea, .stTextInput input, .stSelectbox select {
         font-size: 16px !important;
     }
-    
+
     /* Responsive Hero Banner */
     .hero-banner {
         background: -webkit-linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 50%, #13315c 100%);
@@ -179,7 +179,7 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-    
+
     /* Responsive Branch Grid */
     .branch-grid {
         display: grid;
@@ -197,7 +197,7 @@ st.markdown("""
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         font-size: 0.85rem;
     }
-    
+
     /* Match Badges */
     .match-badge-high {
         background-color: #15803d;
@@ -217,7 +217,7 @@ st.markdown("""
         font-size: 0.95rem;
         display: inline-block;
     }
-    
+
     /* Responsive Job Cards */
     .job-card {
         background: white;
@@ -230,7 +230,7 @@ st.markdown("""
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
-    
+
     /* Skill Chips */
     .skill-chip {
         display: inline-block;
@@ -268,7 +268,7 @@ st.markdown("""
         margin-bottom: 0.35rem;
         border: 1px solid #bbf7d0;
     }
-    
+
     /* Clearance Badge */
     .clearance-badge {
         background: #0f172a;
@@ -334,9 +334,9 @@ def extract_text_from_file(uploaded_file) -> str:
     """Extract raw text from uploaded PDF, DOCX, or TXT file (100% free & local)"""
     if uploaded_file is None:
         return ""
-    
+
     filename = uploaded_file.name.lower()
-    
+
     try:
         if filename.endswith(".pdf"):
             try:
@@ -349,18 +349,18 @@ def extract_text_from_file(uploaded_file) -> str:
                 reader = pypdf.PdfReader(uploaded_file)
                 text = "".join([page.extract_text() or "" for page in reader.pages])
                 return text
-                
+
         elif filename.endswith(".docx"):
             import docx
             doc = docx.Document(uploaded_file)
             return "\n".join([p.text for p in doc.paragraphs])
-            
+
         elif filename.endswith(".txt"):
             return uploaded_file.getvalue().decode("utf-8", errors="ignore")
-            
+
         else:
             return uploaded_file.getvalue().decode("utf-8", errors="ignore")
-            
+
     except Exception as e:
         st.warning(f"⚠️ Note during file reading: {str(e)}. You can also paste resume text directly.")
         return ""
@@ -372,7 +372,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     and estimate years of service from resume text and MOS code.
     """
     text_lower = resume_text.lower()
-    
+
     # 1. Technical & Software Skills Taxonomy
     tech_keywords = [
         "aws", "azure", "gcp", "kubernetes", "docker", "terraform", "python", "java",
@@ -382,7 +382,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "networking", "cybersecurity", "siem", "splunk", "wireshark", "penetration testing",
         "security+", "cissp", "vmware", "tableau", "power bi", "excel", "satcom", "cryptography"
     ]
-    
+
     # 2. Trades, Mechanics & Industrial Engineering Skills
     trades_keywords = [
         "diesel mechanics", "diesel engine", "hydraulics", "pneumatics", "welding",
@@ -392,7 +392,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "heavy equipment", "a&p license", "aviation maintenance", "turbine engine",
         "rotor systems", "precision torque", "switchgear", "substation", "transformer"
     ]
-    
+
     # 3. Logistics, Supply Chain & Transportation Skills
     logistics_keywords = [
         "supply chain", "inventory management", "logistics", "procurement", "property accountability",
@@ -400,14 +400,14 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "shipping & receiving", "freight dispatch", "convoy operations", "forklift",
         "material handling", "sap", "erp", "fleet tracking", "asset tracking", "cargo rigging"
     ]
-    
+
     # 4. Construction & Infrastructure Skills
     construction_keywords = [
         "earthmoving", "excavating", "surveying", "asphalt", "concrete", "framing",
         "osha 30", "osha compliance", "site supervision", "subcontractor management",
         "project scheduling", "blueprint interpretation", "heavy civil", "demolition"
     ]
-    
+
     # 5. Law Enforcement, Security & Protection Skills
     security_keywords = [
         "force protection", "perimeter security", "access control", "cctv", "physical security",
@@ -415,14 +415,14 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "emergency response", "evidence handling", "debriefing", "interpersonal interviewing",
         "case file preparation", "background checks", "security audits"
     ]
-    
+
     # 6. Healthcare, Emergency Medicine & Safety
     healthcare_keywords = [
         "emergency trauma care", "patient triage", "vital signs assessment", "medical documentation",
         "emr", "critical decision making", "cpr", "bls", "acls", "paramedic", "patient care",
         "wound care", "field sanitation", "medevac", "pharmacology", "hazmat compliance"
     ]
-    
+
     # 7. Military Leadership & Command Competencies
     leadership_keywords = [
         "executive briefings", "cross-functional leadership", "mission planning",
@@ -432,7 +432,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
         "standard operating procedures", "personnel accountability", "after-action reviews",
         "situational awareness", "mentorship", "inspections", "training & development"
     ]
-    
+
     def has_keyword(kw: str) -> bool:
         # Exact word-boundary match to prevent false positives (e.g. 'security' matching 'security+')
         pattern = r'(?:\b|_)' + re.escape(kw) + r'(?:\b|_)'
@@ -445,25 +445,25 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
     detected_security = [s for s in security_keywords if has_keyword(s)]
     detected_healthcare = [s for s in healthcare_keywords if has_keyword(s)]
     detected_leadership = [s for s in leadership_keywords if has_keyword(s)]
-    
+
     detected_ops = list(set(detected_trades + detected_logistics + detected_construction + detected_security + detected_healthcare))
-    
+
     # MOS information is kept separate as background context, NEVER injected as claimed personal skills/certs
     mos_info = lookup_mos(mos_code)
     mos_skills = mos_info.get("transferable_skills", []) if mos_info else []
-                
+
     # Estimate years of experience from resume text
     years_pattern = r'(\d+)\+?\s*years?'
     years_matches = re.findall(years_pattern, text_lower)
     total_years = max([int(y) for y in years_matches], default=4)
-    
+
     if total_years >= 12:
         seniority = "Senior / Executive Leader"
     elif total_years >= 6:
         seniority = "Mid-to-Senior Professional"
     else:
         seniority = "Associate / Specialist"
-        
+
     return {
         "technical_skills": list(set(detected_tech)),
         "leadership_skills": list(set(detected_leadership)),
@@ -493,7 +493,7 @@ CITY_COORDINATES = {
     ("greer", "sc"): (34.9387, -82.2271),
     ("simpsonville", "sc"): (34.7371, -82.2543),
     ("clemson", "sc"): (34.6834, -82.8374),
-    
+
     # North Carolina
     ("charlotte", "nc"): (35.2271, -80.8431),
     ("raleigh", "nc"): (35.7796, -78.6382),
@@ -503,14 +503,14 @@ CITY_COORDINATES = {
     ("fayetteville", "nc"): (35.0527, -78.8784),
     ("asheville", "nc"): (35.5951, -82.5515),
     ("wilmington", "nc"): (34.2257, -77.9447),
-    
+
     # Georgia
     ("atlanta", "ga"): (33.7490, -84.3880),
     ("augusta", "ga"): (33.4735, -82.0105),
     ("savannah", "ga"): (32.0809, -81.0912),
     ("columbus", "ga"): (32.4610, -84.9877),
     ("macon", "ga"): (32.8407, -83.6324),
-    
+
     # Florida
     ("tampa", "fl"): (27.9506, -82.4572),
     ("orlando", "fl"): (28.5383, -81.3792),
@@ -518,7 +518,7 @@ CITY_COORDINATES = {
     ("miami", "fl"): (25.7617, -80.1918),
     ("pensacola", "fl"): (30.4213, -87.2169),
     ("tallahassee", "fl"): (30.4383, -84.2807),
-    
+
     # Virginia & DC
     ("washington", "dc"): (38.9072, -77.0369),
     ("arlington", "va"): (38.8799, -77.1067),
@@ -528,7 +528,7 @@ CITY_COORDINATES = {
     ("virginia beach", "va"): (36.8529, -75.9780),
     ("reston", "va"): (38.9586, -77.3570),
     ("mclean", "va"): (38.9339, -77.1773),
-    
+
     # Texas
     ("dallas", "tx"): (32.7767, -96.7970),
     ("austin", "tx"): (30.2672, -97.7431),
@@ -536,7 +536,7 @@ CITY_COORDINATES = {
     ("san antonio", "tx"): (29.4241, -98.4936),
     ("fort worth", "tx"): (32.7555, -97.3308),
     ("el paso", "tx"): (31.7619, -106.4850),
-    
+
     # Tennessee & Alabama
     ("nashville", "tn"): (36.1627, -86.7816),
     ("knoxville", "tn"): (35.9606, -83.9207),
@@ -544,7 +544,7 @@ CITY_COORDINATES = {
     ("chattanooga", "tn"): (35.0456, -85.3097),
     ("huntsville", "al"): (34.7304, -86.5861),
     ("birmingham", "al"): (33.5186, -86.8104),
-    
+
     # National Metros
     ("denver", "co"): (39.7392, -104.9903),
     ("colorado springs", "co"): (38.8339, -104.8214),
@@ -594,21 +594,21 @@ def estimate_job_distance(
     loc_lower = f"{job_city} {job_state} {job_location_display}".lower()
     if "remote" in loc_lower or "anywhere" in loc_lower or "virtual" in loc_lower:
         return 0.0
-        
+
     c_coords = get_city_coordinates(candidate_city, candidate_state)
     j_coords = get_city_coordinates(job_city, job_state)
-    
+
     if c_coords and j_coords:
         return haversine_distance_miles(c_coords[0], c_coords[1], j_coords[0], j_coords[1])
-        
+
     # Same city/metro
     if candidate_city.lower().strip() == job_city.lower().strip() and candidate_state.lower().strip() == job_state.lower().strip():
         return 5.0
-        
+
     # Same state
     if candidate_state.lower().strip() == job_state.lower().strip():
         return 35.0
-        
+
     return 120.0
 
 
@@ -666,7 +666,7 @@ def evaluate_clearance(candidate_clearance: str, job_requirement: str) -> Tuple[
     """
     cand_rank = get_clearance_rank(candidate_clearance)
     job_rank = get_clearance_rank(job_requirement)
-    
+
     if job_rank == 0:
         # Job requires NO clearance (Direct civilian entry)
         return True, 15, "pass", "No clearance required (Direct civilian entry)"
@@ -819,30 +819,30 @@ def calculate_veteran_match_score(
     """
     score = 0.0
     reasons = []
-    
+
     job_title = job.get('title', '').lower().strip()
     job_desc = job.get('description', '').lower()
     job_category = job.get('category', '').strip()
     job_cat_lower = job_category.lower()
     job_text = f"{job_title} {job_desc} {job_cat_lower}"
-    
+
     user_tech = set(extracted_skills.get("technical_skills", []))
     user_leadership = set(extracted_skills.get("leadership_skills", []))
     user_ops = set(extracted_skills.get("ops_skills", []))
     all_user_skills = user_tech.union(user_leadership).union(user_ops)
-    
+
     target_track = veteran_profile.get("target_track", "").strip()
     desired_role_raw = veteran_profile.get("desired_role", "").lower().strip()
-    
+
     # Parse multiple comma/slash/pipe separated desired titles
     desired_roles = [r.strip() for r in re.split(r'[,;/|]+', desired_role_raw) if len(r.strip()) >= 2]
-    
+
     # -------------------------------------------------------------------------
     # 1. HARD TRACK BOUNDARY & REQUESTED ROLE PRIORITIZATION (Max 40 pts)
     # -------------------------------------------------------------------------
     title_matched_name = None
     role_priority = 5  # Default
-    
+
     # Check if candidate explicitly requested a specific title
     if desired_roles:
         for dr in desired_roles:
@@ -858,23 +858,23 @@ def calculate_veteran_match_score(
             elif dr_words and any(w in job_title for w in dr_words):
                 title_matched_name = dr
                 role_priority = 2
-                
+
         if role_priority > 2:
             for dr in desired_roles:
                 if dr in job_cat_lower or dr in job_desc:
                     title_matched_name = dr
                     role_priority = 3
                     break
-    
+
     # Check track domain rules (Prevent cross-domain bleed)
     track_rules = TRACK_DOMAIN_RULES.get(target_track, {})
     is_disallowed = False
     is_allowed = False
-    
+
     if track_rules:
         disallowed_cats = track_rules.get("disallowed_categories", [])
         allowed_cats = track_rules.get("allowed_categories", [])
-        
+
         if any(dc.lower() in job_cat_lower for dc in disallowed_cats):
             is_disallowed = True
         elif any(ac.lower() in job_cat_lower for ac in allowed_cats):
@@ -923,24 +923,24 @@ def calculate_veteran_match_score(
     job_req_skills = [s.lower() for s in job.get("skills", [])]
     is_tech_track = target_track in ["Cloud & DevOps Engineering", "Cybersecurity & Intelligence"]
     is_tech_job = any(w in job_cat_lower or w in job_title for w in ["information technology", "cloud", "software", "cyber", "data", "devops", "platform", "systems engineer"])
-    
+
     matched_skills = []
     missing_skills = []
-    
+
     if job_req_skills:
         matched_skills = [s for s in job_req_skills if s in all_user_skills]
         missing_skills = [s for s in job_req_skills if s not in all_user_skills]
         skill_pct = len(matched_skills) / max(1, len(job_req_skills))
-        
+
         # In tech tracks, technical overlap is weighted heavily (40 pts)
         score += skill_pct * 40.0
-        
+
         if matched_skills:
             reasons.append(f"Skill Alignment: Verified match on {', '.join([s.title() for s in matched_skills[:4]])}")
         else:
             if is_tech_job and len(user_tech) == 0:
                 score -= 25.0
-                
+
         skills_status = "pass" if skill_pct >= 0.4 else "warn"
         skills_detail = f"{len(matched_skills)} of {len(job_req_skills)} Core Competencies Matched"
     else:
@@ -948,7 +948,7 @@ def calculate_veteran_match_score(
         tech_in_text = [s for s in user_tech if s in job_text]
         matched_skills = tech_in_text if is_tech_track else [s for s in all_user_skills if s in job_text]
         missing_skills = []
-        
+
         if is_tech_track and tech_in_text:
             score += min(40.0, len(tech_in_text) * 8.0)
             reasons.append(f"Technical Stack Alignment: Verified match on {', '.join([s.upper() for s in tech_in_text[:4]])}")
@@ -970,7 +970,7 @@ def calculate_veteran_match_score(
     # -------------------------------------------------------------------------
     job_clearance = str(job.get("clearance_required", "None")).strip()
     vet_clearance = str(veteran_profile.get("clearance", "None")).strip()
-    
+
     clr_eligible, clr_pts, clr_status, clr_detail = evaluate_clearance(vet_clearance, job_clearance)
     score += clr_pts
     if clr_eligible:
@@ -988,7 +988,7 @@ def calculate_veteran_match_score(
     job_sal_max = float(job.get("salary_max", 0) or 0)
     vet_sal_min = float(veteran_profile.get("salary_min", 0) or 0)
     vet_sal_max = float(veteran_profile.get("salary_max", 0) or 0)
-    
+
     if job_sal_max >= vet_sal_min and job_sal_min <= vet_sal_max:
         score += 10
         salary_status = "pass"
@@ -1011,7 +1011,7 @@ def calculate_veteran_match_score(
     max_radius_str = str(veteran_profile.get("target_radius", "50 miles")).lower()
     remote_ok = veteran_profile.get("remote_ok", True)
     relocate_ok = veteran_profile.get("relocation", True)
-    
+
     if "10" in max_radius_str:
         max_radius = 10.0
     elif "20" in max_radius_str:
@@ -1022,13 +1022,13 @@ def calculate_veteran_match_score(
         max_radius = 9999.0
     else:
         max_radius = 50.0
-        
+
     job_city = job.get("city", "").strip()
     job_state = job.get("state", "").strip().upper()
     job_loc_display = job.get("location_display", "")
-    
+
     dist = estimate_job_distance(vet_city, vet_state, job_city, job_state, job_loc_display) if (vet_city and vet_state) else None
-    
+
     if "remote" in job_loc_display.lower() or "remote" in job_city.lower() or remote_ok:
         score += 10
         loc_status = "pass"
@@ -1070,15 +1070,15 @@ def calculate_veteran_match_score(
             score += 3
     else:
         score += 2
-        
+
     final_score = min(100.0, max(20.0, score))
     final_score = round(final_score, 1)
-    
+
     # Self-improvement projected success math
     score_uplift = min(25.0, max(8.0, len(missing_skills) * 8.0)) if missing_skills else 8.0
     projected_score = min(98.0, round(final_score + score_uplift, 1))
     projected_salary_gain = min(30000, max(12000, len(missing_skills) * 6000)) if missing_skills else 12000
-    
+
     factors = {
         "role_priority": role_priority,
         "role": {"label": "Role & Track Alignment", "status": role_status, "detail": role_detail},
@@ -1090,7 +1090,7 @@ def calculate_veteran_match_score(
         "score_delta": round(projected_score - final_score, 1),
         "projected_salary_gain": projected_salary_gain
     }
-    
+
     return final_score, reasons, factors
 
 
@@ -1100,18 +1100,18 @@ def calculate_veteran_match_score(
 
 with st.sidebar:
     st.image("https://img.shields.io/badge/7_Eagle_Group-Veteran_Placement-blue?style=for-the-badge&logo=shield")
-    
+
     st.markdown("### 🎖️ Veteran Portal Navigation")
     nav_selection = st.radio(
         "Select Portal View:",
         ["📋 Veteran Intake & Match", "🗺️ MOS Career Crosswalk Explorer", "🦅 7 Eagle Group & Resources"],
         label_visibility="collapsed"
     )
-    
+
     st.markdown("---")
     st.markdown("### 🚀 Fast Demo Profiles")
     st.markdown("Test the pipeline across different military specialties in **1 click**:")
-    
+
     col_d1, col_d2 = st.columns(2)
     with col_d1:
         if st.button("🪖 18F SF Lead", use_container_width=True, help="Army Special Forces / Cloud Architect"):
@@ -1120,7 +1120,7 @@ with st.sidebar:
                 st.session_state[f"form_{k}"] = v
             st.toast("✅ Loaded Army 18F Special Forces Profile!", icon="🎖️")
             st.rerun()
-            
+
         if st.button("🪖 88M Logistics", use_container_width=True, help="Army Motor Transport & CDL"):
             p = DEMO_VETERAN_PROFILES["88M"]
             for k, v in p.items():
@@ -1142,7 +1142,7 @@ with st.sidebar:
                 st.session_state[f"form_{k}"] = v
             st.toast("✅ Loaded Navy IT Profile!", icon="🎖️")
             st.rerun()
-        
+
     st.markdown("---")
     st.markdown("### 📊 Live Platform Impact")
     st.markdown(f"""
@@ -1168,7 +1168,7 @@ with st.sidebar:
         st.success("🟢 Databricks Serverless Active\n\nConnected to Unity Catalog")
     else:
         st.info("🔵 Zero-Cost Free Tier / Local\n\nRunning in local mode with 100% free resume parsing & job matching")
-        
+
     st.markdown("---")
     st.markdown(
         """
@@ -1527,12 +1527,12 @@ if nav_selection == "📋 Veteran Intake & Match":
             with st.spinner("⚡ Setting AI pipeline in motion: Parsing military experience, evaluating MOS crosswalk, and matching jobs..."):
                 veteran_id = str(uuid.uuid4())
                 print(f"[PIPELINE] Processing veteran_id: {veteran_id}")
-                
+
                 # 1. Parse Skills
                 print(f"[PIPELINE] Parsing skills from resume ({len(resume_text)} chars) with MOS '{mos_input}'...")
                 extracted = parse_veteran_skills(resume_text, mos_input)
                 print(f"[PIPELINE] Extracted {len(extracted.get('technical_skills', []))} tech skills, {len(extracted.get('leadership_skills', []))} leadership skills, {len(extracted.get('ops_skills', []))} ops skills. Seniority: {extracted.get('seniority')}")
-                
+
                 # 2. Build Veteran Profile Object
                 veteran_profile = {
                     "veteran_id": veteran_id,
@@ -1559,7 +1559,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                     "leadership_skills": extracted["leadership_skills"],
                     "ops_skills": extracted["ops_skills"]
                 }
-                
+
                 # 3. Store in Unity Catalog if Spark is available
                 if SPARK_AVAILABLE and spark:
                     try:
@@ -1600,7 +1600,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                             "match_reasons": reasons,
                             "factors": factors
                         })
-                
+
                 # Sort by:
                 # 1. role_priority (1: direct requested title match, 2: keyword match, 3: target track match)
                 # 2. clearance eligibility (eligible first)
@@ -1613,12 +1613,12 @@ if nav_selection == "📋 Veteran Intake & Match":
 
                 matches = sorted(matches, key=match_sort_key)
                 print(f"[PIPELINE COMPLETE] Generated {len(matches)} ranked matches for {full_name}. Top match: '{matches[0]['title'] if matches else 'N/A'}' ({matches[0]['match_score'] if matches else 0}%)")
-                
+
                 # 5. Compute Career Readiness & Skill Gap Analysis
                 all_user_skills = extracted["technical_skills"] + extracted["leadership_skills"] + extracted["ops_skills"] + extracted.get("mos_skills", [])
                 top_score = matches[0]["match_score"] if matches else 70.0
                 readiness_data = analyze_career_readiness(selected_career_track, all_user_skills, top_score)
-                
+
                 # Save to session state
                 st.session_state["pipeline_executed"] = True
                 st.session_state["current_matches"] = matches
@@ -1635,10 +1635,10 @@ if nav_selection == "📋 Veteran Intake & Match":
         profile = st.session_state["current_profile"]
         extracted = st.session_state["current_extracted"]
         readiness = st.session_state.get("current_readiness", {})
-        
+
         st.markdown("---")
         st.markdown(f"## 🎯 Career Match Results for **{profile['name']}**")
-        
+
         # Profile Summary Badge
         st.markdown(f"""
         <div style="background: white; border-radius: 10px; padding: 1.25rem; border: 1px solid #cbd5e1; margin-bottom: 1.25rem; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
@@ -1653,10 +1653,10 @@ if nav_selection == "📋 Veteran Intake & Match":
             </div>
         </div>
         """, unsafe_allow_html=True)
-        
+
         # Extracted Skills & Verification Display
         st.markdown("#### 🔍 Candidate Skills & Military Experience Breakdown")
-        
+
         col_sk1, col_sk2 = st.columns(2)
         with col_sk1:
             st.markdown("**📄 Verified Skills Detected in Resume:**")
@@ -1672,7 +1672,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 st.markdown(skills_html, unsafe_allow_html=True)
             else:
                 st.info("No specific technical keywords detected in resume text. The matching engine is using your verified military experience, rank, clearance, and target career track.")
-                
+
         with col_sk2:
             st.markdown(f"**🪖 Military Specialty Crosswalk ({profile['branch']} {profile['mos']}):**")
             if extracted.get("mos_skills"):
@@ -1693,15 +1693,15 @@ if nav_selection == "📋 Veteran Intake & Match":
         with tab_jobs:
             st.markdown("### 💼 Top Matching Opportunities")
             top_matches = matches[:8]
-            
+
             for idx, job in enumerate(top_matches, 1):
                 score = job["match_score"]
                 badge_class = "match-badge-high" if score >= 75 else "match-badge-med"
                 factors = job.get("factors", {})
-                
+
                 clr_req = job.get('clearance_required', 'None')
                 clr_is_fail = factors.get("clearance", {}).get("status") == "fail"
-                
+
                 # Outbound Application URL with Official Referral Attribution
                 raw_url = str(job.get("application_url") or job.get("url") or "")
                 if not raw_url or raw_url == "#" or not raw_url.startswith("http"):
@@ -1721,7 +1721,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 raw_desc = re.sub(r'<[^>]+>', ' ', str(job.get('description', ''))).strip()
                 raw_desc = re.sub(r'\s+', ' ', raw_desc)
                 card_desc = raw_desc[:320] + ("..." if len(raw_desc) > 320 else "")
-                
+
                 prio = factors.get("role_priority", 5)
                 prio_badge = ""
                 if prio == 1:
@@ -1732,7 +1732,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                     prio_badge = '&nbsp;<span style="background: #ede9fe; color: #5b21b6; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Requested Role Specialty</span>'
                 elif prio == 4:
                     prio_badge = '&nbsp;<span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 0.82rem; padding: 0.2rem 0.5rem; border-radius: 6px;">🎯 Target Career Track</span>'
-                
+
                 with st.container():
                     st.markdown(f"""
                     <div class="job-card" style="border-left: 6px solid {'#dc2626' if clr_is_fail else '#0b2545'};">
@@ -1762,7 +1762,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
-                    
+
                     # KEY FACTORS SCORECARD & PROJECTED SELF-IMPROVEMENT
                     with st.expander(f"📊 Key Match Factors & Projected Success Breakdown"):
                         col_fc1, col_fc2 = st.columns(2)
@@ -1790,7 +1790,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                             proj_sc = factors.get("projected_score", min(98.0, cur_sc + 15.0))
                             sc_gain = factors.get("score_delta", round(proj_sc - cur_sc, 1))
                             sal_gain = factors.get("projected_salary_gain", 15000)
-                            
+
                             st.markdown(f"""
                             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem;">
                                 <div style="font-size: 0.95rem; margin-bottom: 6px;">
@@ -1807,7 +1807,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                                 </div>
                             </div>
                             """, unsafe_allow_html=True)
-                            
+
                             # Missing skills tags
                             miss_list = factors.get("skills", {}).get("missing", [])
                             if miss_list:
@@ -1873,7 +1873,7 @@ TOP MATCHING CAREER OPPORTUNITIES:
                 for i, j in enumerate(top_matches, 1):
                     j_url = j.get('application_url') or j.get('url')
                     summary_txt += f"{i}. {j['title']} at {j['company']} | Score: {j['match_score']:.0f}% | Salary: ${j['salary_min']:,.0f}-${j['salary_max']:,.0f} | Apply: {j_url}\n"
-                    
+
                 st.download_button(
                     label="📄 Download Full Veteran Transition Summary (TXT)",
                     data=summary_txt,
@@ -1906,26 +1906,26 @@ TOP MATCHING CAREER OPPORTUNITIES:
             # INTERACTIVE WHAT-IF CAREER & CREDENTIAL SIMULATOR
             st.markdown("### 🔮 Interactive 'What-If' Career & Credential Simulator")
             st.markdown("Select credentials you are interested in acquiring to see your live projected match score, interview probability, and salary growth:")
-            
+
             sim_certs = readiness.get("recommended_certs", [])
             selected_sim_certs = []
-            
+
             if sim_certs:
                 sim_cols = st.columns(len(sim_certs))
                 for idx, c in enumerate(sim_certs):
                     with sim_cols[idx]:
                         if st.checkbox(f"Add {c['name'].split('(')[0].strip()}", key=f"sim_chk_{idx}"):
                             selected_sim_certs.append(c)
-                            
+
                 # Simulator Real-Time Math
                 base_score = readiness.get('current_score', 70.0)
                 sim_score_boost = sum([c['score_uplift'] for c in selected_sim_certs])
                 simulated_score = min(99.0, base_score + sim_score_boost)
                 sim_salary_boost = sum([c['salary_uplift'] for c in selected_sim_certs])
-                
+
                 prob_label = "Very High (90%+)" if simulated_score >= 88 else ("High (75-89%)" if simulated_score >= 75 else "Moderate (60-74%)")
                 prob_color = "#16a34a" if simulated_score >= 88 else ("#0284c7" if simulated_score >= 75 else "#d97706")
-                
+
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, #0b2545 0%, #134074 100%); color: white; border-radius: 10px; padding: 1.25rem; margin: 1rem 0; box-shadow: 0 4px 12px rgba(11,37,69,0.15);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
@@ -2016,13 +2016,13 @@ elif nav_selection == "🗺️ MOS Career Crosswalk Explorer":
         "Explore how military specialties across the **Army, Navy, Air Force, Marine Corps, Coast Guard, and Space Force** "
         "translate directly into high-paying civilian career paths, transferable skills, and compensation benchmarks."
     )
-    
+
     col_s1, col_s2 = st.columns([1, 2])
     with col_s1:
         branch_filter = st.selectbox("Filter by Service Branch:", ["All Branches", "Army", "Navy", "Air Force", "Marine Corps", "Coast Guard", "Space Force"])
     with col_s2:
         search_query = st.text_input("🔍 Search MOS Code, Title, or Civilian Keyword:", placeholder="e.g., 11B, 18F, 88M, 92Y, 68W, IT, Cyber, Logistics, Police...")
-        
+
     filtered_mos = {}
     for code, data in MOS_DATABASE.items():
         if branch_filter != "All Branches" and data["branch"] != branch_filter:
@@ -2039,7 +2039,7 @@ elif nav_selection == "🗺️ MOS Career Crosswalk Explorer":
         filtered_mos[code] = data
 
     st.markdown(f"**Showing {len(filtered_mos)} military specialties:**")
-    
+
     for code, data in filtered_mos.items():
         with st.expander(f"**{code} — {data['title']}** ({data['branch']})"):
             col1, col2 = st.columns([1, 1])
@@ -2068,9 +2068,9 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
         "**7 Eagle Group** connects transitioning military service members, veterans, and military spouses with premier "
         "employers nationwide. We believe military experience is America's greatest leadership and technical talent pool."
     )
-    
+
     st.markdown("---")
-    
+
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
@@ -2081,7 +2081,7 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
         * **Clearance Sponsorship & Placement:** Dedicated placement for Secret, Top Secret, and TS/SCI clearance holders.
         """)
         st.link_button("🌐 Visit 7 Eagle Group Official Portal", "https://7eaglegroup.com", use_container_width=True)
-        
+
     with col2:
         st.markdown("""
         ### 📚 Free Veteran Upskilling & Transition Resources
