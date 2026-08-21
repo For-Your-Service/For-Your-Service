@@ -194,6 +194,6 @@ After your live test:
 
 ## Author
 
-**Free Hall** <whall4.wh@gmail.com>  
-7 Eagle Group  
+**Free Hall** <whall4.wh@gmail.com>
+7 Eagle Group
 Army Green Beret (18Z), 1999-2017
