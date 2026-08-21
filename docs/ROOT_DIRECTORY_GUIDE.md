@@ -1,6 +1,6 @@
 # Root Directory Structure Guide
 
-**For Your Service - 7 Eagle Group**  
+**For Your Service - 7 Eagle Group**
 *AI-powered veteran job matching platform*
 
 ## Purpose of This Document
@@ -288,7 +288,7 @@ pip install -r config/requirements.txt
 
 Each file serves a specific tool:
 - Docker needs 3 files
-- Python needs 3 files  
+- Python needs 3 files
 - Testing needs 2 files
 - Linting needs 3 files
 - Git needs 2 files
@@ -341,7 +341,7 @@ For Your Service is a **production-ready platform** with:
 
 ---
 
-**Maintained by:** Free Hall for 7 Eagle Group  
-**Last Updated:** December 2026  
-**Project:** For Your Service - AI-powered veteran job matching platform  
+**Maintained by:** Free Hall for 7 Eagle Group
+**Last Updated:** December 2026
+**Project:** For Your Service - AI-powered veteran job matching platform
 **GitHub:** https://github.com/For-Your-Service/For-Your-Service
