@@ -40,9 +40,9 @@ O*NET organizes skills into categories:
 
 ## Crosswalk Example
 
-**Job Title:** "DevOps Engineer"  
-**O*NET Code:** 15-1252.00  
-**O*NET Title:** "Software Developers"  
+**Job Title:** "DevOps Engineer"
+**O*NET Code:** 15-1252.00
+**O*NET Title:** "Software Developers"
 **Top Skills:**
 - Programming (Importance: 4.5/5)
 - Systems Analysis (4.2/5)
