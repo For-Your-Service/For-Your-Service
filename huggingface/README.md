@@ -88,6 +88,6 @@ async function getJobMatches(veteranId) {
 
 ## 👨‍💻 Developer
 
-**Free Hall**  
-Email: whall4.wh@gmail.com  
+**Free Hall**
+Email: whall4.wh@gmail.com
 Organization: 7 Eagle Group
