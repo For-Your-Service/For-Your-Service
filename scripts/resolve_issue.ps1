@@ -17,7 +17,7 @@ $changes = git status --porcelain
 if ($changes) {
     git commit -m "$CommitMsg (#$IssueNumber)"
     git push origin main
-    
+
     # 3. Post summary and close issue via GitHub CLI
     gh issue comment $IssueNumber --body "Automated Resolution for **$IssueTag**:`n* Applied code refactor/updates.`n* Validated changes and committed to `main`."
     gh issue close $IssueNumber
