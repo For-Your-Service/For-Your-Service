@@ -54,7 +54,7 @@ def fetch_indeed_jobs(query, location, api_key):
         'limit': 50,
         'filter': 1
     }
-    
+
     response = requests.get(url, params=params)
     response.raise_for_status()
     return response.json()['results']
@@ -67,5 +67,5 @@ def fetch_indeed_jobs(query, location, api_key):
 * Use `radius=50` for broader rural area coverage
 
 ---
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
