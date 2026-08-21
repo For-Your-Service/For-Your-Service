@@ -1,8 +1,8 @@
 -- Remote vs On-Site job availability
 -- Important for veteran location flexibility
 
-SELECT 
-  CASE 
+SELECT
+  CASE
     WHEN LOWER(title) LIKE '%remote%' OR LOWER(description) LIKE '%fully remote%' THEN 'Fully Remote'
     WHEN LOWER(description) LIKE '%hybrid%' THEN 'Hybrid'
     WHEN LOWER(description) LIKE '%onsite%' OR LOWER(description) LIKE '%on-site%' THEN 'On-Site'
