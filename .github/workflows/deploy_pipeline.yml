@@ -1,4 +1,4 @@
-﻿name: Execute Job Offering Pipeline
+name: Execute Job Offering Pipeline
 
 on:
   workflow_dispatch:
