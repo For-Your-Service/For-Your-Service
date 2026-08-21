@@ -1,4 +1,4 @@
-﻿# Canonical JobMatcher Path for Slice 1
+# Canonical JobMatcher Path for Slice 1
 class Slice1JobMatcher:
     def match(self, profile: dict, job: dict) -> float:
         # Standardized cosine/tensor match score stub
