@@ -21,153 +21,153 @@ env:
   # ---------------------------------------------------------------------------
   - name: STREAMLIT_SERVER_PORT
     value: "8080"
-  
+
   - name: STREAMLIT_SERVER_ADDRESS
     value: "0.0.0.0"
 
   - name: STREAMLIT_SERVER_HEADLESS
     value: "true"
-  
+
   - name: STREAMLIT_SERVER_ENABLE_CORS
     value: "false"
 
   - name: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
     value: "false"
-  
+
   - name: STREAMLIT_BROWSER_GATHER_USAGE_STATS
     value: "false"
-  
+
   - name: STREAMLIT_THEME_BASE
     value: "light"
-  
+
   # ---------------------------------------------------------------------------
   # Unity Catalog Configuration (Production Tables)
   # Based on ADR-001: workspace.fys_* is the canonical production spine
   # ---------------------------------------------------------------------------
   - name: CATALOG_NAME
     value: "workspace"
-  
+
   - name: VETERAN_PROFILES_TABLE
     value: "workspace.fys_silver.veteran_profiles"
-  
+
   - name: JOB_POSTINGS_TABLE
     value: "workspace.fys_bronze.job_postings"
-  
+
   # Additional UC tables for future features
   - name: JOB_EMBEDDINGS_TABLE
     value: "workspace.fys_gold.job_embeddings"
-  
+
   - name: MATCH_RESULTS_TABLE
     value: "workspace.fys_gold.match_results"
-  
+
   # ---------------------------------------------------------------------------
   # Application Configuration
   # ---------------------------------------------------------------------------
   - name: APP_ENV
     value: "production"
-  
+
   - name: LOG_LEVEL
     value: "INFO"
-  
+
   - name: TOP_N_MATCHES
     value: "10"
-  
+
   - name: SIMILARITY_THRESHOLD
     value: "0.5"
-  
+
   - name: EMBEDDING_DIMENSION
     value: "384"
-  
+
   # ---------------------------------------------------------------------------
   # 7 Eagle Group Branding & Contact
   # ---------------------------------------------------------------------------
   - name: ORGANIZATION_NAME
     value: "7 Eagle Group"
-  
+
   - name: CONTACT_EMAIL
     value: "whall4.wh@gmail.com"
-  
+
   - name: SUPPORT_URL
     value: "https://github.com/For-Your-Service/For-Your-Service/issues"
-  
+
   # ---------------------------------------------------------------------------
   # Feature Flags (Enable/Disable Features)
   # ---------------------------------------------------------------------------
   - name: ENABLE_RESUME_UPLOAD
     value: "true"
-  
+
   - name: ENABLE_MOS_CROSSWALK
     value: "true"
-  
+
   - name: ENABLE_NEURAL_MATCHING
     value: "false"  # Set to "true" when Siamese twin tower is deployed
-  
+
   - name: ENABLE_SEMANTIC_SIMILARITY
     value: "true"  # sentence-transformers matching (current implementation)
-  
+
   - name: ENABLE_PROFILE_ANALYTICS
     value: "true"
-  
+
   - name: ENABLE_JOB_RECOMMENDATIONS
     value: "true"
-  
+
   # ---------------------------------------------------------------------------
   # Model Configuration (sentence-transformers)
   # ---------------------------------------------------------------------------
   - name: MODEL_NAME
     value: "sentence-transformers/all-MiniLM-L6-v2"
-  
+
   - name: MODEL_CACHE_DIR
     value: "/tmp/models"
-  
+
   # ---------------------------------------------------------------------------
   # Geographic Configuration (Greenville-Anderson MSA)
   # ---------------------------------------------------------------------------
   - name: DEFAULT_LOCATION_CITY
     value: "Greenville"
-  
+
   - name: DEFAULT_LOCATION_STATE
     value: "SC"
-  
+
   - name: SEARCH_RADIUS_MILES
     value: "50"
-  
+
   # ---------------------------------------------------------------------------
   # Data Quality & Validation
   # ---------------------------------------------------------------------------
   - name: MIN_RESUME_LENGTH
     value: "200"
-  
+
   - name: MAX_RESUME_LENGTH
     value: "10000"
-  
+
   - name: MIN_SKILLS_COUNT
     value: "3"
-  
+
   - name: REQUIRE_EMAIL_VALIDATION
     value: "true"
-  
+
   # ---------------------------------------------------------------------------
   # Performance & Caching
   # ---------------------------------------------------------------------------
   - name: ENABLE_QUERY_CACHE
     value: "true"
-  
+
   - name: CACHE_TTL_SECONDS
     value: "3600"  # 1 hour
-  
+
   - name: MAX_CONCURRENT_MATCHES
     value: "5"
-  
+
   # ---------------------------------------------------------------------------
   # Monitoring & Observability
   # ---------------------------------------------------------------------------
   - name: ENABLE_PERFORMANCE_TRACKING
     value: "true"
-  
+
   - name: ENABLE_ERROR_REPORTING
     value: "true"
-  
+
   - name: ENABLE_USAGE_ANALYTICS
     value: "true"
 
