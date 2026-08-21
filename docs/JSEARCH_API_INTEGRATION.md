@@ -1,8 +1,8 @@
 # JSearch API Integration Guide
 
-**Integration Date:** August 10, 2026  
-**API Provider:** RapidAPI (JSearch)  
-**Purpose:** Private sector job aggregation for veteran matching  
+**Integration Date:** August 10, 2026
+**API Provider:** RapidAPI (JSearch)
+**Purpose:** Private sector job aggregation for veteran matching
 **Status:** ✅ Credentials configured, ready for production
 
 ---
@@ -125,7 +125,7 @@ RAPIDAPI_KEY = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
 def fetch_jsearch_jobs(query, max_pages=5):
     """Fetch jobs from JSearch API with pagination."""
     all_jobs = []
-    
+
     for page in range(1, max_pages + 1):
         params = {
             "query": query,
@@ -133,7 +133,7 @@ def fetch_jsearch_jobs(query, max_pages=5):
             "num_pages": "1",
             "date_posted": "month"
         }
-        
+
         response = requests.get(
             f"https://jsearch.p.rapidapi.com/search",
             headers={
@@ -143,19 +143,19 @@ def fetch_jsearch_jobs(query, max_pages=5):
             params=params,
             timeout=15
         )
-        
+
         if response.status_code == 200:
             data = response.json()
             jobs = data.get('data', [])
             all_jobs.extend(jobs)
-            
+
             # Stop if no more results
             if len(jobs) == 0:
                 break
         else:
             print(f"Error on page {page}: {response.status_code}")
             break
-    
+
     return all_jobs
 ```
 
@@ -195,23 +195,23 @@ from pyspark.sql import SparkSession
 def load_jsearch_to_bronze(jobs_list, veteran_name):
     """Load JSearch jobs to Unity Catalog bronze layer."""
     spark = SparkSession.builder.getOrCreate()
-    
+
     # Transform to standard schema
     standardized = [transform_jsearch_to_standard(job) for job in jobs_list]
-    
+
     # Convert to DataFrame
     df = spark.createDataFrame(standardized)
-    
+
     # Add metadata
     from pyspark.sql.functions import current_timestamp, lit
     df = df.withColumn("ingestion_timestamp", current_timestamp())
     df = df.withColumn("veteran_profile", lit(veteran_name))
     df = df.withColumn("data_source", lit("jsearch_api"))
-    
+
     # Write to bronze
     table_name = "workspace.fys_bronze.job_postings_jsearch"
     df.write.mode("append").saveAsTable(table_name)
-    
+
     return len(standardized)
 ```
 
@@ -228,17 +228,17 @@ from datetime import datetime, timedelta
 def get_cached_results(query, cache_hours=24):
     """Check for recent cached results before hitting API."""
     cache_path = f"/dbfs/fys/cache/jsearch/{query.replace(' ', '_')}.json"
-    
+
     try:
         with open(cache_path, 'r') as f:
             cache = json.load(f)
             cache_time = datetime.fromisoformat(cache['timestamp'])
-            
+
             if datetime.utcnow() - cache_time < timedelta(hours=cache_hours):
                 return cache['data']
     except FileNotFoundError:
         pass
-    
+
     return None
 ```
 
@@ -302,22 +302,22 @@ queries = [
 ```python
 def handle_jsearch_response(response):
     """Handle JSearch API responses with proper error management."""
-    
+
     if response.status_code == 200:
         return response.json()
-    
+
     elif response.status_code == 429:
         # Rate limit hit
         raise Exception("JSearch rate limit exceeded. Retry after cooldown period.")
-    
+
     elif response.status_code == 401:
         # Authentication failed
         raise Exception("Invalid JSearch API key. Check Databricks Secrets configuration.")
-    
+
     elif response.status_code == 400:
         # Bad request
         raise Exception(f"Invalid JSearch query parameters: {response.text}")
-    
+
     else:
         raise Exception(f"JSearch API error {response.status_code}: {response.text}")
 ```
@@ -352,7 +352,7 @@ def handle_jsearch_response(response):
 def test_jsearch_connection():
     """Test JSearch API connection and credentials."""
     RAPIDAPI_KEY = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
-    
+
     response = requests.get(
         "https://jsearch.p.rapidapi.com/search",
         headers={
@@ -366,7 +366,7 @@ def test_jsearch_connection():
         },
         timeout=10
     )
-    
+
     assert response.status_code == 200, f"API test failed: {response.status_code}"
     print("✅ JSearch API connection successful")
     return True
@@ -384,9 +384,9 @@ def test_jsearch_connection():
 
 ---
 
-**Author:** Free Hall (7 Eagle Group)  
-**Last Updated:** August 10, 2026  
-**Related Docs:** 
+**Author:** Free Hall (7 Eagle Group)
+**Last Updated:** August 10, 2026
+**Related Docs:**
 - [Job Scraper APIs](JOB_SCRAPER_APIS.md)
 - [Deployment Guide](DEPLOYMENT_HUGGINGFACE.md)
 - [Matching Algorithm](MATCHING_ALGORITHM.md)
