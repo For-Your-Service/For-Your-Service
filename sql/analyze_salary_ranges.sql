@@ -1,7 +1,7 @@
 -- Analyze salary ranges by source and region
 -- For Your Service - 7 Eagle Group
 
-SELECT 
+SELECT
   source,
   location.state,
   COUNT(*) as total_jobs,
