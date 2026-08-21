@@ -1,4 +1,4 @@
-﻿# Import the built-in uuid module to generate random universally unique identifiers for sanitized payloads.
+# Import the built-in uuid module to generate random universally unique identifiers for sanitized payloads.
 import uuid
 
 
