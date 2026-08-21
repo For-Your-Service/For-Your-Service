@@ -49,10 +49,10 @@ Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-*"The willingness with which our young people are likely to serve in any war, no matter how justified, shall be directly proportional to how they perceive the veterans of earlier wars were treated and appreciated by their nation."*  
+*"The willingness with which our young people are likely to serve in any war, no matter how justified, shall be directly proportional to how they perceive the veterans of earlier wars were treated and appreciated by their nation."*
 — George Washington
 
 ---
 
-Built with ❤️ by veterans, for veterans.  
+Built with ❤️ by veterans, for veterans.
 For Your Service © 2026 7 Eagle Group
