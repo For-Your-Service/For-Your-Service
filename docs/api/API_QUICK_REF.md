@@ -25,7 +25,7 @@ Project:      For Your Service - Veteran Job Matching
 
 ### 2️⃣ USAJOBS
 - **URL:** https://developer.usajobs.gov/
-- **Time:** 2 min  
+- **Time:** 2 min
 - **Get:** Authorization Key
 - **Note:** Instant on screen
 
@@ -56,13 +56,13 @@ ADZUNA
 
 USAJOBS
   Auth Key: _____________________________
-  
+
 BLS
   API Key:  ______________________________
-  
+
 O*NET
   No key needed! ✓
-  
+
 CAREERONESTOP
   User ID: ______________________________
   Token:   ______________________________
