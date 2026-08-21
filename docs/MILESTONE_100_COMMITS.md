@@ -1,7 +1,7 @@
 # Project Milestone - 100 Commits
 
-**Date:** August 10, 2026  
-**Author:** Free Hall <whall4.wh@gmail.com>  
+**Date:** August 10, 2026
+**Author:** Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
 
 ---
@@ -136,18 +136,18 @@ Special thanks to:
 
 ## Repository
 
-**GitHub:** https://github.com/For-Your-Service/For-Your-Service  
-**License:** MIT  
+**GitHub:** https://github.com/For-Your-Service/For-Your-Service
+**License:** MIT
 **Contact:** whall4.wh@gmail.com
 
 ---
 
-*"The willingness with which our young people are likely to serve in any war, no matter how justified, shall be directly proportional to how they perceive the veterans of earlier wars were treated and appreciated by their nation."*  
+*"The willingness with which our young people are likely to serve in any war, no matter how justified, shall be directly proportional to how they perceive the veterans of earlier wars were treated and appreciated by their nation."*
 — George Washington
 
 ---
 
-**Commit #100**  
-August 10, 2026  
-Free Hall, Army Green Beret (Ret.)  
+**Commit #100**
+August 10, 2026
+Free Hall, Army Green Beret (Ret.)
 For Your Service Project
