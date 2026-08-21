@@ -49,7 +49,7 @@ print("""
 2. Open Cloud Shell or local terminal
 3. Navigate to the downloaded folder
 4. Run git commands:
-   
+
    cd For-Your-Service-Export
    git init
    git branch -M main
@@ -170,12 +170,12 @@ gcloud functions describe veteran-intake-processor \
    ```bash
    gcloud iam service-accounts create fys-databricks-sa \
      --display-name="FYS Databricks Service Account"
-   
+
    # Grant Storage Object Viewer role
    gcloud projects add-iam-policy-binding ${PROJECT_ID} \
      --member="serviceAccount:fys-databricks-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
      --role="roles/storage.objectViewer"
-   
+
    # Create key
    gcloud iam service-accounts keys create fys-sa-key.json \
      --iam-account=fys-databricks-sa@${PROJECT_ID}.iam.gserviceaccount.com
@@ -430,11 +430,11 @@ print("="*70)
 
 files_to_create = {
     "01_intake_schema_definition.py": "# Databricks notebook source\n# See: Notebook 01_Intake_Schema_Definition\n# Contains: Veteran profile JSON schema, PII anonymization strategy\n\nprint('Run this in Databricks workspace')\n",
-    
+
     "03_bronze_ingestion.py": "# Databricks notebook source\n# See: Notebook 03_Bronze_Ingestion\n# Contains: GCS Auto Loader, Bronze Delta table creation\n\nprint('Run this in Databricks workspace')\n",
-    
+
     "04_silver_feature_engineering.py": "# Databricks notebook source\n# PLACEHOLDER: Silver layer feature engineering\n# TODO: MOS code to skill mapping, feature vector creation\n\nprint('Silver layer - To be implemented')\n",
-    
+
     "05_gold_tensor_engine.py": "# Databricks notebook source\n# PLACEHOLDER: Gold layer tensor engine\n# TODO: PySpark vector dot products for job matching\n\nprint('Gold layer tensor engine - To be implemented')\n"
 }
 
@@ -720,18 +720,18 @@ def anonymize_veteran_profile(profile):
     Anonymize PII fields in veteran profile.
     Returns anonymized profile with veteran_id.
     """
-    
+
     # Generate anonymous veteran ID based on email hash + timestamp
     email = profile.get('personal_info', {}).get('email', '')
     email_hash = hashlib.sha256(email.encode()).hexdigest()[:16]
     veteran_id = f"VET_{email_hash}"
-    
+
     # Create anonymized profile
     anonymized = {
         "veteran_id": veteran_id,
         "intake_id": profile.get('intake_id', str(uuid.uuid4())),
         "timestamp": profile.get('timestamp', datetime.utcnow().isoformat()),
-        
+
         # Anonymized personal info - keep only non-PII location data
         "demographics": {
             "birth_year": int(profile['personal_info']['date_of_birth'].split('-')[0]),
@@ -744,7 +744,7 @@ def anonymize_veteran_profile(profile):
             },
             "email_hash": email_hash
         },
-        
+
         "military_service": profile.get('military_service', {}),
         "skills": profile.get('skills', {}),
         "education": profile.get('education', []),
@@ -752,14 +752,14 @@ def anonymize_veteran_profile(profile):
         "job_preferences": profile.get('job_preferences', {}),
         "transition_info": profile.get('transition_info', {}),
         "metadata": profile.get('metadata', {}),
-        
+
         "processing": {
             "anonymized_at": datetime.utcnow().isoformat(),
             "schema_version": "1.0.0",
             "pii_removed": True
         }
     }
-    
+
     return anonymized
 
 
@@ -769,7 +769,7 @@ def veteran_intake(request):
     HTTP Cloud Function entry point.
     Receives veteran profile, anonymizes PII, stores to GCS.
     """
-    
+
     # Handle CORS
     if request.method == 'OPTIONS':
         headers = {
@@ -778,46 +778,46 @@ def veteran_intake(request):
             'Access-Control-Allow-Headers': 'Content-Type',
         }
         return ('', 204, headers)
-    
+
     headers = {'Access-Control-Allow-Origin': '*'}
-    
+
     try:
         request_json = request.get_json(silent=True)
-        
+
         if not request_json:
             return json.dumps({"error": "No JSON payload provided"}), 400, headers
-        
+
         # Validate required fields
         required_fields = ['personal_info', 'military_service', 'job_preferences']
         for field in required_fields:
             if field not in request_json:
                 return json.dumps({"error": f"Missing required field: {field}"}), 400, headers
-        
+
         # Anonymize the profile
         anonymized_profile = anonymize_veteran_profile(request_json)
         veteran_id = anonymized_profile['veteran_id']
-        
+
         # Store to GCS
         storage_client = storage.Client()
         bucket_name = 'fys-veteran-intake-raw'
         bucket = storage_client.bucket(bucket_name)
-        
+
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         filename = f"intake/{timestamp}_{veteran_id}.json"
-        
+
         blob = bucket.blob(filename)
         blob.upload_from_string(
             json.dumps(anonymized_profile, indent=2),
             content_type='application/json'
         )
-        
+
         return json.dumps({
             "status": "success",
             "veteran_id": veteran_id,
             "gcs_path": f"gs://{bucket_name}/{filename}",
             "message": "Veteran profile anonymized and stored successfully"
         }), 200, headers
-        
+
     except Exception as e:
         return json.dumps({
             "status": "error",
