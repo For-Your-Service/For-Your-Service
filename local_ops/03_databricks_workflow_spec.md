@@ -1,4 +1,4 @@
-﻿# [DONE] Databricks Workflow Spec - Created config/databricks_job.json pipeline configuration
+# [DONE] Databricks Workflow Spec - Created config/databricks_job.json pipeline configuration
 
 ## 🏗️ Architecture & Execution Story: COMPLETED
 Created the declarative Databricks Job configuration specification to automate pipeline orchestration when triggered by cloud storage events.
