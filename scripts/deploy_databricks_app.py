@@ -21,13 +21,13 @@ def deploy_app():
     print("=================================================================")
     print(f" Deploying {APP_NAME} to Databricks Apps")
     print("=================================================================")
-    
+
     host = os.getenv("DATABRICKS_SERVER_HOSTNAME", os.getenv("DATABRICKS_HOST", DEFAULT_HOST))
     if not host.startswith("https://"):
         host = f"https://{host}"
-        
+
     token = os.getenv("DATABRICKS_TOKEN")
-    
+
     if not token:
         print("\n[!] DATABRICKS_TOKEN environment variable is required.")
         print(f"    Target Workspace: {host}")
@@ -78,7 +78,7 @@ def deploy_app():
         print(f"[OK] Created app '{APP_NAME}'")
 
     print("[*] Deploying code and syncing app.yaml environment variables...")
-    
+
     # Deploy app
     deployment = w.apps.deploy_and_wait(
         app_name=APP_NAME,
@@ -86,9 +86,9 @@ def deploy_app():
             source_code_path=ws_source_path
         )
     )
-    
+
     print(f"[OK] Deployment completed: {deployment.deployment_id}")
-    
+
     # Retrieve updated app info
     final_app = w.apps.get(name=APP_NAME)
     print("\n=================================================================")
