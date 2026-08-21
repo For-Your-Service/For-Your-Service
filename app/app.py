@@ -1706,6 +1706,20 @@ if nav_selection == "📋 Veteran Intake & Match":
             st.markdown("### 💼 Top Matching Opportunities")
             top_matches = matches[:8]
 
+            if not top_matches:
+                st.markdown(f"""
+                <div style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 1.75rem; text-align: center; margin: 1rem 0;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                    <h4 style="color: #1e3a8a; margin: 0 0 0.5rem 0;">No Active Live Positions in Immediate Commute Radius</h4>
+                    <p style="color: #475569; font-size: 0.95rem; margin-bottom: 0.75rem;">
+                        No open positions are currently active within your strict {profile.get('target_radius', '50 miles')} radius in <strong>{profile.get('target_city', 'your area')}, {profile.get('target_state', '')}</strong>.
+                    </p>
+                    <p style="color: #1e40af; font-weight: 600; font-size: 0.9rem; margin: 0;">
+                        💡 Recommendation: Check <strong>'Open to Remote Work'</strong> or expand your commute radius to 50–100 miles in the intake form to unlock nationwide defense and commercial opportunities.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
             for idx, job in enumerate(top_matches, 1):
                 score = job["match_score"]
                 badge_class = "match-badge-high" if score >= 75 else "match-badge-med"

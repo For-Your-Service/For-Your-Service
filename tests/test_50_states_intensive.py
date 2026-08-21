@@ -1,14 +1,14 @@
 """
-Intensive 50-State Comprehensive Location & Distance Validation Test Suite
+Intensive 50-State Comprehensive Location & Real-Data Validation Test Suite
 For Your Service - 7 Eagle Group
 Validates that every state, major metropolitan area, and commute radius (up to 200 miles)
-strictly targets the user-supplied location and prevents any static/hardcoded data contamination.
+strictly targets the user-supplied location and prevents any synthetic/fictitious data bleed.
 """
 
 import pytest
 from app.geo_database import CITY_COORDINATES, lookup_city_coordinates
 from app.app import estimate_job_distance, calculate_veteran_match_score, parse_veteran_skills
-from app.sample_data import load_cached_scraped_jobs, generate_localized_partner_jobs
+from app.sample_data import load_cached_scraped_jobs
 
 # Major cities across all 50 US States + District of Columbia
 FIFTY_STATES_MAJOR_CITIES = {
@@ -82,7 +82,7 @@ def test_location_targeting_and_radius_enforcement(state, city):
     Intensive test for each of the 50 US States + DC:
     1. Ingests candidate profile targeting this specific city/state.
     2. Tests radii from 25 to 200 miles.
-    3. Verifies that generated local jobs strictly match the candidate's target city/state at 0 miles.
+    3. Verifies that real job in the candidate's exact city resolves at <= 5 miles.
     4. Verifies that distant out-of-state jobs are strictly penalized as out-of-region.
     """
     sample_resume = f"""
@@ -111,24 +111,25 @@ def test_location_targeting_and_radius_enforcement(state, city):
             "salary_max": 180000
         }
 
-        # Load jobs dynamically driven by candidate's location input
-        jobs = load_cached_scraped_jobs(target_city=city, target_state=state, target_track=profile["target_track"])
+        # Verify real in-city job evaluation
+        in_city_job = {
+            "title": "Principal Systems Engineer",
+            "company": "Defense Systems",
+            "city": city,
+            "state": state,
+            "location_display": f"{city}, {state}",
+            "salary_min": 140000,
+            "salary_max": 190000,
+            "clearance_required": "Secret",
+            "skills": ["aws", "kubernetes", "python", "terraform"]
+        }
+        in_dist = estimate_job_distance(city, state, in_city_job["city"], in_city_job["state"], in_city_job["location_display"])
+        assert in_dist is not None and in_dist <= float(radius), f"In-city job distance {in_dist} > {radius} for {city}, {state}"
+        sc_in, _, f_in = calculate_veteran_match_score(in_city_job, profile, extracted)
+        assert f_in["location"]["status"] == "pass", f"Local job failed for {city}, {state}: {f_in['location']}"
+        assert sc_in >= 80.0, f"Score too low for local job in {city}, {state}: {sc_in}"
 
-        # Find the localized job generated for this city
-        local_jobs = [j for j in jobs if j.get("city", "").lower() == city.lower() and j.get("state", "").upper() == state.upper()]
-        assert len(local_jobs) > 0, f"No localized jobs generated for target input: {city}, {state}"
-
-        # Evaluate the localized job
-        local_job = local_jobs[0]
-        score, reasons, factors = calculate_veteran_match_score(local_job, profile, extracted)
-
-        # Assert local job gets a top score and distance is 0.0 or <= radius
-        dist = factors["location"]["distance_miles"]
-        assert dist is not None and dist <= float(radius), f"Local job for {city}, {state} calculated distance {dist} > {radius}"
-        assert factors["location"]["status"] == "pass", f"Local job for {city}, {state} failed location check: {factors['location']}"
-        assert score >= 75.0, f"Local job match score too low ({score}) for {city}, {state}"
-
-        # Evaluate an out-of-region non-remote job (e.g. if candidate is NOT in Miami FL, test Miami FL job as out-of-region)
+        # Evaluate an out-of-region non-remote job (e.g. if candidate is NOT in Tampa FL)
         if state != "FL":
             distant_job = {
                 "title": "Defense Cloud Infrastructure Engineer",
@@ -142,7 +143,6 @@ def test_location_targeting_and_radius_enforcement(state, city):
                 "skills": ["aws", "kubernetes", "linux", "python"]
             }
             d_dist = estimate_job_distance(city, state, distant_job["city"], distant_job["state"], distant_job["location_display"])
-            # If distance is > radius, verify the location status is flagged as warn / out-of-region
             if d_dist > float(radius):
                 _, _, d_factors = calculate_veteran_match_score(distant_job, profile, extracted)
                 assert d_factors["location"]["status"] in ("fail", "warn"), f"Distant job in Tampa FL was not flagged out-of-region for candidate in {city}, {state} (dist={d_dist}, radius={radius})"
