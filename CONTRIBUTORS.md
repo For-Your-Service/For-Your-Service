@@ -4,9 +4,9 @@ Thank you to everyone who has contributed to For Your Service!
 
 ## Project Lead
 
-**Free Hall** ([@freehall](https://github.com/freehall))  
-*US Army Special Forces (18Z), Ret.*  
-Role: Lead Developer, Architecture  
+**Free Hall** ([@freehall](https://github.com/freehall))
+*US Army Special Forces (18Z), Ret.*
+Role: Lead Developer, Architecture
 Organization: 7 Eagle Group
 
 ---
