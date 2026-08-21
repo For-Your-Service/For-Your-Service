@@ -1,1 +1,1 @@
-﻿{"job_name": "job_postings_medallion", "tasks": [{"task_key": "bronze_ingest"}, {"task_key": "silver_enrich"}, {"task_key": "gold_embed"}]}
+{"job_name": "job_postings_medallion", "tasks": [{"task_key": "bronze_ingest"}, {"task_key": "silver_enrich"}, {"task_key": "gold_embed"}]}
