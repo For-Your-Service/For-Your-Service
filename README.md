@@ -166,6 +166,7 @@ Cost per veteran matched: **$0.14-0.24**
 
 ## 📚 Documentation
 
+- [System & Application Health Dashboard](docs/SYSTEM_HEALTH.md) - Automated twice-daily system & application health metrics
 - [Daily Notes August 20, 2026](DAILY_NOTES_2026_08_20.md) - Databricks Apps hosting, live metrics & USAJOBS ingestion
 - [Daily Notes August 13, 2026](DAILY_NOTES_2026_08_13.md) - AWS IAM security architecture & Terraform IaC
 - [Streamlit Portal Guide](docs/STREAMLIT_GUIDE.md) - Comprehensive portal guide & rank crosswalks
