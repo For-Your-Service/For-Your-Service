@@ -158,9 +158,9 @@ response = requests.get(
 if response.status_code == 200:
     data = response.json()
     jobs = data["SearchResult"]["SearchResultItems"]
-    
+
     print(f"Found {len(jobs)} jobs")
-    
+
     for job in jobs[:3]:  # Show first 3
         posting = job["MatchedObjectDescriptor"]
         print(f"\\n{'='*60}")
@@ -245,18 +245,18 @@ if response.status_code == 200:
     data = response.json()
     print(f"\\nOccupation: {data['title']}")
     print(f"Description: {data['description'][:200]}...")
-    
+
     # Get detailed skills
     skills_response = requests.get(
         f"https://services.onetcenter.org/ws/online/occupations/{onet_code}/skills",
         auth=(USERNAME, "")
     )
-    
+
     if skills_response.status_code == 200:
         skills = skills_response.json()
         print(f"\\n🎯 Top Skills Required:")
         for skill in skills['skill'][:10]:
-            print(f"  • {skill['name']} (Level: {skill['level']['value']})") 
+            print(f"  • {skill['name']} (Level: {skill['level']['value']})")
 else:
     print(f"Error: {response.status_code}")
 
@@ -355,11 +355,11 @@ response = requests.post(
 
 if response.status_code == 200:
     data = response.json()
-    
+
     for series in data["Results"]["series"]:
         print(f"\\n{'='*60}")
         print(f"Series ID: {series['seriesID']}")
-        
+
         # Latest data point
         latest = series["data"][0]
         print(f"Period: {latest['year']}-{latest['period']}")
@@ -467,7 +467,7 @@ if response.status_code == 200:
     data = response.json()
     print(f"\\nFound {data['count']} jobs")
     print(f"Showing page 1 of {data['count'] // 50 + 1}\\n")
-    
+
     for job in data["results"][:5]:  # Show first 5
         print(f"{'='*60}")
         print(f"Title: {job['title']}")
@@ -576,9 +576,9 @@ response = requests.get(
 if response.status_code == 200:
     data = response.json()
     employers = data["VeteranEmployerList"]
-    
+
     print(f"\\nFound {len(employers)} veteran-friendly employers\\n")
-    
+
     for employer in employers[:5]:
         print(f"{'='*60}")
         print(f"Company: {employer['CompanyName']}")
@@ -601,9 +601,9 @@ training_response = requests.get(
 if training_response.status_code == 200:
     training_data = training_response.json()
     programs = training_data["Programs"]
-    
+
     print(f"\\nFound {len(programs)} cybersecurity training programs\\n")
-    
+
     for program in programs[:3]:
         print(f"{'='*60}")
         print(f"School: {program['SchoolName']}")
@@ -726,13 +726,13 @@ def collect_jobs(request):
     Collect jobs from multiple sources and store in GCS.
     Triggered daily by Cloud Scheduler.
     """
-    
+
     results = {
         "timestamp": datetime.utcnow().isoformat(),
         "sources": [],
         "total_jobs_collected": 0
     }
-    
+
     # Target locations and keywords
     locations = [
         ("California", "CA"),
@@ -741,7 +741,7 @@ def collect_jobs(request):
         ("Virginia", "VA"),
         ("Washington", "WA")
     ]
-    
+
     keywords = [
         "cybersecurity",
         "network engineer",
@@ -749,26 +749,26 @@ def collect_jobs(request):
         "project manager",
         "healthcare"
     ]
-    
+
     # Collect from USAJobs
     print("Collecting from USAJobs...")
     usajobs_count = collect_usajobs(locations, keywords)
     results["sources"].append({"source": "USAJobs", "count": usajobs_count})
     results["total_jobs_collected"] += usajobs_count
-    
+
     # Collect from Adzuna
     print("Collecting from Adzuna...")
     adzuna_count = collect_adzuna(locations, keywords)
     results["sources"].append({"source": "Adzuna", "count": adzuna_count})
     results["total_jobs_collected"] += adzuna_count
-    
+
     # Save results summary to GCS
     save_to_gcs(
         data=results,
         bucket_name=GCS_BUCKET,
         blob_path=f"collection_logs/{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_summary.json"
     )
-    
+
     return json.dumps(results), 200
 
 
@@ -779,9 +779,9 @@ def collect_usajobs(locations, keywords):
         "User-Agent": USAJOBS_USER_AGENT,
         "Authorization-Key": USAJOBS_API_KEY
     }
-    
+
     total_collected = 0
-    
+
     for location_name, state_code in locations:
         for keyword in keywords:
             params = {
@@ -790,17 +790,17 @@ def collect_usajobs(locations, keywords):
                 "ResultsPerPage": 100,
                 "Page": 1
             }
-            
+
             response = requests.get(
                 "https://data.usajobs.gov/api/Search",
                 headers=headers,
                 params=params
             )
-            
+
             if response.status_code == 200:
                 data = response.json()
                 jobs = data.get("SearchResult", {}).get("SearchResultItems", [])
-                
+
                 # Save to GCS
                 if jobs:
                     save_to_gcs(
@@ -811,14 +811,14 @@ def collect_usajobs(locations, keywords):
                     total_collected += len(jobs)
             else:
                 print(f"USAJobs error for {location_name} - {keyword}: {response.status_code}")
-    
+
     return total_collected
 
 
 def collect_adzuna(locations, keywords):
     """Collect jobs from Adzuna API"""
     total_collected = 0
-    
+
     for location_name, state_code in locations:
         for keyword in keywords:
             params = {
@@ -830,16 +830,16 @@ def collect_adzuna(locations, keywords):
                 "distance": 50,
                 "full_time": 1
             }
-            
+
             response = requests.get(
                 "https://api.adzuna.com/v1/api/jobs/us/search/1",
                 params=params
             )
-            
+
             if response.status_code == 200:
                 data = response.json()
                 jobs = data.get("results", [])
-                
+
                 # Save to GCS
                 if jobs:
                     save_to_gcs(
@@ -850,7 +850,7 @@ def collect_adzuna(locations, keywords):
                     total_collected += len(jobs)
             else:
                 print(f"Adzuna error for {location_name} - {keyword}: {response.status_code}")
-    
+
     return total_collected
 
 
@@ -859,12 +859,12 @@ def save_to_gcs(data, bucket_name, blob_path):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_path)
-    
+
     blob.upload_from_string(
         json.dumps(data, indent=2),
         content_type='application/json'
     )
-    
+
     print(f"Saved to gs://{bucket_name}/{blob_path}")
 '''
 
@@ -1012,8 +1012,8 @@ print("="*70)
 # MAGIC * Commute times and transportation
 # MAGIC * Industry employment by metro area
 # MAGIC
-# MAGIC 🔑 **API Registration:** https://api.census.gov/data/key_signup.html  
-# MAGIC 📚 **Docs:** https://www.census.gov/data/developers/data-sets.html  
+# MAGIC 🔑 **API Registration:** https://api.census.gov/data/key_signup.html
+# MAGIC 📚 **Docs:** https://www.census.gov/data/developers/data-sets.html
 # MAGIC ⚡ **Rate Limit:** Unlimited (reasonable use)
 # MAGIC
 # MAGIC **Key Endpoints:**
@@ -1043,7 +1043,7 @@ print("="*70)
 # MAGIC * Unemployment rates (city/county level)
 # MAGIC * Occupational employment projections
 # MAGIC
-# MAGIC 📚 **Docs:** https://www.bls.gov/developers/api_signature_v2.shtml  
+# MAGIC 📚 **Docs:** https://www.bls.gov/developers/api_signature_v2.shtml
 # MAGIC ⚡ **Rate Limit:** 500 queries/day (FREE)
 # MAGIC
 # MAGIC **Key Series IDs for Greenville-Anderson-Mauldin, SC Metro:**
@@ -1071,8 +1071,8 @@ print("="*70)
 # MAGIC * Industry contribution to regional GDP
 # MAGIC * Regional price parities (cost of living index)
 # MAGIC
-# MAGIC 🔑 **API Registration:** https://apps.bea.gov/API/signup/  
-# MAGIC 📚 **Docs:** https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf  
+# MAGIC 🔑 **API Registration:** https://apps.bea.gov/API/signup/
+# MAGIC 📚 **Docs:** https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
 # MAGIC ⚡ **Rate Limit:** Unlimited (reasonable use)
 # MAGIC
 # MAGIC **Key Datasets:**
@@ -1111,8 +1111,8 @@ print("="*70)
 # MAGIC * Industry/sector
 # MAGIC * Tech stack
 # MAGIC
-# MAGIC 🔑 **API:** https://clearbit.com/enrichment  
-# MAGIC 💰 **Cost:** 50 free lookups/month, then $99/mo  
+# MAGIC 🔑 **API:** https://clearbit.com/enrichment
+# MAGIC 💰 **Cost:** 50 free lookups/month, then $99/mo
 # MAGIC 📚 **Docs:** https://dashboard.clearbit.com/docs
 # MAGIC
 # MAGIC #### Option 2: Web Scraping (Glassdoor, LinkedIn)
@@ -1136,9 +1136,9 @@ print("="*70)
 # MAGIC ## Recommended Implementation Priority
 # MAGIC
 # MAGIC ### Phase 1: City Demographics (HIGHEST VALUE, FREE)
-# MAGIC ✅ **Why:** Veterans need to know if they can afford to live there  
-# MAGIC ✅ **APIs:** Census Bureau ACS  
-# MAGIC ✅ **Complexity:** Low  
+# MAGIC ✅ **Why:** Veterans need to know if they can afford to live there
+# MAGIC ✅ **APIs:** Census Bureau ACS
+# MAGIC ✅ **Complexity:** Low
 # MAGIC ✅ **Cost:** $0/month
 # MAGIC
 # MAGIC **Data to Collect:**
@@ -1151,9 +1151,9 @@ print("="*70)
 # MAGIC ---
 # MAGIC
 # MAGIC ### Phase 2: Job Market Analytics (HIGH VALUE, FREE)
-# MAGIC ✅ **Why:** Is the local tech market growing or shrinking?  
-# MAGIC ✅ **APIs:** BLS metro-level stats  
-# MAGIC ✅ **Complexity:** Medium  
+# MAGIC ✅ **Why:** Is the local tech market growing or shrinking?
+# MAGIC ✅ **APIs:** BLS metro-level stats
+# MAGIC ✅ **Complexity:** Medium
 # MAGIC ✅ **Cost:** $0/month
 # MAGIC
 # MAGIC **Data to Collect:**
@@ -1165,9 +1165,9 @@ print("="*70)
 # MAGIC ---
 # MAGIC
 # MAGIC ### Phase 3: City Growth Metrics (MEDIUM VALUE, FREE)
-# MAGIC ✅ **Why:** Growing cities = more opportunities  
-# MAGIC ✅ **APIs:** BEA Regional GDP, Census migration data  
-# MAGIC ✅ **Complexity:** Medium  
+# MAGIC ✅ **Why:** Growing cities = more opportunities
+# MAGIC ✅ **APIs:** BEA Regional GDP, Census migration data
+# MAGIC ✅ **Complexity:** Medium
 # MAGIC ✅ **Cost:** $0/month
 # MAGIC
 # MAGIC **Data to Collect:**
@@ -1179,7 +1179,7 @@ print("="*70)
 # MAGIC ---
 # MAGIC
 # MAGIC ### Phase 4: Company Intelligence (LOWER PRIORITY, PAID)
-# MAGIC ⚠️ **Why Lower Priority:** Most APIs are expensive  
+# MAGIC ⚠️ **Why Lower Priority:** Most APIs are expensive
 # MAGIC ⚠️ **Alternative:** Start with public data, add paid APIs later
 # MAGIC
 # MAGIC **FREE Data Collection:**
@@ -1319,25 +1319,25 @@ variables = {
     "B01001_001E": "total_population",
     "B01002_001E": "median_age",
     "B21001_002E": "veteran_population",
-    
+
     # Economics
     "B19013_001E": "median_household_income",
     "B17001_002E": "population_below_poverty",
     "B25077_001E": "median_home_value",
     "B25064_001E": "median_gross_rent",
-    
+
     # Education
     "B15003_022E": "bachelors_degree",
     "B15003_023E": "masters_degree",
     "B15003_024E": "professional_degree",
     "B15003_025E": "doctorate_degree",
-    
+
     # Employment
     "B23025_003E": "civilian_labor_force",
     "B23025_005E": "unemployed",
     "B24010_003E": "management_occupations",
     "B24010_023E": "computer_math_occupations",
-    
+
     # Commute & Transportation
     "B08303_001E": "workers_16_plus",
     "B08303_013E": "commute_60plus_minutes"
@@ -1352,43 +1352,43 @@ print(f"\n📈 Collecting {len(variables)} demographic indicators per city")
 def fetch_city_demographics(msa_code, api_key):
     """
     Fetch demographics for a single metro area from Census Bureau API.
-    
+
     Args:
         msa_code: Metropolitan Statistical Area code (e.g., "24860" for Greenville)
         api_key: Your Census Bureau API key
-    
+
     Returns:
         dict: Demographics data for the city
     """
-    
+
     base_url = "https://api.census.gov/data/2022/acs/acs5"
-    
+
     # Build query parameters
     get_vars = ",".join(["NAME"] + list(variables.keys()))
-    
+
     params = {
         "get": get_vars,
         "for": f"metropolitan statistical area/micropolitan statistical area:{msa_code}",
         "key": api_key
     }
-    
+
     try:
         response = requests.get(base_url, params=params, timeout=10)
         response.raise_for_status()
-        
+
         data = response.json()
-        
+
         if len(data) < 2:
             print(f"   ⚠️  WARNING: No data for MSA {msa_code}")
             return None
-        
+
         # Parse response (first row is headers, second is data)
         headers = data[0]
         values = data[1]
-        
+
         # Create result dict
         result = {"msa_code": msa_code}
-        
+
         for i, header in enumerate(headers):
             if header == "NAME":
                 result["city_name"] = values[i]
@@ -1400,9 +1400,9 @@ def fetch_city_demographics(msa_code, api_key):
                     result[friendly_name] = float(values[i]) if values[i] not in [None, '', '-666666666'] else None
                 except:
                     result[friendly_name] = None
-        
+
         return result
-        
+
     except requests.exceptions.RequestException as e:
         print(f"   ❌ ERROR fetching data for MSA {msa_code}: {e}")
         return None
@@ -1416,79 +1416,79 @@ if CENSUS_API_KEY == "YOUR_API_KEY_HERE":
     print("   Register for free at: https://api.census.gov/data/key_signup.html")
 else:
     print("\n🚀 Starting data collection...\n")
-    
+
     all_demographics = []
-    
+
     for msa_code, city_name in target_cities.items():
         print(f"📥 Fetching: {city_name}...")
-        
+
         demo_data = fetch_city_demographics(msa_code, CENSUS_API_KEY)
-        
+
         if demo_data:
             all_demographics.append(demo_data)
             print(f"   ✅ Success!")
-            
+
             # Calculate derived metrics
             if demo_data.get('total_population') and demo_data.get('veteran_population'):
                 vet_pct = (demo_data['veteran_population'] / demo_data['total_population']) * 100
                 print(f"      • Veteran Population: {demo_data['veteran_population']:,.0f} ({vet_pct:.2f}%)")
-            
+
             if demo_data.get('median_household_income'):
                 print(f"      • Median Income: ${demo_data['median_household_income']:,.0f}")
-            
+
             if demo_data.get('civilian_labor_force') and demo_data.get('unemployed'):
                 unemployment_rate = (demo_data['unemployed'] / demo_data['civilian_labor_force']) * 100
                 print(f"      • Unemployment: {unemployment_rate:.2f}%")
-        
+
         # Rate limiting - be respectful
         import time
         time.sleep(0.5)  # 500ms between requests
-    
+
     print(f"\n✅ COLLECTION COMPLETE: {len(all_demographics)}/{len(target_cities)} cities")
-    
+
     # ==========================================
     # 💾 SAVE TO PANDAS DATAFRAME
     # ==========================================
-    
+
     if all_demographics:
         df_demographics = pd.DataFrame(all_demographics)
-        
+
         # Calculate derived columns
         df_demographics['veteran_percentage'] = (
             df_demographics['veteran_population'] / df_demographics['total_population'] * 100
         )
-        
+
         df_demographics['unemployment_rate'] = (
             df_demographics['unemployed'] / df_demographics['civilian_labor_force'] * 100
         )
-        
+
         df_demographics['higher_ed_percentage'] = (
-            (df_demographics['bachelors_degree'] + 
-             df_demographics['masters_degree'] + 
-             df_demographics['professional_degree'] + 
+            (df_demographics['bachelors_degree'] +
+             df_demographics['masters_degree'] +
+             df_demographics['professional_degree'] +
              df_demographics['doctorate_degree']) / df_demographics['total_population'] * 100
         )
-        
+
         df_demographics['long_commute_percentage'] = (
             df_demographics['commute_60plus_minutes'] / df_demographics['workers_16_plus'] * 100
         )
-        
+
         print("\n📊 DEMOGRAPHICS SUMMARY:")
         print(df_demographics[[
-            'city_name', 
-            'total_population', 
+            'city_name',
+            'total_population',
             'median_household_income',
             'veteran_percentage',
             'unemployment_rate'
         ]].to_string(index=False))
-        
+
         # ==========================================
         # 💾 SAVE TO JSON (BRONZE LAYER)
         # ==========================================
-        
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_file = f"/Workspace/Repos/whall4.wh@gmail.com/For-Your-Service/data/city_demographics_{timestamp}.json"
-        
+
         # Convert to JSON-serializable format
         bronze_data = {
             "metadata": {
@@ -1500,19 +1500,19 @@ else:
             },
             "cities": all_demographics
         }
-        
+
         with open(output_file, 'w') as f:
             json.dump(bronze_data, f, indent=2)
-        
+
         print(f"\n💾 SAVED TO: {output_file}")
         print(f"   • {len(all_demographics)} cities")
         print(f"   • {len(variables)} variables per city")
         print(f"   • Ready for Bronze table ingestion")
-        
+
         # ==========================================
         # 📤 NEXT STEPS
         # ==========================================
-        
+
         print("\n🚀 NEXT STEPS:")
         print("   1. Ingest JSON to Bronze Delta table: city_demographics_bronze")
         print("   2. Transform to Silver: Calculate city opportunity scores")
@@ -1536,10 +1536,10 @@ Before running the scraper below, register for these FREE APIs:
    📧 Email: whall4.wh@gmail.com
    ⏱️ Instant approval
    🎁 You get: Application ID + API Key
-   
+
 2. USAJOBS:
    👉 https://developer.usajobs.gov/
-   📧 Email: whall4.wh@gmail.com  
+   📧 Email: whall4.wh@gmail.com
    ⏱️ Instant approval
    🎁 You get: Authorization Key
 
@@ -1609,13 +1609,13 @@ def scrape_adzuna_jobs(location, keyword, max_results=50):
     Scrape real job postings from Adzuna API.
     Returns list of job dictionaries with standardized fields.
     """
-    
+
     if ADZUNA_APP_ID == "YOUR_APP_ID_HERE":
         print("⚠️  Adzuna API credentials not configured. Skipping...")
         return []
-    
+
     print(f"\n🔍 Searching Adzuna: {keyword} in {location['city']}, {location['state']}")
-    
+
     params = {
         "app_id": ADZUNA_APP_ID,
         "app_key": ADZUNA_API_KEY,
@@ -1626,18 +1626,18 @@ def scrape_adzuna_jobs(location, keyword, max_results=50):
         "full_time": 1,
         "sort_by": "date"  # Most recent first
     }
-    
+
     try:
         response = requests.get(
             "https://api.adzuna.com/v1/api/jobs/us/search/1",
             params=params,
             timeout=10
         )
-        
+
         if response.status_code == 200:
             data = response.json()
             jobs = data.get("results", [])
-            
+
             # Standardize job data format
             standardized_jobs = []
             for job in jobs:
@@ -1665,19 +1665,19 @@ def scrape_adzuna_jobs(location, keyword, max_results=50):
                     "category": job.get("category", {}).get("label"),
                     "scraped_at": datetime.utcnow().isoformat()
                 })
-            
+
             print(f"   ✅ Found {len(standardized_jobs)} jobs")
             return standardized_jobs
         else:
             print(f"   ❌ Error: {response.status_code} - {response.text[:100]}")
             return []
-            
+
     except Exception as e:
         print(f"   ❌ Exception: {str(e)}")
         return []
 
 # ==========================================
-# 🏛️ USAJOBS SCRAPER  
+# 🏛️ USAJOBS SCRAPER
 # ==========================================
 
 def scrape_usajobs(location, keyword, max_results=100):
@@ -1685,26 +1685,26 @@ def scrape_usajobs(location, keyword, max_results=100):
     Scrape federal job postings from USAJobs API.
     Great for veterans due to preference indicators.
     """
-    
+
     if USAJOBS_API_KEY == "YOUR_API_KEY_HERE":
         print("⚠️  USAJobs API credentials not configured. Skipping...")
         return []
-    
+
     print(f"\n🏛️  Searching USAJobs: {keyword} in {location['state']}")
-    
+
     headers = {
         "Host": "data.usajobs.gov",
         "User-Agent": USAJOBS_USER_AGENT,
         "Authorization-Key": USAJOBS_API_KEY
     }
-    
+
     params = {
         "Keyword": keyword,
         "LocationName": location["city"],
         "ResultsPerPage": max_results if max_results < 500 else 500,
         "Page": 1
     }
-    
+
     try:
         response = requests.get(
             "https://data.usajobs.gov/api/Search",
@@ -1712,18 +1712,18 @@ def scrape_usajobs(location, keyword, max_results=100):
             params=params,
             timeout=10
         )
-        
+
         if response.status_code == 200:
             data = response.json()
             result_items = data.get("SearchResult", {}).get("SearchResultItems", [])
-            
+
             standardized_jobs = []
             for item in result_items:
                 job = item.get("MatchedObjectDescriptor", {})
-                
+
                 # Extract salary
                 salary_info = job.get("PositionRemuneration", [{}])[0]
-                
+
                 standardized_jobs.append({
                     "source": "usajobs",
                     "job_id": job.get("PositionID"),
@@ -1747,13 +1747,13 @@ def scrape_usajobs(location, keyword, max_results=100):
                     "category": job.get("JobCategory", [{}])[0].get("Name"),
                     "scraped_at": datetime.utcnow().isoformat()
                 })
-            
+
             print(f"   ✅ Found {len(standardized_jobs)} jobs")
             return standardized_jobs
         else:
             print(f"   ❌ Error: {response.status_code}")
             return []
-            
+
     except Exception as e:
         print(f"   ❌ Exception: {str(e)}")
         return []
@@ -1769,15 +1769,15 @@ all_jobs = []
 
 for location in TARGET_LOCATIONS:
     for keyword in SEARCH_KEYWORDS:
-        
+
         # Scrape from Adzuna
         adzuna_jobs = scrape_adzuna_jobs(location, keyword, max_results=20)
         all_jobs.extend(adzuna_jobs)
-        
+
         # Scrape from USAJobs
         usajobs_jobs = scrape_usajobs(location, keyword, max_results=50)
         all_jobs.extend(usajobs_jobs)
-        
+
         # Rate limiting - be nice to APIs
         time.sleep(1)
 
@@ -1808,15 +1808,15 @@ else:
 # Save the scraped data to a JSON file for Bronze layer ingestion
 
 if all_jobs:
-    
+
     # Create output filename with timestamp
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = f"scraped_jobs_{timestamp}.json"
-    
+
     # Save to JSON
     with open(output_file, 'w') as f:
         json.dump(all_jobs, f, indent=2)
-    
+
     print("="*70)
     print("💾 DATA SAVED")
     print("="*70)
@@ -1826,26 +1826,26 @@ if all_jobs:
     print("   1. This file is ready for Bronze layer ingestion")
     print("   2. Upload to GCS: gs://fys-job-market-data/raw/")
     print("   3. Or ingest directly into Databricks Delta table")
-    
+
     # Show data statistics
     print("\n📊 DATA STATISTICS:")
     print(f"   • Jobs with salary info: {len([j for j in all_jobs if j['salary']['min']])}")
     print(f"   • Unique companies: {len(set([j['company'] for j in all_jobs if j['company']]))}")
     print(f"   • Unique job titles: {len(set([j['title'] for j in all_jobs]))}")
-    
+
     # Show breakdown by location
     print("\n📍 JOBS BY LOCATION:")
     from collections import Counter
     locations = Counter([j['location']['city'] for j in all_jobs])
     for loc, count in locations.most_common():
         print(f"   • {loc}: {count} jobs")
-    
+
     # Show breakdown by category/industry
     print("\n🏢 JOBS BY CATEGORY:")
     categories = Counter([j.get('category') for j in all_jobs if j.get('category')])
     for cat, count in categories.most_common(5):
         print(f"   • {cat}: {count} jobs")
-        
+
 else:
     print("\n⚠️  No jobs to save. Please update API credentials and run the scraper cell above.")
 
@@ -1864,30 +1864,30 @@ Every scraped job contains:
   • title           - Job title (e.g., "Cybersecurity Analyst")
   • company         - Company name
   • source          - API source (adzuna, usajobs, etc.)
-  
+
 📍 LOCATION:
   • city, state     - Geographic location
   • latitude/longitude - For distance calculations
   • display         - Full formatted address
-  
+
 💰 SALARY:
   • min, max        - Salary range
   • is_predicted    - Whether salary is estimated or posted
-  
+
 📄 DETAILS:
   • description     - Job description (first 500 chars)
   • category        - Industry/job category
   • contract_type   - Full-time, contract, etc.
   • posted_date     - When job was posted
   • url             - Direct application link
-  
+
 🎖️ VETERAN-SPECIFIC (USAJobs only):
   • security_clearance    - Required clearance level
   • veteran_preference    - Hiring path preferences
-  
+
 ⏰ METADATA:
   • scraped_at      - Timestamp of data collection
-  
+
 ---
 
 💡 This standardized format feeds directly into your:
@@ -1934,15 +1934,15 @@ def quick_commit(message=None):
     Quick commit current changes to GitHub.
     Run this cell frequently throughout the day!
     """
-    
+
     if message is None:
         # Auto-generate timestamp-based message
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
         message = f"Work in progress - {timestamp}"
-    
+
     print(f"\n📝 Commit message: {message}")
     print("\n⏳ Committing...\n")
-    
+
     # This will be done via runGit tool in practice
     print("""
     To commit via Databricks Assistant:
@@ -1957,12 +1957,12 @@ print("""
 🔹 MICRO-COMMITS (Every 30-60 minutes):
    • "commit my work" → Auto-commits with timestamp
    • Shows continuous progress throughout the day
-   
+
 🔹 FEATURE-COMPLETE COMMITS (After each major task):
    • "commit: Added scraper for Adzuna API"
    • "commit: Completed Bronze layer ingestion"
    • Descriptive message showing what you accomplished
-   
+
 🔹 END-OF-DAY COMMIT:
    • "commit: End of day - completed job market data collection setup"
    • Summary of the day's work
@@ -1973,7 +1973,7 @@ print("""
 
 ✅ Morning (9-10 AM): Initial setup/planning
 ⏰ Mid-morning (11 AM): First major feature
-⏰ Before lunch (12 PM): Progress checkpoint  
+⏰ Before lunch (12 PM): Progress checkpoint
 ⏰ Early afternoon (2 PM): Next feature
 ⏰ Mid-afternoon (3:30 PM): Progress checkpoint
 ⏰ Late afternoon (5 PM): End of day summary
@@ -2026,10 +2026,10 @@ print("="*70)
 # MAGIC
 # MAGIC ## Benefits of Bronze Layer
 # MAGIC
-# MAGIC ✅ **Auditability:** Keep raw data forever, can replay transformations  
-# MAGIC ✅ **Debugging:** When Silver has issues, go back to Bronze source  
-# MAGIC ✅ **Reprocessing:** Change feature logic? Re-run from Bronze  
-# MAGIC ✅ **Data lineage:** Clear path from API → Bronze → Silver → Gold  
+# MAGIC ✅ **Auditability:** Keep raw data forever, can replay transformations
+# MAGIC ✅ **Debugging:** When Silver has issues, go back to Bronze source
+# MAGIC ✅ **Reprocessing:** Change feature logic? Re-run from Bronze
+# MAGIC ✅ **Data lineage:** Clear path from API → Bronze → Silver → Gold
 # MAGIC
 # MAGIC ---
 # MAGIC
@@ -2111,7 +2111,7 @@ spark.sql(f"""
         title STRING COMMENT 'Job title',
         company STRING COMMENT 'Company name',
         source STRING COMMENT 'Data source: adzuna, usajobs, indeed, etc.',
-        
+
         location STRUCT<
             city: STRING COMMENT 'City',
             state: STRING COMMENT 'State code',
@@ -2119,21 +2119,21 @@ spark.sql(f"""
             latitude: DOUBLE COMMENT 'Latitude for distance calculations',
             longitude: DOUBLE COMMENT 'Longitude for distance calculations'
         > COMMENT 'Job location details',
-        
+
         salary STRUCT<
             min: DOUBLE COMMENT 'Minimum salary',
             max: DOUBLE COMMENT 'Maximum salary',
             currency: STRING COMMENT 'Currency code (USD)',
             is_predicted: BOOLEAN COMMENT 'Whether salary is predicted by source'
         > COMMENT 'Salary information',
-        
+
         description STRING COMMENT 'Job description text',
         requirements STRING COMMENT 'Job requirements text',
         posted_date TIMESTAMP COMMENT 'Date job was originally posted',
         url STRING COMMENT 'Application URL',
-        
+
         raw_json STRING COMMENT 'Full original JSON from API for auditability',
-        
+
         scrape_date DATE COMMENT 'Date we scraped this job (partition key)',
         scrape_timestamp TIMESTAMP COMMENT 'Exact timestamp of scrape'
     )
@@ -2265,7 +2265,7 @@ print("="*70)
 
 # Basic statistics
 stats = spark.sql(f"""
-    SELECT 
+    SELECT
         COUNT(*) as total_jobs,
         COUNT(DISTINCT job_id) as unique_jobs,
         COUNT(DISTINCT company) as unique_companies,
@@ -2291,7 +2291,7 @@ print(f"Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
 print(f"\n\nJobs by Source:")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         source,
         COUNT(*) as job_count,
         COUNT(DISTINCT company) as companies,
@@ -2306,7 +2306,7 @@ spark.sql(f"""
 print(f"\nTop 10 Locations:")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         location.city,
         location.state,
         COUNT(*) as job_count,
@@ -2322,8 +2322,8 @@ spark.sql(f"""
 print(f"\nSalary Distribution:")
 print("="*70)
 spark.sql(f"""
-    SELECT 
-        CASE 
+    SELECT
+        CASE
             WHEN salary.max < 50000 THEN '< $50K'
             WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
             WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
@@ -2341,7 +2341,7 @@ spark.sql(f"""
 print(f"\nTop 5 Highest-Paying Jobs:")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         title,
         company,
         CONCAT(location.city, ', ', location.state) as location,
@@ -2510,16 +2510,16 @@ print(f"  4. Train neural network matching model")
 # MAGIC
 # MAGIC - [ ] Complete Bronze/Silver/Gold pipeline with current data (Adzuna + USAJobs)
 # MAGIC - [ ] Register for ClearanceJobs API or build scraper
-# MAGIC - [ ] Extend Bronze schema for clearance fields  
+# MAGIC - [ ] Extend Bronze schema for clearance fields
 # MAGIC - [ ] Add clearance matching logic to neural network
 # MAGIC - [ ] Build veteran clearance profile tracking
 # MAGIC - [ ] Test end-to-end: Veteran with TS/SCI → Matched cleared jobs
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC 💡 **Key Insight:**  
-# MAGIC Indeed wants to MONETIZE job seekers.  
-# MAGIC ClearanceJobs wants to PLACE veterans.  
+# MAGIC 💡 **Key Insight:**
+# MAGIC Indeed wants to MONETIZE job seekers.
+# MAGIC ClearanceJobs wants to PLACE veterans.
 # MAGIC
 # MAGIC We align with ClearanceJobs' mission. ✅
 
@@ -2591,10 +2591,10 @@ bronze_df = jobs_df.select(
     col("title"),
     col("company"),
     col("source"),
-    
+
     # Location struct - keep as is
     col("location"),
-    
+
     # Salary struct - cast types to match Bronze schema
     struct(
         col("salary.min").cast("double").alias("min"),
@@ -2602,15 +2602,15 @@ bronze_df = jobs_df.select(
         lit("USD").alias("currency"),
         when(col("salary.is_predicted") == "1", True).otherwise(False).alias("is_predicted")
     ).alias("salary"),
-    
+
     col("description"),
     col("description").alias("requirements"),  # Use description for requirements (source has no separate field)
     to_timestamp(col("posted_date")).alias("posted_date"),
     col("url"),
-    
+
     # Store original JSON for auditability
     to_json(struct("*")).alias("raw_json"),
-    
+
     # Add scrape metadata
     lit(scrape_date).alias("scrape_date"),
     lit(scrape_timestamp).cast("timestamp").alias("scrape_timestamp")
@@ -2654,7 +2654,7 @@ print(f"\n📊 BRONZE TABLE STATISTICS")
 print("="*70)
 
 stats = spark.sql(f"""
-    SELECT 
+    SELECT
         COUNT(*) as total_jobs,
         COUNT(DISTINCT job_id) as unique_jobs,
         COUNT(DISTINCT company) as unique_companies,
@@ -2680,7 +2680,7 @@ print(f"   Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
 print(f"\n\n📊 JOBS BY SOURCE")
 print("="*70)
 display(spark.sql(f"""
-    SELECT 
+    SELECT
         source,
         COUNT(*) as job_count,
         COUNT(DISTINCT company) as companies,
@@ -2695,7 +2695,7 @@ display(spark.sql(f"""
 print(f"\n📍 TOP 10 LOCATIONS")
 print("="*70)
 display(spark.sql(f"""
-    SELECT 
+    SELECT
         location.city,
         location.state,
         COUNT(*) as job_count,
@@ -2711,7 +2711,7 @@ display(spark.sql(f"""
 print(f"\n🏢 TOP 10 COMPANIES")
 print("="*70)
 display(spark.sql(f"""
-    SELECT 
+    SELECT
         company,
         COUNT(*) as job_count,
         ROUND(AVG(salary.max), 0) as avg_max_salary
@@ -2726,8 +2726,8 @@ display(spark.sql(f"""
 print(f"\n💰 SALARY DISTRIBUTION")
 print("="*70)
 display(spark.sql(f"""
-    SELECT 
-        CASE 
+    SELECT
+        CASE
             WHEN salary.max < 50000 THEN '< $50K'
             WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
             WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
@@ -2747,7 +2747,7 @@ display(spark.sql(f"""
 print(f"\n🔍 SAMPLE JOBS (Top 5 by salary)")
 print("="*70)
 display(spark.sql(f"""
-    SELECT 
+    SELECT
         title,
         company,
         CONCAT(location.city, ', ', location.state) as location,
@@ -2793,7 +2793,7 @@ bronze_df = jobs_df.select(
     col("title"),
     col("company"),
     col("source"),
-    
+
     # Location struct
     struct(
         col("location.city").alias("city"),
@@ -2802,7 +2802,7 @@ bronze_df = jobs_df.select(
         col("location.latitude").alias("latitude"),
         col("location.longitude").alias("longitude")
     ).alias("location"),
-    
+
     # Salary struct
     struct(
         col("salary.min").alias("min"),
@@ -2810,15 +2810,15 @@ bronze_df = jobs_df.select(
         col("salary.currency").alias("currency"),
         col("salary.is_predicted").alias("is_predicted")
     ).alias("salary"),
-    
+
     col("description"),
     col("requirements"),
     col("posted_date").cast("timestamp"),
     col("url"),
-    
+
     # Store original JSON for auditability
     to_json(struct("*")).alias("raw_json"),
-    
+
     # Add scrape metadata
     lit(scrape_date).alias("scrape_date"),
     lit(scrape_timestamp).cast("timestamp").alias("scrape_timestamp")
@@ -2862,7 +2862,7 @@ print(f"\n📊 BRONZE TABLE STATISTICS")
 print("="*70)
 
 stats = spark.sql(f"""
-    SELECT 
+    SELECT
         COUNT(*) as total_jobs,
         COUNT(DISTINCT job_id) as unique_jobs,
         COUNT(DISTINCT company) as unique_companies,
@@ -2888,7 +2888,7 @@ print(f"   Date Range: {stats['earliest_scrape']} to {stats['latest_scrape']}")
 print(f"\n\n📊 JOBS BY SOURCE")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         source,
         COUNT(*) as job_count,
         COUNT(DISTINCT company) as companies,
@@ -2903,7 +2903,7 @@ spark.sql(f"""
 print(f"\n📍 TOP 10 LOCATIONS")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         location.city,
         location.state,
         COUNT(*) as job_count,
@@ -2919,7 +2919,7 @@ spark.sql(f"""
 print(f"\n🏢 TOP 10 COMPANIES")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         company,
         COUNT(*) as job_count,
         ROUND(AVG(salary.max), 0) as avg_max_salary
@@ -2934,8 +2934,8 @@ spark.sql(f"""
 print(f"\n💰 SALARY DISTRIBUTION")
 print("="*70)
 spark.sql(f"""
-    SELECT 
-        CASE 
+    SELECT
+        CASE
             WHEN salary.max < 50000 THEN '< $50K'
             WHEN salary.max BETWEEN 50000 AND 75000 THEN '$50K-$75K'
             WHEN salary.max BETWEEN 75000 AND 100000 THEN '$75K-$100K'
@@ -2955,7 +2955,7 @@ spark.sql(f"""
 print(f"\n🔍 SAMPLE JOBS (First 5)")
 print("="*70)
 spark.sql(f"""
-    SELECT 
+    SELECT
         title,
         company,
         CONCAT(location.city, ', ', location.state) as location,
