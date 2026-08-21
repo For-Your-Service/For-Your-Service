@@ -1,4 +1,4 @@
-﻿# Data Lineage Code Anchors
+# Data Lineage Code Anchors
 
 Generated on: 2026-08-14 16:09:15
 
