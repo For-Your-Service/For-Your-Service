@@ -1,8 +1,8 @@
 # Multi-Cloud Cost Optimization & Free-Tier Guardrails in IaC 🇺🇸 💰
 
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service  
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
+**Project:** For Your Service
 
 ---
 
