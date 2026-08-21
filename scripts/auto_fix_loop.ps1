@@ -1,4 +1,4 @@
-﻿# Target exact remaining open issues
+# Target exact remaining open issues
 $issues = @(
     @{ Number = 111; Tag = "FYS-120"; Title = "[FYS-120] Data lineage doc generated from code paths" },
     @{ Number = 108; Tag = "FYS-109"; Title = "[FYS-109] Pipeline health triad — in / build / out" },
