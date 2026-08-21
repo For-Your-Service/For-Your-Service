@@ -33,7 +33,7 @@ jobs:
           # Run vulture and output results to a report file
           # Minimum confidence set to 80% to reduce false positives
           vulture . --min-confidence 80 > vulture-report.txt || true
-          
+
       - name: Check if Dead Code Was Found
         id: check_report
         run: |
@@ -52,11 +52,11 @@ jobs:
           branch: automated/vulture-dead-code-sweep
           title: "🧹 Automated Dead Code Sweep (Vulture Report)"
           body: |
-            Automated static analysis scan detected potentially unused code or unimported modules. 
+            Automated static analysis scan detected potentially unused code or unimported modules.
             Review the attached report below and clear out the technical debt.
-            
+
             `	ext
-            
+
             `
           labels: |
             code-quality
