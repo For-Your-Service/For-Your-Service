@@ -1,8 +1,8 @@
 -- Job posting freshness report
 -- For Your Service - 7 Eagle Group
 
-SELECT 
-  CASE 
+SELECT
+  CASE
     WHEN DATEDIFF(CURRENT_DATE, TO_DATE(created_date)) <= 7 THEN '0-7 days'
     WHEN DATEDIFF(CURRENT_DATE, TO_DATE(created_date)) <= 14 THEN '8-14 days'
     WHEN DATEDIFF(CURRENT_DATE, TO_DATE(created_date)) <= 30 THEN '15-30 days'
@@ -13,7 +13,7 @@ SELECT
 FROM workspace.fys_bronze.job_postings
 WHERE scrape_date = CURRENT_DATE
 GROUP BY age_bucket
-ORDER BY 
+ORDER BY
   CASE age_bucket
     WHEN '0-7 days' THEN 1
     WHEN '8-14 days' THEN 2
