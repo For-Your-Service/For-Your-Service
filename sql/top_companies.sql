@@ -1,7 +1,7 @@
 -- Top hiring companies in Greenville MSA
 -- For Your Service - 7 Eagle Group
 
-SELECT 
+SELECT
   company,
   COUNT(*) as active_postings,
   COUNT(DISTINCT title) as unique_roles,
