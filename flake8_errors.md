@@ -1,4 +1,4 @@
-﻿.\08_Glassdoor_AI_Pipeline_Architecture.py:7:101: E501 line too long (113 > 100 characters)
+.\08_Glassdoor_AI_Pipeline_Architecture.py:7:101: E501 line too long (113 > 100 characters)
 .\08_Glassdoor_AI_Pipeline_Architecture.py:53:60: W291 trailing whitespace
 .\08_Glassdoor_AI_Pipeline_Architecture.py:172:101: E501 line too long (105 > 100 characters)
 .\08_Glassdoor_AI_Pipeline_Architecture.py:173:101: E501 line too long (116 > 100 characters)
