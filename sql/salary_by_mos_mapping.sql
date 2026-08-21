@@ -10,7 +10,7 @@ WITH mos_mapping AS (
   SELECT '11B', 'Operations Coordinator'
 ),
 job_matches AS (
-  SELECT 
+  SELECT
     m.mos,
     m.civilian_title,
     j.salary,
@@ -20,7 +20,7 @@ job_matches AS (
   WHERE LOWER(j.title) LIKE CONCAT('%', LOWER(m.civilian_title), '%')
   AND j.scrape_date >= CURRENT_DATE - INTERVAL 30 DAYS
 )
-SELECT 
+SELECT
   mos,
   civilian_title,
   COUNT(*) as matching_jobs,
