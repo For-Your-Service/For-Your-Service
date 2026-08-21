@@ -29,8 +29,8 @@ def load_job_embeddings(location: str, radius: int) -> List[Dict]:
         {"job_id": "job_2", "embedding": np.random.rand(384)}
     ]
 
-def calculate_matches(veteran_emb: np.ndarray, 
-                     job_embs: List[Dict], 
+def calculate_matches(veteran_emb: np.ndarray,
+                     job_embs: List[Dict],
                      threshold: float = 0.7) -> List[Dict]:
     """Calculate match scores"""
     matches = []
@@ -41,7 +41,7 @@ def calculate_matches(veteran_emb: np.ndarray,
                 "job_id": job["job_id"],
                 "score": float(score)
             })
-    
+
     # Sort by score descending
     matches.sort(key=lambda x: x["score"], reverse=True)
     return matches
@@ -51,19 +51,19 @@ def main():
     # Step 1: Load veteran profile
     veteran = load_veteran_profile("vet_12345")
     print(f"Loaded veteran: {veteran['veteran_id']}")
-    
+
     # Step 2: Generate veteran embedding
     veteran_emb = generate_veteran_embedding(veteran)
     print(f"Generated embedding: {veteran_emb.shape}")
-    
+
     # Step 3: Load job embeddings (regional)
     jobs = load_job_embeddings("Greenville, SC", radius=50)
     print(f"Loaded {len(jobs)} job embeddings")
-    
+
     # Step 4: Calculate matches
     matches = calculate_matches(veteran_emb, jobs, threshold=0.7)
     print(f"Found {len(matches)} matches")
-    
+
     # Step 5: Return top 10
     top_matches = matches[:10]
     for i, match in enumerate(top_matches):
