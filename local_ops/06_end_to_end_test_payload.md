@@ -1,4 +1,4 @@
-﻿# [BACKLOG] End-to-End Test Payload - Send dummy JSON through Cloud Function into Databricks
+# [BACKLOG] End-to-End Test Payload - Send dummy JSON through Cloud Function into Databricks
 
 ## 🏗️ Architecture & Execution Roadmap: PENDING
 Executes a full integration test sending a simulated JSON telemetry payload through the live Cloud Function endpoint into GCS storage.
