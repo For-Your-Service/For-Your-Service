@@ -95,14 +95,14 @@ CREATE TABLE IF NOT EXISTS veteran_intake.silver.veterans (
     name STRING NOT NULL,
     email STRING NOT NULL UNIQUE,
     phone STRING,
-    
+
     -- Location
     city STRING,
     state STRING,
     zip STRING,
     willing_to_relocate BOOLEAN DEFAULT FALSE,
     remote_preference STRING,
-    
+
     -- Military
     military_branch STRING,
     mos_afsc STRING,
@@ -113,27 +113,27 @@ CREATE TABLE IF NOT EXISTS veteran_intake.silver.veterans (
     clearance_level STRING,
     clearance_status STRING COMMENT 'active, expired, inactive',
     deployments INTEGER,
-    
+
     -- Professional
     total_civilian_years INTEGER,
     current_title STRING,
     current_company STRING,
     seniority_level STRING,
-    
+
     -- Skills
     skills ARRAY<STRING>,
     certifications ARRAY<STRUCT<name:STRING, issuer:STRING, date_obtained:DATE>>,
-    
+
     -- Preferences
     target_roles ARRAY<STRING>,
     salary_min INTEGER,
     salary_max INTEGER,
     employment_types ARRAY<STRING>,
-    
+
     -- Embedding
     embedding ARRAY<DOUBLE> COMMENT '384-dim vector embedding',
     embedding_model STRING DEFAULT 'all-MiniLM-L6-v2',
-    
+
     created_at TIMESTAMP,
     updated_at TIMESTAMP
 )
@@ -159,22 +159,22 @@ CREATE TABLE IF NOT EXISTS veteran_intake.gold.job_matches (
     match_id STRING NOT NULL PRIMARY KEY,
     veteran_id STRING NOT NULL,
     job_id STRING NOT NULL,
-    
+
     -- Match scores
     semantic_similarity DOUBLE COMMENT 'Cosine similarity 0-1',
     match_score INTEGER COMMENT 'Final score 0-100',
-    
+
     -- Score components
     base_score DOUBLE,
     location_adjustment DOUBLE,
     salary_adjustment DOUBLE,
     clearance_adjustment DOUBLE,
     seniority_adjustment DOUBLE,
-    
+
     -- Match reasons
     match_reasons ARRAY<STRING>,
     match_concerns ARRAY<STRING>,
-    
+
     -- Metadata
     calculated_at TIMESTAMP,
     model_version STRING
@@ -187,7 +187,7 @@ PARTITIONED BY (veteran_id);
 CREATE TABLE IF NOT EXISTS veteran_intake.gold.veteran_match_summary (
     veteran_id STRING NOT NULL PRIMARY KEY,
     veteran_name STRING,
-    
+
     -- Match statistics
     total_jobs_analyzed INTEGER,
     top_match_score INTEGER,
@@ -196,12 +196,12 @@ CREATE TABLE IF NOT EXISTS veteran_intake.gold.veteran_match_summary (
     good_matches_60_69 INTEGER,
     fair_matches_50_59 INTEGER,
     weak_matches_below_50 INTEGER,
-    
+
     -- Top job match
     top_job_id STRING,
     top_job_title STRING,
     top_job_company STRING,
-    
+
     -- Last run
     last_run_timestamp TIMESTAMP,
     jobs_scraped_count INTEGER
@@ -215,16 +215,16 @@ CREATE TABLE IF NOT EXISTS veteran_intake.gold.applications (
     veteran_id STRING NOT NULL,
     job_id STRING NOT NULL,
     match_score INTEGER,
-    
+
     -- Application status
     status STRING COMMENT 'applied, interview, offer, rejected, accepted',
     applied_date DATE,
     status_updated_at TIMESTAMP,
-    
+
     -- Outcome
     outcome STRING,
     feedback STRING,
-    
+
     created_at TIMESTAMP
 )
 USING DELTA
@@ -237,7 +237,7 @@ PARTITIONED BY (veteran_id, DATE(applied_date));
 
 -- Active jobs (posted in last 30 days)
 CREATE OR REPLACE VIEW veteran_intake.gold.active_jobs AS
-SELECT 
+SELECT
     job_id,
     title,
     company,
@@ -254,7 +254,7 @@ WHERE posted_date >= CURRENT_DATE - INTERVAL 30 DAYS
 
 -- Best matches (score >= 70) for all veterans
 CREATE OR REPLACE VIEW veteran_intake.gold.best_matches AS
-SELECT 
+SELECT
     v.name AS veteran_name,
     v.veteran_id,
     j.title AS job_title,
