@@ -1,6 +1,6 @@
-# For Your Service 🇺🇸
+# FOR YOUR SERVICE — Veteran Career Transition Intelligence 🇺🇸
 
-AI-powered veteran job matching platform using neural networks.
+> Your transition generates thousands of service data points every day. We turn that data into a clear path forward.
 
 ## The Mission
 

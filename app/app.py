@@ -1194,8 +1194,9 @@ st.markdown(f"""
         <img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" width="46" height="30" alt="United States Flag" style="border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.35); vertical-align: middle; display: inline-block;">
         <span>FOR YOUR SERVICE</span>
     </div>
-    <div class="hero-subtitle">Universal Veteran Career Intake & AI Military-to-Civilian Job Matching Platform</div>
-    <div class="hero-badge">🎖️ Serving ALL Branches • 100% Free Veteran Transition Platform</div>
+    <div class="hero-subtitle" style="font-size: 1.15rem; font-weight: 700; color: #facc15; margin-top: 4px;">Veteran Career Transition Intelligence</div>
+    <div style="font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; font-style: italic; max-width: 780px;">"Your transition generates thousands of service data points every day. We turn that data into a clear path forward."</div>
+    <div class="hero-badge" style="margin-top: 8px;">🎖️ Serving ALL Branches • 100% Free Veteran Transition Platform</div>
 </div>
 
 <div style="background: linear-gradient(135deg, #0b1d3a 0%, #1e3a8a 100%); border-radius: 12px; padding: 1.15rem; margin: 1rem 0 1.25rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.12); color: white;">
