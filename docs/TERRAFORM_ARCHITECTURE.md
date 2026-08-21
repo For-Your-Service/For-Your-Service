@@ -1,8 +1,8 @@
 # Multi-Cloud Terraform Architecture Whitepaper 🇺🇸 ☁️
 
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service - AI Veteran Job Matching Platform  
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
+**Project:** For Your Service - AI Veteran Job Matching Platform
 
 ---
 
