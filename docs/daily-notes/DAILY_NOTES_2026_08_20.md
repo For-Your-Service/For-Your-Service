@@ -1,8 +1,8 @@
 # Daily Notes - August 20, 2026
 
-**Developer:** Free Hall (whall4.wh@gmail.com)  
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service - AI Veteran Job Matching Platform  
+**Developer:** Free Hall (whall4.wh@gmail.com)
+**Organization:** 7 Eagle Group
+**Project:** For Your Service - AI Veteran Job Matching Platform
 **Role:** Cloud Engineer • DevOps Analyst • Data Architect (18Z / 18F, US Army Special Forces, Ret.)
 
 ---
@@ -103,7 +103,7 @@ Implemented an atomic metric tracking engine in [`app/app.py`](../../app/app.py)
 
 ---
 
-**Committed By:** Free Hall <whall4.wh@gmail.com>  
-**Date:** 2026-08-20  
-**Organization:** 7 Eagle Group  
+**Committed By:** Free Hall <whall4.wh@gmail.com>
+**Date:** 2026-08-20
+**Organization:** 7 Eagle Group
 **Project:** For Your Service 🇺🇸
