@@ -124,15 +124,8 @@ else:
     platform_metrics = get_platform_metrics()
 
 # ============================================================================
-# PAGE CONFIGURATION & PATRIOTIC STYLING
+# PATRIOTIC STYLING & RESPONSIVE THEME
 # ============================================================================
-
-st.set_page_config(
-    page_title="For Your Service - Veteran Career Portal",
-    page_icon="🎖️",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # Custom Responsive Patriotic CSS (iOS, Android, Mac Safari, Chrome, Edge Compatible)
 st.markdown("""
