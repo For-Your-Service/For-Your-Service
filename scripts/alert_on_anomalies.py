@@ -33,7 +33,7 @@ def check_anomalies(spark):
 
     # Check 3: High null rate
     null_df = spark.sql("""
-        SELECT 
+        SELECT
           ROUND(100.0 * SUM(CASE WHEN salary.min IS NULL THEN 1 ELSE 0 END) / COUNT(*), 2) as null_pct
         FROM workspace.fys_bronze.job_postings
         WHERE scrape_date = CURRENT_DATE - INTERVAL 1 DAYS
@@ -45,7 +45,7 @@ def check_anomalies(spark):
 
     # Check 4: Duplicate rate
     dup_df = spark.sql("""
-        SELECT 
+        SELECT
           COUNT(*) as total,
           COUNT(DISTINCT job_id) as unique_ids,
           COUNT(*) - COUNT(DISTINCT job_id) as duplicates
