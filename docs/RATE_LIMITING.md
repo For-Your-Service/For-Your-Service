@@ -27,13 +27,13 @@ class RateLimiter:
         self.rate = rate_per_minute
         self.tokens = rate_per_minute
         self.updated_at = time.time()
-        
+
     def allow_request(self):
         now = time.time()
         elapsed = now - self.updated_at
         self.tokens = min(self.rate, self.tokens + elapsed * (self.rate / 60))
         self.updated_at = now
-        
+
         if self.tokens >= 1:
             self.tokens -= 1
             return True
@@ -60,7 +60,7 @@ When rate-limited (429 status):
 if response.status_code == 429:
     print(f"⚠️ Rate limited by {provider}")
     print(f"Retry-After: {response.headers.get('Retry-After')} seconds")
-    
+
     # Alert if repeated hits
     if rate_limit_count > 3:
         send_slack_alert(f"Repeated rate limits from {provider}")
@@ -76,5 +76,5 @@ if response.status_code == 429:
 
 ---
 
-**Owner:** 7 Eagle Group  
+**Owner:** 7 Eagle Group
 **Updated:** 2026-08-10
