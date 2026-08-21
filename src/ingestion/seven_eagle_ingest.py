@@ -1,4 +1,4 @@
-﻿# Databricks Ingestion Script for 7 Eagle Group API
+# Databricks Ingestion Script for 7 Eagle Group API
 
 # 1. Define and retrieve widget parameters passed from GitHub Actions
 dbutils.widgets.text("seven_eagle_id", "", "7 Eagle App ID")
