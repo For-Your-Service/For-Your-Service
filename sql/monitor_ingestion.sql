@@ -1,7 +1,7 @@
 -- Monitor daily job ingestion metrics
 -- For Your Service - 7 Eagle Group
 
-SELECT 
+SELECT
   scrape_date,
   source,
   COUNT(*) as job_count,
