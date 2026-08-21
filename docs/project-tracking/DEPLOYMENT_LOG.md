@@ -293,7 +293,7 @@ All veteran profiles use JSON format:
 
 ### GitHub Team (Need Invites)
 - Donavanmarcus@gmail.com
-- Josh.shalack@gmail.com  
+- Josh.shalack@gmail.com
 - leroy@ironin.com
 
 ### 7 Eagle Group Partnership
@@ -395,7 +395,7 @@ _Maintained by: For Your Service Development Team_
 
 ## 🧪 Test Results Summary
 
-**Test Date:** August 5, 2026 at 19:02:12 UTC  
+**Test Date:** August 5, 2026 at 19:02:12 UTC
 **Status:** ✅ **ALL TESTS PASSED**
 
 ### Cloud Function Test
