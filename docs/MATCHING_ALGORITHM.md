@@ -43,37 +43,37 @@ def create_veteran_text(profile):
     Creates semantic text representation of veteran
     """
     text_parts = []
-    
+
     # Military experience
     text_parts.append(f"Military: {profile['branch']} {profile['mos']}")
     text_parts.append(f"Rank: {profile['rank']}")
     text_parts.append(f"Years of service: {profile['service_years']}")
-    
+
     # Clearance
     if profile['clearance_level'] != 'None':
         text_parts.append(f"Security clearance: {profile['clearance_level']}")
-    
+
     # Skills
     text_parts.append(f"Skills: {', '.join(profile['skills'])}")
-    
+
     # Experience
     text_parts.append(f"Current role: {profile['current_title']}")
     text_parts.append(f"Experience: {profile['total_years']} years")
     text_parts.append(f"Seniority: {profile['seniority_level']}")
-    
+
     # Certifications
     certs = ', '.join([c['name'] for c in profile['certifications']])
     text_parts.append(f"Certifications: {certs}")
-    
+
     return ' | '.join(text_parts)
 ```
 
 **Example for William Free Hall:**
 ```
-Military: Army 18F Special Forces Intelligence Sergeant | Rank: Team Sergeant | 
-Years of service: 18 | Security clearance: TS/SCI (expired) | 
-Skills: AWS, Azure, GCP, Kubernetes, Docker, Terraform, Python, Databricks, PySpark | 
-Current role: Technical Lead & Solutions Architect | Experience: 28 years | 
+Military: Army 18F Special Forces Intelligence Sergeant | Rank: Team Sergeant |
+Years of service: 18 | Security clearance: TS/SCI (expired) |
+Skills: AWS, Azure, GCP, Kubernetes, Docker, Terraform, Python, Databricks, PySpark |
+Current role: Technical Lead & Solutions Architect | Experience: 28 years |
 Seniority: executive | Certifications: AWS Certified Cloud Practitioner
 ```
 
@@ -84,27 +84,27 @@ def create_job_text(job):
     Creates semantic text representation of job posting
     """
     text_parts = []
-    
+
     text_parts.append(f"Title: {job['title']}")
     text_parts.append(f"Company: {job['company']}")
     text_parts.append(f"Location: {job['location']}")
-    
+
     # Description (truncated to 500 chars for embedding efficiency)
     desc = job['description'][:500]
     text_parts.append(f"Description: {desc}")
-    
+
     # Requirements
     if 'requirements' in job:
         text_parts.append(f"Requirements: {job['requirements']}")
-    
+
     # Salary
     if job['salary_min']:
         text_parts.append(f"Salary: ${job['salary_min']}-${job['salary_max']}")
-    
+
     # Clearance
     if job['clearance_required']:
         text_parts.append(f"Clearance required: {job['clearance_required']}")
-    
+
     return ' | '.join(text_parts)
 ```
 
@@ -148,31 +148,31 @@ def adjust_match_score(base_score, job, veteran):
     Applies business logic adjustments
     """
     score = base_score
-    
+
     # Salary mismatch penalty
     if job['salary_max'] < veteran['salary_min']:
         score *= 0.7  # 30% penalty
-    
+
     # Location bonus
     if veteran['location'] in job['location']:
         score += 5
     elif job['remote'] == 'Remote' and veteran['remote_preference'] == 'required':
         score += 10
-    
+
     # Clearance match bonus
     if job['clearance_required'] and veteran['clearance_status'] == 'active':
         score += 15
     elif job['clearance_required'] and veteran['clearance_status'] == 'expired':
         score += 5  # Still eligible for reinstatement
-    
+
     # Seniority mismatch penalty
     seniority_gap = abs(
-        SENIORITY_LEVELS[veteran['seniority']] - 
+        SENIORITY_LEVELS[veteran['seniority']] -
         SENIORITY_LEVELS[job['seniority']]
     )
     if seniority_gap > 1:
         score *= 0.85  # 15% penalty for major mismatch
-    
+
     # Cap at 100
     return min(100, score)
 ```
@@ -281,6 +281,6 @@ spark.createDataFrame([
 
 ---
 
-**Created:** August 10, 2026  
-**Author:** William Free Hall <whall4.wh@gmail.com>  
+**Created:** August 10, 2026
+**Author:** William Free Hall <whall4.wh@gmail.com>
 **Organization:** 7 Eagle Group
