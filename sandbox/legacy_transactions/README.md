@@ -1,4 +1,4 @@
-﻿# Legacy Transactions Sandbox
+# Legacy Transactions Sandbox
 
 > **NON-CANONICAL / DEPRECATED**
 > Rule: Code that is not on the serving spine is not production.
