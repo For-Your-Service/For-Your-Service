@@ -7,7 +7,7 @@
 -- ============================================================================
 
 -- Count veterans by military branch
-SELECT 
+SELECT
     military_branch,
     COUNT(*) as veteran_count,
     AVG(years_of_service) as avg_service_years,
@@ -17,7 +17,7 @@ GROUP BY military_branch
 ORDER BY veteran_count DESC;
 
 -- Veteran skill distribution
-SELECT 
+SELECT
     EXPLODE(skills) as skill,
     COUNT(*) as veteran_count
 FROM veteran_intake.silver.veterans
@@ -26,7 +26,7 @@ ORDER BY veteran_count DESC
 LIMIT 25;
 
 -- Veterans by seniority and target salary
-SELECT 
+SELECT
     seniority_level,
     COUNT(*) as veteran_count,
     AVG(salary_min) as avg_salary_min,
@@ -42,7 +42,7 @@ ORDER BY avg_salary_min DESC;
 -- ============================================================================
 
 -- Active jobs by state and remote type
-SELECT 
+SELECT
     state,
     remote_type,
     COUNT(*) as job_count,
@@ -54,7 +54,7 @@ GROUP BY state, remote_type
 ORDER BY job_count DESC;
 
 -- Top hiring companies
-SELECT 
+SELECT
     company,
     COUNT(*) as job_postings,
     AVG((salary_min + salary_max) / 2) as avg_salary,
@@ -66,7 +66,7 @@ ORDER BY job_postings DESC
 LIMIT 20;
 
 -- Jobs requiring security clearance
-SELECT 
+SELECT
     clearance_required,
     COUNT(*) as job_count,
     AVG(salary_min) as avg_min_salary,
@@ -78,7 +78,7 @@ GROUP BY clearance_required
 ORDER BY avg_min_salary DESC;
 
 -- Most in-demand skills from job descriptions
-SELECT 
+SELECT
     skill,
     COUNT(*) as job_count,
     AVG((salary_min + salary_max) / 2) as avg_salary
@@ -94,7 +94,7 @@ LIMIT 30;
 -- ============================================================================
 
 -- William Free Hall's best matches
-SELECT 
+SELECT
     j.title,
     j.company,
     j.location,
@@ -112,8 +112,8 @@ ORDER BY m.match_score DESC
 LIMIT 25;
 
 -- Match score distribution for all veterans
-SELECT 
-    CASE 
+SELECT
+    CASE
         WHEN match_score >= 85 THEN '85-100 (Exceptional)'
         WHEN match_score >= 70 THEN '70-84 (Strong)'
         WHEN match_score >= 60 THEN '60-69 (Good)'
@@ -123,8 +123,8 @@ SELECT
     COUNT(*) as match_count,
     AVG(match_score) as avg_score
 FROM veteran_intake.gold.job_matches
-GROUP BY 
-    CASE 
+GROUP BY
+    CASE
         WHEN match_score >= 85 THEN '85-100 (Exceptional)'
         WHEN match_score >= 70 THEN '70-84 (Strong)'
         WHEN match_score >= 60 THEN '60-69 (Good)'
@@ -134,7 +134,7 @@ GROUP BY
 ORDER BY avg_score DESC;
 
 -- Top match factors (what drives high scores)
-SELECT 
+SELECT
     EXPLODE(match_reasons) as reason,
     COUNT(*) as frequency,
     AVG(match_score) as avg_match_score
@@ -149,8 +149,8 @@ LIMIT 20;
 -- ============================================================================
 
 -- Application conversion rates
-SELECT 
-    CASE 
+SELECT
+    CASE
         WHEN match_score >= 80 THEN '80+ (Strong)'
         WHEN match_score >= 70 THEN '70-79 (Good)'
         WHEN match_score >= 60 THEN '60-69 (Fair)'
@@ -163,8 +163,8 @@ SELECT
     ROUND(100.0 * COUNT(DISTINCT CASE WHEN status = 'interview' THEN application_id END) / COUNT(*), 1) as interview_rate,
     ROUND(100.0 * COUNT(DISTINCT CASE WHEN status = 'offer' THEN application_id END) / COUNT(*), 1) as offer_rate
 FROM veteran_intake.gold.applications
-GROUP BY 
-    CASE 
+GROUP BY
+    CASE
         WHEN match_score >= 80 THEN '80+ (Strong)'
         WHEN match_score >= 70 THEN '70-79 (Good)'
         WHEN match_score >= 60 THEN '60-69 (Fair)'
@@ -173,7 +173,7 @@ GROUP BY
 ORDER BY interview_rate DESC;
 
 -- Veteran application history
-SELECT 
+SELECT
     v.name,
     COUNT(DISTINCT a.application_id) as total_applications,
     COUNT(DISTINCT CASE WHEN a.status = 'interview' THEN a.application_id END) as interviews,
@@ -191,7 +191,7 @@ ORDER BY total_applications DESC;
 -- ============================================================================
 
 -- Jobs missing salary information
-SELECT 
+SELECT
     data_source,
     COUNT(*) as total_jobs,
     COUNT(CASE WHEN salary_min IS NULL THEN 1 END) as missing_salary,
@@ -201,7 +201,7 @@ WHERE posted_date >= CURRENT_DATE - INTERVAL 30 DAYS
 GROUP BY data_source;
 
 -- Veteran profiles completeness
-SELECT 
+SELECT
     COUNT(*) as total_veterans,
     COUNT(CASE WHEN skills IS NULL OR SIZE(skills) = 0 THEN 1 END) as missing_skills,
     COUNT(CASE WHEN salary_min IS NULL THEN 1 END) as missing_salary,
@@ -210,7 +210,7 @@ SELECT
 FROM veteran_intake.silver.veterans;
 
 -- Duplicate job postings
-SELECT 
+SELECT
     title,
     company,
     COUNT(*) as duplicate_count
@@ -225,7 +225,7 @@ ORDER BY duplicate_count DESC;
 -- ============================================================================
 
 -- Daily job ingestion volume
-SELECT 
+SELECT
     DATE(ingestion_timestamp) as ingestion_date,
     data_source,
     COUNT(DISTINCT job_id) as jobs_ingested,
@@ -236,7 +236,7 @@ GROUP BY DATE(ingestion_timestamp), data_source
 ORDER BY ingestion_date DESC, jobs_ingested DESC;
 
 -- Match calculation performance
-SELECT 
+SELECT
     veteran_id,
     calculated_at,
     COUNT(*) as jobs_matched,
