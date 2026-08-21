@@ -26,7 +26,7 @@
 
 ```sql
 -- Job ingestion rate (last 24 hours)
-SELECT 
+SELECT
   date_trunc('hour', ingestion_timestamp) as hour,
   data_source,
   COUNT(*) as jobs_ingested
@@ -36,7 +36,7 @@ GROUP BY 1, 2
 ORDER BY 1 DESC
 
 -- Match quality metrics
-SELECT 
+SELECT
   veteran_id,
   COUNT(*) as total_matches,
   AVG(match_score) as avg_score,
@@ -112,7 +112,7 @@ def health_check():
         'model_loaded': check_model_loaded(),
         'api_keys': check_api_keys_valid()
     }
-    
+
     if all(checks.values()):
         return {'status': 'healthy', 'checks': checks}, 200
     else:
@@ -128,5 +128,5 @@ def health_check():
 
 ---
 
-**Owner:** 7 Eagle Group  
+**Owner:** 7 Eagle Group
 **Updated:** 2026-08-10
