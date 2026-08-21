@@ -29,7 +29,7 @@ normalizer = SkillNormalizer()
 # Normalize single skill
 skill = normalizer.normalize_skill("k8s")
 print(skill)
-# {'original': 'k8s', 'canonical_name': 'Kubernetes', 
+# {'original': 'k8s', 'canonical_name': 'Kubernetes',
 #  'category': 'DevOps', 'confidence': 1.0}
 
 # Normalize multiple skills
@@ -39,7 +39,7 @@ normalized = normalizer.normalize_skills(raw_skills)
 # Group by category
 tech_stack = normalizer.extract_tech_stack(normalized)
 print(tech_stack)
-# {'Cloud': ['Amazon Web Services'], 
+# {'Cloud': ['Amazon Web Services'],
 #  'DevOps': ['Terraform', 'Docker'],
 #  'Programming': ['Python']}
 ```
@@ -144,6 +144,6 @@ Common variations automatically mapped to canonical forms:
 
 ## Author
 
-**Free Hall** <whall4.wh@gmail.com>  
-7 Eagle Group  
+**Free Hall** <whall4.wh@gmail.com>
+7 Eagle Group
 Army Special Forces (18Z), 1999-2017
