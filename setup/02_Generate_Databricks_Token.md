@@ -1,8 +1,8 @@
 # 🔐 Generate Databricks Personal Access Token
 
-**For:** Hugging Face Spaces API Backend  
-**Developer:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**For:** Hugging Face Spaces API Backend
+**Developer:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 **Date:** 2026-08-09
 
 ---
