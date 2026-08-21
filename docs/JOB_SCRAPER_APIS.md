@@ -1,7 +1,7 @@
 # Job Scraper API Documentation
 
-**Last Updated:** August 10, 2026  
-**Author:** Free Hall (7 Eagle Group)  
+**Last Updated:** August 10, 2026
+**Author:** Free Hall (7 Eagle Group)
 **Purpose:** Multi-source job data aggregation for veteran matching
 
 ---
@@ -23,8 +23,8 @@ For-Your-Service integrates with multiple job APIs to provide comprehensive cove
 
 ## 1. JSearch API (RapidAPI)
 
-**Status:** ✅ Credentials configured, production-ready  
-**Coverage:** Private sector tech roles  
+**Status:** ✅ Credentials configured, production-ready
+**Coverage:** Private sector tech roles
 **Best For:** DevOps, Cloud, SRE positions at tech companies
 
 ### Quick Start
@@ -74,8 +74,8 @@ jobs = response.json()['data']
 
 ## 2. USAJobs.gov API
 
-**Status:** ⚠️ Requires registration  
-**Coverage:** Federal government positions  
+**Status:** ⚠️ Requires registration
+**Coverage:** Federal government positions
 **Best For:** VA, DOD, DHS roles with veteran preference
 
 ### Registration (5 minutes)
@@ -136,8 +136,8 @@ response = requests.get(
 
 ## 3. Adzuna API
 
-**Status:** ✅ Previously configured  
-**Coverage:** General job aggregation (UK/US)  
+**Status:** ✅ Previously configured
+**Coverage:** General job aggregation (UK/US)
 **Best For:** Broad market coverage
 
 ### Configuration
@@ -168,8 +168,8 @@ params = {
 
 ## 4. LinkedIn Jobs API
 
-**Status:** 🔄 Future consideration  
-**Coverage:** Professional network jobs  
+**Status:** 🔄 Future consideration
+**Coverage:** Professional network jobs
 **Cost:** Enterprise pricing required
 
 ### Why Not Now?
@@ -190,16 +190,16 @@ params = {
 ```python
 def scrape_all_sources(veteran_profile):
     """Scrape from all configured APIs."""
-    
+
     all_jobs = []
-    
+
     # 1. JSearch (private sector)
     jsearch_jobs = fetch_jsearch_jobs(
         query=f"{veteran_profile['target_role']} in {veteran_profile['location']}",
         max_pages=5
     )
     all_jobs.extend(transform_jsearch(jsearch_jobs))
-    
+
     # 2. USAJobs (federal - if configured)
     if usajobs_key_exists():
         usajobs = fetch_usajobs(
@@ -208,14 +208,14 @@ def scrape_all_sources(veteran_profile):
             clearance=veteran_profile['clearance_level']
         )
         all_jobs.extend(transform_usajobs(usajobs))
-    
+
     # 3. Adzuna (supplemental)
     adzuna_jobs = fetch_adzuna_jobs(
         what=veteran_profile['target_role'],
         where=veteran_profile['location']
     )
     all_jobs.extend(transform_adzuna(adzuna_jobs))
-    
+
     return deduplicate_jobs(all_jobs)
 ```
 
@@ -226,7 +226,7 @@ def deduplicate_jobs(jobs_list):
     """Remove duplicate postings across sources."""
     seen = set()
     unique_jobs = []
-    
+
     for job in jobs_list:
         # Create fingerprint
         fingerprint = (
@@ -234,11 +234,11 @@ def deduplicate_jobs(jobs_list):
             job['company'].lower(),
             job['location_city'].lower()
         )
-        
+
         if fingerprint not in seen:
             seen.add(fingerprint)
             unique_jobs.append(job)
-    
+
     return unique_jobs
 ```
 
@@ -275,7 +275,7 @@ import time
 
 def fetch_with_retry(api_function, max_retries=3):
     """Retry API calls with exponential backoff."""
-    
+
     for attempt in range(max_retries):
         try:
             return api_function()
@@ -302,7 +302,7 @@ def fetch_with_retry(api_function, max_retries=3):
 ```python
 def log_api_usage(api_name, requests_made, requests_remaining):
     """Track API usage for monitoring."""
-    
+
     usage_data = {
         'api': api_name,
         'timestamp': datetime.utcnow().isoformat(),
@@ -310,12 +310,12 @@ def log_api_usage(api_name, requests_made, requests_remaining):
         'requests_remaining': requests_remaining,
         'usage_percent': (requests_made / (requests_made + requests_remaining)) * 100
     }
-    
+
     # Write to monitoring table
     spark.createDataFrame([usage_data]).write.mode('append').saveAsTable(
         'workspace.fys_monitoring.api_usage'
     )
-    
+
     # Alert if > 80% usage
     if usage_data['usage_percent'] > 80:
         send_alert(f"⚠️ {api_name} at {usage_data['usage_percent']:.1f}% capacity")
@@ -369,6 +369,6 @@ def log_api_usage(api_name, requests_made, requests_remaining):
 
 ---
 
-**Questions or Issues?**  
-Contact: Free Hall <whall4.wh@gmail.com>  
+**Questions or Issues?**
+Contact: Free Hall <whall4.wh@gmail.com>
 Organization: 7 Eagle Group
