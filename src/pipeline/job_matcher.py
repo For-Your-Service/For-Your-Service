@@ -77,27 +77,61 @@ class JobMatcher:
         top_k: int = 10,
         location_filter: Optional[str] = None,
         salary_min: Optional[int] = None,
+        candidate_input: Optional[Dict] = None,
     ) -> MatchResult:
         """
-        Find best job matches for candidate
+        Find best job matches for candidate dynamically driven by candidate location input.
 
         Args:
             candidate_embedding: Candidate's skill vector
             job_embeddings: List of (job_id, embedding, metadata) tuples
             top_k: Number of top matches to return
-            location_filter: Optional location filter (e.g., "Greenville, SC")
+            location_filter: Optional location filter (e.g., "Greenville, SC" or "Dallas, TX")
             salary_min: Optional minimum salary requirement
+            candidate_input: Optional candidate input payload with target_city, target_state, commute_radius_miles
 
         Returns:
             MatchResult with ranked job matches
         """
         matches = []
 
+        # Extract dynamic location criteria directly from candidate input payload
+        if candidate_input:
+            target_city = candidate_input.get("target_city")
+            target_state = candidate_input.get("target_state")
+            remote_ok = candidate_input.get("remote_ok", True)
+        elif location_filter:
+            parts = [p.strip() for p in location_filter.split(",") if p.strip()]
+            target_city = parts[0] if len(parts) > 0 else None
+            target_state = parts[1] if len(parts) > 1 else None
+            remote_ok = True
+        else:
+            target_city = None
+            target_state = None
+            remote_ok = True
+
         for job_id, job_embedding, metadata in job_embeddings:
-            # Apply filters
-            if location_filter and metadata.get("location") != location_filter:
-                # Allow remote jobs regardless of location
-                if not metadata.get("remote_option", False):
+            # Dynamic Location Filter: completely agnostic and adaptable to any region
+            if target_city or target_state or location_filter:
+                job_loc = str(metadata.get("location", ""))
+                job_city = str(metadata.get("city", ""))
+                job_state = str(metadata.get("state", ""))
+                is_remote = metadata.get("remote_option", False) or "remote" in job_loc.lower() or "remote" in job_city.lower()
+
+                if is_remote and remote_ok:
+                    loc_matched = True
+                elif target_city and target_state:
+                    loc_matched = (
+                        (job_city and job_city.lower() == target_city.strip().lower() and job_state and job_state.upper() == target_state.strip().upper())
+                        or (target_city.strip().lower() in job_loc.lower() and target_state.strip().upper() in job_loc.upper())
+                        or (location_filter and location_filter.strip().lower() == job_loc.strip().lower())
+                    )
+                elif location_filter:
+                    loc_matched = location_filter.strip().lower() == job_loc.strip().lower() or location_filter.strip().lower() in job_loc.lower()
+                else:
+                    loc_matched = True
+
+                if not loc_matched:
                     continue
 
             if salary_min:
