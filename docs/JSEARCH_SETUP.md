@@ -4,7 +4,7 @@
 
 JSearch aggregates jobs from:
 - Indeed
-- LinkedIn  
+- LinkedIn
 - Glassdoor
 - ZipRecruiter
 
