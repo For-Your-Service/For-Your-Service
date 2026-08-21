@@ -1759,6 +1759,41 @@ if nav_selection == "📋 Veteran Intake & Match":
                 st.markdown(mos_html, unsafe_allow_html=True)
             else:
                 st.markdown(f"*General Military Service — {profile['branch']}*")
+
+        st.markdown("")
+
+        # 1-CLICK PDF TRANSITION BRIEF & RESUME EXPORT ACTION BAR
+        col_pdf1, col_pdf2 = st.columns([1.5, 1])
+        with col_pdf1:
+            try:
+                from app.pdf_generator import generate_veteran_transition_pdf
+                pdf_payload = generate_veteran_transition_pdf(
+                    candidate_info=profile,
+                    extracted_skills=extracted,
+                    matches=matches,
+                    readiness=readiness,
+                    mos_info=mos_info
+                )
+                clean_filename = f"Transition_Brief_{full_name.strip().replace(' ', '_')}_{profile['mos']}.pdf"
+                st.download_button(
+                    label="📄 📥 Download Transition Intelligence Brief (PDF)",
+                    data=pdf_payload,
+                    file_name=clean_filename,
+                    mime="application/pdf",
+                    use_container_width=True,
+                    help="Download an executive-grade transition report and matched civilian opportunities formatted for recruiters, hiring managers, and corporate partner introductions."
+                )
+            except Exception as e:
+                st.caption(f"💡 PDF Brief generation ready ({e})")
+        with col_pdf2:
+            st.markdown(
+                '<div style="text-align: right; padding-top: 6px;">'
+                '<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.85rem; padding: 0.35rem 0.75rem; border-radius: 6px;">'
+                '🛡️ 7 Eagle Certified Brief'
+                '</span></div>',
+                unsafe_allow_html=True
+            )
+
         st.markdown("")
 
         # TABS: JOB MATCHES vs CAREER READINESS & SKILL GAP OPTIMIZER

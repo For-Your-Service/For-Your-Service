@@ -704,7 +704,14 @@ def load_cached_scraped_jobs(target_city: str = "", target_state: str = "", targ
     except Exception:
         pass
 
-    all_jobs = list(SAMPLE_JOBS)
+    defense_jobs = []
+    try:
+        from app.defense_contractor_fetcher import fetch_defense_contractor_jobs
+        defense_jobs = fetch_defense_contractor_jobs(target_city, target_state, target_track)
+    except Exception:
+        pass
+
+    all_jobs = list(SAMPLE_JOBS) + defense_jobs
 
     # If candidate has a specific target city & state, synthesize high-quality local partner opportunities
     if target_city and target_state:

@@ -18,5 +18,6 @@ python-docx>=0.8.11
 databricks-sdk>=0.12.0
 pyspark>=3.4.0
 
-# Utilities
+# Utilities & Export
 python-dateutil>=2.8.2
+reportlab>=4.0.0
