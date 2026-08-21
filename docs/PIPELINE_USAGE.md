@@ -1,6 +1,6 @@
 # Job Data Ingestion Pipeline
 
-**Organization:** 7 Eagle Group  
+**Organization:** 7 Eagle Group
 **Author:** Free Hall <whall4.wh@gmail.com>
 
 ## Overview
@@ -66,7 +66,7 @@ print(f"Status: {summary['pipeline_status']}")
 SELECT * FROM main.default.job_matching_bronze LIMIT 10;
 
 -- Silver table (normalized jobs)
-SELECT 
+SELECT
     title,
     company,
     job_location,
@@ -147,11 +147,11 @@ Normalized job records:
 
 ## Tech Stack Prioritization
 
-**Cloud:** AWS, Azure, GCP  
-**Container Orchestration:** Kubernetes, Docker  
-**Infrastructure as Code:** Terraform, Ansible  
-**CI/CD:** Jenkins, GitHub Actions, GitLab CI  
-**Monitoring:** Grafana, Prometheus, Datadog  
+**Cloud:** AWS, Azure, GCP
+**Container Orchestration:** Kubernetes, Docker
+**Infrastructure as Code:** Terraform, Ansible
+**CI/CD:** Jenkins, GitHub Actions, GitLab CI
+**Monitoring:** Grafana, Prometheus, Datadog
 **Languages:** Python, Bash, Go
 
 ## API Credentials
@@ -203,11 +203,11 @@ Pipeline gracefully handles missing Spark session - data still saved to UC Volum
 
 ## Commit History
 
-**Commits Today:** 40  
+**Commits Today:** 40
 **Total Project Commits:** 391
 
 ## Contact
 
-**Free Hall**  
-Email: whall4.wh@gmail.com  
+**Free Hall**
+Email: whall4.wh@gmail.com
 Organization: 7 Eagle Group
