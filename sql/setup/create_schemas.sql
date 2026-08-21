@@ -25,4 +25,3 @@ USE CATALOG veteran_intake;
 
 SHOW SCHEMAS;
 
-
