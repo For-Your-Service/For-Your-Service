@@ -1,4 +1,4 @@
-﻿param (
+param (
     [Parameter(Mandatory=$true)][int]$IssueNumber,
     [Parameter(Mandatory=$true)][string]$IssueTag,
     [Parameter(Mandatory=$true)][scriptblock]$FixAction,
