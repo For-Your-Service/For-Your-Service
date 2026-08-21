@@ -1,4 +1,4 @@
-﻿-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
+-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 
 -- DEPRECATED: Non-canonical schema definition. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 -- Create Unity Catalog schemas for For Your Service
