@@ -1,4 +1,4 @@
-﻿# Import SparkSession to manage the distributed DataFrame runtime environment.
+# Import SparkSession to manage the distributed DataFrame runtime environment.
 from pyspark.sql import SparkSession
 
 # Import specific built-in transformation and cryptographic functions from pyspark.sql.functions.
@@ -10,7 +10,7 @@ def run_silver_transformation():
 
     # Define the source path of the raw Bronze Delta table.
     bronze_table_path = "dbfs:/mnt/lakehouse/bronze/transactions"
-    
+
     # Load the raw Bronze Delta table into a Spark DataFrame for processing.
     df_bronze = spark.read.format("delta").load(bronze_table_path)
 
@@ -23,10 +23,10 @@ def run_silver_transformation():
 
     # Define the target Delta storage path for the Silver layer tables.
     silver_table_path = "dbfs:/mnt/lakehouse/silver/transactions"
-    
+
     # Write the transformed, scrubbed records into the Silver Delta table using overwrite mode.
     df_silver.write.format("delta").mode("overwrite").save(silver_table_path)
-    
+
     # Print a confirmation message indicating successful Silver tier processing.
     print(f"Successfully transformed records into Silver Delta table at {silver_table_path}")
 
