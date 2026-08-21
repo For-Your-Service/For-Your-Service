@@ -86,7 +86,7 @@ class DatabricksClient:
         self.server_hostname = os.getenv("DATABRICKS_SERVER_HOSTNAME")
         self.http_path = os.getenv("DATABRICKS_HTTP_PATH")
         self.access_token = os.getenv("DATABRICKS_TOKEN")
-        
+
         if not all([self.server_hostname, self.http_path, self.access_token]):
             print("⚠️ WARNING: Databricks credentials not configured")
             self.connection = None
@@ -101,7 +101,7 @@ class DatabricksClient:
             except Exception as e:
                 print(f"❌ Databricks connection failed: {e}")
                 self.connection = None
-    
+
     def save_veteran_profile(self, veteran_id: str, profile: dict) -> bool:
         try:
             query = """
@@ -111,7 +111,7 @@ class DatabricksClient:
                     %(salary_min)s, %(salary_max)s, %(created_at)s, %(updated_at)s
                 )
             """
-            
+
             params = {
                 "veteran_id": veteran_id,
                 "name": profile['name'],
@@ -127,14 +127,14 @@ class DatabricksClient:
                 "created_at": datetime.now(),
                 "updated_at": datetime.now()
             }
-            
+
             cursor = self.connection.cursor()
             cursor.execute(query, params)
             return True
         except Exception as e:
             print(f"❌ Error saving veteran: {e}")
             return False
-    
+
     def get_veteran_profile(self, veteran_id: str) -> Optional[dict]:
         try:
             query = "SELECT * FROM workspace.fys_silver.veteran_profiles WHERE veteran_id = %(veteran_id)s LIMIT 1"
@@ -148,7 +148,7 @@ class DatabricksClient:
         except Exception as e:
             print(f"❌ Error retrieving veteran: {e}")
             return None
-    
+
     def get_jobs(self, location: Optional[str] = None, limit: int = 100) -> List[dict]:
         try:
             query = "SELECT * FROM workspace.fys_bronze.job_postings"
@@ -176,7 +176,7 @@ async def root():
         "developer": "Free Hall",
         "status": "operational",
         "database": "connected" if db_client.connection else "disconnected",
-        "endpoints": ["GET /health", "GET /docs", "POST /api/v1/veteran/register", 
+        "endpoints": ["GET /health", "GET /docs", "POST /api/v1/veteran/register",
                      "GET /api/v1/veteran/{veteran_id}", "POST /api/v1/match", "GET /api/v1/jobs"],
         "documentation": "/docs"
     }
@@ -214,12 +214,12 @@ async def match_veteran_to_jobs(request: MatchRequest):
         veteran = db_client.get_veteran_profile(request.veteran_id)
         if not veteran:
             raise HTTPException(status_code=404, detail="Veteran not found")
-        
+
         jobs = db_client.get_jobs(location=request.location_filter, limit=500)
         if not jobs:
             return MatchResponse(veteran_id=request.veteran_id, location_filter=request.location_filter,
                                total_matches=0, matches=[])
-        
+
         # Placeholder: Rule-based matching (TODO: Replace with neural network inference)
         matches = []
         for job in jobs[:request.top_n]:
@@ -235,7 +235,7 @@ async def match_veteran_to_jobs(request: MatchRequest):
                 concerns=[],
                 url=job.get('url', '#')
             ))
-        
+
         matches = [m for m in matches if m.match_score >= request.min_score]
         return MatchResponse(veteran_id=request.veteran_id, location_filter=request.location_filter,
                            total_matches=len(matches), matches=matches)
