@@ -99,7 +99,7 @@ veteran_profile = {
         "willing_to_relocate": True,
         "remote_preference": True
     },
-    
+
     "military": {
         "branch": "Army",
         "mos": "18 Series (Special Forces - Green Beret)",
@@ -109,7 +109,7 @@ veteran_profile = {
         "clearance": "Former TS/SCI (1999-2017, expired - no longer active)",
         "clearance_notes": "18 years handling classified material, security-first mindset remains"
     },
-    
+
     "target_roles": [
         "DevOps Engineer",
         "Solutions Architect",
@@ -118,7 +118,7 @@ veteran_profile = {
         "Platform Engineer",
         "Technical Sales Engineer"
     ],
-    
+
     "skills": {
         "cloud_platforms": ["AWS", "Azure", "EKS", "EC2", "S3", "VPC", "Fargate"],
         "devops_tools": ["Kubernetes", "Docker", "Terraform", "Jenkins", "Ansible", "GitHub"],
@@ -127,18 +127,18 @@ veteran_profile = {
         "security": ["GitHub Advanced Security", "GHAS", "Threat Assessment", "Security Clearance"],
         "leadership": ["Team Leadership", "Technical Training", "Stakeholder Management"]
     },
-    
+
     "certifications": [
         "AWS Professional",
         "Azure Professional",
         "Cybersecurity Training (Syracuse O2O)"
     ],
-    
+
     "education": [
         "BS Cybersecurity (2020-2022)",
         "AA Computer Programming (2018-2020)"
     ],
-    
+
     "experience": [
         {
             "company": "ConocoPhillips",
@@ -161,7 +161,7 @@ veteran_profile = {
             ]
         }
     ],
-    
+
     "salary_target": {
         "min": 120000,
         "max": 180000,
@@ -203,7 +203,7 @@ print("="*70)
 # Load all jobs from Bronze table
 table_name = "workspace.fys_bronze.job_postings"
 jobs_df = spark.sql(f"""
-    SELECT 
+    SELECT
         job_id,
         title,
         company,
@@ -261,7 +261,7 @@ print(f"   {', '.join(list(set(veteran_keywords))[:15])}...")
 def calculate_match_score(job_row):
     """
     Calculate similarity score (0-100) between veteran profile and job posting.
-    
+
     Scoring factors:
     1. Skills Match (40 points): Keyword overlap in title + description + requirements
     2. Salary Match (30 points): Overlap with veteran's target salary range
@@ -270,63 +270,63 @@ def calculate_match_score(job_row):
     """
     score = 0
     match_reasons = []
-    
+
     # Combine all job text for keyword matching
     job_text = ' '.join([
         str(job_row['title']),
         str(job_row['description']) if pd.notna(job_row['description']) else '',
         str(job_row['requirements']) if pd.notna(job_row['requirements']) else ''
     ]).lower()
-    
+
     # 1. Skills Match (40 points)
     skills_matched = [kw for kw in veteran_keywords if kw in job_text]
     skills_score = min(40, len(skills_matched) * 2)  # 2 points per matched skill, max 40
     score += skills_score
-    
+
     if skills_score > 20:
         match_reasons.append(f"{len(skills_matched)} skills matched ({', '.join(skills_matched[:5])})")
-    
+
     # 2. Salary Match (30 points)
     vet_min = veteran_profile['salary_target']['min']
     vet_max = veteran_profile['salary_target']['max']
     job_min = job_row['salary_min'] if pd.notna(job_row['salary_min']) else 0
     job_max = job_row['salary_max'] if pd.notna(job_row['salary_max']) else 0
-    
+
     if job_max >= vet_min and job_min <= vet_max:
         # Salary ranges overlap
         overlap_amount = min(job_max, vet_max) - max(job_min, vet_min)
         overlap_pct = overlap_amount / (vet_max - vet_min)
         salary_score = min(30, overlap_pct * 30)
         score += salary_score
-        
+
         if salary_score > 15:
             match_reasons.append(f"Salary ${job_min:,.0f}-${job_max:,.0f} in target range")
-    
+
     # 3. Title Match (20 points)
     job_title = str(job_row['title']).lower()
-    title_keywords_matched = [role for role in veteran_profile['target_roles'] 
+    title_keywords_matched = [role for role in veteran_profile['target_roles']
                                if any(word in job_title for word in role.lower().split())]
-    
+
     title_score = min(20, len(title_keywords_matched) * 10)  # 10 points per matched target role
     score += title_score
-    
+
     if title_score > 0:
         match_reasons.append(f"Title matches: {', '.join(title_keywords_matched)}")
-    
+
     # 4. Company/Industry Bonus (10 points)
     company_name = str(job_row['company']).lower() if pd.notna(job_row['company']) else ''
     source = str(job_row['source']).lower()
-    
+
     # Bonus for government jobs (veteran preference)
     if source == 'usajobs' or 'government' in job_text:
         score += 5
         match_reasons.append("Government job (veteran preference)")
-    
+
     # Bonus for tech/defense companies
     if any(tech in company_name for tech in ['northrop', 'lockheed', 'raytheon', 'amazon', 'microsoft', 'google']):
         score += 5
         match_reasons.append("Major tech/defense company")
-    
+
     return {
         'score': round(score, 1),
         'match_reasons': match_reasons,
@@ -370,23 +370,23 @@ for idx, (i, job) in enumerate(top_10.iterrows(), 1):
     print(f"\n\n{'#'*70}")
     print(f"MATCH #{idx} - Score: {job['match_score']:.1f}/100")
     print(f"{'#'*70}")
-    
+
     print(f"\n💼 JOB TITLE: {job['title']}")
     print(f"🏢 COMPANY: {job['company']}")
     print(f"📍 LOCATION: {job['city']}, {job['state']}")
     print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
     print(f"📊 SOURCE: {job['source']}")
-    
+
     print(f"\n🎯 WHY THIS MATCHES:")
     if job['match_reasons']:
         for reason in job['match_reasons'].split(', '):
             print(f"   ✅ {reason}")
     else:
         print(f"   • {job['skills_matched']} skills matched")
-    
+
     print(f"\n🔗 APPLICATION URL:")
     print(f"   {job['url']}")
-    
+
     # Show snippet of job description
     if pd.notna(job['description']):
         desc_snippet = job['description'][:300].replace('\n', ' ')
