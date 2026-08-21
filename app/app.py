@@ -536,27 +536,51 @@ CITY_COORDINATES = {
     ("san antonio", "tx"): (29.4241, -98.4936),
     ("fort worth", "tx"): (32.7555, -97.3308),
     ("el paso", "tx"): (31.7619, -106.4850),
+    ("killeen", "tx"): (31.1171, -97.7278),
+    ("fort cavazos", "tx"): (31.1316, -97.7761),
+    ("corpus christi", "tx"): (27.8006, -97.3964),
 
-    # Tennessee & Alabama
+    # Tennessee & Alabama & Kentucky
     ("nashville", "tn"): (36.1627, -86.7816),
     ("knoxville", "tn"): (35.9606, -83.9207),
     ("memphis", "tn"): (35.1495, -90.0490),
     ("chattanooga", "tn"): (35.0456, -85.3097),
+    ("clarksville", "tn"): (36.5298, -87.3595),
     ("huntsville", "al"): (34.7304, -86.5861),
     ("birmingham", "al"): (33.5186, -86.8104),
+    ("mobile", "al"): (30.6954, -88.0399),
+    ("louisville", "ky"): (38.2527, -85.7585),
+    ("fort knox", "ky"): (37.9048, -85.9575),
 
-    # National Metros
+    # Maryland, Delaware & Pennsylvania
+    ("baltimore", "md"): (39.2904, -76.6122),
+    ("annapolis", "md"): (38.9784, -76.4922),
+    ("fort meade", "md"): (39.1087, -76.7419),
+    ("philadelphia", "pa"): (39.9526, -75.1652),
+    ("pittsburgh", "pa"): (40.4406, -79.9959),
+
+    # National Metros & Military Hubs
     ("denver", "co"): (39.7392, -104.9903),
     ("colorado springs", "co"): (38.8339, -104.8214),
+    ("aurora", "co"): (39.7294, -104.8319),
     ("seattle", "wa"): (47.6062, -122.3321),
+    ("tacoma", "wa"): (47.2529, -122.4443),
     ("san diego", "ca"): (32.7157, -117.1611),
+    ("oceanside", "ca"): (33.1959, -117.3795),
     ("los angeles", "ca"): (34.0522, -118.2437),
     ("san francisco", "ca"): (37.7749, -122.4194),
+    ("sacramento", "ca"): (38.5816, -121.4944),
     ("chicago", "il"): (41.8781, -87.6298),
     ("new york", "ny"): (40.7128, -74.0060),
     ("boston", "ma"): (42.3601, -71.0589),
     ("phoenix", "az"): (33.4484, -112.0740),
-    ("las vegas", "nv"): (36.1699, -115.1398)
+    ("tucson", "az"): (32.2226, -110.9747),
+    ("las vegas", "nv"): (36.1699, -115.1398),
+    ("salt lake city", "ut"): (40.7608, -111.8910),
+    ("oklahoma city", "ok"): (35.4676, -97.5164),
+    ("lawton", "ok"): (34.6036, -98.3959),
+    ("kansas city", "mo"): (39.0997, -94.5786),
+    ("st. louis", "mo"): (38.6270, -90.1994)
 }
 
 
@@ -1010,7 +1034,7 @@ def calculate_veteran_match_score(
     vet_state = veteran_profile.get("target_state", "").strip().upper()
     max_radius_str = str(veteran_profile.get("target_radius", "50 miles")).lower()
     remote_ok = veteran_profile.get("remote_ok", True)
-    relocate_ok = veteran_profile.get("relocation", True)
+    relocate_ok = veteran_profile.get("relocate", True) or veteran_profile.get("relocation", True)
 
     if "10" in max_radius_str:
         max_radius = 10.0
@@ -1028,30 +1052,31 @@ def calculate_veteran_match_score(
     job_loc_display = job.get("location_display", "")
 
     dist = estimate_job_distance(vet_city, vet_state, job_city, job_state, job_loc_display) if (vet_city and vet_state) else None
+    is_remote_job = "remote" in job_loc_display.lower() or "remote" in job_city.lower() or "anywhere" in job_loc_display.lower()
 
-    if "remote" in job_loc_display.lower() or "remote" in job_city.lower() or remote_ok:
+    if is_remote_job:
         score += 10
         loc_status = "pass"
-        loc_detail = "Remote / Flexible location" if "remote" in job_loc_display.lower() else f"Flexible match ({job_loc_display})"
+        loc_detail = "Remote / Flexible location"
         reasons.append("📍 Location: Remote / Flexible work mode")
     elif dist is not None and dist <= max_radius:
         score += 10
         loc_status = "pass"
         loc_detail = f"Local ({dist:.0f} mi from {vet_city.title()}, {vet_state} — within {int(max_radius)} mi radius)"
         reasons.append(f"📍 Commute Radius: {dist:.0f} miles from {vet_city.title()} (Within your {int(max_radius)}-mile preference)")
-    elif dist is not None and dist <= max_radius * 1.5:
+    elif dist is not None and dist <= max_radius * 2.0:
         score += 6
         loc_status = "warn"
         loc_detail = f"Regional ({dist:.0f} mi from {vet_city.title()}, {vet_state} — near {int(max_radius)} mi radius)"
         reasons.append(f"📍 Commute: Regional opportunity ({dist:.0f} miles from {vet_city.title()})")
     else:
-        if relocate_ok or remote_ok:
+        if relocate_ok:
             score += 4
             loc_status = "warn"
             loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Open to relocation/travel)" if dist else f"{job_loc_display} (Relocation match)"
         else:
-            score -= 10
-            loc_status = "warn"
+            score -= 15
+            loc_status = "fail"
             loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Outside {int(max_radius)} mi radius)" if dist else f"{job_loc_display} (Outside radius)"
 
     # -------------------------------------------------------------------------
@@ -1118,6 +1143,7 @@ with st.sidebar:
             p = DEMO_VETERAN_PROFILES["18F"]
             for k, v in p.items():
                 st.session_state[f"form_{k}"] = v
+            st.session_state["pipeline_executed"] = False
             st.toast("✅ Loaded Army 18F Special Forces Profile!", icon="🎖️")
             st.rerun()
 
@@ -1125,6 +1151,7 @@ with st.sidebar:
             p = DEMO_VETERAN_PROFILES["88M"]
             for k, v in p.items():
                 st.session_state[f"form_{k}"] = v
+            st.session_state["pipeline_executed"] = False
             st.toast("✅ Loaded Army 88M Logistics Profile!", icon="🎖️")
             st.rerun()
 
@@ -1133,6 +1160,7 @@ with st.sidebar:
             p = DEMO_VETERAN_PROFILES["11B"]
             for k, v in p.items():
                 st.session_state[f"form_{k}"] = v
+            st.session_state["pipeline_executed"] = False
             st.toast("✅ Loaded Army 11B Infantry Profile!", icon="🎖️")
             st.rerun()
 
@@ -1140,6 +1168,7 @@ with st.sidebar:
             p = DEMO_VETERAN_PROFILES["25B"]
             for k, v in p.items():
                 st.session_state[f"form_{k}"] = v
+            st.session_state["pipeline_executed"] = False
             st.toast("✅ Loaded Navy IT Profile!", icon="🎖️")
             st.rerun()
 
@@ -1270,6 +1299,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 p = DEMO_VETERAN_PROFILES["18F"]
                 for k, v in p.items():
                     st.session_state[f"form_{k}"] = v
+                st.session_state["pipeline_executed"] = False
                 st.toast("✅ Loaded Army 18F Special Forces Profile!", icon="🎖️")
                 st.rerun()
         with m_col2:
@@ -1277,6 +1307,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 p = DEMO_VETERAN_PROFILES["11B"]
                 for k, v in p.items():
                     st.session_state[f"form_{k}"] = v
+                st.session_state["pipeline_executed"] = False
                 st.toast("✅ Loaded Army 11B Infantry Profile!", icon="🎖️")
                 st.rerun()
         with m_col3:
@@ -1284,6 +1315,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 p = DEMO_VETERAN_PROFILES["88M"]
                 for k, v in p.items():
                     st.session_state[f"form_{k}"] = v
+                st.session_state["pipeline_executed"] = False
                 st.toast("✅ Loaded Army 88M Logistics Profile!", icon="🎖️")
                 st.rerun()
         with m_col4:
@@ -1291,6 +1323,7 @@ if nav_selection == "📋 Veteran Intake & Match":
                 p = DEMO_VETERAN_PROFILES["25B"]
                 for k, v in p.items():
                     st.session_state[f"form_{k}"] = v
+                st.session_state["pipeline_executed"] = False
                 st.toast("✅ Loaded Navy IT Profile!", icon="🎖️")
                 st.rerun()
 
@@ -1436,20 +1469,30 @@ if nav_selection == "📋 Veteran Intake & Match":
     with col_c1:
         name_default = st.session_state.get("form_name", "")
         full_name = st.text_input("Full Name *", value=name_default, placeholder="e.g., John Miller")
+        if full_name:
+            st.session_state["form_name"] = full_name
     with col_c2:
         email_default = st.session_state.get("form_email", "")
         email_addr = st.text_input("Email Address *", value=email_default, placeholder="veteran@example.com")
+        if email_addr:
+            st.session_state["form_email"] = email_addr
     with col_c3:
         phone_default = st.session_state.get("form_phone", "")
         phone_num = st.text_input("Phone Number", value=phone_default, placeholder="(555) 123-4567")
+        if phone_num:
+            st.session_state["form_phone"] = phone_num
 
     col_t1, col_t2, col_t3 = st.columns([1.2, 0.8, 1.2])
     with col_t1:
         city_default = st.session_state.get("form_target_city", "")
-        target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="e.g., Dallas, Greenville, Tampa, San Diego...")
+        target_city = st.text_input("Target City / Metro *", value=city_default, placeholder="e.g., Dallas, Greenville, Tampa, San Diego, Fayetteville...").strip()
+        if target_city:
+            st.session_state["form_target_city"] = target_city
     with col_t2:
         state_default = st.session_state.get("form_target_state", "")
-        target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="e.g., TX, SC, FL, CA...").upper()
+        target_state = st.text_input("Target State (2-letter code) *", value=state_default, max_chars=2, placeholder="e.g., TX, SC, FL, CA, NC...").strip().upper()
+        if target_state:
+            st.session_state["form_target_state"] = target_state
     with col_t3:
         radius_options = ["10 miles", "20 miles", "50 miles", "100 miles", "Any Distance / Nationwide"]
         radius_default_idx = 2  # 50 miles
@@ -1461,12 +1504,15 @@ if nav_selection == "📋 Veteran Intake & Match":
             index=radius_default_idx,
             help="Choose maximum travel distance from city center: 10 miles, 20 miles, 50 miles, 100 miles, etc."
         )
+        st.session_state["form_target_radius"] = target_radius
 
     col_flex1, col_flex2 = st.columns(2)
     with col_flex1:
-        remote_ok = st.checkbox("Open to Remote / Hybrid Opportunities", value=True)
+        remote_ok = st.checkbox("Open to Remote / Hybrid Opportunities", value=st.session_state.get("form_remote_ok", True))
+        st.session_state["form_remote_ok"] = remote_ok
     with col_flex2:
-        relocate_ok = st.checkbox("Willing to Relocate for the Right Opportunity", value=True)
+        relocate_ok = st.checkbox("Willing to Relocate for the Right Opportunity", value=st.session_state.get("form_relocate", True))
+        st.session_state["form_relocate"] = relocate_ok
 
     # Target Career Track Selection
     col_track1, col_track2 = st.columns([1, 1])
@@ -1605,9 +1651,9 @@ if nav_selection == "📋 Veteran Intake & Match":
                     except Exception as e:
                         print(f"[PIPELINE WARNING] Unity Catalog write skipped/failed: {e}")
 
-                # 4. Load Job Postings & Compute Semantic Matches
-                all_jobs = load_cached_scraped_jobs()
-                print(f"[PIPELINE] Loaded {len(all_jobs)} candidate job postings. Running scoring engine...")
+                # 4. Load Job Postings & Compute Semantic Matches (Location & Track Aware)
+                all_jobs = load_cached_scraped_jobs(target_city=target_city, target_state=target_state, target_track=selected_career_track)
+                print(f"[PIPELINE] Loaded {len(all_jobs)} candidate job postings for {target_city}, {target_state}. Running scoring engine...")
                 matches = []
                 for job in all_jobs:
                     score, reasons, factors = calculate_veteran_match_score(job, veteran_profile, extracted)
