@@ -3,9 +3,9 @@
 # MAGIC %md
 # MAGIC # AWS Quick Setup Guide - For Your Service
 # MAGIC
-# MAGIC **Organization:** 7 Eagle Group  
-# MAGIC **Account ID:** 342050998009  
-# MAGIC **Account Owner:** W. Free Hall (whall4.wh@gmail.com)  
+# MAGIC **Organization:** 7 Eagle Group
+# MAGIC **Account ID:** 342050998009
+# MAGIC **Account Owner:** W. Free Hall (whall4.wh@gmail.com)
 # MAGIC **Region:** us-east-1
 # MAGIC
 # MAGIC ---
@@ -70,7 +70,7 @@
 # MAGIC Key: aws_access_key_id
 # MAGIC Value: [Your Access Key ID - starts with AKIA...]
 # MAGIC
-# MAGIC Key: aws_secret_access_key  
+# MAGIC Key: aws_secret_access_key
 # MAGIC Value: [Your Secret Access Key - long alphanumeric string]
 # MAGIC
 # MAGIC Key: aws_region
