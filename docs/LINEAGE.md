@@ -1,6 +1,6 @@
 # Data Lineage & Ontology Map
 
-**Issue ID:** FYS-120 | **Epic:** FYS-E013 | **Foundry Stage:** 8 — Data Lineage
+**Issue ID:** FYS-120 | **Epic:** FYS-E013 | **Foundry Stage:** 8  Data Lineage
 
 ---
 
@@ -8,29 +8,29 @@
 
 ```
 [ USAJOBS / Adzuna / JSearch APIs ]
-                     ¦
+
                      ?
        orchestrator.collect_job_postings
-                     ¦
+
                      ?
                BronzeWriter
-                     ¦
+
                      ?
       workspace.fys_bronze.job_postings
-                     ¦
+
                      ?
              [ Silver Enrich ]
-                     ¦
+
                      ?
       Hugging Face get_jobs / Match
 ```
 
 ```
 [ Veteran Profile API / Ingestion ]
-                     ¦
+
                      ?
     workspace.fys_silver.veteran_profiles
-                     ¦
+
                      ?
              Matching Surface
 ```
