@@ -556,14 +556,14 @@ def load_cached_scraped_jobs() -> List[Dict]:
 
     # Combine verified partner network with live ingested jobs
     all_jobs = list(SAMPLE_JOBS)
-    
+
     seen = set(f"{j['title'].lower()}_{j['company'].lower()}" for j in all_jobs)
     for rj in real_live_jobs:
         key = f"{rj['title'].lower()}_{rj['company'].lower()}"
         if key not in seen:
             seen.add(key)
             all_jobs.append(rj)
-            
+
     for job in all_jobs:
         app_url = job.get("application_url") or job.get("url")
         if not app_url or app_url == "#" or not str(app_url).startswith("http"):
@@ -572,5 +572,5 @@ def load_cached_scraped_jobs() -> List[Dict]:
             app_url = f"https://www.google.com/search?q={company_clean}+{title_clean}+careers+jobs"
         job["application_url"] = app_url
         job["url"] = app_url
-            
+
     return all_jobs
