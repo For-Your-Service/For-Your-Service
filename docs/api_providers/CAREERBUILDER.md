@@ -18,5 +18,5 @@ Major job board with 24+ million registered users.
 * `Radius` - Search radius (miles)
 
 ---
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
