@@ -48,5 +48,5 @@ One of the oldest job boards with 50+ years of recruitment experience.
 * Parse salary ranges for accurate matching
 
 ---
-**Maintained by:** 7 Eagle Group  
+**Maintained by:** 7 Eagle Group
 **Last Updated:** 2026-08-10
