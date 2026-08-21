@@ -12,12 +12,12 @@ from src.pipeline import MatchingOrchestrator
 
 def main():
     """Run example matching pipeline"""
-    
+
     print("=" * 60)
     print("For Your Service - Veteran Job Matching Pipeline")
     print("=" * 60)
     print()
-    
+
     # Initialize orchestrator
     print("Initializing orchestrator...")
     orchestrator = MatchingOrchestrator(
@@ -26,7 +26,7 @@ def main():
     )
     print("✓ Orchestrator ready")
     print()
-    
+
     # Define target jobs (example: DevOps Engineer roles)
     print("Loading job requirements...")
     jobs = [
@@ -80,19 +80,19 @@ def main():
     ]
     print(f"✓ Loaded {len(jobs)} job opportunities")
     print()
-    
+
     # Process resume
     resume_path = "examples/sample_veteran_resume.pdf"
     print(f"Processing resume: {resume_path}")
     print("(Note: Use actual resume file for real matching)")
     print()
-    
+
     # Example: Show what the results would look like
     print("=" * 60)
     print("EXAMPLE OUTPUT (with mock data)")
     print("=" * 60)
     print()
-    
+
     print("📋 CANDIDATE PROFILE")
     print("-" * 60)
     print("Name: Free Hall")
@@ -111,12 +111,12 @@ def main():
     print("  • Leadership, Strategic Planning, Team Management")
     print("  • Network Administration, Cybersecurity")
     print()
-    
+
     print("=" * 60)
     print("JOB MATCH RESULTS")
     print("=" * 60)
     print()
-    
+
     # Mock results for Job 1
     print("1️⃣  DevOps Engineer - Tech Innovations Inc")
     print("    Location: Greenville, SC")
@@ -133,7 +133,7 @@ def main():
     print()
     print("    🎯 Readiness: Ready to apply immediately")
     print()
-    
+
     # Mock results for Job 2
     print("2️⃣  Cloud Solutions Architect - Enterprise Solutions LLC")
     print("    Location: Remote")
@@ -150,7 +150,7 @@ def main():
     print()
     print("    🎯 Readiness: 1-2 months with Azure upskilling")
     print()
-    
+
     # Mock results for Job 3
     print("3️⃣  Site Reliability Engineer - Defense Contractors Group")
     print("    Location: Greenville, SC")
@@ -168,33 +168,33 @@ def main():
     print()
     print("    🎯 Readiness: Ready now (highlight clearance history)")
     print()
-    
+
     print("=" * 60)
     print("PERSONALIZED RECOMMENDATIONS")
     print("=" * 60)
     print()
-    
+
     print("📝 Resume Improvements:")
     print("  1. Add professional summary highlighting 18 years of experience")
     print("  2. Translate '18Z' to 'Special Forces Team Sergeant'")
     print("  3. Quantify achievements: team sizes, infrastructure scale")
     print("  4. Add certifications: AWS Solutions Architect, CKA")
     print()
-    
+
     print("🎯 Job Search Strategy:")
     print("  • Target veteran-friendly employers (all 3 matches qualify)")
     print("  • Emphasize security clearance history (defense contractors)")
     print("  • Apply to DevOps role immediately (85% match)")
     print("  • Leverage 18+ years experience for senior/lead positions")
     print()
-    
+
     print("🤝 Networking Advice:")
     print("  • Join Hire Heroes USA for resume review")
     print("  • Connect with 7 Eagle Group veteran network")
     print("  • Attend Greenville tech meetups")
     print("  • Reach out to veteran hiring managers on LinkedIn")
     print()
-    
+
     print("📚 Skill Development Plan:")
     print("  Priority 1: Azure basics (4-6 weeks)")
     print("    - Microsoft Azure Administrator Associate cert")
@@ -208,7 +208,7 @@ def main():
     print("    - Prometheus & Grafana tutorials")
     print("    - Deploy monitoring for personal projects")
     print()
-    
+
     print("=" * 60)
     print("NEXT STEPS")
     print("=" * 60)
