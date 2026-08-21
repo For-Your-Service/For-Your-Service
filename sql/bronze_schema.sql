@@ -1,4 +1,4 @@
-﻿-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
+-- DEPRECATED: Non-canonical schema reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 
 -- DEPRECATED: Non-canonical main.fys_* reference. See docs/adr/ADR-001-CODE-CANONICAL-CATALOG-SPINE.md
 -- Bronze Layer: Raw job postings
