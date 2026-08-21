@@ -15,19 +15,19 @@ class DatabaseConfig:
     bronze_schema: str = "bronze"
     silver_schema: str = "silver"
     gold_schema: str = "gold"
-    
+
     @property
     def bronze_jobs_table(self) -> str:
         return f"{self.catalog}.{self.bronze_schema}.jobs"
-    
+
     @property
     def silver_jobs_table(self) -> str:
         return f"{self.catalog}.{self.silver_schema}.jobs"
-    
+
     @property
     def silver_veterans_table(self) -> str:
         return f"{self.catalog}.{self.silver_schema}.veterans"
-    
+
     @property
     def gold_matches_table(self) -> str:
         return f"{self.catalog}.{self.gold_schema}.job_matches"
@@ -41,7 +41,7 @@ class ModelConfig:
     max_sequence_length: int = 256
     batch_size: int = 100
     device: str = "cpu"  # cpu or cuda
-    
+
     # Similarity thresholds
     exceptional_threshold: int = 85
     strong_threshold: int = 70
@@ -52,24 +52,24 @@ class ModelConfig:
 @dataclass
 class ScraperConfig:
     """Job scraper API configuration"""
-    
+
     # USAJobs
     usajobs_api_url: str = "https://data.usajobs.gov/api/search"
     usajobs_rate_limit: int = 250  # per day
     usajobs_user_agent: str = "whall4.wh@gmail.com"
-    
+
     # Adzuna
     adzuna_api_url: str = "https://api.adzuna.com/v1/api/jobs/us/search"
     adzuna_rate_limit: int = 250  # per month (free tier)
-    
+
     # Search parameters
     results_per_page: int = 100
     max_pages: int = 5
     posted_within_days: int = 14
-    
+
     # Target locations
     target_locations: List[str] = None
-    
+
     def __post_init__(self):
         if self.target_locations is None:
             self.target_locations = [
@@ -80,10 +80,10 @@ class ScraperConfig:
                 "Charlotte, NC",
                 "Atlanta, GA"
             ]
-    
+
     # Target keywords
     target_keywords: List[str] = None
-    
+
     def __post_init__(self):
         if self.target_keywords is None:
             self.target_keywords = [
@@ -102,12 +102,12 @@ class ScraperConfig:
 @dataclass
 class VeteranConfig:
     """Default veteran profile configuration"""
-    
+
     # William Free Hall's profile as default
     name: str = "William Free Hall"
     email: str = "whall4.wh@gmail.com"
     location: str = "Greenville, SC"
-    
+
     # Military background
     military_branch: str = "Army"
     mos: str = "18F"
@@ -115,14 +115,14 @@ class VeteranConfig:
     years_of_service: int = 18
     clearance_level: str = "TS/SCI"
     clearance_status: str = "expired"
-    
+
     # Professional
     total_years: int = 28
     seniority_level: str = "executive"
-    
+
     # Skills
     skills: List[str] = None
-    
+
     def __post_init__(self):
         if self.skills is None:
             self.skills = [
@@ -132,7 +132,7 @@ class VeteranConfig:
                 "Databricks", "PySpark",
                 "GitHub Actions", "Jenkins"
             ]
-    
+
     # Preferences
     salary_min: int = 120000
     salary_max: int = 180000
@@ -142,24 +142,24 @@ class VeteranConfig:
 @dataclass
 class DeploymentConfig:
     """Deployment configuration"""
-    
+
     # Environment
     environment: str = os.getenv("ENVIRONMENT", "development")
-    
+
     # Hugging Face Spaces (FREE tier)
     hf_space_name: str = "for-your-service"
     hf_sdk: str = "streamlit"
-    
+
     # Production (GKE)
     gke_cluster_name: str = "fys-production"
     gke_region: str = "us-central1"
     gke_node_count: int = 2
     gke_machine_type: str = "n1-standard-1"
-    
+
     @property
     def is_production(self) -> bool:
         return self.environment == "production"
-    
+
     @property
     def is_development(self) -> bool:
         return self.environment == "development"
@@ -168,17 +168,17 @@ class DeploymentConfig:
 @dataclass
 class Config:
     """Main configuration class"""
-    
+
     database: DatabaseConfig = DatabaseConfig()
     model: ModelConfig = ModelConfig()
     scraper: ScraperConfig = ScraperConfig()
     veteran: VeteranConfig = VeteranConfig()
     deployment: DeploymentConfig = DeploymentConfig()
-    
+
     # Logging
     log_level: str = "INFO"
     log_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    
+
     # Feature flags
     enable_vector_search: bool = False  # Future: Databricks Vector Search
     enable_caching: bool = True
@@ -193,29 +193,29 @@ config = Config()
 def load_config(env: str = None):
     """
     Load environment-specific configuration
-    
+
     Args:
         env: Environment name (development, staging, production)
     """
     global config
-    
+
     if env:
         config.deployment.environment = env
-    
+
     if config.deployment.is_production:
         # Production overrides
         config.model.batch_size = 500
         config.scraper.results_per_page = 100
         config.scraper.max_pages = 10
         config.enable_vector_search = True
-    
+
     return config
 
 
 if __name__ == "__main__":
     # Test configuration
     cfg = load_config("development")
-    
+
     print("=== Configuration ===")
     print(f"Environment: {cfg.deployment.environment}")
     print(f"\nDatabase:")
