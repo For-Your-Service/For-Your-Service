@@ -1,8 +1,8 @@
 -- Analyze jobs requiring security clearance
 -- Veterans with clearance have competitive advantage
 
-SELECT 
-  CASE 
+SELECT
+  CASE
     WHEN LOWER(description) LIKE '%top secret%' OR LOWER(description) LIKE '%ts/sci%' THEN 'TS/SCI'
     WHEN LOWER(description) LIKE '%secret%clearance%' THEN 'Secret'
     WHEN LOWER(description) LIKE '%clearance%eligible%' THEN 'Clearance Eligible'
@@ -15,7 +15,7 @@ SELECT
 FROM workspace.fys_bronze.job_postings
 WHERE scrape_date >= CURRENT_DATE - INTERVAL 7 DAYS
 GROUP BY clearance_level
-ORDER BY 
+ORDER BY
   CASE clearance_level
     WHEN 'TS/SCI' THEN 1
     WHEN 'Secret' THEN 2
