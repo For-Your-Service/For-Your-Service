@@ -1,8 +1,8 @@
 # Databricks Cloudflare Error 1010 - Troubleshooting Guide
 
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service  
-**Issue:** Cloudflare Browser Integrity Check blocking Databricks UI  
+**Organization:** 7 Eagle Group
+**Project:** For Your Service
+**Issue:** Cloudflare Browser Integrity Check blocking Databricks UI
 **Error Code:** 1010
 
 ---
@@ -113,13 +113,13 @@ Cmd + Shift + R
 
 **Chrome/Edge:**
 ```
-Settings → Privacy → Site Settings → View permissions and data → 
+Settings → Privacy → Site Settings → View permissions and data →
 Search for "databricks" → Clear data
 ```
 
 **Firefox:**
 ```
-Options → Privacy → Cookies and Site Data → Manage Data → 
+Options → Privacy → Cookies and Site Data → Manage Data →
 Search for "databricks" → Remove Selected
 ```
 
@@ -292,7 +292,7 @@ If fixes above don't work, contact Databricks support with:
 
 ---
 
-**Last Updated:** 2026-08-13  
-**Maintained By:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**Last Updated:** 2026-08-13
+**Maintained By:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 **Project:** For Your Service
