@@ -16,7 +16,7 @@ CREATE TABLE workspace.fys_silver.job_postings_enriched (
   job_id STRING,
   title STRING,
   company STRING,
-  
+
   -- Enrichments
   onet_code STRING,
   onet_title STRING,
@@ -24,7 +24,7 @@ CREATE TABLE workspace.fys_silver.job_postings_enriched (
   mos_matches ARRAY<STRUCT<mos: STRING, similarity: DOUBLE>>,
   standardized_title STRING,
   industry_sector STRING,
-  
+
   -- Metadata
   enriched_date TIMESTAMP,
   enrichment_version STRING
