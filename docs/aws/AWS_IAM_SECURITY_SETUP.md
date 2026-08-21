@@ -1,9 +1,9 @@
 # AWS IAM Security Setup - For Your Service
 
-**Organization:** 7 Eagle Group  
-**Account ID:** 342050998009  
-**Account Owner:** W. Free Hall  
-**Region:** us-east-1 (Free Tier Optimized)  
+**Organization:** 7 Eagle Group
+**Account ID:** 342050998009
+**Account Owner:** W. Free Hall
+**Region:** us-east-1 (Free Tier Optimized)
 **Date:** 2026-08-13
 
 ## Overview
@@ -12,11 +12,11 @@ Secure AWS IAM configuration for the For Your Service veteran job matching platf
 
 ## Security Principles
 
-✅ **Least Privilege Access** - Only grant permissions needed  
-✅ **No Root Account Usage** - Create IAM users instead  
-✅ **MFA Enabled** - Multi-factor authentication on all accounts  
-✅ **Access Key Rotation** - Regular credential updates  
-✅ **Audit Logging** - Track all AWS actions via CloudTrail  
+✅ **Least Privilege Access** - Only grant permissions needed
+✅ **No Root Account Usage** - Create IAM users instead
+✅ **MFA Enabled** - Multi-factor authentication on all accounts
+✅ **Access Key Rotation** - Regular credential updates
+✅ **Audit Logging** - Track all AWS actions via CloudTrail
 
 ---
 
@@ -253,7 +253,7 @@ All AWS resources for this project use the prefix `foryourservice-` for:
 
 1. **Test Connection:** Verify IAM credentials work from Databricks
 2. **Create S3 Bucket:** `foryourservice-data-prod` in us-east-1
-3. **Create DynamoDB Tables:** 
+3. **Create DynamoDB Tables:**
    - `foryourservice-veterans`
    - `foryourservice-jobs`
 4. **Deploy Lambda Functions:** API endpoints for matching
@@ -270,6 +270,6 @@ All AWS resources for this project use the prefix `foryourservice-` for:
 
 ---
 
-**Last Updated:** 2026-08-13  
-**Maintained By:** Free Hall (whall4.wh@gmail.com)  
+**Last Updated:** 2026-08-13
+**Maintained By:** Free Hall (whall4.wh@gmail.com)
 **Organization:** 7 Eagle Group
