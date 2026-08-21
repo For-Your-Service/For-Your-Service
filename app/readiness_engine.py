@@ -252,19 +252,19 @@ def analyze_career_readiness(
     and high-impact free certifications.
     """
     track = CAREER_TRACKS.get(target_track_name, CAREER_TRACKS["Operations, Program & Project Management"])
-    
+
     user_skills_lower = [s.lower() for s in candidate_skills]
     core_skills = track["core_skills"]
-    
+
     # Identify missing core skills
     missing_skills = [s for s in core_skills if s not in user_skills_lower]
     matching_skills = [s for s in core_skills if s in user_skills_lower]
-    
+
     # Calculate potential uplift
     potential_score = min(98.0, current_match_score + 18.0)
     top_cert = track["recommended_certs"][0] if track["recommended_certs"] else None
     est_salary_uplift = sum([c["salary_uplift"] for c in track["recommended_certs"][:2]]) // 2 if track["recommended_certs"] else 15000
-    
+
     return {
         "target_track": target_track_name,
         "icon": track["icon"],
