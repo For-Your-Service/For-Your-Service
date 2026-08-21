@@ -1840,7 +1840,7 @@ def scrape_jobs_for_location(city, state, max_results=100):
         print(f"   ⚠️ See /Users/whall4.wh@gmail.com/00_Secret_Management_Setup for setup guide")
         
         ADZUNA_APP_ID = "ea966e18"
-        ADZUNA_APP_KEY = "90f7d868807b93575515153c3a8d0a51"
+        ADZUNA_APP_KEY = os.getenv("ADZUNA_APP_KEY", "")
     
     location_query = f"{city}, {state}"
     
