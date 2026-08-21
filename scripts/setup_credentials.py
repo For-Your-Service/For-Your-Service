@@ -33,15 +33,15 @@ To store your JSearch API credentials securely:
    Click "Create"
 
 3. Add JSearch Credentials:
-   
+
    Secret #1:
    - Click "Add Secret"
    - Key: jsearch-rapidapi-key
    - Value: [paste your RapidAPI key]
    - Click "Add"
-   
+
    Secret #2:
-   - Click "Add Secret"  
+   - Click "Add Secret"
    - Key: jsearch-rapidapi-host
    - Value: jsearch.p.rapidapi.com
    - Click "Add"
@@ -59,24 +59,24 @@ def test_credentials():
     try:
         api_key = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
         api_host = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-host")
-        
+
         print("\n✅ JSearch credentials: CONFIGURED")
         print(f"   Key length: {len(api_key)} characters")
-        
+
         # Test API connection
         print("\n🔍 Testing API connection...")
         headers = {
             "X-RapidAPI-Key": api_key,
             "X-RapidAPI-Host": api_host
         }
-        
+
         response = requests.get(
             f"https://{api_host}/search",
             headers=headers,
             params={"query": "test", "page": "1"},
             timeout=10
         )
-        
+
         if response.status_code == 200:
             print("✅ API connection successful!")
             data = response.json()
@@ -85,9 +85,9 @@ def test_credentials():
             print("⚠️  Rate limit (API key works!)")
         else:
             print(f"⚠️  API returned status {response.status_code}")
-        
+
         return True
-        
+
     except Exception as e:
         print(f"\n❌ Credentials not configured yet")
         print(f"   Error: {e}")
