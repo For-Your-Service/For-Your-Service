@@ -32,14 +32,14 @@ def _internal_helper():
 ```python
 def match_veteran(veteran_id: str, top_k: int = 20) -> list:
     """Match veteran to top K jobs.
-    
+
     Args:
         veteran_id: Unique veteran identifier
         top_k: Number of results to return
-        
+
     Returns:
         List of job matches with scores
-        
+
     Raises:
         ValueError: If veteran_id not found
     """
@@ -58,7 +58,7 @@ def match_veteran(veteran_id: str, top_k: int = 20) -> list:
 
 ### Example
 ```sql
-SELECT 
+SELECT
   v.veteran_id,
   v.name,
   COUNT(m.job_id) as match_count
