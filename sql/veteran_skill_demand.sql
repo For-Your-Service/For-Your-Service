@@ -1,7 +1,7 @@
 -- Analyze skill demand relevant to veterans
 -- Tracks which skills are most requested in job postings
 
-SELECT 
+SELECT
   skill,
   COUNT(DISTINCT job_id) as job_count,
   ROUND(100.0 * COUNT(DISTINCT job_id) / (SELECT COUNT(*) FROM workspace.fys_bronze.job_postings), 2) as market_penetration_pct,
@@ -10,11 +10,11 @@ SELECT
   COUNT(DISTINCT company) as companies_hiring
 FROM (
   -- Extract skills from job descriptions
-  SELECT 
+  SELECT
     job_id,
     company,
     salary,
-    CASE 
+    CASE
       WHEN LOWER(description) LIKE '%aws%' THEN 'AWS'
       WHEN LOWER(description) LIKE '%azure%' THEN 'Azure'
       WHEN LOWER(description) LIKE '%kubernetes%' THEN 'Kubernetes'
