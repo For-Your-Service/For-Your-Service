@@ -1,4 +1,4 @@
-﻿name: Flake8 Linter
+name: Flake8 Linter
 
 on:
   push:
