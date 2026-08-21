@@ -1,4 +1,4 @@
-﻿class SiameseMatchingModel:
+class SiameseMatchingModel:
     def __init__(self):
         pass
 
