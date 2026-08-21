@@ -730,33 +730,33 @@ def lookup_mos(query: str) -> Optional[Dict]:
     """
     if not query:
         return None
-    
+
     clean_query = query.strip().upper()
-    
+
     # Direct exact match on code
     if clean_query in MOS_DATABASE:
         result = MOS_DATABASE[clean_query].copy()
         result["code"] = clean_query
         return result
-    
+
     # Strip common prefixes (e.g., "MOS 11B" -> "11B", "AFSC 1D7X1" -> "1D7X1")
     for word in clean_query.split():
         if word in MOS_DATABASE:
             result = MOS_DATABASE[word].copy()
             result["code"] = word
             return result
-            
+
     # Fuzzy search on title, category, or transferable skills
     query_lower = query.lower()
     for code, data in MOS_DATABASE.items():
-        if (query_lower in data["title"].lower() or 
-            query_lower in data.get("category", "").lower() or 
+        if (query_lower in data["title"].lower() or
+            query_lower in data.get("category", "").lower() or
             any(query_lower in s.lower() for s in data["transferable_skills"]) or
             any(query_lower in ct.lower() for ct in data["civilian_titles"])):
             result = data.copy()
             result["code"] = code
             return result
-            
+
     return None
 
 
