@@ -1,4 +1,4 @@
-﻿# [DONE] Repository Foundation - Base structure, STATUS.md, and architectural README.md
+# [DONE] Repository Foundation - Base structure, STATUS.md, and architectural README.md
 
 ## 🏗️ Architecture & Execution Story: COMPLETED
 Established the foundational git repository structure, separating GCP serverless ingestion microservices from Databricks PySpark analytics processing pipelines.
