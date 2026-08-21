@@ -27,16 +27,16 @@ Open an issue with:
 - Error logs/screenshots
 
 ### 5. Contact Developer
-**Free Hall**  
-Email: whall4.wh@gmail.com  
+**Free Hall**
+Email: whall4.wh@gmail.com
 Response time: 24-48 hours
 
 ---
 
 ## 🤝 Partner Organizations
 
-**7 Eagle Group**  
-Veteran placement organization partner  
+**7 Eagle Group**
+Veteran placement organization partner
 Website: [TBD]
 
 ---
@@ -73,7 +73,7 @@ Contact for pricing.
 
 Share your success story!
 
-Email: whall4.wh@gmail.com  
+Email: whall4.wh@gmail.com
 Subject: "Success Story: [Veteran Name]"
 
 We'd love to feature how For Your Service helped you or your organization.
