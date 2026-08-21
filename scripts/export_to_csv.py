@@ -6,7 +6,7 @@ def export_bronze_to_csv(spark, output_path, days=7):
     """Export last N days of job data to CSV"""
 
     df = spark.sql(f"""
-        SELECT 
+        SELECT
           job_id,
           title,
           company,
