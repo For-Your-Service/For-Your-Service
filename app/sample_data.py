@@ -699,17 +699,25 @@ def load_cached_scraped_jobs(target_city: str = "", target_state: str = "", targ
     """
     real_live_jobs = []
     try:
-        from app.real_job_fetcher import fetch_all_live_jobs
+        from real_job_fetcher import fetch_all_live_jobs
         real_live_jobs = fetch_all_live_jobs()
     except Exception:
-        pass
+        try:
+            from app.real_job_fetcher import fetch_all_live_jobs
+            real_live_jobs = fetch_all_live_jobs()
+        except Exception:
+            pass
 
     defense_jobs = []
     try:
-        from app.defense_contractor_fetcher import fetch_defense_contractor_jobs
+        from defense_contractor_fetcher import fetch_defense_contractor_jobs
         defense_jobs = fetch_defense_contractor_jobs(target_city, target_state, target_track)
     except Exception:
-        pass
+        try:
+            from app.defense_contractor_fetcher import fetch_defense_contractor_jobs
+            defense_jobs = fetch_defense_contractor_jobs(target_city, target_state, target_track)
+        except Exception:
+            pass
 
     all_jobs = list(SAMPLE_JOBS) + defense_jobs
 

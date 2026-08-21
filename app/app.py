@@ -6,6 +6,17 @@
 # ============================================================================
 
 import streamlit as st
+
+# ============================================================================
+# MUST BE FIRST STREAMLIT COMMAND
+# ============================================================================
+st.set_page_config(
+    page_title="For Your Service — 7 Eagle Group",
+    page_icon="🇺🇸",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 import pandas as pd
 import numpy as np
 import uuid
@@ -18,15 +29,21 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-# Import local MOS data, dynamic branch ranks, and sample engine
+# Import local modules with safe dual fallback for Databricks Apps root execution
 try:
     from mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
     from sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
     from readiness_engine import CAREER_TRACKS, analyze_career_readiness
+    from geo_database import CITY_COORDINATES, lookup_city_coordinates
+    from pdf_generator import generate_veteran_transition_pdf
+    from defense_contractor_fetcher import fetch_defense_contractor_jobs
 except ImportError:
     from app.mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
     from app.sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
     from app.readiness_engine import CAREER_TRACKS, analyze_career_readiness
+    from app.geo_database import CITY_COORDINATES, lookup_city_coordinates
+    from app.pdf_generator import generate_veteran_transition_pdf
+    from app.defense_contractor_fetcher import fetch_defense_contractor_jobs
 
 # Check for Databricks / PySpark compute availability safely
 SPARK_AVAILABLE = False
@@ -477,8 +494,6 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
 # ============================================================================
 # GEOGRAPHIC DISTANCE & COMMUTE RADIUS ENGINE
 # ============================================================================
-
-from app.geo_database import CITY_COORDINATES, lookup_city_coordinates
 
 
 def haversine_distance_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -1659,7 +1674,6 @@ if nav_selection == "📋 Veteran Intake & Match":
         col_pdf1, col_pdf2 = st.columns([1.5, 1])
         with col_pdf1:
             try:
-                from app.pdf_generator import generate_veteran_transition_pdf
                 pdf_payload = generate_veteran_transition_pdf(
                     candidate_info=profile,
                     extracted_skills=extracted,
