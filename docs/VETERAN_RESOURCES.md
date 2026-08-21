@@ -12,7 +12,7 @@
 - [Hire Heroes USA](https://www.hireheroesusa.org/)
 - [American Corporate Partners](https://www.acp-usa.org/)
 - [The Honor Foundation](https://www.honor.org/)
-- [7 Eagle Group](https://7eaglegroup.com) ← Our partner!
+- [7 Eagle Group](https://7eagle.com) ← Our partner!
 
 ---
 

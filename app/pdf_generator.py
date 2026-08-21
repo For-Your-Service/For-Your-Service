@@ -286,7 +286,7 @@ def generate_veteran_transition_pdf(
     story.append(HRFlowable(width="100%", thickness=1, color=BORDER_COLOR, spaceAfter=6, spaceBefore=6))
     footer_text = (
         "<b>7 Eagle Group Veteran Placement Platform</b> &bull; Confidential Transition Report &bull; "
-        "Visit: <b>7eaglegroup.com</b> &bull; GitHub: <b>github.com/For-Your-Service/For-Your-Service</b>"
+        "Visit: <b>7eagle.com</b> &bull; GitHub: <b>github.com/For-Your-Service/For-Your-Service</b>"
     )
     story.append(Paragraph(footer_text, style_contact_line))
 

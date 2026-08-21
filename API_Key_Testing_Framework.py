@@ -607,7 +607,7 @@ def test_custom_api(
     Example:
         test_custom_api(
             api_name="7 Eagle Group Internal API",
-            endpoint="https://api.7eaglegroup.com/veterans",
+            endpoint="https://api.7eagle.com/veterans",
             api_key=os.getenv("EAGLE_API_KEY"),
             method="GET",
             params={"state": "SC"}
@@ -746,7 +746,7 @@ print("✅ Custom API testing template loaded")
 # MAGIC ### Documentation
 # MAGIC - [For Your Service GitHub Repo](https://github.com/For-Your-Service/For-Your-Service)
 # MAGIC - [Databricks Secrets Management](https://docs.databricks.com/security/secrets/index.html)
-# MAGIC - [7 Eagle Group Partnership](https://7eaglegroup.com)
+# MAGIC - [7 Eagle Group Partnership](https://7eagle.com)
 # MAGIC
 # MAGIC ---
 # MAGIC

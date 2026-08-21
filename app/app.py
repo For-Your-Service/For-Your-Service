@@ -1872,7 +1872,7 @@ if nav_selection == "📋 Veteran Intake & Match":
             with col_exp2:
                 summary_txt = f"""FOR YOUR SERVICE - VETERAN TRANSITION REPORT
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-Partner: 7 Eagle Group (https://7eaglegroup.com)
+Partner: 7 Eagle Group (https://7eagle.com)
 
 VETERAN PROFILE:
 - Name: {profile['name']}
@@ -2096,7 +2096,7 @@ elif nav_selection == "🦅 7 Eagle Group & Resources":
         * **Zero Cost to Veterans:** 100% free placement services for all military personnel and spouses.
         * **Clearance Sponsorship & Placement:** Dedicated placement for Secret, Top Secret, and TS/SCI clearance holders.
         """)
-        st.link_button("🌐 Visit 7 Eagle Group Official Portal", "https://7eaglegroup.com", use_container_width=True)
+        st.link_button("🌐 Visit 7 Eagle Group Official Portal", "https://7eagle.com", use_container_width=True)
 
     with col2:
         st.markdown("""
