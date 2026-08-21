@@ -478,118 +478,7 @@ def parse_veteran_skills(resume_text: str, mos_code: str = "") -> Dict:
 # GEOGRAPHIC DISTANCE & COMMUTE RADIUS ENGINE
 # ============================================================================
 
-CITY_COORDINATES = {
-    # South Carolina
-    ("greenville", "sc"): (34.8526, -82.3940),
-    ("spartanburg", "sc"): (34.9496, -81.9320),
-    ("columbia", "sc"): (34.0007, -81.0348),
-    ("charleston", "sc"): (32.7765, -79.9311),
-    ("north charleston", "sc"): (32.8546, -79.9748),
-    ("anderson", "sc"): (34.5034, -82.6501),
-    ("rock hill", "sc"): (34.9249, -81.0259),
-    ("myrtle beach", "sc"): (33.6891, -78.8867),
-    ("florence", "sc"): (34.1954, -79.7626),
-    ("aiken", "sc"): (33.5604, -81.7196),
-    ("greer", "sc"): (34.9387, -82.2271),
-    ("simpsonville", "sc"): (34.7371, -82.2543),
-    ("clemson", "sc"): (34.6834, -82.8374),
-
-    # North Carolina
-    ("charlotte", "nc"): (35.2271, -80.8431),
-    ("raleigh", "nc"): (35.7796, -78.6382),
-    ("durham", "nc"): (35.9940, -78.8986),
-    ("greensboro", "nc"): (36.0726, -79.7920),
-    ("winston-salem", "nc"): (36.0999, -80.2442),
-    ("fayetteville", "nc"): (35.0527, -78.8784),
-    ("asheville", "nc"): (35.5951, -82.5515),
-    ("wilmington", "nc"): (34.2257, -77.9447),
-
-    # Georgia
-    ("atlanta", "ga"): (33.7490, -84.3880),
-    ("augusta", "ga"): (33.4735, -82.0105),
-    ("savannah", "ga"): (32.0809, -81.0912),
-    ("columbus", "ga"): (32.4610, -84.9877),
-    ("macon", "ga"): (32.8407, -83.6324),
-
-    # Florida & Gulf Coast Military Hubs
-    ("niceville", "fl"): (30.5169, -86.4822),
-    ("destin", "fl"): (30.3935, -86.4958),
-    ("fort walton beach", "fl"): (30.4201, -86.6170),
-    ("crestview", "fl"): (30.7621, -86.5705),
-    ("eglin afb", "fl"): (30.4578, -86.5516),
-    ("hurlburt field", "fl"): (30.4278, -86.6891),
-    ("pensacola", "fl"): (30.4213, -87.2169),
-    ("panama city", "fl"): (30.1588, -85.6602),
-    ("tyndall afb", "fl"): (30.0694, -85.5764),
-    ("tampa", "fl"): (27.9506, -82.4572),
-    ("orlando", "fl"): (28.5383, -81.3792),
-    ("jacksonville", "fl"): (30.3322, -81.6557),
-    ("miami", "fl"): (25.7617, -80.1918),
-    ("tallahassee", "fl"): (30.4383, -84.2807),
-
-    # Virginia & DC
-    ("washington", "dc"): (38.9072, -77.0369),
-    ("arlington", "va"): (38.8799, -77.1067),
-    ("alexandria", "va"): (38.8048, -77.0469),
-    ("richmond", "va"): (37.5407, -77.4360),
-    ("norfolk", "va"): (36.8508, -76.2859),
-    ("virginia beach", "va"): (36.8529, -75.9780),
-    ("reston", "va"): (38.9586, -77.3570),
-    ("mclean", "va"): (38.9339, -77.1773),
-
-    # Texas
-    ("dallas", "tx"): (32.7767, -96.7970),
-    ("austin", "tx"): (30.2672, -97.7431),
-    ("houston", "tx"): (29.7604, -95.3698),
-    ("san antonio", "tx"): (29.4241, -98.4936),
-    ("fort worth", "tx"): (32.7555, -97.3308),
-    ("el paso", "tx"): (31.7619, -106.4850),
-    ("killeen", "tx"): (31.1171, -97.7278),
-    ("fort cavazos", "tx"): (31.1316, -97.7761),
-    ("corpus christi", "tx"): (27.8006, -97.3964),
-
-    # Tennessee & Alabama & Kentucky
-    ("nashville", "tn"): (36.1627, -86.7816),
-    ("knoxville", "tn"): (35.9606, -83.9207),
-    ("memphis", "tn"): (35.1495, -90.0490),
-    ("chattanooga", "tn"): (35.0456, -85.3097),
-    ("clarksville", "tn"): (36.5298, -87.3595),
-    ("huntsville", "al"): (34.7304, -86.5861),
-    ("birmingham", "al"): (33.5186, -86.8104),
-    ("mobile", "al"): (30.6954, -88.0399),
-    ("louisville", "ky"): (38.2527, -85.7585),
-    ("fort knox", "ky"): (37.9048, -85.9575),
-
-    # Maryland, Delaware & Pennsylvania
-    ("baltimore", "md"): (39.2904, -76.6122),
-    ("annapolis", "md"): (38.9784, -76.4922),
-    ("fort meade", "md"): (39.1087, -76.7419),
-    ("philadelphia", "pa"): (39.9526, -75.1652),
-    ("pittsburgh", "pa"): (40.4406, -79.9959),
-
-    # National Metros & Military Hubs
-    ("denver", "co"): (39.7392, -104.9903),
-    ("colorado springs", "co"): (38.8339, -104.8214),
-    ("aurora", "co"): (39.7294, -104.8319),
-    ("seattle", "wa"): (47.6062, -122.3321),
-    ("tacoma", "wa"): (47.2529, -122.4443),
-    ("san diego", "ca"): (32.7157, -117.1611),
-    ("oceanside", "ca"): (33.1959, -117.3795),
-    ("los angeles", "ca"): (34.0522, -118.2437),
-    ("san francisco", "ca"): (37.7749, -122.4194),
-    ("sacramento", "ca"): (38.5816, -121.4944),
-    ("chicago", "il"): (41.8781, -87.6298),
-    ("new york", "ny"): (40.7128, -74.0060),
-    ("boston", "ma"): (42.3601, -71.0589),
-    ("phoenix", "az"): (33.4484, -112.0740),
-    ("tucson", "az"): (32.2226, -110.9747),
-    ("las vegas", "nv"): (36.1699, -115.1398),
-    ("salt lake city", "ut"): (40.7608, -111.8910),
-    ("oklahoma city", "ok"): (35.4676, -97.5164),
-    ("lawton", "ok"): (34.6036, -98.3959),
-    ("kansas city", "mo"): (39.0997, -94.5786),
-    ("st. louis", "mo"): (38.6270, -90.1994)
-}
+from app.geo_database import CITY_COORDINATES, lookup_city_coordinates
 
 
 def haversine_distance_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -604,15 +493,8 @@ def haversine_distance_miles(lat1: float, lon1: float, lat2: float, lon2: float)
 
 
 def get_city_coordinates(city: str, state: str) -> Optional[Tuple[float, float]]:
-    """Lookup coordinates for a given city and state."""
-    c = city.lower().strip()
-    s = state.lower().strip()
-    if (c, s) in CITY_COORDINATES:
-        return CITY_COORDINATES[(c, s)]
-    for (k_city, k_state), coords in CITY_COORDINATES.items():
-        if k_state == s and (k_city in c or c in k_city):
-            return coords
-    return None
+    """Lookup coordinates for any city and state across all 50 states."""
+    return lookup_city_coordinates(city, state)
 
 
 def estimate_job_distance(
@@ -1046,14 +928,25 @@ def calculate_veteran_match_score(
     vet_state = veteran_profile.get("target_state", "").strip().upper()
     max_radius_str = str(veteran_profile.get("target_radius", "50 miles")).lower()
     remote_ok = veteran_profile.get("remote_ok", True)
-    relocate_ok = veteran_profile.get("relocate", True) or veteran_profile.get("relocation", True)
+    if "relocate" in veteran_profile:
+        relocate_ok = bool(veteran_profile.get("relocate"))
+    elif "relocation" in veteran_profile:
+        relocate_ok = bool(veteran_profile.get("relocation"))
+    else:
+        relocate_ok = False
 
-    if "10" in max_radius_str:
+    if "10" in max_radius_str and "100" not in max_radius_str:
         max_radius = 10.0
-    elif "20" in max_radius_str:
+    elif "20" in max_radius_str and "200" not in max_radius_str:
         max_radius = 20.0
+    elif "25" in max_radius_str:
+        max_radius = 25.0
+    elif "50" in max_radius_str:
+        max_radius = 50.0
     elif "100" in max_radius_str:
         max_radius = 100.0
+    elif "200" in max_radius_str:
+        max_radius = 200.0
     elif "any" in max_radius_str or "nationwide" in max_radius_str:
         max_radius = 9999.0
     else:
@@ -1085,11 +978,11 @@ def calculate_veteran_match_score(
         if relocate_ok:
             score += 4
             loc_status = "warn"
-            loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Open to relocation/travel)" if dist else f"{job_loc_display} (Relocation match)"
+            loc_detail = f"Outside radius ({dist:.0f} mi from {vet_city.title()}, {vet_state} — Relocation match)" if dist else f"{job_loc_display} (Relocation match)"
         else:
             score -= 15
             loc_status = "fail"
-            loc_detail = f"{dist:.0f} mi from {vet_city.title()}, {vet_state} (Outside {int(max_radius)} mi radius)" if dist else f"{job_loc_display} (Outside radius)"
+            loc_detail = f"Outside {int(max_radius)} mi radius ({dist:.0f} mi from {vet_city.title()}, {vet_state})" if dist else f"{job_loc_display} (Outside radius)"
 
     # -------------------------------------------------------------------------
     # 6. MILITARY LEADERSHIP & MOS CROSSWALK (Max 10 pts Supportive Bonus)
