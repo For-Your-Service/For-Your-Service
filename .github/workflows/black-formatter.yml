@@ -1,4 +1,4 @@
-﻿name: Black Code Formatter Check
+name: Black Code Formatter Check
 
 on:
   push:
