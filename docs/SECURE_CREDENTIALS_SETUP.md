@@ -1,14 +1,14 @@
 # Secure API Credential Storage Guide
 
-**Author:** Free Hall (7 Eagle Group)  
-**Last Updated:** August 10, 2026  
+**Author:** Free Hall (7 Eagle Group)
+**Last Updated:** August 10, 2026
 **Purpose:** Store and access API keys securely without git exposure
 
 ---
 
 ## Overview
 
-**Problem:** API keys hardcoded in code = security risk + git exposure  
+**Problem:** API keys hardcoded in code = security risk + git exposure
 **Solution:** Databricks Secrets for encrypted credential storage
 
 ### APIs We're Securing
@@ -37,11 +37,11 @@
    - Click "Create"
 
 3. **Add Your JSearch Credentials:**
-   
+
    Secret #1:
    - Key: `jsearch-rapidapi-key`
    - Value: [paste your RapidAPI key]
-   
+
    Secret #2:
    - Key: `jsearch-rapidapi-host`
    - Value: `jsearch.p.rapidapi.com`
@@ -87,26 +87,26 @@ def fetch_jsearch_jobs_secure(query, max_results=100):
     """
     from databricks.sdk.runtime import dbutils
     import requests
-    
+
     # Securely fetch credentials
     api_key = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-key")
     api_host = dbutils.secrets.get(scope="api-keys", key="jsearch-rapidapi-host")
-    
+
     headers = {
         "X-RapidAPI-Key": api_key,
         "X-RapidAPI-Host": api_host
     }
-    
+
     all_jobs = []
     page = 1
-    
+
     while len(all_jobs) < max_results:
         params = {
             "query": query,
             "page": str(page),
             "date_posted": "month"
         }
-        
+
         try:
             response = requests.get(
                 f"https://{api_host}/search",
@@ -114,7 +114,7 @@ def fetch_jsearch_jobs_secure(query, max_results=100):
                 params=params,
                 timeout=15
             )
-            
+
             if response.status_code == 200:
                 data = response.json()
                 jobs = data.get('data', [])
@@ -128,11 +128,11 @@ def fetch_jsearch_jobs_secure(query, max_results=100):
             else:
                 print(f"API error: {response.status_code}")
                 break
-                
+
         except requests.exceptions.Timeout:
             print("Request timeout")
             break
-    
+
     return all_jobs[:max_results]
 
 # Usage
@@ -170,33 +170,33 @@ def fetch_usajobs_secure(keyword, location, clearance_levels=None):
     """Fetch federal jobs using secure credentials."""
     from databricks.sdk.runtime import dbutils
     import requests
-    
+
     # Securely fetch credentials
     api_key = dbutils.secrets.get(scope="api-keys", key="usajobs-api-key")
     user_email = dbutils.secrets.get(scope="api-keys", key="usajobs-email")
-    
+
     headers = {
         'Host': 'data.usajobs.gov',
         'User-Agent': user_email,
         'Authorization-Key': api_key
     }
-    
+
     params = {
         'Keyword': keyword,
         'LocationName': location,
         'ResultsPerPage': 100
     }
-    
+
     if clearance_levels:
         params['SecurityClearanceRequired'] = ';'.join(clearance_levels)
-    
+
     response = requests.get(
         'https://data.usajobs.gov/api/search',
         headers=headers,
         params=params,
         timeout=20
     )
-    
+
     if response.status_code == 200:
         data = response.json()
         jobs = data['SearchResult']['SearchResultItems']
@@ -220,11 +220,11 @@ print(f"✅ Found {len(federal_jobs)} federal jobs")
 def test_secrets_setup():
     """Verify secrets are configured correctly."""
     from databricks.sdk.runtime import dbutils
-    
+
     print("=" * 60)
     print("🔒 TESTING SECURE CREDENTIALS")
     print("=" * 60)
-    
+
     # Test JSearch
     try:
         api_key = dbutils.secrets.get("api-keys", "jsearch-rapidapi-key")
@@ -232,7 +232,7 @@ def test_secrets_setup():
         print("✅ JSearch credentials: CONFIGURED")
     except Exception as e:
         print(f"❌ JSearch credentials: MISSING - {e}")
-    
+
     # Test USAJobs (optional)
     try:
         usajobs_key = dbutils.secrets.get("api-keys", "usajobs-api-key")
@@ -240,7 +240,7 @@ def test_secrets_setup():
         print("✅ USAJobs credentials: CONFIGURED")
     except:
         print("⚠️  USAJobs: NOT CONFIGURED (register first)")
-    
+
     print("=" * 60)
 
 # Run test
@@ -312,7 +312,7 @@ headers = {"X-RapidAPI-Key": RAPIDAPI_KEY}
 **Fix:** Create `api-keys` scope in UI:
 - Settings → Admin Console → Secrets → Create Scope
 
-### "Secret does not exist"  
+### "Secret does not exist"
 
 **Fix:** Add secret in UI:
 - Select `api-keys` scope → Add Secret
@@ -334,8 +334,8 @@ headers = {"X-RapidAPI-Key": RAPIDAPI_KEY}
 
 ---
 
-**Author:** Free Hall  
-**Organization:** 7 Eagle Group  
+**Author:** Free Hall
+**Organization:** 7 Eagle Group
 **Contact:** whall4.wh@gmail.com
 
 **Related Documentation:**
