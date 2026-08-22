@@ -1,0 +1,18 @@
+{
+  "hub_name": "JB Pearl Harbor-Hickam / Camp Smith",
+  "latitude": 21.3542,
+  "longitude": -157.945,
+  "major_commands": [
+    "USINDOPACOM",
+    "PACAF",
+    "COMPACFLT"
+  ],
+  "prime_defense_contractors": [
+    "Booz Allen Hamilton",
+    "Lockheed Martin",
+    "CACI"
+  ],
+  "technology_domains": "Indo-Pacific Joint Strategy, Maritime Defense, Satellite Comms",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
