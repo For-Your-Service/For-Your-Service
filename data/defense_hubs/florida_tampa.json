@@ -1,0 +1,19 @@
+{
+  "hub_name": "MacDill AFB / Tampa",
+  "latitude": 27.8494,
+  "longitude": -82.5211,
+  "major_commands": [
+    "USCENTCOM",
+    "USSOCOM",
+    "6th Air Refueling Wing"
+  ],
+  "prime_defense_contractors": [
+    "Booz Allen Hamilton",
+    "Jacobs",
+    "CACI",
+    "General Dynamics"
+  ],
+  "technology_domains": "Special Operations Tech, Intelligence Synthesis, Global Logistics",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
