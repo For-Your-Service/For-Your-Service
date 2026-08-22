@@ -1,0 +1,18 @@
+{
+  "hub_name": "Naval Base San Diego / Point Loma",
+  "latitude": 32.6847,
+  "longitude": -117.1296,
+  "major_commands": [
+    "NAVWAR",
+    "Third Fleet",
+    "Naval Air Forces"
+  ],
+  "prime_defense_contractors": [
+    "General Atomics",
+    "Northrop Grumman",
+    "Lockheed Martin"
+  ],
+  "technology_domains": "C4ISR, Unmanned Aerial Systems, Naval Combat Systems",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
