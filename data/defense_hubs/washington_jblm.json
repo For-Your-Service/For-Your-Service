@@ -1,0 +1,18 @@
+{
+  "hub_name": "Joint Base Lewis-McChord / Tacoma",
+  "latitude": 47.1122,
+  "longitude": -122.5811,
+  "major_commands": [
+    "I Corps",
+    "62nd Airlift Wing",
+    "1st Special Forces Group"
+  ],
+  "prime_defense_contractors": [
+    "Boeing Defense",
+    "General Dynamics",
+    "CACI"
+  ],
+  "technology_domains": "Pacific Theater Mobility, Special Forces Logistics, Stryker Systems",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
