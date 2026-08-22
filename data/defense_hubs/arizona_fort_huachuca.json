@@ -1,0 +1,18 @@
+{
+  "hub_name": "Fort Huachuca / Sierra Vista",
+  "latitude": 31.5552,
+  "longitude": -110.3038,
+  "major_commands": [
+    "NETCOM",
+    "USAICoE",
+    "Joint Interoperability Test Command"
+  ],
+  "prime_defense_contractors": [
+    "General Dynamics",
+    "CACI",
+    "Leidos"
+  ],
+  "technology_domains": "Military Intelligence, Cyber Comms, Electronic Warfare",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
