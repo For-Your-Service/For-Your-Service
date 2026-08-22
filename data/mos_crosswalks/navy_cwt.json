@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "CWT",
+  "title": "Cyber Warfare Technician",
+  "core_skills": "Offensive Cyber Exploitation, Python/C Scripting, IDS/IPS",
+  "target_civilian_roles": [
+    "Senior Threat Hunter",
+    "Security Research Engineer"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$120,000 - $180,000",
+  "last_verified": "2026-08-22"
+}
