@@ -1,0 +1,19 @@
+{
+  "hub_name": "Fort Eisenhower (Fort Gordon) / Augusta",
+  "latitude": 33.4208,
+  "longitude": -82.1583,
+  "major_commands": [
+    "U.S. Army Cyber Center of Excellence",
+    "NSA Georgia",
+    "780th MI Bde"
+  ],
+  "prime_defense_contractors": [
+    "Raytheon",
+    "Parsons",
+    "Booz Allen Hamilton",
+    "Leidos"
+  ],
+  "technology_domains": "Cyberspace Operations, Cryptology, Signal Corps Architecture",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
