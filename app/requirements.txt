@@ -14,9 +14,9 @@ numpy>=1.24.0
 pypdf>=3.0.0
 python-docx>=0.8.11
 
-# Databricks connectivity
+# Databricks & Cloud Connectivity
 databricks-sdk>=0.12.0
-pyspark>=3.4.0
+requests>=2.31.0
 
 # Utilities & Export
 python-dateutil>=2.8.2

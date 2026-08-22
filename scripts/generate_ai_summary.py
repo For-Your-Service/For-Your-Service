@@ -23,18 +23,22 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 METRICS_FILE = ROOT_DIR / "data" / "analytics" / "usage_metrics.json"
 
 def get_platform_metrics():
+    today_str = datetime.now().strftime("%Y-%m-%d")
     metrics = {
-        "total_visitors": 1465,
-        "total_matches_run": 865,
-        "veterans_connected": 218
+        "metric_date": today_str,
+        "total_visitors": 0,
+        "total_matches_run": 0,
+        "veterans_connected": 0
     }
     if METRICS_FILE.exists():
         try:
             with open(METRICS_FILE, "r", encoding="utf-8") as f:
                 saved = json.load(f)
-                metrics["total_visitors"] = saved.get("total_visitors", metrics["total_visitors"])
-                metrics["total_matches_run"] = saved.get("total_matches_run", metrics["total_matches_run"])
-                metrics["veterans_connected"] = saved.get("veterans_connected", metrics["veterans_connected"])
+                saved_date = saved.get("metric_date") or saved.get("date")
+                if saved_date == today_str:
+                    metrics["total_visitors"] = saved.get("total_visitors", 0)
+                    metrics["total_matches_run"] = saved.get("total_matches_run", 0)
+                    metrics["veterans_connected"] = saved.get("veterans_connected", 0)
         except Exception:
             pass
     return metrics

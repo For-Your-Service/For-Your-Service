@@ -66,11 +66,13 @@ METRICS_FILE = METRICS_DIR / "usage_metrics.json"
 FALLBACK_METRICS_FILE = Path("/tmp/fys_usage_metrics.json")
 
 def get_platform_metrics(increment_visit=False, increment_match=False, increment_intro=False) -> Dict[str, int]:
-    """Retrieve and atomically update live platform visitor and usage counters"""
+    """Retrieve and atomically update daily platform visitor and usage counters (resets daily to 0)"""
+    today_str = datetime.now().strftime("%Y-%m-%d")
     default_metrics = {
-        "total_visitors": 1420,
-        "total_matches_run": 865,
-        "veterans_connected": 218,
+        "metric_date": today_str,
+        "total_visitors": 0,
+        "total_matches_run": 0,
+        "veterans_connected": 0,
         "last_updated": datetime.now().isoformat()
     }
 
@@ -89,9 +91,16 @@ def get_platform_metrics(increment_visit=False, increment_match=False, increment
         try:
             with open(target_file, "r", encoding="utf-8") as f:
                 saved = json.load(f)
-                metrics["total_visitors"] = max(default_metrics["total_visitors"], saved.get("total_visitors", default_metrics["total_visitors"]))
-                metrics["total_matches_run"] = max(default_metrics["total_matches_run"], saved.get("total_matches_run", default_metrics["total_matches_run"]))
-                metrics["veterans_connected"] = max(default_metrics["veterans_connected"], saved.get("veterans_connected", default_metrics["veterans_connected"]))
+                saved_date = saved.get("metric_date") or saved.get("date")
+                if saved_date == today_str:
+                    metrics["total_visitors"] = int(saved.get("total_visitors", 0))
+                    metrics["total_matches_run"] = int(saved.get("total_matches_run", 0))
+                    metrics["veterans_connected"] = int(saved.get("veterans_connected", 0))
+                else:
+                    # New day: automatically reset counters to 0
+                    metrics["total_visitors"] = 0
+                    metrics["total_matches_run"] = 0
+                    metrics["veterans_connected"] = 0
         except Exception:
             pass
 
@@ -102,7 +111,8 @@ def get_platform_metrics(increment_visit=False, increment_match=False, increment
     if increment_intro:
         metrics["veterans_connected"] += 1
 
-    if increment_visit or increment_match or increment_intro:
+    if increment_visit or increment_match or increment_intro or not target_file.exists():
+        metrics["metric_date"] = today_str
         metrics["last_updated"] = datetime.now().isoformat()
         try:
             with open(target_file, "w", encoding="utf-8") as f:

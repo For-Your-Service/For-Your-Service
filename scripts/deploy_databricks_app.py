@@ -32,18 +32,13 @@ def deploy_app():
         host = f"https://{host}"
 
     token = os.getenv("DATABRICKS_TOKEN")
-
-    if not token:
-        print("\n[!] DATABRICKS_TOKEN environment variable is required.")
-        print(f"    Target Workspace: {host}")
-        print("    Please set DATABRICKS_TOKEN before running:")
-        print("      $env:DATABRICKS_TOKEN=\"dapi...\"")
-        print("      $env:DATABRICKS_HOST=\"" + host + "\"")
-        sys.exit(1)
-
-    print(f"[*] Authenticating with workspace: {host}...")
-    w = WorkspaceClient(host=host, token=token)
+    if token:
+        w = WorkspaceClient(host=host, token=token)
+    else:
+        w = WorkspaceClient()
+        host = w.config.host
     user = w.current_user.me().user_name
+    print(f"[*] Authenticating with workspace: {host}...")
     print(f"[OK] Authenticated as: {user}")
 
     ws_import_dir = f"/Users/{user}/apps/{APP_NAME}"
@@ -71,6 +66,10 @@ def deploy_app():
     try:
         app_obj = w.apps.get(name=APP_NAME)
         print(f"[OK] Found existing app '{APP_NAME}'")
+        if app_obj.compute_status and "STOPPED" in str(app_obj.compute_status.state).upper():
+            print(f"[*] App '{APP_NAME}' is currently STOPPED. Starting app compute...")
+            w.apps.start_and_wait(name=APP_NAME)
+            print(f"[OK] App '{APP_NAME}' started successfully.")
     except Exception:
         print(f"[*] App '{APP_NAME}' not found. Creating new Databricks App...")
         app_obj = w.apps.create_and_wait(
