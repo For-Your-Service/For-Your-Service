@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "1D7X1Q",
+  "title": "Enterprise Cyber Defense",
+  "core_skills": "SIEM Architecture, Threat Detection, Zero Trust",
+  "target_civilian_roles": [
+    "Senior Cyber Security Engineer",
+    "SOC Lead"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$110,000 - $165,000",
+  "last_verified": "2026-08-22"
+}
