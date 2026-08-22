@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "18F",
+  "title": "Special Forces Intelligence Sergeant",
+  "core_skills": "Target Intelligence, HUMINT/SIGINT Synthesis, Geospatial",
+  "target_civilian_roles": [
+    "Senior Threat Intelligence Analyst",
+    "Defense Strategy Lead"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$110,000 - $165,000",
+  "last_verified": "2026-08-22"
+}
