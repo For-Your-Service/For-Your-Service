@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "13F",
+  "title": "Joint Fire Support Specialist",
+  "core_skills": "Target Acquisition, Radio Communications, Tactical Data",
+  "target_civilian_roles": [
+    "Telecom Field Tech",
+    "Systems Dispatcher"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$68,000 - $98,000",
+  "last_verified": "2026-08-22"
+}
