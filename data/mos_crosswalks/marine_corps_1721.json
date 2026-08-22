@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "1721",
+  "title": "Defensive Cyberspace Operator",
+  "core_skills": "Endpoint Forensics, Incident Response, Firewall Defense",
+  "target_civilian_roles": [
+    "Incident Response Analyst",
+    "SOC Tier 3 Specialist"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$110,000 - $165,000",
+  "last_verified": "2026-08-22"
+}
