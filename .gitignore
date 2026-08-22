@@ -1,4 +1,4 @@
-﻿# For Your Service - Git Ignore
+# For Your Service - Git Ignore
 # Author: William Free Hall <whall4.wh@gmail.com>
 
 # Python
@@ -140,3 +140,7 @@ terraform.rc
 
 # Terraform outputs
 outputs.json
+
+# Sandbox and temporary executables
+sandbox/
+*.exe
