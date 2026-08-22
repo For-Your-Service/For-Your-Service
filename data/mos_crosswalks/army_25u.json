@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "25U",
+  "title": "Signal Support Systems Specialist",
+  "core_skills": "Radio Networks, COMSEC, Tier-2 Helpdesk Support",
+  "target_civilian_roles": [
+    "IT Field Specialist",
+    "Telecom Systems Admin"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$68,000 - $98,000",
+  "last_verified": "2026-08-22"
+}
