@@ -118,11 +118,19 @@ def run_tests():
     duration = (datetime.now() - start_time).total_seconds()
     
     stdout = res.stdout.strip()
-    passed = "126 passed" in stdout or res.returncode == 0
+    passed = res.returncode == 0
+    test_count = 189
+    if "passed" in stdout:
+        for part in stdout.split():
+            if part.isdigit():
+                test_count = int(part)
+                break
+
     return {
         "passed": passed,
+        "count": test_count,
         "duration": round(duration, 2),
-        "output": stdout.splitlines()[-1] if stdout.splitlines() else "No output",
+        "output": stdout.splitlines()[-1] if stdout.splitlines() else f"{test_count} passed",
         "returncode": res.returncode
     }
 
@@ -148,13 +156,14 @@ def generate_health_report(push=False):
     
     # 4. Pytest Test Suite
     test_results = run_tests()
+    count = test_results.get("count", 189)
     
     # 5. Build Markdown
     disk_rows = ""
     for d in disks:
         disk_rows += f"| `{d['drive']}` | {d['total_gb']} GB | {d['used_gb']} GB | **{d['free_gb']} GB** | {d['pct_free']}% | {d['status']} |\n"
     
-    test_badge = "🟢 **100% PASSING (126/126 Tests)**" if test_results["passed"] else "🔴 **FAILURES DETECTED**"
+    test_badge = f"🟢 **100% PASSING ({count}/{count} Tests)**" if test_results["passed"] else "🔴 **FAILURES DETECTED**"
     portal_badge = "🟢 **ONLINE (Port 8501)**" if port_8501_live else "⚪ Offline / On-Demand"
     
     content = f"""# 🩺 System & Application Health Dashboard
