@@ -1,0 +1,19 @@
+{
+  "hub_name": "Peterson SFB / Schriever SFB / Fort Carson",
+  "latitude": 38.8242,
+  "longitude": -104.7003,
+  "major_commands": [
+    "USSPACECOM",
+    "NORAD/NORTHCOM",
+    "4th Infantry Division"
+  ],
+  "prime_defense_contractors": [
+    "L3Harris",
+    "Lockheed Martin",
+    "Ball Aerospace",
+    "Sierra Nevada"
+  ],
+  "technology_domains": "Space Operations, Satellite C2, Cyber Defense",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
