@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "IT",
+  "title": "Information Systems Technician",
+  "core_skills": "C4I Systems, Cisco Networking, Windows/Linux Server",
+  "target_civilian_roles": [
+    "Network Operations Engineer",
+    "Enterprise Systems Admin"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$85,000 - $130,000",
+  "last_verified": "2026-08-22"
+}
