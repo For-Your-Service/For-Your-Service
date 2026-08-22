@@ -1,0 +1,18 @@
+{
+  "hub_name": "Naval Station Norfolk / Hampton Roads",
+  "latitude": 36.9458,
+  "longitude": -76.3047,
+  "major_commands": [
+    "US Fleet Forces Command",
+    "Joint Staff Hampton Roads",
+    "NATO ACT"
+  ],
+  "prime_defense_contractors": [
+    "Huntington Ingalls",
+    "General Dynamics NASSCO",
+    "Lockheed Martin"
+  ],
+  "technology_domains": "Nuclear Aircraft Carrier Overhaul, Fleet Combat Systems, Submarines",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
