@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "35L",
+  "title": "Counterintelligence Special Agent",
+  "core_skills": "CI Investigations, Insider Threat, OPSEC Auditing",
+  "target_civilian_roles": [
+    "Corporate Insider Threat Lead",
+    "Compliance Investigator"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$100,000 - $155,000",
+  "last_verified": "2026-08-22"
+}
