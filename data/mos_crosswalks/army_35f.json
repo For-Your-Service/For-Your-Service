@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "35F",
+  "title": "Intelligence Analyst",
+  "core_skills": "All-Source Intelligence, Threat Modeling, Briefing",
+  "target_civilian_roles": [
+    "OSINT Analyst",
+    "Corporate Threat Intelligence"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$90,000 - $135,000",
+  "last_verified": "2026-08-22"
+}
