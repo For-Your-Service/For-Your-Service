@@ -1,0 +1,19 @@
+{
+  "hub_name": "Pentagon / Fort Belvoir / Quantico",
+  "latitude": 38.7189,
+  "longitude": -77.1542,
+  "major_commands": [
+    "Office of the Secretary of Defense",
+    "DTRA",
+    "MCESG"
+  ],
+  "prime_defense_contractors": [
+    "Amazon Web Services (AWS)",
+    "Microsoft Federal",
+    "Palantir",
+    "Leidos"
+  ],
+  "technology_domains": "Defense Policy, National Defense Cloud, Counter-WMD Systems",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
