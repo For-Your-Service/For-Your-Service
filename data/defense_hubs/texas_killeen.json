@@ -1,0 +1,17 @@
+{
+  "hub_name": "Fort Cavazos (Fort Hood) / Killeen",
+  "latitude": 31.1302,
+  "longitude": -97.777,
+  "major_commands": [
+    "III Armored Corps",
+    "1st Cavalry Division",
+    "Operational Test Command"
+  ],
+  "prime_defense_contractors": [
+    "General Dynamics Land Systems",
+    "Northrop Grumman"
+  ],
+  "technology_domains": "Heavy Armored Systems, Combined Arms Logistics, Simulation",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
