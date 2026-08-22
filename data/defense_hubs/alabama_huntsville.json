@@ -1,0 +1,20 @@
+{
+  "hub_name": "Redstone Arsenal / Huntsville",
+  "latitude": 34.6992,
+  "longitude": -86.6775,
+  "major_commands": [
+    "SMDC",
+    "NASA MSFC",
+    "FBI Redstone",
+    "MDA"
+  ],
+  "prime_defense_contractors": [
+    "Boeing",
+    "Lockheed Martin",
+    "Dynetics",
+    "Northrop Grumman"
+  ],
+  "technology_domains": "Missile Defense, Space, Aerospace Engineering",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
