@@ -1,3 +1,14 @@
+---
+title: For Your Service
+emoji: 🇺🇸
+colorFrom: blue
+colorTo: red
+sdk: streamlit
+sdk_version: 1.38.0
+app_file: app/app.py
+pinned: false
+---
+
 # FOR YOUR SERVICE — Veteran Career Transition Intelligence 🇺🇸
 
 > Your transition generates thousands of service data points every day. We turn that data into a clear path forward.
