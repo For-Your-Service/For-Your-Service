@@ -1,0 +1,18 @@
+{
+  "hub_name": "MCB Camp Pendleton / Oceanside",
+  "latitude": 33.3032,
+  "longitude": -117.4727,
+  "major_commands": [
+    "I MEF",
+    "1st Marine Division",
+    "MCI-West"
+  ],
+  "prime_defense_contractors": [
+    "Viasat",
+    "BAE Systems",
+    "Oshkosh Defense"
+  ],
+  "technology_domains": "Amphibious Warfare, Tactical Communications, Unmanned Systems",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
