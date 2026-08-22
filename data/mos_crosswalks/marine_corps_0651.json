@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "0651",
+  "title": "Cyber Network Specialist",
+  "core_skills": "Tactical LAN/WAN, Cisco Switching, Radio Over IP",
+  "target_civilian_roles": [
+    "Network Administrator",
+    "Field Telecom Specialist"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$80,000 - $120,000",
+  "last_verified": "2026-08-22"
+}
