@@ -1,0 +1,14 @@
+{
+  "branch": "Army",
+  "code": "11B",
+  "title": "Infantryman",
+  "core_skills": "Security, Tactical Ops, Team Leadership",
+  "target_civilian_roles": [
+    "Physical Security",
+    "Operations Management",
+    "Emergency Services"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$65,000 - $95,000",
+  "last_verified": "2026-08-22"
+}
