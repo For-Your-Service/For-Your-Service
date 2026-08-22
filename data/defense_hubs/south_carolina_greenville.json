@@ -1,0 +1,17 @@
+{
+  "hub_name": "Greenville-Anderson Defense Corridor",
+  "latitude": 34.8526,
+  "longitude": -82.394,
+  "major_commands": [
+    "Lockheed Martin Greenville Ops",
+    "SC National Guard Joint Force"
+  ],
+  "prime_defense_contractors": [
+    "Lockheed Martin",
+    "Michelin Defense",
+    "General Electric Aviation"
+  ],
+  "technology_domains": "F-16 Production, C-130 Depot Maintenance, Tactical Heavy Mobility",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
