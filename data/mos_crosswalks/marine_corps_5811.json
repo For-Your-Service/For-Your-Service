@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "5811",
+  "title": "Military Police",
+  "core_skills": "Physical Security Inspections, Criminal Investigation",
+  "target_civilian_roles": [
+    "Corporate Security Specialist",
+    "Compliance Lead"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$62,000 - $92,000",
+  "last_verified": "2026-08-22"
+}
