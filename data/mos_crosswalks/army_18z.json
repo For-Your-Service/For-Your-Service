@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "18Z",
+  "title": "Special Forces Operations Sergeant",
+  "core_skills": "Operational Detachment Command, Multi-Domain Strategy",
+  "target_civilian_roles": [
+    "VP Operations",
+    "Defense Program Director"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$130,000 - $195,000",
+  "last_verified": "2026-08-22"
+}
