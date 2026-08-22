@@ -1,0 +1,19 @@
+{
+  "hub_name": "Eglin AFB / Hurlburt Field / Pensacola",
+  "latitude": 30.4578,
+  "longitude": -86.5459,
+  "major_commands": [
+    "AFRL Munitions Directorate",
+    "96th Test Wing",
+    "1st SOW"
+  ],
+  "prime_defense_contractors": [
+    "Lockheed Martin",
+    "Boeing",
+    "Raytheon",
+    "General Dynamics"
+  ],
+  "technology_domains": "Weapons Testing, Air Force Special Operations, Cyber Training",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
