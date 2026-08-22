@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "CTR",
+  "title": "Cryptologic Technician Collection",
+  "core_skills": "RF Spectrum Analysis, Signals Intercept, Radar Tracking",
+  "target_civilian_roles": [
+    "Electronic Intelligence Specialist",
+    "RF Field Engineer"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$95,000 - $140,000",
+  "last_verified": "2026-08-22"
+}
