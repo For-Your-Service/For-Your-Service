@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "1N0X1",
+  "title": "All Source Intelligence Analyst",
+  "core_skills": "Target Intelligence, Air Order of Battle, Strategy",
+  "target_civilian_roles": [
+    "Intelligence Briefing Officer",
+    "Global Threat Analyst"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$92,000 - $138,000",
+  "last_verified": "2026-08-22"
+}
