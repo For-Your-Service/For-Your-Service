@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "1N4X1",
+  "title": "Fusion Analyst",
+  "core_skills": "Digital Network Exploitation, Target Discovery",
+  "target_civilian_roles": [
+    "Cyber Threat Intelligence Lead",
+    "Malware Researcher"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$105,000 - $160,000",
+  "last_verified": "2026-08-22"
+}
