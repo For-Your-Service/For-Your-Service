@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "0311",
+  "title": "Rifleman",
+  "core_skills": "Tactical Mobility, Fire Team Command, Threat Neutralization",
+  "target_civilian_roles": [
+    "Operations Specialist",
+    "Field Logistics Team Lead"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$65,000 - $95,000",
+  "last_verified": "2026-08-22"
+}
