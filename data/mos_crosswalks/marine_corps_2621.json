@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "2621",
+  "title": "Special Communications Signals Analyst",
+  "core_skills": "Tactical SIGINT, Direction Finding, RF Intercept",
+  "target_civilian_roles": [
+    "Electronic Warfare Tech",
+    "Tactical Data Specialist"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$95,000 - $142,000",
+  "last_verified": "2026-08-22"
+}
