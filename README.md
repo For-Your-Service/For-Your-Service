@@ -20,6 +20,15 @@ The military gives you elite operational experience. Civilian tech applications 
 **Partner:** 7 Eagle Group  
 **Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
 
+### 🏛️ Command & Control / Infrastructure Stack
+
+[![Organization](https://img.shields.io/badge/ORGANIZATION-FOR_YOUR_SERVICE-blue?style=flat-square&logo=github)](https://github.com/For-Your-Service) 
+[![Project](https://img.shields.io/badge/PROJECT-GUNSLINGER'S_DESKTOP_LEDGER-purple?style=flat-square&logo=python)](https://github.com/FreeFades2Black/gunslingers-desktop-ledger)
+[![Databricks Apps](https://img.shields.io/badge/DATABRICKS_APPS-FYS_MATCHING_APP-FF3621?style=flat-square&logo=databricks)](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
+[![AWS Infrastructure](https://img.shields.io/badge/AWS-S3_%7C_LAMBDA_%7C_IAM-232F3E?style=flat-square&logo=amazon-aws)](https://aws.amazon.com)
+[![Hugging Face](https://img.shields.io/badge/HUGGING_FACE-EMBEDDINGS_%7C_SPACES-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/FreeFades2Black)
+[![Streamlit Cloud](https://img.shields.io/badge/STREAMLIT-COMMUNITY_CLOUD-FF4B4B?style=flat-square&logo=streamlit)](https://share.streamlit.io)
+
 ---
 
 ## What For Your Service Does
