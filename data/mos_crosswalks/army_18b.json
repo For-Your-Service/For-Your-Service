@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "18B",
+  "title": "Special Forces Weapons Sergeant",
+  "core_skills": "Small Arms, Heavy Weapons, Cross-Cultural Training",
+  "target_civilian_roles": [
+    "Defense Contractor Instructor",
+    "Security Consultant"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$85,000 - $130,000",
+  "last_verified": "2026-08-22"
+}
