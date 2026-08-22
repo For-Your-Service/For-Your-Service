@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "18E",
+  "title": "Special Forces Communications Sergeant",
+  "core_skills": "HF/VHF/SATCOM, Cryptographic Systems, Mesh Networks",
+  "target_civilian_roles": [
+    "SATCOM Engineer",
+    "Tactical Telecom Architect"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$90,000 - $140,000",
+  "last_verified": "2026-08-22"
+}
