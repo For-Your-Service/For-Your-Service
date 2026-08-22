@@ -1,7 +1,7 @@
 # 🩺 System & Application Health Dashboard
 
 > **Automated Health Monitoring for For Your Service Platform**  
-> **Last Verified:** `2026-08-21 14:55:48` (August 21, 2026) • **Report Frequency:** Twice Daily (09:00 & 21:00)
+> **Last Verified:** `2026-08-22 18:21:42` (August 22, 2026) • **Report Frequency:** Twice Daily (09:00 & 21:00)
 
 ---
 
@@ -9,7 +9,7 @@
 
 | Component | Status | Metrics / Details |
 | :--- | :--- | :--- |
-| **🧪 Automated Test Suite** | 🟢 **100% PASSING (126/126 Tests)** | ======================= 181 passed, 1 warning in 4.67s ======================== (Duration: 5.93s) |
+| **🧪 Automated Test Suite** | 🟢 **100% PASSING (189/189 Tests)** | ======================= 189 passed, 1 warning in 4.59s ======================== (Duration: 5.92s) |
 | **🌐 Veteran Portal Service** | 🟢 **ONLINE (Port 8501)** | Local Streamlit Runtime `http://localhost:8501` |
 | **🧠 Neural Matching Engine** | 🟢 **ACTIVE** | `sentence-transformers/all-MiniLM-L6-v2` |
 | **☁️ Databricks Cloud Proxy** | 🟢 **CONFIGURED** | `fys-matching-app-7474643734871839.aws.databricksapps.com` |
@@ -21,8 +21,8 @@
 
 | Drive | Total Size | Used Space | Free Space | Free % | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `C:` | 475.8 GB | 470.7 GB | **5.1 GB** | 1.1% | 🔴 Critical |
-| `D:` | 1863.0 GB | 1781.9 GB | **81.1 GB** | 4.4% | 🔴 Critical |
+| `C:` | 475.8 GB | 470.8 GB | **5.0 GB** | 1.1% | 🔴 Critical |
+| `D:` | 1863.0 GB | 1782.4 GB | **80.6 GB** | 4.3% | 🔴 Critical |
 
 ---
 
@@ -31,7 +31,7 @@
 * **Host Machine:** `Predator-Gunslinger-19`
 * **Operating System:** `Windows 11` (AMD64)
 * **Python Runtime:** `3.12.0`
-* **RAM Utilization:** **12.35 GB** / 15.94 GB (77% Used) • **3.59 GB Free**
+* **RAM Utilization:** **11.36 GB** / 15.94 GB (71% Used) • **4.58 GB Free**
 
 ---
 
@@ -39,8 +39,8 @@
 
 * **Test Suite:** pytest (3.12.0)
 * **Test Paths:** `tests/api`, `tests/pipeline`, `tests/matching`, `tests/features`, `tests/unit`
-* **Result:** `======================= 181 passed, 1 warning in 4.67s ========================`
-* **Execution Duration:** `5.93 seconds`
+* **Result:** `======================= 189 passed, 1 warning in 4.59s ========================`
+* **Execution Duration:** `5.92 seconds`
 
 ---
 
