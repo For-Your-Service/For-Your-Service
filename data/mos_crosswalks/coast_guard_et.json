@@ -1,0 +1,13 @@
+{
+  "branch": "Coast Guard",
+  "code": "ET",
+  "title": "Electronics Technician",
+  "core_skills": "Navigation Radar, Depth Finders, VHF Marine Radio",
+  "target_civilian_roles": [
+    "Marine Electronics Field Engineer",
+    "Avionics Tech"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$78,000 - $115,000",
+  "last_verified": "2026-08-22"
+}
