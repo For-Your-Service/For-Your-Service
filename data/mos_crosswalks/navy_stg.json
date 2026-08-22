@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "STG",
+  "title": "Sonar Technician Surface",
+  "core_skills": "Acoustic Signal Processing, Underwater Sensor Arrays",
+  "target_civilian_roles": [
+    "Acoustic Data Analyst",
+    "Marine Sensor Technician"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$78,000 - $118,000",
+  "last_verified": "2026-08-22"
+}
