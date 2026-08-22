@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "31B",
+  "title": "Military Police",
+  "core_skills": "Law Enforcement, Physical Security, Access Control",
+  "target_civilian_roles": [
+    "Corporate Physical Security",
+    "Risk Mitigation Specialist"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$62,000 - $92,000",
+  "last_verified": "2026-08-22"
+}
