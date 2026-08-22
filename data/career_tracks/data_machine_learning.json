@@ -1,0 +1,18 @@
+{
+  "track_name": "Data Architecture & Machine Learning",
+  "core_competencies": [
+    "Python / SQL",
+    "Apache Spark / Delta Lake",
+    "Databricks Unity Catalog",
+    "PyTorch / Transformers",
+    "Data Pipeline ETL"
+  ],
+  "recommended_certifications": [
+    "Databricks Certified Data Engineer",
+    "AWS Certified Machine Learning",
+    "Azure Data Fundamentals"
+  ],
+  "veteran_funding_pathways": "Databricks Veteran Fellowship, Google Career Certificates for Veterans",
+  "average_salary_range": "$120,000 - $185,000",
+  "last_audited": "2026-08-22"
+}
