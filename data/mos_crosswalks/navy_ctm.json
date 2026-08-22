@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "CTM",
+  "title": "Cryptologic Technician Maintenance",
+  "core_skills": "Cryptographic Hardware Repair, Electronic Calibration",
+  "target_civilian_roles": [
+    "Hardware Security Specialist",
+    "Telecom Equipment Engineer"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$90,000 - $135,000",
+  "last_verified": "2026-08-22"
+}
