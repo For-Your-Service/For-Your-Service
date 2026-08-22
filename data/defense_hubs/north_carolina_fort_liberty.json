@@ -1,0 +1,19 @@
+{
+  "hub_name": "Fort Liberty (Fort Bragg) / Fayetteville",
+  "latitude": 35.1392,
+  "longitude": -79.0064,
+  "major_commands": [
+    "USASOC",
+    "JSOC",
+    "XVIII Airborne Corps",
+    "82nd Airborne"
+  ],
+  "prime_defense_contractors": [
+    "General Dynamics",
+    "CACI",
+    "Magellan Federal"
+  ],
+  "technology_domains": "Special Operations Integration, Airborne Mobility, Expeditionary Telecom",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
