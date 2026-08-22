@@ -1,7 +1,15 @@
 import pytest
-from app.app import evaluate_clearance_match
+from app.app import evaluate_clearance
 
 def test_clearance_levels():
-    assert evaluate_clearance_match("TS/SCI", "Secret") >= 1.0
-    assert evaluate_clearance_match("Secret", "Secret") >= 1.0
-    assert evaluate_clearance_match("None", "Secret") < 0.6
+    eligible_higher, _, status1, _ = evaluate_clearance("TS/SCI", "Secret")
+    assert eligible_higher is True
+    assert status1 == "pass"
+
+    eligible_equal, _, status2, _ = evaluate_clearance("Secret", "Secret")
+    assert eligible_equal is True
+    assert status2 == "pass"
+
+    eligible_lower, _, status3, _ = evaluate_clearance("None / Unsure", "Secret")
+    assert eligible_lower is False
+    assert status3 == "fail"
