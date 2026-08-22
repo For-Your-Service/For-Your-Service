@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "1D7X1A",
+  "title": "Network Operations",
+  "core_skills": "Enterprise Routing, Firewall Management, SDN",
+  "target_civilian_roles": [
+    "Cloud Network Engineer",
+    "Infrastructure Admin"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$90,000 - $135,000",
+  "last_verified": "2026-08-22"
+}
