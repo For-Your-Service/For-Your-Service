@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "35S",
+  "title": "Signals Collector / Analyst",
+  "core_skills": "Satellite Signal Intercept, Signal Processing, Spectrum",
+  "target_civilian_roles": [
+    "Spectrum Operations Specialist",
+    "RF Systems Tech"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$95,000 - $140,000",
+  "last_verified": "2026-08-22"
+}
