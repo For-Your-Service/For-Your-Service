@@ -1,0 +1,18 @@
+{
+  "track_name": "Cloud & DevOps Engineering",
+  "core_competencies": [
+    "Linux Administration",
+    "Docker / Kubernetes",
+    "Terraform / IaC",
+    "CI/CD Pipelines",
+    "AWS / Azure / GCP Architecture"
+  ],
+  "recommended_certifications": [
+    "AWS Certified Solutions Architect",
+    "CKA (Certified Kubernetes Administrator)",
+    "HashiCorp Certified Terraform Associate"
+  ],
+  "veteran_funding_pathways": "DoD SkillBridge, AWS Military Apprenticeship, Microsoft MSSA",
+  "average_salary_range": "$115,000 - $170,000",
+  "last_audited": "2026-08-22"
+}
