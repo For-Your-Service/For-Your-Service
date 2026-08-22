@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "15T",
+  "title": "UH-60 Helicopter Repairer",
+  "core_skills": "Turbine Engines, Hydraulic Systems, FAA Inspection",
+  "target_civilian_roles": [
+    "Aviation Maintenance Technician",
+    "Aerospace Field Tech"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$78,000 - $118,000",
+  "last_verified": "2026-08-22"
+}
