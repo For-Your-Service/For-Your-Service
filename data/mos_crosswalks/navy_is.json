@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "IS",
+  "title": "Intelligence Specialist",
+  "core_skills": "Imagery Analysis, Threat Assessment, Strike Warfare Planning",
+  "target_civilian_roles": [
+    "Geospatial Analyst",
+    "Defense Intelligence Consultant"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$92,000 - $140,000",
+  "last_verified": "2026-08-22"
+}
