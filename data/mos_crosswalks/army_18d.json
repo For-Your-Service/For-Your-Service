@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "18D",
+  "title": "Special Forces Medical Sergeant",
+  "core_skills": "Advanced Trauma Life Support, Surgical Care, Telemedicine",
+  "target_civilian_roles": [
+    "Physician Assistant Track",
+    "Emergency Flight Medic"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$95,000 - $150,000",
+  "last_verified": "2026-08-22"
+}
