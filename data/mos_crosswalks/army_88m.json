@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "88M",
+  "title": "Motor Transport Operator",
+  "core_skills": "Class A CDL, Fleet Operations, Hazardous Material Transit",
+  "target_civilian_roles": [
+    "Fleet Logistics Coordinator",
+    "Commercial Heavy Hauler"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$65,000 - $95,000",
+  "last_verified": "2026-08-22"
+}
