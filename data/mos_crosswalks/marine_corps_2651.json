@@ -1,0 +1,13 @@
+{
+  "branch": "Marine Corps",
+  "code": "2651",
+  "title": "Special Intelligence System Administrator",
+  "core_skills": "SCI LAN Infrastructure, Encryption, Multi-Level Security",
+  "target_civilian_roles": [
+    "Cleared Systems Engineer",
+    "Secure Infrastructure Lead"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$105,000 - $155,000",
+  "last_verified": "2026-08-22"
+}
