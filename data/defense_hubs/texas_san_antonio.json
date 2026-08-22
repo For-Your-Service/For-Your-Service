@@ -1,0 +1,18 @@
+{
+  "hub_name": "Joint Base San Antonio (Lackland/Fort Sam)",
+  "latitude": 29.3842,
+  "longitude": -98.6186,
+  "major_commands": [
+    "Sixteenth Air Force (Air Forces Cyber)",
+    "MEDCOM",
+    "BMT"
+  ],
+  "prime_defense_contractors": [
+    "Boeing Tech Center",
+    "Booz Allen",
+    "Lockheed Martin"
+  ],
+  "technology_domains": "Cyber Superiority, Military Medicine, Intelligence Integration",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
