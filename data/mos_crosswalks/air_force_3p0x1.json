@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "3P0X1",
+  "title": "Security Forces",
+  "core_skills": "Base Defense, Integrated Air Defense Security, Anti-Terrorism",
+  "target_civilian_roles": [
+    "Critical Infrastructure Protection",
+    "Security Director"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$68,000 - $98,000",
+  "last_verified": "2026-08-22"
+}
