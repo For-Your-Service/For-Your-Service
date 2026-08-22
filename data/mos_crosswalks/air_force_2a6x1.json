@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "2A6X1",
+  "title": "Aerospace Propulsion",
+  "core_skills": "Jet Engine Overhaul, Turbofan Maintenance, Test Cells",
+  "target_civilian_roles": [
+    "Jet Engine Field Technician",
+    "Commercial Aviation A&P"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$80,000 - $120,000",
+  "last_verified": "2026-08-22"
+}
