@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "CTI",
+  "title": "Cryptologic Technician Interpretive",
+  "core_skills": "Foreign Language Translation, Cultural Intelligence",
+  "target_civilian_roles": [
+    "Linguist Intelligence Analyst",
+    "Global Risk Consultant"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$92,000 - $138,000",
+  "last_verified": "2026-08-22"
+}
