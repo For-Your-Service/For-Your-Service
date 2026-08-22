@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "92A",
+  "title": "Automated Logistical Specialist",
+  "core_skills": "SAP/GCSS-Army, Inventory Control, Supply Chain",
+  "target_civilian_roles": [
+    "Supply Chain Analyst",
+    "Warehouse Operations Lead"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$62,000 - $92,000",
+  "last_verified": "2026-08-22"
+}
