@@ -1,0 +1,13 @@
+{
+  "branch": "Navy",
+  "code": "SO",
+  "title": "Special Warfare Operator (SEAL)",
+  "core_skills": "Maritime Special Operations, High-Risk Planning",
+  "target_civilian_roles": [
+    "Corporate Risk Director",
+    "Executive Protection Specialist"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$95,000 - $160,000",
+  "last_verified": "2026-08-22"
+}
