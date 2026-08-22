@@ -1,0 +1,13 @@
+{
+  "branch": "Coast Guard",
+  "code": "IS",
+  "title": "Intelligence Specialist",
+  "core_skills": "Maritime Domain Awareness, Counter-Narcotics Intel",
+  "target_civilian_roles": [
+    "Maritime Security Analyst",
+    "Port Threat Investigator"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$88,000 - $132,000",
+  "last_verified": "2026-08-22"
+}
