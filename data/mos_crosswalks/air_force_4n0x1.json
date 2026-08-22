@@ -1,0 +1,13 @@
+{
+  "branch": "Air Force",
+  "code": "4N0X1",
+  "title": "Aerospace Medical Service",
+  "core_skills": "Flight Medicine, Patient Decontamination, Emergency Care",
+  "target_civilian_roles": [
+    "Emergency Room Nurse Track",
+    "Flight EMT"
+  ],
+  "clearance_baseline": "Secret",
+  "estimated_compensation": "$65,000 - $95,000",
+  "last_verified": "2026-08-22"
+}
