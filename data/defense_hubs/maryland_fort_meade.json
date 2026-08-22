@@ -1,0 +1,20 @@
+{
+  "hub_name": "Fort Meade / Annapolis Junction",
+  "latitude": 39.1088,
+  "longitude": -76.7411,
+  "major_commands": [
+    "NSA / CSS",
+    "USCYBERCOM",
+    "DISA",
+    "Defense Media Activity"
+  ],
+  "prime_defense_contractors": [
+    "Leidos",
+    "Lockheed Martin",
+    "Northrop Grumman",
+    "Booz Allen"
+  ],
+  "technology_domains": "National Cyber Defense, Cryptanalysis, Global IT Infrastructure",
+  "recommended_search_radius_miles": 50,
+  "last_updated": "2026-08-22"
+}
