@@ -1,0 +1,14 @@
+{
+  "branch": "Army",
+  "code": "17C",
+  "title": "Cyber Operations Specialist",
+  "core_skills": "Offensive/Defensive Cyber, Threat Hunting, Packet Analysis",
+  "target_civilian_roles": [
+    "SOC Analyst",
+    "Penetration Tester",
+    "Cyber Architect"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$115,000 - $175,000",
+  "last_verified": "2026-08-22"
+}
