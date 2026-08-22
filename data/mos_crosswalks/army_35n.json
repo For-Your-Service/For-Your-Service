@@ -1,0 +1,13 @@
+{
+  "branch": "Army",
+  "code": "35N",
+  "title": "Signals Intelligence Analyst",
+  "core_skills": "SIGINT Intercept, RF Demodulation, Cryptanalysis",
+  "target_civilian_roles": [
+    "Electronic Warfare Analyst",
+    "RF Data Scientist"
+  ],
+  "clearance_baseline": "TS/SCI",
+  "estimated_compensation": "$98,000 - $145,000",
+  "last_verified": "2026-08-22"
+}
