@@ -1,0 +1,19 @@
+{
+  "track_name": "Cybersecurity & SOC Operations",
+  "core_competencies": [
+    "Threat Hunting",
+    "SIEM (Splunk, Sentinel)",
+    "Network Traffic Forensics",
+    "Incident Response",
+    "Vulnerability Management"
+  ],
+  "recommended_certifications": [
+    "CompTIA Security+",
+    "CySA+",
+    "CISSP",
+    "GIAC Certified Incident Handler (GCIH)"
+  ],
+  "veteran_funding_pathways": "SANS VetSuccess Academy, Onward to Opportunity (O2O)",
+  "average_salary_range": "$95,000 - $155,000",
+  "last_audited": "2026-08-22"
+}
