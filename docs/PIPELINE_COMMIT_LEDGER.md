@@ -22,3 +22,4 @@
 - Commit 022: `feat(spark-embeddings): set EMBEDDING_DIM constant to 384 for MiniLM-L6-v2 compatibility`
 - Commit 023: `feat(spark-embeddings): implement _generate_vector deterministic hash-seeded fallback generator`
 - Commit 024: `feat(spark-embeddings): add L2 vector normalization to ensure unit length tensor representations`
+- Commit 025: `feat(spark-embeddings): implement Pandas iterator UDF for high-throughput batch vector inference`
