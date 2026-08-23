@@ -30,3 +30,4 @@
 - Commit 030: `refactor(spark-embeddings): eliminate Python worker serialization overhead in vector generation`
 - Commit 031: `refactor(spark-embeddings): handle null and missing cleaned_text inputs gracefully in UDF`
 - Commit 032: `perf(spark-embeddings): benchmark vectorization throughput across PySpark worker partitions`
+- Commit 033: `docs(spark-embeddings): add architecture diagrams for distributed tensor generation`
