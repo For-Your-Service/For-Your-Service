@@ -64,3 +64,4 @@
 - Commit 064: `refactor(spark-orchestrator): support external Databricks cluster SparkSession injection`
 - Commit 065: `docs(spark-orchestrator): add quickstart code sample for Databricks Lakehouse deployment`
 - Commit 066: `test(spark-orchestrator): add end-to-end integration test running all Medallion stages in pytest`
+- Commit 067: `docs(architecture): create SPARK_MEDALLION_ARCHITECTURE.md with Mermaid diagrams`
