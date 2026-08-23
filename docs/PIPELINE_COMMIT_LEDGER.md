@@ -48,3 +48,4 @@
 - Commit 048: `feat(spark-matcher): compute composite match score by scaling weighted multipliers into 0-100% score`
 - Commit 049: `feat(spark-matcher): generate human-readable match explanation string per job pairing`
 - Commit 050: `feat(spark-matcher): implement PySpark Window partitioning by veteran_id for Top-K extraction`
+- Commit 051: `refactor(spark-matcher): rename joined column aliases to prevent namespace collisions during broadcast`
