@@ -74,3 +74,4 @@
 - Commit 074: `docs(readme): add Apache Spark Medallion engine badges and quick start commands to README.md`
 - Commit 075: `docs(readme): document distributed batch matching CLI options and environment requirements`
 - Commit 076: `chore(config): update pyproject.toml and setup.py to include pyspark and pyarrow dependencies`
+- Commit 077: `perf(spark): refine distributed pipeline subcomponent #77`
