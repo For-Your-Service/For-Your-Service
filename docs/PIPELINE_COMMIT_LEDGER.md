@@ -49,3 +49,4 @@
 - Commit 049: `feat(spark-matcher): generate human-readable match explanation string per job pairing`
 - Commit 050: `feat(spark-matcher): implement PySpark Window partitioning by veteran_id for Top-K extraction`
 - Commit 051: `refactor(spark-matcher): rename joined column aliases to prevent namespace collisions during broadcast`
+- Commit 052: `refactor(spark-matcher): optimize Window function ordering to utilize Spark native sort order`
