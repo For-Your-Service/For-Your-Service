@@ -4,3 +4,4 @@
 - Commit 004: `feat(spark-etl): add whitespace stripping and Unicode sanitization to description cleaner`
 - Commit 005: `feat(spark-etl): add salary range parser with automated average salary calculation`
 - Commit 006: `feat(spark-etl): integrate security clearance regex scanner for Top Secret and Secret flags`
+- Commit 007: `feat(spark-etl): implement _extract_mos_matches crosswalk linking with MOS_DATABASE`
