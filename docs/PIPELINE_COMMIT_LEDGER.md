@@ -20,3 +20,4 @@
 - Commit 020: `test(spark-etl): add unit test fixture for raw Bronze job feed ingestion`
 - Commit 021: `feat(spark-embeddings): initialize SparkEmbeddingPipeline class and configuration`
 - Commit 022: `feat(spark-embeddings): set EMBEDDING_DIM constant to 384 for MiniLM-L6-v2 compatibility`
+- Commit 023: `feat(spark-embeddings): implement _generate_vector deterministic hash-seeded fallback generator`
