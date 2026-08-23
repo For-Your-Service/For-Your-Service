@@ -57,3 +57,4 @@
 - Commit 057: `feat(spark-orchestrator): initialize SparkMedallionOrchestrator class`
 - Commit 058: `feat(spark-orchestrator): configure default local[*] SparkSession with shuffle partition tuning`
 - Commit 059: `feat(spark-orchestrator): wire BronzeToSilver, SparkEmbedding, and BatchMatcher into unified flow`
+- Commit 060: `feat(spark-orchestrator): implement run_full_pipeline execution entry point`
