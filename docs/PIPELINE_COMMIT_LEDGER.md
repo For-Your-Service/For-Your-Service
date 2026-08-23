@@ -44,3 +44,4 @@
 - Commit 044: `feat(spark-matcher): implement geographic proximity multiplier (1.15x for exact city/state match)`
 - Commit 045: `feat(spark-matcher): implement regional state-level boost multiplier (1.08x) for in-state matching`
 - Commit 046: `feat(spark-matcher): add remote work compatibility multiplier (1.10x) for remote-friendly roles`
+- Commit 047: `feat(spark-matcher): add direct MOS crosswalk alignment boost (1.15x) when matched_mos_codes overlap`
