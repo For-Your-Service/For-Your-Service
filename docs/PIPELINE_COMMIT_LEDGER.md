@@ -117,3 +117,4 @@
 - Commit 117: `docs(lakehouse): refine distributed pipeline subcomponent #117`
 - Commit 118: `feat(telemetry): refine distributed pipeline subcomponent #118`
 - Commit 119: `perf(spark): refine distributed pipeline subcomponent #119`
+- Commit 120: `refactor(etl): refine distributed pipeline subcomponent #120`
