@@ -33,3 +33,4 @@
 - Commit 033: `docs(spark-embeddings): add architecture diagrams for distributed tensor generation`
 - Commit 034: `test(spark-embeddings): add test asserting 384-dimensional output vector shape`
 - Commit 035: `test(spark-embeddings): add unit test asserting unit L2 norm constraint on all generated embeddings`
+- Commit 036: `feat(spark-matcher): initialize SparkBatchMatcher engine and VETERAN_INTAKE_SCHEMA`
