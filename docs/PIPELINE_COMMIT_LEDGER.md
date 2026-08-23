@@ -45,3 +45,4 @@
 - Commit 045: `feat(spark-matcher): implement regional state-level boost multiplier (1.08x) for in-state matching`
 - Commit 046: `feat(spark-matcher): add remote work compatibility multiplier (1.10x) for remote-friendly roles`
 - Commit 047: `feat(spark-matcher): add direct MOS crosswalk alignment boost (1.15x) when matched_mos_codes overlap`
+- Commit 048: `feat(spark-matcher): compute composite match score by scaling weighted multipliers into 0-100% score`
