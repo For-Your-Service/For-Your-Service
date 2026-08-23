@@ -38,3 +38,4 @@
 - Commit 038: `feat(spark-matcher): implement veteran profile text concatenation for vector representation`
 - Commit 039: `feat(spark-matcher): generate 384-dim veteran profile embeddings via PySpark UDF`
 - Commit 040: `feat(spark-matcher): implement distributed cross-join between veteran vectors and Gold jobs`
+- Commit 041: `feat(spark-matcher): implement _cosine_similarity_udf dot-product calculation with clipping`
