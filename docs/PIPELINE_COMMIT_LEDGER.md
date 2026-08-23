@@ -7,3 +7,4 @@
 - Commit 007: `feat(spark-etl): implement _extract_mos_matches crosswalk linking with MOS_DATABASE`
 - Commit 008: `feat(spark-etl): add support for Army combat arms and special operations MOS taxonomy`
 - Commit 009: `feat(spark-etl): add Navy ratings crosswalk mapping for IT, CTN, and BM specialties`
+- Commit 010: `feat(spark-etl): add Air Force AFSC crosswalk mapping for Cyber Defense and Avionics`
