@@ -23,3 +23,4 @@
 - Commit 023: `feat(spark-embeddings): implement _generate_vector deterministic hash-seeded fallback generator`
 - Commit 024: `feat(spark-embeddings): add L2 vector normalization to ensure unit length tensor representations`
 - Commit 025: `feat(spark-embeddings): implement Pandas iterator UDF for high-throughput batch vector inference`
+- Commit 026: `feat(spark-embeddings): add dynamic HuggingFace SentenceTransformer loader with lazy initialization`
