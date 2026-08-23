@@ -1,0 +1,41 @@
+# ==============================================================================
+# Dockerfile.spark - Apache Spark & Delta Lake Medallion Matching Runner
+# ==============================================================================
+
+FROM python:3.11-slim AS builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    openjdk-17-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir --user \
+    pyspark>=3.5.0 \
+    pyarrow>=14.0.0 \
+    pandas>=2.0.0 \
+    numpy>=1.24.0 \
+    databricks-sdk>=0.12.0
+
+FROM python:3.11-slim AS runner
+
+WORKDIR /app
+
+# Install OpenJDK runtime for Spark execution
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
+    PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:/root/.local/bin:$PATH \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+COPY --from=builder /root/.local /root/.local
+
+COPY src/ ./src/
+COPY app/ ./app/
+COPY data/ ./data/
+
+CMD ["python", "-m", "src.spark.pipeline_orchestrator"]

@@ -1,27 +1,84 @@
 version: '3.8'
 
 services:
-  api:
-    build: .
+  # ============================================================================
+  # 1. Streamlit Veteran Intake & Analytics Portal (Port 8501)
+  # ============================================================================
+  portal:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.portal
+    container_name: fys-portal
     ports:
-      - "8000:8000"
+      - "8501:8501"
     environment:
+      - API_URL=http://api:8080
       - ENV=production
-      - LOG_LEVEL=INFO
-    env_file:
-      - .env
     volumes:
       - ./data:/app/data
     restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - fys-network
 
-  ingestion:
-    build: .
-    command: python -m src.ingestion.scheduler
+  # ============================================================================
+  # 2. FastAPI Ingestion & Neural Scoring Microservice (Port 8080)
+  # ============================================================================
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: fys-api
+    ports:
+      - "8080:8080"
     environment:
       - ENV=production
       - LOG_LEVEL=INFO
-    env_file:
-      - .env
-    depends_on:
-      - api
+    volumes:
+      - ./data:/app/data
     restart: unless-stopped
+    networks:
+      - fys-network
+
+  # ============================================================================
+  # 3. Scheduled Multi-Source Feed Harvester (USAJOBS / Adzuna / BLS)
+  # ============================================================================
+  ingestor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ingestor
+    container_name: fys-ingestor
+    environment:
+      - ENV=production
+      - API_URL=http://api:8080
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - fys-network
+
+  # ============================================================================
+  # 4. Apache Spark Batch Lakehouse Runner (On-Demand / Batch Profile)
+  # ============================================================================
+  spark-runner:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.spark
+    container_name: fys-spark-runner
+    environment:
+      - SPARK_LOCAL_IP=127.0.0.1
+    volumes:
+      - ./data:/app/data
+    profiles:
+      - batch
+    networks:
+      - fys-network
+
+networks:
+  fys-network:
+    driver: bridge

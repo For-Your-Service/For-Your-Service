@@ -1,10 +1,12 @@
-name: Build and Publish Docker Image to GHCR
+name: Build and Publish Docker Images to GHCR
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Dockerfile'
+      - 'docker/**'
+      - 'app/**'
+      - 'src/**'
       - 'main.py'
       - 'requirements.txt'
       - '.github/workflows/docker-publish.yml'
@@ -14,7 +16,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
@@ -22,6 +23,19 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: portal
+            dockerfile: docker/Dockerfile.portal
+            image_suffix: -portal
+          - service: api
+            dockerfile: docker/Dockerfile.api
+            image_suffix: -api
+          - service: ingestor
+            dockerfile: docker/Dockerfile.ingestor
+            image_suffix: -ingestor
 
     steps:
       - name: Checkout repository
@@ -41,18 +55,18 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}${{ matrix.image_suffix }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=ref,event=branch
             type=semver,pattern={{version}}
             type=sha,prefix=sha-,format=short
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (${{ matrix.service }})
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
