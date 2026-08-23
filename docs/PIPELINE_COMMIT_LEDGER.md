@@ -62,3 +62,4 @@
 - Commit 062: `feat(spark-orchestrator): aggregate executive metrics dictionary including average top match score`
 - Commit 063: `feat(spark-orchestrator): return structured pipeline artifact dictionary with all intermediate DataFrames`
 - Commit 064: `refactor(spark-orchestrator): support external Databricks cluster SparkSession injection`
+- Commit 065: `docs(spark-orchestrator): add quickstart code sample for Databricks Lakehouse deployment`
