@@ -13,3 +13,4 @@
 - Commit 013: `feat(spark-etl): implement fallback keyword categorization for unlisted defense postings`
 - Commit 014: `feat(spark-etl): add deduplication logic on composite key (title, company, city, state)`
 - Commit 015: `feat(spark-etl): add ingestion timestamp and metadata tracking columns to Silver DataFrame`
+- Commit 016: `refactor(spark-etl): optimize UDF registration for cluster serialization efficiency`
