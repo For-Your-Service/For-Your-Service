@@ -51,3 +51,4 @@
 - Commit 051: `refactor(spark-matcher): rename joined column aliases to prevent namespace collisions during broadcast`
 - Commit 052: `refactor(spark-matcher): optimize Window function ordering to utilize Spark native sort order`
 - Commit 053: `perf(spark-matcher): minimize memory footprint by projecting only necessary matching vectors`
+- Commit 054: `docs(spark-matcher): document multi-factor scoring formula and clearance weighting matrix`
