@@ -19,3 +19,4 @@
 - Commit 019: `docs(spark-etl): document Bronze-to-Silver schema transformation rules and type specs`
 - Commit 020: `test(spark-etl): add unit test fixture for raw Bronze job feed ingestion`
 - Commit 021: `feat(spark-embeddings): initialize SparkEmbeddingPipeline class and configuration`
+- Commit 022: `feat(spark-embeddings): set EMBEDDING_DIM constant to 384 for MiniLM-L6-v2 compatibility`
