@@ -15,3 +15,4 @@
 - Commit 015: `feat(spark-etl): add ingestion timestamp and metadata tracking columns to Silver DataFrame`
 - Commit 016: `refactor(spark-etl): optimize UDF registration for cluster serialization efficiency`
 - Commit 017: `refactor(spark-etl): vectorize salary null coalescing expressions using F.coalesce`
+- Commit 018: `refactor(spark-etl): optimize string trimming and case normalization with native PySpark functions`
