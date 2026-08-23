@@ -29,3 +29,4 @@
 - Commit 029: `feat(spark-embeddings): attach embedding_timestamp tracking column for data lineage`
 - Commit 030: `refactor(spark-embeddings): eliminate Python worker serialization overhead in vector generation`
 - Commit 031: `refactor(spark-embeddings): handle null and missing cleaned_text inputs gracefully in UDF`
+- Commit 032: `perf(spark-embeddings): benchmark vectorization throughput across PySpark worker partitions`
