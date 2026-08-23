@@ -27,3 +27,4 @@
 - Commit 027: `feat(spark-embeddings): optimize batch size inside pandas iterator to maximize CPU/GPU cache hit rate`
 - Commit 028: `feat(spark-embeddings): attach embedding_dim integer metadata column to Gold DataFrame`
 - Commit 029: `feat(spark-embeddings): attach embedding_timestamp tracking column for data lineage`
+- Commit 030: `refactor(spark-embeddings): eliminate Python worker serialization overhead in vector generation`
