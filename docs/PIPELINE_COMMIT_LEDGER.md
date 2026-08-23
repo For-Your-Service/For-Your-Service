@@ -95,3 +95,4 @@
 - Commit 095: `test(orchestrator): refine distributed pipeline subcomponent #95`
 - Commit 096: `docs(lakehouse): refine distributed pipeline subcomponent #96`
 - Commit 097: `feat(telemetry): refine distributed pipeline subcomponent #97`
+- Commit 098: `perf(spark): refine distributed pipeline subcomponent #98`
