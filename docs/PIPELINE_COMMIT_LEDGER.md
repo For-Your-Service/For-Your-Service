@@ -42,3 +42,4 @@
 - Commit 042: `feat(spark-matcher): add clearance level boost multiplier (1.15x for Top Secret / SCI match)`
 - Commit 043: `feat(spark-matcher): add clearance penalty multiplier (0.85x) for unmet security clearance prerequisites`
 - Commit 044: `feat(spark-matcher): implement geographic proximity multiplier (1.15x for exact city/state match)`
+- Commit 045: `feat(spark-matcher): implement regional state-level boost multiplier (1.08x) for in-state matching`
