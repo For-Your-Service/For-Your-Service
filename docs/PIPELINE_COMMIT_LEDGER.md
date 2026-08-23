@@ -50,3 +50,4 @@
 - Commit 050: `feat(spark-matcher): implement PySpark Window partitioning by veteran_id for Top-K extraction`
 - Commit 051: `refactor(spark-matcher): rename joined column aliases to prevent namespace collisions during broadcast`
 - Commit 052: `refactor(spark-matcher): optimize Window function ordering to utilize Spark native sort order`
+- Commit 053: `perf(spark-matcher): minimize memory footprint by projecting only necessary matching vectors`
