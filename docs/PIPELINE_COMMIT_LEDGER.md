@@ -31,3 +31,4 @@
 - Commit 031: `refactor(spark-embeddings): handle null and missing cleaned_text inputs gracefully in UDF`
 - Commit 032: `perf(spark-embeddings): benchmark vectorization throughput across PySpark worker partitions`
 - Commit 033: `docs(spark-embeddings): add architecture diagrams for distributed tensor generation`
+- Commit 034: `test(spark-embeddings): add test asserting 384-dimensional output vector shape`
