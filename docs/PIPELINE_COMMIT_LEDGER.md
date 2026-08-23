@@ -52,3 +52,4 @@
 - Commit 052: `refactor(spark-matcher): optimize Window function ordering to utilize Spark native sort order`
 - Commit 053: `perf(spark-matcher): minimize memory footprint by projecting only necessary matching vectors`
 - Commit 054: `docs(spark-matcher): document multi-factor scoring formula and clearance weighting matrix`
+- Commit 055: `test(spark-matcher): add unit test verifying Top-K ranking partition behavior`
