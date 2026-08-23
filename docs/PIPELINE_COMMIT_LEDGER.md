@@ -122,3 +122,4 @@
 - Commit 122: `style(matcher): refine distributed pipeline subcomponent #122`
 - Commit 123: `test(orchestrator): refine distributed pipeline subcomponent #123`
 - Commit 124: `docs(lakehouse): refine distributed pipeline subcomponent #124`
+- Commit 125: `feat(telemetry): refine distributed pipeline subcomponent #125`
