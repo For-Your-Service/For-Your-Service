@@ -16,3 +16,4 @@
 - Commit 016: `refactor(spark-etl): optimize UDF registration for cluster serialization efficiency`
 - Commit 017: `refactor(spark-etl): vectorize salary null coalescing expressions using F.coalesce`
 - Commit 018: `refactor(spark-etl): optimize string trimming and case normalization with native PySpark functions`
+- Commit 019: `docs(spark-etl): document Bronze-to-Silver schema transformation rules and type specs`
