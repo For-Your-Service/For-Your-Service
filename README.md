@@ -23,8 +23,9 @@ The military gives you elite operational experience. Civilian tech applications 
 ### 🏛️ Command & Control / Infrastructure Stack
 
 [![Organization](https://img.shields.io/badge/ORGANIZATION-FOR_YOUR_SERVICE-blue?style=flat-square&logo=github)](https://github.com/For-Your-Service) 
-[![Project](https://img.shields.io/badge/PROJECT-GUNSLINGER'S_DESKTOP_LEDGER-purple?style=flat-square&logo=python)](https://github.com/FreeFades2Black/gunslingers-desktop-ledger)
+[![Apache Spark](https://img.shields.io/badge/APACHE_SPARK-PYSPARK_%7C_DELTA_LAKE-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)](docs/SPARK_MEDALLION_ARCHITECTURE.md)
 [![Databricks Apps](https://img.shields.io/badge/DATABRICKS_APPS-FYS_MATCHING_APP-FF3621?style=flat-square&logo=databricks)](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
+[![Docker Images](https://img.shields.io/badge/CONTAINER_REGISTRY-GHCR.IO-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/orgs/For-Your-Service/packages)
 [![AWS Infrastructure](https://img.shields.io/badge/AWS-S3_%7C_LAMBDA_%7C_IAM-232F3E?style=flat-square&logo=amazon-aws)](https://aws.amazon.com)
 [![Hugging Face](https://img.shields.io/badge/HUGGING_FACE-EMBEDDINGS_%7C_SPACES-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/FreeFades2Black)
 [![Streamlit Cloud](https://img.shields.io/badge/STREAMLIT-COMMUNITY_CLOUD-FF4B4B?style=flat-square&logo=streamlit)](https://share.streamlit.io)
@@ -38,12 +39,14 @@ The military gives you elite operational experience. Civilian tech applications 
 | Translating your military experience into resume bullet points is manual and frustrating | Automated MOS/AFSC-to-industry role mapping and tensor matching |
 | Federal and defense job boards are scattered and hard to track | Live integrated USAJOBS and defense contractor feed ingestion |
 | Finding the right technical team or mentor is a guessing game | Data-driven introductions based on peer transition paths |
-| Tracking your application pipeline is messy | Unified pipeline tracking through Databricks and a local dashboard |
+| Tracking your application pipeline is messy | Unified pipeline tracking through Databricks, Apache Spark, and local dashboard |
 
 ---
 
 ## 🎯 Key Features
 
+- **Apache Spark & Delta Lake Medallion Engine:** Distributed Bronze-to-Silver MOS cleaning, Gold 384-dimensional vector embedding generation (`@pandas_udf`), and batch matrix matching.
+- **Modular Microservices Suite:** 4 optimized Docker containers (`portal`, `api`, `ingestor`, `spark-runner`) published to GitHub Container Registry (`ghcr.io`).
 - **Streamlit Web Interface:** Production-ready veteran intake portal with real-time job matching across all 6 military branches.
 - **Live Impact & Visitor Analytics:** Real-time 4-card metric tracker showing active service members connected and AI matches run.
 - **Multi-Source Ingestion:** Aggregates jobs from USAJOBS, JSearch, and Adzuna APIs with sanitized card presentation.
