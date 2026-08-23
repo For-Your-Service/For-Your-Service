@@ -25,3 +25,4 @@
 - Commit 025: `feat(spark-embeddings): implement Pandas iterator UDF for high-throughput batch vector inference`
 - Commit 026: `feat(spark-embeddings): add dynamic HuggingFace SentenceTransformer loader with lazy initialization`
 - Commit 027: `feat(spark-embeddings): optimize batch size inside pandas iterator to maximize CPU/GPU cache hit rate`
+- Commit 028: `feat(spark-embeddings): attach embedding_dim integer metadata column to Gold DataFrame`
