@@ -40,3 +40,4 @@
 - Commit 040: `feat(spark-matcher): implement distributed cross-join between veteran vectors and Gold jobs`
 - Commit 041: `feat(spark-matcher): implement _cosine_similarity_udf dot-product calculation with clipping`
 - Commit 042: `feat(spark-matcher): add clearance level boost multiplier (1.15x for Top Secret / SCI match)`
+- Commit 043: `feat(spark-matcher): add clearance penalty multiplier (0.85x) for unmet security clearance prerequisites`
