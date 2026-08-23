@@ -11,3 +11,4 @@
 - Commit 011: `feat(spark-etl): add Marine Corps MOS crosswalk mapping for 0311, 0671, and 0689`
 - Commit 012: `feat(spark-etl): add Coast Guard and Space Force crosswalk rules to ETL parser`
 - Commit 013: `feat(spark-etl): implement fallback keyword categorization for unlisted defense postings`
+- Commit 014: `feat(spark-etl): add deduplication logic on composite key (title, company, city, state)`
