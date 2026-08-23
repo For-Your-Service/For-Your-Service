@@ -73,3 +73,4 @@
 - Commit 073: `docs(daily-notes): update DAILY_NOTES_2026_08_22 with Apache Spark implementation details`
 - Commit 074: `docs(readme): add Apache Spark Medallion engine badges and quick start commands to README.md`
 - Commit 075: `docs(readme): document distributed batch matching CLI options and environment requirements`
+- Commit 076: `chore(config): update pyproject.toml and setup.py to include pyspark and pyarrow dependencies`
