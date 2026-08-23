@@ -82,3 +82,4 @@
 - Commit 082: `docs(lakehouse): refine distributed pipeline subcomponent #82`
 - Commit 083: `feat(telemetry): refine distributed pipeline subcomponent #83`
 - Commit 084: `perf(spark): refine distributed pipeline subcomponent #84`
+- Commit 085: `refactor(etl): refine distributed pipeline subcomponent #85`
