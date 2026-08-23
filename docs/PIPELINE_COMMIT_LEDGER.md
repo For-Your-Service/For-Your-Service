@@ -67,3 +67,4 @@
 - Commit 067: `docs(architecture): create SPARK_MEDALLION_ARCHITECTURE.md with Mermaid diagrams`
 - Commit 068: `docs(architecture): document Bronze layer ingestion frequencies and table schemas`
 - Commit 069: `docs(architecture): document Silver layer O*NET skill normalization and MOS rules`
+- Commit 070: `docs(architecture): document Gold layer 384-dimensional tensor storage specifications`
