@@ -9,3 +9,4 @@
 - Commit 009: `feat(spark-etl): add Navy ratings crosswalk mapping for IT, CTN, and BM specialties`
 - Commit 010: `feat(spark-etl): add Air Force AFSC crosswalk mapping for Cyber Defense and Avionics`
 - Commit 011: `feat(spark-etl): add Marine Corps MOS crosswalk mapping for 0311, 0671, and 0689`
+- Commit 012: `feat(spark-etl): add Coast Guard and Space Force crosswalk rules to ETL parser`
