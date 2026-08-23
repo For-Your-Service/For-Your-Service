@@ -66,3 +66,4 @@
 - Commit 066: `test(spark-orchestrator): add end-to-end integration test running all Medallion stages in pytest`
 - Commit 067: `docs(architecture): create SPARK_MEDALLION_ARCHITECTURE.md with Mermaid diagrams`
 - Commit 068: `docs(architecture): document Bronze layer ingestion frequencies and table schemas`
+- Commit 069: `docs(architecture): document Silver layer O*NET skill normalization and MOS rules`
