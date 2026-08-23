@@ -1,2 +1,3 @@
 - Commit 001: `feat(spark-etl): initialize Spark Bronze-to-Silver ETL module structure`
 - Commit 002: `feat(spark-etl): define SILVER_JOB_SCHEMA with explicit PySpark StructTypes`
+- Commit 003: `feat(spark-etl): implement _clean_html_text regex parser for job postings`
