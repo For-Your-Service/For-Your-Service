@@ -34,3 +34,4 @@
 - Commit 034: `test(spark-embeddings): add test asserting 384-dimensional output vector shape`
 - Commit 035: `test(spark-embeddings): add unit test asserting unit L2 norm constraint on all generated embeddings`
 - Commit 036: `feat(spark-matcher): initialize SparkBatchMatcher engine and VETERAN_INTAKE_SCHEMA`
+- Commit 037: `feat(spark-matcher): define schema for veteran cohorts including MOS, rank, and clearance`
