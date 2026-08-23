@@ -2,3 +2,4 @@
 - Commit 002: `feat(spark-etl): define SILVER_JOB_SCHEMA with explicit PySpark StructTypes`
 - Commit 003: `feat(spark-etl): implement _clean_html_text regex parser for job postings`
 - Commit 004: `feat(spark-etl): add whitespace stripping and Unicode sanitization to description cleaner`
+- Commit 005: `feat(spark-etl): add salary range parser with automated average salary calculation`
