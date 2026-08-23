@@ -18,3 +18,4 @@
 - Commit 018: `refactor(spark-etl): optimize string trimming and case normalization with native PySpark functions`
 - Commit 019: `docs(spark-etl): document Bronze-to-Silver schema transformation rules and type specs`
 - Commit 020: `test(spark-etl): add unit test fixture for raw Bronze job feed ingestion`
+- Commit 021: `feat(spark-embeddings): initialize SparkEmbeddingPipeline class and configuration`
