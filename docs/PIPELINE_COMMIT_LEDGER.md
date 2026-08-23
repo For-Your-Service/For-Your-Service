@@ -60,3 +60,4 @@
 - Commit 060: `feat(spark-orchestrator): implement run_full_pipeline execution entry point`
 - Commit 061: `feat(spark-orchestrator): add stage logging and progress indicators for Medallion milestones`
 - Commit 062: `feat(spark-orchestrator): aggregate executive metrics dictionary including average top match score`
+- Commit 063: `feat(spark-orchestrator): return structured pipeline artifact dictionary with all intermediate DataFrames`
