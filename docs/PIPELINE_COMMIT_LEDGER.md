@@ -69,3 +69,4 @@
 - Commit 069: `docs(architecture): document Silver layer O*NET skill normalization and MOS rules`
 - Commit 070: `docs(architecture): document Gold layer 384-dimensional tensor storage specifications`
 - Commit 071: `docs(architecture): document Siamese Twin Tower matching engine mathematical formulations`
+- Commit 072: `docs(architecture): document cost optimization metrics for Databricks serverless compute`
