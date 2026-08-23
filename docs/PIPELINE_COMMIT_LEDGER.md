@@ -86,3 +86,4 @@
 - Commit 086: `chore(embeddings): refine distributed pipeline subcomponent #86`
 - Commit 087: `style(matcher): refine distributed pipeline subcomponent #87`
 - Commit 088: `test(orchestrator): refine distributed pipeline subcomponent #88`
+- Commit 089: `docs(lakehouse): refine distributed pipeline subcomponent #89`
