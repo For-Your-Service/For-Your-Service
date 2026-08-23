@@ -37,3 +37,4 @@
 - Commit 037: `feat(spark-matcher): define schema for veteran cohorts including MOS, rank, and clearance`
 - Commit 038: `feat(spark-matcher): implement veteran profile text concatenation for vector representation`
 - Commit 039: `feat(spark-matcher): generate 384-dim veteran profile embeddings via PySpark UDF`
+- Commit 040: `feat(spark-matcher): implement distributed cross-join between veteran vectors and Gold jobs`
