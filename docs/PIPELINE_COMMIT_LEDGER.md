@@ -87,3 +87,4 @@
 - Commit 087: `style(matcher): refine distributed pipeline subcomponent #87`
 - Commit 088: `test(orchestrator): refine distributed pipeline subcomponent #88`
 - Commit 089: `docs(lakehouse): refine distributed pipeline subcomponent #89`
+- Commit 090: `feat(telemetry): refine distributed pipeline subcomponent #90`
