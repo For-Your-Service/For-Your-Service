@@ -25,8 +25,8 @@
 
 # DBTITLE 1,Install Dependencies
 # Install required packages
-%pip install requests python-dotenv pandas tabulate --quiet
-dbutils.library.restartPython()
+# MAGIC %pip install requests python-dotenv pandas tabulate --quiet
+# dbutils.library.restartPython()
 
 # COMMAND ----------
 
