@@ -1,9 +1,9 @@
 # 📢 LinkedIn Live Telemetry Broadcast Setup Guide
 ## For Your Service — Veteran Career Transition Intelligence
 
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
-**Workflow:** [`.github/workflows/linkedin-broadcast.yml`](../.github/workflows/linkedin-broadcast.yml)  
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
+**Workflow:** [`.github/workflows/linkedin-broadcast.yml`](../.github/workflows/linkedin-broadcast.yml)
 **Broadcast Script:** [`scripts/broadcast_linkedin_telemetry.py`](../scripts/broadcast_linkedin_telemetry.py)
 
 ---
@@ -28,7 +28,7 @@ This automated integration broadcasts daily system health, test suite pass rates
 ---
 
 ### Step 2: Configure GitHub Repository Secrets
-Navigate to your GitHub repository:  
+Navigate to your GitHub repository:
 **Settings** ➔ **Secrets and variables** ➔ **Actions** ➔ **New repository secret**:
 
 | Secret Name | Description | Example Value |

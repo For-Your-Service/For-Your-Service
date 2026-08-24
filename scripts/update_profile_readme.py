@@ -37,7 +37,7 @@ def update_profile():
 
     content = f"""# William Free Hall (freefades2black) 🇺🇸
 
-**Cloud Engineer • DevOps Analyst • Data Architect**  
+**Cloud Engineer • DevOps Analyst • Data Architect**
 *18Z / 18F, US Army Special Forces (Ret.)* | **Partner:** 7 Eagle Group
 
 ---
@@ -52,7 +52,7 @@ def update_profile():
 
 ## 🩺 Live System & Application Health Dashboard
 
-> **Automated Twice-Daily Health & Pipeline Monitor (09:00 & 21:00 UTC)**  
+> **Automated Twice-Daily Health & Pipeline Monitor (09:00 & 21:00 UTC)**
 > **Repository:** [`For-Your-Service/For-Your-Service`](https://github.com/For-Your-Service/For-Your-Service) • **Status:** 🟢 **100% Operational**
 
 | Component | Status | Details |
@@ -71,7 +71,7 @@ def update_profile():
 
 ### ☁️ Multi-Cloud Terraform Architecture & Databricks Apps Milestone – `{now_date} ({now_time})`
 
-**Platform:** **For Your Service — Veteran Career Transition Intelligence**  
+**Platform:** **For Your Service — Veteran Career Transition Intelligence**
 **Architecture:** Multi-Cloud Infrastructure as Code (AWS, GCP, Databricks, Hugging Face)
 
 **Core Accomplishments:**

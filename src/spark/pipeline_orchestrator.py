@@ -36,9 +36,9 @@ class SparkMedallionOrchestrator:
         self.matcher = SparkBatchMatcher(self.spark)
 
     def run_full_pipeline(
-        self, 
-        bronze_jobs_df: DataFrame, 
-        veterans_df: DataFrame, 
+        self,
+        bronze_jobs_df: DataFrame,
+        veterans_df: DataFrame,
         top_k_per_veteran: int = 5
     ) -> Dict[str, Any]:
         """
@@ -60,8 +60,8 @@ class SparkMedallionOrchestrator:
 
         print("\n🎯 [STAGE 3/3] Running Distributed Batch Veteran Matching Engine...")
         matches_df = self.matcher.match_batch(
-            veterans_df=veterans_df, 
-            gold_jobs_df=gold_df, 
+            veterans_df=veterans_df,
+            gold_jobs_df=gold_df,
             top_k=top_k_per_veteran
         )
         matches_count = matches_df.count()

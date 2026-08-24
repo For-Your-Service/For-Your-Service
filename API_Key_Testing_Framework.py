@@ -44,7 +44,7 @@ from tabulate import tabulate
 class APIKeyTester:
     """
     Secure API key testing framework for For Your Service platform.
-    
+
     Features:
     - Secure credential management via environment variables
     - Retry logic with exponential backoff
@@ -52,12 +52,12 @@ class APIKeyTester:
     - Test result cataloging with timestamps
     - Support for multiple HTTP methods
     """
-    
+
     def __init__(self, catalog_file: str = "/dbfs/FileStore/api_test_catalog.json"):
         self.catalog_file = catalog_file
         self.test_results = self._load_catalog()
         self.session = requests.Session()  # Reuse connections
-        
+
     def _load_catalog(self) -> list:
         """Load existing test catalog or create new one."""
         try:
@@ -67,7 +67,7 @@ class APIKeyTester:
         except Exception as e:
             print(f"⚠️ Could not load catalog: {e}")
         return []
-    
+
     def _save_catalog(self):
         """Save test results to catalog file."""
         try:
@@ -76,7 +76,7 @@ class APIKeyTester:
                 json.dump(self.test_results, f, indent=2)
         except Exception as e:
             print(f"⚠️ Could not save catalog: {e}")
-    
+
     def test_api_key(
         self,
         api_name: str,
@@ -93,7 +93,7 @@ class APIKeyTester:
     ) -> Tuple[bool, Dict[str, Any]]:
         """
         Test an API key against an endpoint.
-        
+
         Args:
             api_name: Descriptive name for the API (e.g., "USAJOBS", "OpenAI")
             endpoint: Full URL to test
@@ -106,14 +106,14 @@ class APIKeyTester:
             timeout: Request timeout in seconds
             retry_count: Number of retry attempts
             validate_response: Optional function to validate response content
-            
+
         Returns:
             (success: bool, result: dict)
         """
-        
+
         # Build headers based on auth type
         req_headers = headers or {}
-        
+
         if auth_type == "header":
             req_headers["Authorization"] = f"Api-Key {api_key}"
         elif auth_type == "bearer":
@@ -121,7 +121,7 @@ class APIKeyTester:
         elif auth_type == "query":
             params = params or {}
             params["api_key"] = api_key
-        
+
         # Test with retry logic
         last_error = None
         for attempt in range(retry_count):
@@ -134,10 +134,10 @@ class APIKeyTester:
                     params=params,
                     timeout=timeout
                 )
-                
+
                 # Check response status
                 success = response.status_code in [200, 201]
-                
+
                 # Optional custom validation
                 if success and validate_response:
                     try:
@@ -145,7 +145,7 @@ class APIKeyTester:
                     except Exception as e:
                         success = False
                         last_error = f"Validation failed: {str(e)}"
-                
+
                 # Log result
                 result = {
                     "api_name": api_name,
@@ -158,25 +158,25 @@ class APIKeyTester:
                     "attempt": attempt + 1,
                     "error": last_error or (None if success else response.text[:200])
                 }
-                
+
                 # Catalog the result
                 self.test_results.append(result)
                 self._save_catalog()
-                
+
                 if success:
                     return True, result
-                
+
                 # If not success and we have retries left, wait with exponential backoff
                 if attempt < retry_count - 1:
                     wait_time = 2 ** attempt
                     time.sleep(wait_time)
-                    
+
             except requests.exceptions.RequestException as e:
                 last_error = str(e)
                 if attempt < retry_count - 1:
                     wait_time = 2 ** attempt
                     time.sleep(wait_time)
-        
+
         # All retries failed
         result = {
             "api_name": api_name,
@@ -189,39 +189,39 @@ class APIKeyTester:
             "attempt": retry_count,
             "error": last_error
         }
-        
+
         self.test_results.append(result)
         self._save_catalog()
-        
+
         return False, result
-    
+
     def get_test_summary(self, last_n: Optional[int] = None) -> pd.DataFrame:
         """Get summary of test results."""
         if not self.test_results:
             return pd.DataFrame()
-        
+
         df = pd.DataFrame(self.test_results)
         if last_n:
             df = df.tail(last_n)
-        
+
         return df[['timestamp', 'api_name', 'success', 'status_code', 'response_time_ms', 'error']]
-    
+
     def print_summary(self, last_n: Optional[int] = 10):
         """Pretty print test summary."""
         df = self.get_test_summary(last_n)
         if df.empty:
             print("📋 No test results yet.")
             return
-        
+
         print(f"\n📊 Last {len(df)} Test Results:")
         print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
-        
+
         # Summary stats
         total = len(df)
         passed = df['success'].sum()
         failed = total - passed
         success_rate = (passed / total * 100) if total > 0 else 0
-        
+
         print(f"\n✅ Passed: {passed} | ❌ Failed: {failed} | 📈 Success Rate: {success_rate:.1f}%")
 
 
@@ -323,7 +323,7 @@ if usajobs_key != "YOUR_API_KEY_HERE":
         auth_type="query",  # Key is in custom header, not standard auth
         timeout=15
     )
-    
+
     if success:
         print("✅ USAJOBS API key is VALID")
         print(f"   Response time: {result['response_time_ms']}ms")
@@ -351,7 +351,7 @@ if openai_key != "YOUR_API_KEY_HERE":
     def validate_openai_response(response):
         data = response.json()
         return 'choices' in data and len(data['choices']) > 0
-    
+
     success, result = tester.test_api_key(
         api_name="OpenAI",
         endpoint="https://api.openai.com/v1/chat/completions",
@@ -366,7 +366,7 @@ if openai_key != "YOUR_API_KEY_HERE":
         validate_response=validate_openai_response,
         timeout=30
     )
-    
+
     if success:
         print("✅ OpenAI API key is VALID")
         print(f"   Response time: {result['response_time_ms']}ms")
@@ -397,7 +397,7 @@ if hf_token != "YOUR_TOKEN_HERE":
         auth_type="bearer",
         timeout=10
     )
-    
+
     if success:
         print("✅ Hugging Face token is VALID")
         print(f"   Response time: {result['response_time_ms']}ms")
@@ -419,19 +419,19 @@ print("="*70)
 try:
     import boto3
     from botocore.exceptions import ClientError, NoCredentialsError
-    
+
     # AWS credentials should be set in environment or IAM role
     # For testing: export AWS_ACCESS_KEY_ID=xxx
     #              export AWS_SECRET_ACCESS_KEY=xxx
-    
+
     try:
         s3_client = boto3.client('s3')
-        
+
         # Test by listing buckets (requires ListAllMyBuckets permission)
         start_time = time.time()
         response = s3_client.list_buckets()
         response_time_ms = int((time.time() - start_time) * 1000)
-        
+
         result = {
             "api_name": "AWS S3",
             "endpoint": "s3.amazonaws.com",
@@ -445,17 +445,17 @@ try:
         }
         tester.test_results.append(result)
         tester._save_catalog()
-        
+
         print("✅ AWS credentials are VALID")
         print(f"   Found {len(response['Buckets'])} buckets")
         print(f"   Response time: {response_time_ms}ms")
-        
+
     except NoCredentialsError:
         print("⚠️ AWS credentials not found")
         print("   Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY")
     except ClientError as e:
         print(f"❌ AWS API test FAILED: {e}")
-        
+
 except ImportError:
     print("⚠️ boto3 not installed. Install with: %pip install boto3")
 
@@ -523,7 +523,7 @@ print("="*70)
 # MAGIC     """Quick commit to GitHub for test progress."""
 # MAGIC     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
 # MAGIC     commit_msg = f"test: {message} - {timestamp}"
-# MAGIC     
+# MAGIC
 # MAGIC     subprocess.run(["git", "add", "."])
 # MAGIC     subprocess.run(["git", "commit", "-m", commit_msg])
 # MAGIC     subprocess.run(["git", "push"])
@@ -603,7 +603,7 @@ def test_custom_api(
 ):
     """
     Quick template for testing custom endpoints.
-    
+
     Example:
         test_custom_api(
             api_name="7 Eagle Group Internal API",
@@ -613,9 +613,9 @@ def test_custom_api(
             params={"state": "SC"}
         )
     """
-    
+
     print(f"\n\u2699️ Testing {api_name}...")
-    
+
     success, result = tester.test_api_key(
         api_name=api_name,
         endpoint=endpoint,
@@ -627,7 +627,7 @@ def test_custom_api(
         timeout=15,
         retry_count=3
     )
-    
+
     if success:
         print(f"✅ {api_name} - API key VALID")
         print(f"   ⏱️ Response time: {result['response_time_ms']}ms")
@@ -695,22 +695,22 @@ print("✅ Custom API testing template loaded")
 # MAGIC
 # MAGIC def validate_all_keys():
 # MAGIC     tester = APIKeyTester()
-# MAGIC     
+# MAGIC
 # MAGIC     keys_to_test = [
 # MAGIC         {"name": "USAJOBS", "endpoint": "...", "key": dbutils.secrets.get(...)},
 # MAGIC         {"name": "OpenAI", "endpoint": "...", "key": dbutils.secrets.get(...)},
 # MAGIC     ]
-# MAGIC     
+# MAGIC
 # MAGIC     all_valid = True
 # MAGIC     for key_config in keys_to_test:
 # MAGIC         success, _ = tester.test_api_key(**key_config)
 # MAGIC         if not success:
 # MAGIC             all_valid = False
 # MAGIC             print(f"❌ {key_config['name']} validation failed!")
-# MAGIC     
+# MAGIC
 # MAGIC     if not all_valid:
 # MAGIC         raise Exception("API key validation failed - deployment blocked")
-# MAGIC     
+# MAGIC
 # MAGIC     print("✅ All API keys validated successfully")
 # MAGIC ```
 # MAGIC
@@ -750,9 +750,9 @@ print("✅ Custom API testing template loaded")
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC **Built by:** Free Hall (whall4.wh@gmail.com)  
-# MAGIC **Organization:** 7 Eagle Group  
-# MAGIC **Project:** For Your Service - AI-Powered Veteran Job Matching  
+# MAGIC **Built by:** Free Hall (whall4.wh@gmail.com)
+# MAGIC **Organization:** 7 Eagle Group
+# MAGIC **Project:** For Your Service - AI-Powered Veteran Job Matching
 # MAGIC **Last Updated:** 2026-08-12
 
 # COMMAND ----------

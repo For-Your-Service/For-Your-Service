@@ -1,6 +1,6 @@
 # 🩺 System & Application Health Dashboard
 
-> **Automated Health Monitoring for For Your Service Platform**  
+> **Automated Health Monitoring for For Your Service Platform**
 > **Last Verified:** `2026-08-22 18:21:42` (August 22, 2026) • **Report Frequency:** Twice Daily (09:00 & 21:00)
 
 ---

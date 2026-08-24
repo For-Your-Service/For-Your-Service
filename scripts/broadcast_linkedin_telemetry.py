@@ -33,8 +33,8 @@ def broadcast_to_linkedin(dry_run=False):
 
     token = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
     author_urn = (
-        os.getenv("LINKEDIN_AUTHOR_URN", "").strip() or 
-        os.getenv("LINKEDIN_PERSON_URN", "").strip() or 
+        os.getenv("LINKEDIN_AUTHOR_URN", "").strip() or
+        os.getenv("LINKEDIN_PERSON_URN", "").strip() or
         os.getenv("LINKEDIN_ORGANIZATION_URN", "").strip() or
         "urn:li:person:iXAJqWIA_I"
     )

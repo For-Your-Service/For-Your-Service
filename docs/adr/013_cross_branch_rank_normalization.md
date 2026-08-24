@@ -1,9 +1,9 @@
 # ADR-013: Universal Military Rank and Paygrade Crosswalk
 
-**Status:** Accepted  
-**Date:** 2026-08-22  
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**Status:** Accepted
+**Date:** 2026-08-22
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 
 ---
 

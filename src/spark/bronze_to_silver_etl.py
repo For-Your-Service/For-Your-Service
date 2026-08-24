@@ -9,7 +9,7 @@ import re
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
-    StructType, StructField, StringType, DoubleType, BooleanType, 
+    StructType, StructField, StringType, DoubleType, BooleanType,
     ArrayType, TimestampType, IntegerType
 )
 
@@ -124,7 +124,7 @@ class BronzeToSilverPipeline:
 
         # Register UDFs
         clean_html_udf = F.udf(self._clean_html_text, StringType())
-        
+
         mos_schema = StructType([
             StructField("matched_codes", ArrayType(StringType())),
             StructField("category", StringType())

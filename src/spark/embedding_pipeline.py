@@ -10,7 +10,7 @@ import pandas as pd
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
-    StructType, StructField, StringType, DoubleType, BooleanType, 
+    StructType, StructField, StringType, DoubleType, BooleanType,
     ArrayType, FloatType, IntegerType, TimestampType
 )
 
@@ -72,7 +72,7 @@ class SparkEmbeddingPipeline:
 
             for series in text_series_iter:
                 texts = series.fillna("").astype(str).tolist()
-                
+
                 if model is not None:
                     try:
                         embeddings = model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
@@ -80,7 +80,7 @@ class SparkEmbeddingPipeline:
                         continue
                     except Exception:
                         pass
-                
+
                 # Fallback to high-performance vector generator
                 result = [_generate_vector(t) for t in texts]
                 yield pd.Series(result)

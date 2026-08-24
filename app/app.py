@@ -1199,7 +1199,7 @@ if nav_selection == "📋 Veteran Intake & Match":
     # Mission Statement & Value Comparison
     with st.expander("🎖️ The Mission & What For Your Service Does (Why We Built This)", expanded=False):
         st.markdown("""
-        **The Mission**  
+        **The Mission**
         The military gives you elite operational experience. Civilian tech applications don't always know how to read it. Raw service records, MOS codes, and leadership tours sit in static PDFs rather than working for you. **For Your Service** learns the patterns in your background, maps your service profile against live industry demand, and surfaces what matters: targeted role matching, resume translation, and automated transition insights.
 
         ---

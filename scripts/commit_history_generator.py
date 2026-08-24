@@ -110,7 +110,7 @@ for i, msg in enumerate(COMMIT_MESSAGES, 1):
     # Make a subtle timestamp or telemetry touch in a tracked notes file
     with open("docs/PIPELINE_COMMIT_LEDGER.md", "a", encoding="utf-8") as f:
         f.write(f"- Commit {i:03d}: `{msg}`\n")
-    
+
     subprocess.run(["git", "add", "."], check=True)
     subprocess.run(["git", "commit", "-m", msg, "--allow-empty"], check=True)
     if i % 25 == 0 or i == len(COMMIT_MESSAGES):

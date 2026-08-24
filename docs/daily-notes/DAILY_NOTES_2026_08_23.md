@@ -1,9 +1,9 @@
 # Daily Notes - August 23, 2026
 
-**Developer:** Free Hall (whall4.wh@gmail.com)  
-**Organization:** 7 Eagle Group  
-**Project:** For Your Service - AI Veteran Job Matching Platform  
-**Role:** Solutions Architect • Cloud Engineer • Data Architect (18Z / 18F, US Army Special Forces, Ret.)  
+**Developer:** Free Hall (whall4.wh@gmail.com)
+**Organization:** 7 Eagle Group
+**Project:** For Your Service - AI Veteran Job Matching Platform
+**Role:** Solutions Architect • Cloud Engineer • Data Architect (18Z / 18F, US Army Special Forces, Ret.)
 
 ---
 
@@ -91,7 +91,7 @@ Configured `.github/workflows/docker-publish.yml` with a parallel 3-way matrix b
 
 ---
 
-**Committed By:** Free Hall <whall4.wh@gmail.com>  
-**Date:** 2026-08-23  
-**Organization:** 7 Eagle Group  
+**Committed By:** Free Hall <whall4.wh@gmail.com>
+**Date:** 2026-08-23
+**Organization:** 7 Eagle Group
 **Project:** For Your Service 🇺🇸

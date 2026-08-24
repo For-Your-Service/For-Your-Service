@@ -10,7 +10,7 @@ import pandas as pd
 from pyspark.sql import SparkSession, DataFrame, Window
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
-    StructType, StructField, StringType, DoubleType, BooleanType, 
+    StructType, StructField, StringType, DoubleType, BooleanType,
     ArrayType, FloatType, IntegerType
 )
 from src.spark.embedding_pipeline import _generate_vector, EMBEDDING_DIM
@@ -64,9 +64,9 @@ class SparkBatchMatcher:
         return max(0.0, min(1.0, dot))
 
     def match_batch(
-        self, 
-        veterans_df: DataFrame, 
-        gold_jobs_df: DataFrame, 
+        self,
+        veterans_df: DataFrame,
+        gold_jobs_df: DataFrame,
         top_k: int = 5
     ) -> DataFrame:
         """
@@ -77,7 +77,7 @@ class SparkBatchMatcher:
 
         # 1. Prepare Veteran Embedding representation
         vector_gen_udf = F.udf(_generate_vector, ArrayType(FloatType()))
-        
+
         vets = (
             veterans_df
             .withColumn("skills_str", F.concat_ws(", ", F.coalesce(F.col("skills"), F.array())))
@@ -139,13 +139,13 @@ class SparkBatchMatcher:
         # A) Clearance Matching Boost
         clearance_boost = (
             F.when(
-                (F.col("required_clearance") == "Top Secret / SCI") & 
-                (F.col("vet_clearance").like("%Top Secret%")), 
+                (F.col("required_clearance") == "Top Secret / SCI") &
+                (F.col("vet_clearance").like("%Top Secret%")),
                 F.lit(1.15)
             )
             .when(
-                (F.col("required_clearance") == "Secret") & 
-                (F.col("vet_clearance").like("%Secret%")), 
+                (F.col("required_clearance") == "Secret") &
+                (F.col("vet_clearance").like("%Secret%")),
                 F.lit(1.10)
             )
             .when(F.col("required_clearance") == "None", F.lit(1.0))
@@ -155,16 +155,16 @@ class SparkBatchMatcher:
         # B) Geographic / Remote Match Boost
         location_boost = (
             F.when(
-                (F.lower(F.col("vet_city")) == F.lower(F.col("job_city"))) & 
-                (F.upper(F.col("vet_state")) == F.upper(F.col("job_state"))), 
+                (F.lower(F.col("vet_city")) == F.lower(F.col("job_city"))) &
+                (F.upper(F.col("vet_state")) == F.upper(F.col("job_state"))),
                 F.lit(1.15)
             )
             .when(
-                (F.upper(F.col("vet_state")) == F.upper(F.col("job_state"))), 
+                (F.upper(F.col("vet_state")) == F.upper(F.col("job_state"))),
                 F.lit(1.08)
             )
             .when(
-                (F.col("vet_remote_ok") == True) & (F.col("remote_allowed") == True), 
+                (F.col("vet_remote_ok") == True) & (F.col("remote_allowed") == True),
                 F.lit(1.10)
             )
             .otherwise(F.lit(0.95))
@@ -186,9 +186,9 @@ class SparkBatchMatcher:
             .withColumn("mos_multiplier", mos_boost)
             .withColumn(
                 "raw_score",
-                F.col("neural_similarity") * 
-                F.col("clearance_multiplier") * 
-                F.col("location_multiplier") * 
+                F.col("neural_similarity") *
+                F.col("clearance_multiplier") *
+                F.col("location_multiplier") *
                 F.col("mos_multiplier")
             )
             .withColumn(

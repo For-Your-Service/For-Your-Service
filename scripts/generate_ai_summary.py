@@ -47,7 +47,7 @@ def get_test_count():
     pytest_bin = ROOT_DIR / "venv" / "Scripts" / "pytest.exe"
     if not pytest_bin.exists():
         pytest_bin = "pytest"
-    
+
     try:
         res = subprocess.run(f'"{pytest_bin}" -q', cwd=str(ROOT_DIR), shell=True, capture_output=True, text=True)
         stdout = res.stdout.strip()

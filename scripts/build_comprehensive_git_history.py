@@ -135,7 +135,7 @@ def main():
         }
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"feat(mos): add canonical crosswalk mapping for {branch.upper()} {code} ({title})"
         run_cmd(f'git commit -m "{msg}"')
@@ -185,7 +185,7 @@ def main():
         }
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"feat(geography): map defense industrial corridor for {name}"
         run_cmd(f'git commit -m "{msg}"')
@@ -225,7 +225,7 @@ def main():
         }
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"feat(tracks): publish career blueprint and certification path for {name}"
         run_cmd(f'git commit -m "{msg}"')
@@ -279,7 +279,7 @@ def main():
         }
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"feat(contractors): add partner ingestion profile for {name}"
         run_cmd(f'git commit -m "{msg}"')
@@ -314,10 +314,10 @@ def main():
         file_path = adr_dir / f"{slug}.md"
         content = f"""# {title}
 
-**Status:** {status}  
-**Date:** 2026-08-22  
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**Status:** {status}
+**Date:** 2026-08-22
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 
 ---
 
@@ -333,7 +333,7 @@ Transitioning service members require low-latency, deterministic, and accurate c
 """
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"docs(adr): record architecture decision {slug.split('_')[0].upper()} ({title})"
         run_cmd(f'git commit -m "{msg}"')
@@ -361,10 +361,10 @@ Transitioning service members require low-latency, deterministic, and accurate c
         file_path = guides_dir / f"{slug}.md"
         content = f"""# {title} 🇺🇸
 
-**Target Audience:** Transitioning Service Members & Veterans  
-**Publisher:** For Your Service & 7 Eagle Group  
-**Author:** Free Hall (18Z / 18F, US Army Special Forces, Ret.)  
-**Date:** 2026-08-22  
+**Target Audience:** Transitioning Service Members & Veterans
+**Publisher:** For Your Service & 7 Eagle Group
+**Author:** Free Hall (18Z / 18F, US Army Special Forces, Ret.)
+**Date:** 2026-08-22
 
 ---
 
@@ -375,13 +375,13 @@ Transitioning service members require low-latency, deterministic, and accurate c
 
 ## 🛠️ Step-by-Step Action Items
 
-1. **Step 1: Intake & Assessment**  
+1. **Step 1: Intake & Assessment**
    Run your MOS / AFSC through the **For Your Service** semantic matcher at [https://fys-matching-app-7474643734871839.aws.databricksapps.com](https://fys-matching-app-7474643734871839.aws.databricksapps.com).
 
-2. **Step 2: Generate 1-Click Transition Brief**  
+2. **Step 2: Generate 1-Click Transition Brief**
    Export your customized ReportLab PDF transition action plan with clearance-matched career tracks.
 
-3. **Step 3: Connect with 7 Eagle Group Recruiters**  
+3. **Step 3: Connect with 7 Eagle Group Recruiters**
    Request direct recruiter introduction for verified corporate and defense contractor interview fast-tracking.
 
 ---
@@ -390,7 +390,7 @@ Transitioning service members require low-latency, deterministic, and accurate c
 """
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"docs(guide): publish veteran transition guide on {title}"
         run_cmd(f'git commit -m "{msg}"')
@@ -489,7 +489,7 @@ def test_daily_metrics_structure():
         file_path = tests_unit_dir / f"{slug}.py"
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(code.strip() + "\n")
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"test(unit): add automated unit test suite for {desc}"
         run_cmd(f'git commit -m "{msg}"')
@@ -518,7 +518,7 @@ def process_stage_{i:03d}(payload: dict) -> dict:
 '''
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        
+
         run_cmd(f"git add {file_path}")
         msg = f"refactor(pipeline): optimize modular stage {i:03d} telemetry processor"
         run_cmd(f'git commit -m "{msg}"')

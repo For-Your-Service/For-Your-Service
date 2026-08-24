@@ -56,7 +56,7 @@ def scrub_security():
     print("\n" + "="*70)
     print(" PHASE 1: SECURITY & CREDENTIAL AUDIT & SANITIZATION")
     print("="*70)
-    
+
     # 1. databricks/04_Job_Market_Data_Sources.py
     file1 = ROOT_DIR / "databricks" / "04_Job_Market_Data_Sources.py"
     if file1.exists():
@@ -96,7 +96,7 @@ def scrub_redundancies():
     print("\n" + "="*70)
     print(" PHASE 2: REDUNDANCY & ARTIFACT ELIMINATION")
     print("="*70)
-    
+
     # Remove nested redundant directory For-Your-Service/
     nested_dir = ROOT_DIR / "For-Your-Service"
     if nested_dir.exists():
@@ -124,12 +124,12 @@ def scrub_code_hygiene():
     print("\n" + "="*70)
     print(" PHASE 3: GRANULAR CODE HYGIENE & FORMATTING (ATOMIC COMMITS)")
     print("="*70)
-    
+
     tracked_files_res = run_cmd("git ls-files")
     tracked_files = [line.strip() for line in tracked_files_res.stdout.splitlines() if line.strip()]
-    
+
     extensions = {".py", ".md", ".json", ".yaml", ".yml", ".sql", ".sh", ".ps1", ".txt", ".ini", ".toml"}
-    
+
     count = 0
     for rel_path in sorted(tracked_files):
         p = ROOT_DIR / rel_path
@@ -139,16 +139,16 @@ def scrub_code_hygiene():
             continue
         if any(part in ["venv", ".git", "jobs_cache", "analytics"] for part in p.parts):
             continue
-            
+
         try:
             raw_bytes = p.read_bytes()
             has_bom = raw_bytes.startswith(b"\xef\xbb\xbf")
             content = raw_bytes.decode("utf-8-sig", errors="ignore")
-            
+
             lines = content.splitlines()
             # Clean trailing whitespace from each line
             cleaned_lines = [line.rstrip() for line in lines]
-            
+
             # Ensure single trailing newline at EOF if non-empty
             if cleaned_lines and cleaned_lines[-1] != "":
                 cleaned_content = "\n".join(cleaned_lines) + "\n"
@@ -159,7 +159,7 @@ def scrub_code_hygiene():
                 cleaned_content = "\n".join(cleaned_lines) + "\n"
             else:
                 cleaned_content = ""
-                
+
             # If changes needed
             if has_bom or cleaned_content != raw_bytes.decode("utf-8", errors="ignore"):
                 # For python files, verify syntax before saving
@@ -169,15 +169,15 @@ def scrub_code_hygiene():
                     except Exception as ce:
                         print(f"[SKIP-SYNTAX] {rel_path}: {ce}")
                         continue
-                        
+
                 p.write_text(cleaned_content, encoding="utf-8", newline="\n")
-                
+
                 cat = "style(hygiene)" if p.suffix not in [".md", ".txt"] else "docs(hygiene)"
                 if git_commit(rel_path, f"{cat}: sanitize formatting and strip trailing whitespace in {rel_path}"):
                     count += 1
         except Exception as e:
             print(f"[ERR] {rel_path}: {e}")
-            
+
     print(f"\n[OK] Completed hygiene sweep: {count} granular atomic commits generated.")
 
 # ==============================================================================

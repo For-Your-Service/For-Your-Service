@@ -17,12 +17,12 @@ pinned: false
 
 The military gives you elite operational experience. Civilian tech applications don't always know how to read it. Raw service records, MOS codes, and leadership tours sit in static PDFs rather than working for you. **For Your Service** learns the patterns in your background, maps your service profile against live industry demand, and surfaces what matters: targeted role matching, resume translation, and automated transition insights.
 
-**Partner:** 7 Eagle Group  
+**Partner:** 7 Eagle Group
 **Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
 
 ### 🏛️ Command & Control / Infrastructure Stack
 
-[![Organization](https://img.shields.io/badge/ORGANIZATION-FOR_YOUR_SERVICE-blue?style=flat-square&logo=github)](https://github.com/For-Your-Service) 
+[![Organization](https://img.shields.io/badge/ORGANIZATION-FOR_YOUR_SERVICE-blue?style=flat-square&logo=github)](https://github.com/For-Your-Service)
 [![Apache Spark](https://img.shields.io/badge/APACHE_SPARK-PYSPARK_%7C_DELTA_LAKE-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)](docs/SPARK_MEDALLION_ARCHITECTURE.md)
 [![Databricks Apps](https://img.shields.io/badge/DATABRICKS_APPS-FYS_MATCHING_APP-FF3621?style=flat-square&logo=databricks)](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
 [![Docker Images](https://img.shields.io/badge/CONTAINER_REGISTRY-GHCR.IO-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/orgs/For-Your-Service/packages)
@@ -209,9 +209,9 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📧 Contact
 
-**Free Hall**  
-Email: whall4.wh@gmail.com  
-Organization: 7 Eagle Group  
+**Free Hall**
+Email: whall4.wh@gmail.com
+Organization: 7 Eagle Group
 GitHub: https://github.com/For-Your-Service
 
 ---

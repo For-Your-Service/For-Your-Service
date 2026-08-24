@@ -1,9 +1,9 @@
 # ADR-008: Zero-Trust Security for Veteran PII and Resumes
 
-**Status:** Accepted  
-**Date:** 2026-08-22  
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**Status:** Accepted
+**Date:** 2026-08-22
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 
 ---
 

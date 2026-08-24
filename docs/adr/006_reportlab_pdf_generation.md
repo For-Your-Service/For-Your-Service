@@ -1,9 +1,9 @@
 # ADR-006: Local ReportLab PDF Transition Brief Engine
 
-**Status:** Accepted  
-**Date:** 2026-08-22  
-**Lead Architect:** Free Hall <whall4.wh@gmail.com>  
-**Organization:** 7 Eagle Group  
+**Status:** Accepted
+**Date:** 2026-08-22
+**Lead Architect:** Free Hall <whall4.wh@gmail.com>
+**Organization:** 7 Eagle Group
 
 ---
 

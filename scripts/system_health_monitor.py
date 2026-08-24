@@ -112,11 +112,11 @@ def run_tests():
         pytest_bin = Path(sys.executable).parent / "pytest"
         if not pytest_bin.exists():
             pytest_bin = "pytest"
-    
+
     start_time = datetime.now()
     res = subprocess.run(f'"{pytest_bin}" -q', cwd=str(ROOT_DIR), shell=True, capture_output=True, text=True)
     duration = (datetime.now() - start_time).total_seconds()
-    
+
     stdout = res.stdout.strip()
     passed = res.returncode == 0
     test_count = 189
@@ -138,37 +138,37 @@ def generate_health_report(push=False):
     now = datetime.now()
     now_str = now.strftime("%Y-%m-%d %H:%M:%S")
     now_date = now.strftime("%B %d, %Y")
-    
+
     print(f"[*] Running health check at {now_str}...")
-    
+
     # 1. System Info
     node_name = platform.node()
     os_name = f"{platform.system()} {platform.release()}"
     arch = platform.machine()
     python_ver = platform.python_version()
-    
+
     # 2. Hardware
     mem = get_memory_info()
     disks = get_disk_info()
-    
+
     # 3. Application Services
     port_8501_live = check_port("127.0.0.1", 8501)
-    
+
     # 4. Pytest Test Suite
     test_results = run_tests()
     count = test_results.get("count", 189)
-    
+
     # 5. Build Markdown
     disk_rows = ""
     for d in disks:
         disk_rows += f"| `{d['drive']}` | {d['total_gb']} GB | {d['used_gb']} GB | **{d['free_gb']} GB** | {d['pct_free']}% | {d['status']} |\n"
-    
+
     test_badge = f"🟢 **100% PASSING ({count}/{count} Tests)**" if test_results["passed"] else "🔴 **FAILURES DETECTED**"
     portal_badge = "🟢 **ONLINE (Port 8501)**" if port_8501_live else "⚪ Offline / On-Demand"
-    
+
     content = f"""# 🩺 System & Application Health Dashboard
 
-> **Automated Health Monitoring for For Your Service Platform**  
+> **Automated Health Monitoring for For Your Service Platform**
 > **Last Verified:** `{now_str}` ({now_date}) • **Report Frequency:** Twice Daily (09:00 & 21:00)
 
 ---

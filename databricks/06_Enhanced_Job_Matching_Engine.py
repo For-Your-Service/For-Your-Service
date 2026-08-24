@@ -81,21 +81,21 @@
 # MAGIC
 # MAGIC ## What This Tool DOES
 # MAGIC
-# MAGIC ✅ **Initial screening** - Helps prioritize which jobs to review first  
-# MAGIC ✅ **Skills alignment** - Identifies technical matches between profile and job description  
-# MAGIC ✅ **Salary filtering** - Flags jobs outside your target compensation range  
-# MAGIC ✅ **Experience matching** - Checks if seniority level aligns (senior vs. junior roles)  
+# MAGIC ✅ **Initial screening** - Helps prioritize which jobs to review first
+# MAGIC ✅ **Skills alignment** - Identifies technical matches between profile and job description
+# MAGIC ✅ **Salary filtering** - Flags jobs outside your target compensation range
+# MAGIC ✅ **Experience matching** - Checks if seniority level aligns (senior vs. junior roles)
 # MAGIC ✅ **Clearance awareness** - Identifies jobs requiring active clearance
 # MAGIC
 # MAGIC ---
 # MAGIC
 # MAGIC ## What This Tool DOES NOT Do
 # MAGIC
-# MAGIC ❌ **Does NOT predict hiring probability** - A "75/100" score means "strong initial match," NOT "75% chance of getting hired"  
-# MAGIC ❌ **Does NOT account for company culture** - You may be a perfect technical match but poor cultural fit  
-# MAGIC ❌ **Does NOT know about internal candidates** - Many jobs are filled internally  
-# MAGIC ❌ **Does NOT see hidden requirements** - Hiring managers often have unwritten preferences  
-# MAGIC ❌ **Does NOT track application competition** - You may be one of 500 applicants  
+# MAGIC ❌ **Does NOT predict hiring probability** - A "75/100" score means "strong initial match," NOT "75% chance of getting hired"
+# MAGIC ❌ **Does NOT account for company culture** - You may be a perfect technical match but poor cultural fit
+# MAGIC ❌ **Does NOT know about internal candidates** - Many jobs are filled internally
+# MAGIC ❌ **Does NOT see hidden requirements** - Hiring managers often have unwritten preferences
+# MAGIC ❌ **Does NOT track application competition** - You may be one of 500 applicants
 # MAGIC ❌ **Does NOT guarantee interviews** - Even "perfect" matches may not respond
 # MAGIC
 # MAGIC ---
@@ -169,7 +169,7 @@
 # =====================================================================
 # 📄 RESUME INPUT - Paste Any Resume Here
 # =====================================================================
-# 
+#
 # 🎯 INSTRUCTIONS: Just paste the resume text below and run this cell!
 #
 # ✅ SUPPORTS:
@@ -275,7 +275,7 @@ print("="*70)
 # =====================================================================
 # 🔍 INTELLIGENT RESUME ANALYSIS
 # =====================================================================
-# 
+#
 # 🎯 PURPOSE: Automatically extract experience and assess resume quality
 #
 # ✅ AUTO-DETECTS:
@@ -306,7 +306,7 @@ print("="*70)
 def extract_years_of_experience(resume_text):
     """
     Parse resume for work history dates and calculate total experience.
-    
+
     Looks for patterns like:
     - "2018 - Present"
     - "Jan 2015 - Dec 2020"
@@ -314,13 +314,13 @@ def extract_years_of_experience(resume_text):
     """
     current_year = datetime.now().year
     years_found = []
-    
+
     # Pattern 1: YYYY - Present/Current
     present_pattern = r'(\d{4})\s*[-–—]\s*(Present|Current|Now)'
     for match in re.finditer(present_pattern, resume_text, re.IGNORECASE):
         start_year = int(match.group(1))
         years_found.append((start_year, current_year))
-    
+
     # Pattern 2: YYYY - YYYY
     year_range_pattern = r'(\d{4})\s*[-–—]\s*(\d{4})'
     for match in re.finditer(year_range_pattern, resume_text):
@@ -328,7 +328,7 @@ def extract_years_of_experience(resume_text):
         end_year = int(match.group(2))
         if start_year < end_year <= current_year:
             years_found.append((start_year, end_year))
-    
+
     # Pattern 3: Month YYYY - Month YYYY
     month_year_pattern = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{4})\s*[-–—]\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{4})'
     for match in re.finditer(month_year_pattern, resume_text, re.IGNORECASE):
@@ -336,15 +336,15 @@ def extract_years_of_experience(resume_text):
         end_year = int(match.group(4))
         if start_year < end_year <= current_year:
             years_found.append((start_year, end_year))
-    
+
     if not years_found:
         return None, ["⚠️ NO DATES FOUND: Add dates to work experience (e.g., '2018 - Present')"]
-    
+
     # Calculate total unique years (handle overlapping jobs)
     all_years = set()
     for start, end in years_found:
         all_years.update(range(start, end + 1))
-    
+
     total_years = len(all_years)
     return total_years, []
 
@@ -357,14 +357,14 @@ def detect_seniority_level(resume_text, years_exp=None):
     Determine seniority from job titles and experience years.
     """
     resume_lower = resume_text.lower()
-    
+
     # Count seniority indicators
     senior_indicators = len(re.findall(r'\b(senior|lead|principal|staff|architect|director|manager|vp|chief)\b', resume_lower))
     mid_indicators = len(re.findall(r'\b(engineer|developer|analyst|specialist|consultant)\b', resume_lower))
     junior_indicators = len(re.findall(r'\b(junior|associate|entry|assistant)\b', resume_lower))
-    
+
     recommendations = []
-    
+
     # Determine seniority
     if senior_indicators >= 3 or (years_exp and years_exp >= 10):
         seniority = "senior"
@@ -372,11 +372,11 @@ def detect_seniority_level(resume_text, years_exp=None):
         seniority = "junior"
     else:
         seniority = "mid"
-    
+
     # Check if seniority is ambiguous
     if senior_indicators == 0 and mid_indicators == 0 and junior_indicators == 0:
         recommendations.append("💡 CLARIFY SENIORITY: Add job titles that indicate your level (e.g., 'Senior Engineer')")
-    
+
     return seniority, recommendations
 
 # =====================================================================
@@ -390,11 +390,11 @@ def extract_location(resume_text):
     # Pattern: City, ST or City, State
     location_pattern = r'([A-Z][a-z]+(?: [A-Z][a-z]+)?),\s*([A-Z]{2})\b'
     matches = re.findall(location_pattern, resume_text)
-    
+
     if matches:
         city, state = matches[0]  # Take first match (usually in header)
         return city, state, []
-    
+
     return None, None, ["⚠️ LOCATION UNCLEAR: Add city, state to contact info (e.g., 'Houston, TX')"]
 
 # =====================================================================
@@ -412,14 +412,14 @@ def extract_skills(resume_text):
         'sql', 'postgresql', 'mysql', 'mongodb', 'redis', 'elasticsearch',
         'jenkins', 'gitlab', 'github', 'ci/cd', 'devops', 'agile', 'scrum'
     ]
-    
+
     resume_lower = resume_text.lower()
     found_skills = [skill for skill in common_skills if skill in resume_lower]
-    
+
     recommendations = []
     if len(found_skills) < 5:
         recommendations.append("💡 ADD SKILLS SECTION: List technical skills explicitly (e.g., 'Python, AWS, Kubernetes')")
-    
+
     return found_skills, recommendations
 
 # =====================================================================
@@ -432,7 +432,7 @@ def assess_resume_quality(resume_text, years_exp, seniority, location_city, skil
     """
     score = 100
     recommendations = []
-    
+
     # Check 1: Length (too short/long)
     word_count = len(resume_text.split())
     if word_count < 200:
@@ -441,35 +441,35 @@ def assess_resume_quality(resume_text, years_exp, seniority, location_city, skil
     elif word_count > 1500:
         score -= 10
         recommendations.append("⚠️ TOO LONG: Consider condensing to 800-1000 words for better readability")
-    
+
     # Check 2: Has dates
     if years_exp is None:
         score -= 25
         recommendations.append("❌ MISSING DATES: Add employment dates (YYYY - YYYY) to all positions")
-    
+
     # Check 3: Has location
     if location_city is None:
         score -= 15
         recommendations.append("❌ MISSING LOCATION: Add city, state to contact section")
-    
+
     # Check 4: Skills count
     if len(skills) < 5:
         score -= 15
         recommendations.append("⚠️ FEW SKILLS: List 8-12 technical skills for better job matching")
-    
+
     # Check 5: Quantifiable achievements
     numbers = len(re.findall(r'\d+[%$KM]|\d{1,3}[,\d]*', resume_text))
     if numbers < 3:
         score -= 10
         recommendations.append("💡 ADD METRICS: Include quantifiable achievements (e.g., 'Reduced costs by 30%')")
-    
+
     # Check 6: Action verbs
     action_verbs = ['led', 'managed', 'built', 'designed', 'implemented', 'developed', 'created', 'established']
     verb_count = sum(1 for verb in action_verbs if verb in resume_text.lower())
     if verb_count < 4:
         score -= 10
         recommendations.append("💡 USE ACTION VERBS: Start bullet points with strong verbs (Led, Built, Designed)")
-    
+
     # Check 7: Contact info
     has_email = bool(re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', resume_text))
     has_phone = bool(re.search(r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}', resume_text))
@@ -479,7 +479,7 @@ def assess_resume_quality(resume_text, years_exp, seniority, location_city, skil
     if not has_phone:
         score -= 5
         recommendations.append("⚠️ MISSING PHONE: Add phone number to contact section")
-    
+
     return max(0, score), recommendations
 
 # =====================================================================
@@ -501,10 +501,10 @@ quality_score, quality_recommendations = assess_resume_quality(
 
 # Combine all recommendations
 all_recommendations = (
-    exp_recommendations + 
-    seniority_recommendations + 
-    location_recommendations + 
-    skills_recommendations + 
+    exp_recommendations +
+    seniority_recommendations +
+    location_recommendations +
+    skills_recommendations +
     quality_recommendations
 )
 
@@ -571,7 +571,7 @@ print("="*70)
 # =====================================================================
 # DYNAMIC PARAMETER INGESTION - Event-Driven Execution
 # =====================================================================
-# 
+#
 # 🎯 PURPOSE: Support TWO execution modes:
 #   1. INTERACTIVE: Manual notebook run (uses widgets)
 #   2. JOB-TRIGGERED: REST API triggered from intake form (uses job params)
@@ -630,11 +630,11 @@ OPTIONAL_PARAMS = [
 
 if execution_mode == "JOB":
     print("\n🔄 Loading parameters from Job API...")
-    
+
     # Job mode: Read from dbutils.widgets (set by Jobs API)
     params = {}
     missing_params = []
-    
+
     for param in REQUIRED_PARAMS:
         try:
             params[param] = dbutils.widgets.get(param)
@@ -642,28 +642,28 @@ if execution_mode == "JOB":
                 missing_params.append(param)
         except:
             missing_params.append(param)
-    
+
     # Optional params
     for param in OPTIONAL_PARAMS:
         try:
             params[param] = dbutils.widgets.get(param)
         except:
             params[param] = None
-    
+
     if missing_params:
         raise ValueError(f"Missing required parameters: {missing_params}")
-    
+
     # Type conversions
     params['salary_min'] = int(params['salary_min'])
     params['salary_max'] = int(params['salary_max'])
     params['experience_years'] = int(params['experience_years'])
-    
+
     print("   ✅ All required parameters loaded")
-    
+
 else:
     print("\n💻 Interactive mode - Reading from resume input cell")
     print("   💡 Resume and applicant info loaded from previous cell")
-    
+
     # Interactive mode: Read from resume_input and applicant_info variables
     # These are set in the "PASTE RESUME HERE" cell above
     params = {
@@ -807,7 +807,7 @@ applicant_run_timestamp = run_timestamp
 # MAGIC def trigger_veteran_matching(applicant_data: dict):
 # MAGIC     """
 # MAGIC     Trigger Databricks job with applicant parameters.
-# MAGIC     
+# MAGIC
 # MAGIC     Args:
 # MAGIC         applicant_data: Dict with keys:
 # MAGIC             - applicant_id: str
@@ -820,18 +820,18 @@ applicant_run_timestamp = run_timestamp
 # MAGIC             - role_keywords: str (optional)
 # MAGIC             - resume_text: str (optional)
 # MAGIC             - clearance_status: str (optional)
-# MAGIC     
+# MAGIC
 # MAGIC     Returns:
 # MAGIC         run_id: Job run ID for tracking
 # MAGIC     """
-# MAGIC     
+# MAGIC
 # MAGIC     # Initialize Databricks client
 # MAGIC     # Uses DATABRICKS_HOST and DATABRICKS_TOKEN env vars
 # MAGIC     client = WorkspaceClient()
-# MAGIC     
+# MAGIC
 # MAGIC     # Job ID (get from Databricks UI after creating job)
 # MAGIC     JOB_ID = 123  # Replace with your actual job ID
-# MAGIC     
+# MAGIC
 # MAGIC     # Trigger job with applicant parameters
 # MAGIC     run = client.jobs.run_now(
 # MAGIC         job_id=JOB_ID,
@@ -848,11 +848,11 @@ applicant_run_timestamp = run_timestamp
 # MAGIC             "clearance_status": applicant_data.get("clearance_status", "unknown")
 # MAGIC         }
 # MAGIC     )
-# MAGIC     
+# MAGIC
 # MAGIC     print(f"✅ Job triggered for {applicant_data['applicant_name']}")
 # MAGIC     print(f"   Run ID: {run.run_id}")
 # MAGIC     print(f"   Run URL: {run.run_page_url}")
-# MAGIC     
+# MAGIC
 # MAGIC     return run.run_id
 # MAGIC
 # MAGIC # Example: Trigger for Stephen Porterfield
@@ -881,21 +881,21 @@ applicant_run_timestamp = run_timestamp
 # MAGIC     Poll job status and wait for completion.
 # MAGIC     """
 # MAGIC     client = WorkspaceClient()
-# MAGIC     
+# MAGIC
 # MAGIC     while True:
 # MAGIC         run = client.jobs.get_run(run_id)
 # MAGIC         state = run.state.life_cycle_state
-# MAGIC         
+# MAGIC
 # MAGIC         if state in ["TERMINATED", "SKIPPED", "INTERNAL_ERROR"]:
 # MAGIC             result_state = run.state.result_state
-# MAGIC             
+# MAGIC
 # MAGIC             if result_state == "SUCCESS":
 # MAGIC                 print(f"✅ Job completed successfully!")
 # MAGIC                 return "SUCCESS"
 # MAGIC             else:
 # MAGIC                 print(f"❌ Job failed: {result_state}")
 # MAGIC                 return result_state
-# MAGIC         
+# MAGIC
 # MAGIC         print(f"🔄 Job running... ({state})")
 # MAGIC         time.sleep(30)  # Poll every 30 seconds
 # MAGIC
@@ -907,21 +907,21 @@ applicant_run_timestamp = run_timestamp
 # MAGIC
 # MAGIC ## Benefits of This Architecture
 # MAGIC
-# MAGIC ✅ **Real-time freshness** - Every applicant gets current job data  
-# MAGIC ✅ **No stale data** - Scrape at intake, not on a schedule  
-# MAGIC ✅ **Isolated execution** - Applicant-specific tables prevent cross-contamination  
-# MAGIC ✅ **Scalable** - Multiple applicants can be processed in parallel  
-# MAGIC ✅ **Traceable** - Every run has a unique ID and timestamp  
+# MAGIC ✅ **Real-time freshness** - Every applicant gets current job data
+# MAGIC ✅ **No stale data** - Scrape at intake, not on a schedule
+# MAGIC ✅ **Isolated execution** - Applicant-specific tables prevent cross-contamination
+# MAGIC ✅ **Scalable** - Multiple applicants can be processed in parallel
+# MAGIC ✅ **Traceable** - Every run has a unique ID and timestamp
 # MAGIC ✅ **Event-driven** - Triggered by intake form, not manual runs
 # MAGIC
 # MAGIC ---
 # MAGIC
 # MAGIC ## Next Steps
 # MAGIC
-# MAGIC 1. **Create the job** via Databricks UI (Jobs → Create Job)  
-# MAGIC 2. **Get the job ID** from the job's URL  
-# MAGIC 3. **Deploy trigger script** as webhook endpoint  
-# MAGIC 4. **Connect intake form** to webhook  
+# MAGIC 1. **Create the job** via Databricks UI (Jobs → Create Job)
+# MAGIC 2. **Get the job ID** from the job's URL
+# MAGIC 3. **Deploy trigger script** as webhook endpoint
+# MAGIC 4. **Connect intake form** to webhook
 # MAGIC 5. **Test with real veteran** - submit form, verify results
 
 # COMMAND ----------
@@ -930,7 +930,7 @@ applicant_run_timestamp = run_timestamp
 # =====================================================================
 # Pipeline Validation Suite: For-Your-Service Match Engine
 # =====================================================================
-# 
+#
 # Production-grade validation to ensure reliable, trustworthy outputs.
 # Run AFTER matching pipeline to validate data quality and model outputs.
 #
@@ -975,7 +975,7 @@ try:
     total_records = len(jobs_pdf)
     print(f"\n✔️ Check 1.1: Bronze Records Loaded")
     print(f"   Total Records: {total_records}")
-    
+
     if total_records == 0:
         validation_results['failed'].append("No records loaded from Bronze table")
         print("   ❌ FAILED: No records found")
@@ -985,19 +985,19 @@ try:
     else:
         validation_results['passed'].append(f"Bronze data loaded: {total_records} jobs")
         print(f"   ✅ PASSED: Sufficient data loaded")
-    
+
     # Check 1.2: Required fields present
     print(f"\n✔️ Check 1.2: Required Fields")
     required_fields = ['job_id', 'title', 'company', 'description', 'url', 'salary_min', 'salary_max']
     missing_fields = [f for f in required_fields if f not in jobs_pdf.columns]
-    
+
     if missing_fields:
         validation_results['failed'].append(f"Missing required fields: {missing_fields}")
         print(f"   ❌ FAILED: Missing fields: {missing_fields}")
     else:
         validation_results['passed'].append("All required fields present")
         print("   ✅ PASSED: All required fields present")
-    
+
     # Check 1.3: Null/missing critical data
     print(f"\n✔️ Check 1.3: Null Data Quality")
     null_checks = {
@@ -1005,42 +1005,42 @@ try:
         'urls': jobs_pdf['url'].isna().sum(),
         'titles': jobs_pdf['title'].isna().sum()
     }
-    
+
     for field, null_count in null_checks.items():
         pct = (null_count / total_records * 100) if total_records > 0 else 0
         print(f"   {field}: {null_count} nulls ({pct:.1f}%)")
-        
+
         if null_count > 0 and field in ['urls', 'titles']:
             validation_results['warnings'].append(f"Critical nulls in {field}: {null_count}")
         elif pct > 20:
             validation_results['warnings'].append(f"High null rate in {field}: {pct:.1f}%")
-    
+
     validation_results['passed'].append("Null data audit complete")
     print("   ✅ PASSED: Null data within acceptable thresholds")
-    
+
     # Check 1.4: Salary data validity
     print(f"\n✔️ Check 1.4: Salary Data Validity")
     valid_salaries = jobs_pdf[
-        (jobs_pdf['salary_min'].notna()) & 
+        (jobs_pdf['salary_min'].notna()) &
         (jobs_pdf['salary_max'].notna()) &
         (jobs_pdf['salary_min'] > 0) &
         (jobs_pdf['salary_max'] >= jobs_pdf['salary_min'])
     ]
-    
+
     salary_quality = len(valid_salaries) / total_records * 100 if total_records > 0 else 0
     print(f"   Valid Salary Data: {len(valid_salaries)}/{total_records} ({salary_quality:.1f}%)")
-    
+
     if salary_quality < 50:
         validation_results['warnings'].append(f"Low salary data quality: {salary_quality:.1f}%")
         print(f"   ⚠️ WARNING: Less than 50% have valid salary data")
     else:
         validation_results['passed'].append(f"Salary data quality: {salary_quality:.1f}%")
         print(f"   ✅ PASSED: {salary_quality:.1f}% have valid salary ranges")
-    
+
     print("\n" + "-"*80)
     print("✅ VALIDATION 1 COMPLETE")
     print("-"*80)
-    
+
 except Exception as e:
     validation_results['failed'].append(f"Validation 1 crashed: {str(e)}")
     print(f"\n❌ VALIDATION 1 FAILED WITH ERROR: {e}")
@@ -1059,22 +1059,22 @@ print("="*80)
 try:
     # Check 2.1: Match score bounds
     print(f"\n✔️ Check 2.1: Match Score Bounds")
-    
+
     if 'match_score' in jobs_tensor_sorted.columns:
         min_score = jobs_tensor_sorted['match_score'].min()
         max_score = jobs_tensor_sorted['match_score'].max()
         mean_score = jobs_tensor_sorted['match_score'].mean()
-        
+
         print(f"   Min Score: {min_score:.0f}/100")
         print(f"   Max Score: {max_score:.0f}/100")
         print(f"   Mean Score: {mean_score:.0f}/100")
-        
+
         # Validate bounds [0, 100]
         out_of_bounds = jobs_tensor_sorted[
-            (jobs_tensor_sorted['match_score'] < 0) | 
+            (jobs_tensor_sorted['match_score'] < 0) |
             (jobs_tensor_sorted['match_score'] > 100)
         ]
-        
+
         if len(out_of_bounds) > 0:
             validation_results['failed'].append(f"{len(out_of_bounds)} scores out of bounds")
             print(f"   ❌ FAILED: {len(out_of_bounds)} scores outside [0, 100]")
@@ -1084,24 +1084,24 @@ try:
     else:
         validation_results['warnings'].append("Match score column not found")
         print("   ⚠️ WARNING: match_score column missing")
-    
+
     # Check 2.2: Distribution sanity
     print(f"\n✔️ Check 2.2: Score Distribution Analysis")
-    
+
     if 'match_score' in jobs_tensor_sorted.columns:
         # Count by score bands
         strong_matches = (jobs_tensor_sorted['match_score'] >= 75).sum()
-        good_matches = ((jobs_tensor_sorted['match_score'] >= 60) & 
+        good_matches = ((jobs_tensor_sorted['match_score'] >= 60) &
                      (jobs_tensor_sorted['match_score'] < 75)).sum()
-        fair_matches = ((jobs_tensor_sorted['match_score'] >= 45) & 
+        fair_matches = ((jobs_tensor_sorted['match_score'] >= 45) &
                      (jobs_tensor_sorted['match_score'] < 60)).sum()
         weak_matches = (jobs_tensor_sorted['match_score'] < 45).sum()
-        
+
         print(f"   75-100 (Strong):  {strong_matches} jobs")
         print(f"   60-74 (Good):     {good_matches} jobs")
         print(f"   45-59 (Fair):     {fair_matches} jobs")
         print(f"   0-44 (Weak):      {weak_matches} jobs")
-        
+
         # Check for reasonable distribution
         if strong_matches == 0:
             validation_results['warnings'].append("No strong matches (75+)")
@@ -1112,36 +1112,36 @@ try:
         else:
             validation_results['passed'].append(f"Distribution: {strong_matches} strong, {good_matches} good matches")
             print(f"   ✅ PASSED: {strong_matches + good_matches} actionable matches found")
-    
+
     # Check 2.3: Ranking order
     print(f"\n✔️ Check 2.3: Ranking Order Validation")
-    
+
     if 'match_score' in jobs_tensor_sorted.columns:
         # Verify descending order
         is_sorted = jobs_tensor_sorted['match_score'].is_monotonic_decreasing
-        
+
         if is_sorted:
             validation_results['passed'].append("Results sorted correctly by match score")
             print("   ✅ PASSED: Results ranked in descending order")
         else:
             validation_results['failed'].append("Results not properly sorted")
             print("   ❌ FAILED: Ranking order incorrect")
-    
+
     # Check 2.4: Component score breakdown
     print(f"\n✔️ Check 2.4: Component Score Verification")
-    
+
     if 'component_weights' in jobs_tensor_sorted.columns:
         # Verify component contributions
         sample_job = jobs_tensor_sorted.iloc[0]
         components = sample_job['component_weights']
-        
+
         print(f"   Top match component breakdown:")
         print(f"     • Skills: {components['semantic']:.0f}/30")
         print(f"     • Experience: {components['experience']:.0f}/30")
         print(f"     • Salary: {components['salary']:.0f}/25")
         print(f"     • Clearance: {components['clearance']:.0f}/10")
         print(f"     • Location: {components['location']:.0f}/5")
-        
+
         total = sum(components.values())
         if total > 100:
             validation_results['warnings'].append(f"Component sum exceeds 100: {total}")
@@ -1149,11 +1149,11 @@ try:
         else:
             validation_results['passed'].append(f"Component weights properly balanced")
             print(f"   ✅ PASSED: Components total to {total:.0f}/100")
-    
+
     print("\n" + "-"*80)
     print("✅ VALIDATION 2 COMPLETE")
     print("-"*80)
-    
+
 except Exception as e:
     validation_results['failed'].append(f"Validation 2 crashed: {str(e)}")
     print(f"\n❌ VALIDATION 2 FAILED WITH ERROR: {e}")
@@ -1172,39 +1172,39 @@ print("="*80)
 try:
     # Check 3.1: Model availability and inference
     print(f"\n✔️ Check 3.1: SentenceTransformer Model Health")
-    
+
     from sentence_transformers import SentenceTransformer
-    
+
     try:
         test_model = SentenceTransformer('all-MiniLM-L6-v2')
         test_text = "Cloud Platform Engineering Senior Architecture"
         test_embedding = test_model.encode(test_text)
-        
+
         print(f"   Model: all-MiniLM-L6-v2")
         print(f"   Test Embedding Dimension: {len(test_embedding)}")
         print(f"   Expected Dimension: 384")
-        
+
         if len(test_embedding) == 384:
             validation_results['passed'].append("Neural network model producing correct dimensions")
             print("   ✅ PASSED: Embedding dimensionality correct (384-D)")
         else:
             validation_results['failed'].append(f"Embedding dimension mismatch: {len(test_embedding)} vs 384")
             print(f"   ❌ FAILED: Dimension mismatch ({len(test_embedding)} vs 384)")
-    
+
     except Exception as model_error:
         validation_results['failed'].append(f"Model loading failed: {str(model_error)}")
         print(f"   ❌ FAILED: Could not load model - {model_error}")
-    
+
     # Check 3.2: Embedding presence in results
     print(f"\n✔️ Check 3.2: Embeddings in Results")
-    
+
     if 'embedding' in jobs_tensor_sorted.columns:
         # Check for null embeddings
         null_embeddings = jobs_tensor_sorted['embedding'].isna().sum()
         total_jobs = len(jobs_tensor_sorted)
-        
+
         print(f"   Jobs with embeddings: {total_jobs - null_embeddings}/{total_jobs}")
-        
+
         if null_embeddings > 0:
             validation_results['warnings'].append(f"{null_embeddings} jobs missing embeddings")
             print(f"   ⚠️ WARNING: {null_embeddings} jobs without embeddings")
@@ -1214,19 +1214,19 @@ try:
     else:
         validation_results['warnings'].append("Embedding column not found")
         print("   ⚠️ WARNING: No embedding column found")
-    
+
     # Check 3.3: Semantic similarity ranges
     print(f"\n✔️ Check 3.3: Semantic Similarity Distribution")
-    
+
     if 'semantic_similarity' in jobs_tensor_sorted.columns:
         min_sim = jobs_tensor_sorted['semantic_similarity'].min()
         max_sim = jobs_tensor_sorted['semantic_similarity'].max()
         mean_sim = jobs_tensor_sorted['semantic_similarity'].mean()
-        
+
         print(f"   Min Similarity: {min_sim:.4f}")
         print(f"   Max Similarity: {max_sim:.4f}")
         print(f"   Mean Similarity: {mean_sim:.4f}")
-        
+
         # Cosine similarity should be in [-1, 1], typically [0, 1] for text
         if min_sim < -1.0 or max_sim > 1.0:
             validation_results['failed'].append(f"Similarity out of bounds: [{min_sim:.4f}, {max_sim:.4f}]")
@@ -1240,28 +1240,28 @@ try:
     else:
         validation_results['warnings'].append("Semantic similarity not calculated")
         print("   ⚠️ WARNING: semantic_similarity column missing")
-    
+
     # Check 3.4: Confidence intervals
     print(f"\n✔️ Check 3.4: Confidence Intervals")
-    
+
     if 'confidence' in jobs_tensor_sorted.columns:
         avg_confidence = jobs_tensor_sorted['confidence'].mean()
         low_confidence = (jobs_tensor_sorted['confidence'] < 5).sum()
-        
+
         print(f"   Average Confidence: ±{avg_confidence:.1f}%")
         print(f"   Jobs with low confidence (<5%): {low_confidence}")
-        
+
         if avg_confidence > 20:
             validation_results['warnings'].append(f"High uncertainty: avg ±{avg_confidence:.1f}%")
             print(f"   ⚠️ WARNING: High uncertainty levels")
         else:
             validation_results['passed'].append(f"Confidence intervals acceptable: ±{avg_confidence:.1f}%")
             print("   ✅ PASSED: Confidence levels acceptable")
-    
+
     print("\n" + "-"*80)
     print("✅ VALIDATION 3 COMPLETE")
     print("-"*80)
-    
+
 except Exception as e:
     validation_results['failed'].append(f"Validation 3 crashed: {str(e)}")
     print(f"\n❌ VALIDATION 3 FAILED WITH ERROR: {e}")
@@ -1280,14 +1280,14 @@ print("="*80)
 try:
     # Check 4.1: Clearance requirement handling
     print(f"\n✔️ Check 4.1: Clearance Requirement Detection")
-    
+
     if 'clearance_required' in jobs_tensor_sorted.columns:
         jobs_requiring_clearance = jobs_tensor_sorted['clearance_required'].sum()
         total_jobs = len(jobs_tensor_sorted)
-        
+
         print(f"   Jobs requiring ACTIVE clearance: {jobs_requiring_clearance}/{total_jobs}")
         print(f"   Jobs accepting EXPIRED clearance: {total_jobs - jobs_requiring_clearance}/{total_jobs}")
-        
+
         # For a veteran with EXPIRED TS/SCI, active clearance jobs should be flagged
         if jobs_requiring_clearance == 0:
             validation_results['passed'].append("No clearance barriers detected")
@@ -1295,7 +1295,7 @@ try:
         else:
             validation_results['warnings'].append(f"{jobs_requiring_clearance} jobs require active clearance")
             print(f"   ⚠️ WARNING: {jobs_requiring_clearance} jobs may be difficult with expired clearance")
-        
+
         # Check if any top 10 matches require active clearance
         top_10_clearance = jobs_tensor_sorted.head(10)['clearance_required'].sum()
         if top_10_clearance > 0:
@@ -1304,21 +1304,21 @@ try:
         else:
             validation_results['passed'].append("Top 10 matches don't require active clearance")
             print("   ✅ PASSED: Top 10 matches accessible with expired clearance")
-    
+
     # Check 4.2: Seniority alignment
     print(f"\n✔️ Check 4.2: Seniority Level Alignment")
-    
+
     if 'seniority_level' in jobs_tensor_sorted.columns:
         seniority_dist = jobs_tensor_sorted['seniority_level'].value_counts()
         print(f"   Seniority Distribution:")
         for level, count in seniority_dist.items():
             print(f"      {level}: {count} jobs")
-        
+
         # For a senior veteran (20+ years), most matches should be senior/mid
         top_10_seniority = jobs_tensor_sorted.head(10)['seniority_level'].value_counts()
         junior_in_top_10 = top_10_seniority.get('junior', 0)
         senior_in_top_10 = top_10_seniority.get('senior', 0)
-        
+
         if junior_in_top_10 > 5:
             validation_results['warnings'].append(f"{junior_in_top_10} junior roles in top 10 (overqualification)")
             print(f"   ⚠️ WARNING: {junior_in_top_10} junior roles in top 10")
@@ -1328,41 +1328,41 @@ try:
         else:
             validation_results['passed'].append("Seniority distribution acceptable")
             print(f"   ✅ PASSED: Mixed seniority levels (senior: {senior_in_top_10}, mid: {top_10_seniority.get('mid', 0)})")
-    
+
     # Check 4.3: Salary range validation
     # Use dynamic salary range from applicant parameters
     target_min = int(applicant_params.get('salary_min', 120000))
     target_max = int(applicant_params.get('salary_max', 180000))
-    
+
     print(f"\n✔️ Check 4.3: Salary Range Guardrails (${target_min/1000:.0f}K-${target_max/1000:.0f}K)")
-    
+
     if 'salary_min' in jobs_tensor_sorted.columns and 'salary_max' in jobs_tensor_sorted.columns:
         # Jobs that fall cleanly within target range
         in_range = jobs_tensor_sorted[
-            (jobs_tensor_sorted['salary_max'] >= target_min) & 
+            (jobs_tensor_sorted['salary_max'] >= target_min) &
             (jobs_tensor_sorted['salary_min'] <= target_max)
         ]
-        
+
         # Jobs completely outside range
         out_of_range = jobs_tensor_sorted[
-            (jobs_tensor_sorted['salary_max'] < target_min) | 
+            (jobs_tensor_sorted['salary_max'] < target_min) |
             (jobs_tensor_sorted['salary_min'] > target_max)
         ]
-        
+
         in_range_pct = len(in_range) / len(jobs_tensor_sorted) * 100
         out_range_pct = len(out_of_range) / len(jobs_tensor_sorted) * 100
-        
+
         print(f"   Jobs overlapping target range: {len(in_range)}/{len(jobs_tensor_sorted)} ({in_range_pct:.1f}%)")
         print(f"   Jobs outside target range: {len(out_of_range)}/{len(jobs_tensor_sorted)} ({out_range_pct:.1f}%)")
-        
+
         # Check top 10
         top_10_in_range = jobs_tensor_sorted.head(10)[
-            (jobs_tensor_sorted.head(10)['salary_max'] >= target_min) & 
+            (jobs_tensor_sorted.head(10)['salary_max'] >= target_min) &
             (jobs_tensor_sorted.head(10)['salary_min'] <= target_max)
         ]
-        
+
         print(f"   Top 10 within range: {len(top_10_in_range)}/10")
-        
+
         if len(top_10_in_range) >= 8:
             validation_results['passed'].append(f"Excellent salary match: {len(top_10_in_range)}/10 in target range")
             print(f"   ✅ PASSED: {len(top_10_in_range)}/10 top matches in salary target")
@@ -1372,41 +1372,41 @@ try:
         else:
             validation_results['failed'].append(f"Poor salary alignment: only {len(top_10_in_range)}/10 in range")
             print(f"   ❌ FAILED: Only {len(top_10_in_range)}/10 top matches in salary range")
-    
+
     # Check 4.4: Location filtering
     # Use dynamic location from applicant parameters
     target_city = applicant_params.get('target_city', 'Unknown')
     target_state = applicant_params.get('target_state', 'Unknown')
-    
+
     print(f"\n✔️ Check 4.4: Location Filtering ({target_city}, {target_state})")
-    
+
     if 'city' in jobs_tensor_sorted.columns and 'state' in jobs_tensor_sorted.columns:
         target_location_jobs = jobs_tensor_sorted[
-            (jobs_tensor_sorted['city'] == target_city) & 
+            (jobs_tensor_sorted['city'] == target_city) &
             (jobs_tensor_sorted['state'] == target_state)
         ]
-        
+
         other_locations = len(jobs_tensor_sorted) - len(target_location_jobs)
-        
+
         print(f"   {target_city}, {target_state} jobs: {len(target_location_jobs)}/{len(jobs_tensor_sorted)}")
-        
+
         if other_locations > 0:
             validation_results['warnings'].append(f"{other_locations} jobs outside {target_city}, {target_state}")
             print(f"   ⚠️ WARNING: {other_locations} jobs outside target location")
         else:
             validation_results['passed'].append(f"All jobs in target location ({target_city}, {target_state})")
             print("   ✅ PASSED: All jobs match target location")
-    
+
     # Check 4.5: Match explanation quality
     print(f"\n✔️ Check 4.5: Match Explanation Quality")
-    
+
     if 'match_reasons' in jobs_tensor_sorted.columns:
         jobs_with_reasons = jobs_tensor_sorted['match_reasons'].apply(lambda x: len(x) > 0 if isinstance(x, list) else False).sum()
         avg_reasons = jobs_tensor_sorted['match_reasons'].apply(lambda x: len(x) if isinstance(x, list) else 0).mean()
-        
+
         print(f"   Jobs with match reasons: {jobs_with_reasons}/{len(jobs_tensor_sorted)}")
         print(f"   Average reasons per job: {avg_reasons:.1f}")
-        
+
         if jobs_with_reasons == len(jobs_tensor_sorted):
             validation_results['passed'].append("All jobs have match explanations")
             print("   ✅ PASSED: All jobs have detailed match explanations")
@@ -1416,11 +1416,11 @@ try:
         else:
             validation_results['passed'].append(f"Most jobs have explanations ({jobs_with_reasons}/{len(jobs_tensor_sorted)})")
             print(f"   ✅ PASSED: {jobs_with_reasons}/{len(jobs_tensor_sorted)} have explanations")
-    
+
     print("\n" + "-"*80)
     print("✅ VALIDATION 4 COMPLETE")
     print("-"*80)
-    
+
 except Exception as e:
     validation_results['failed'].append(f"Validation 4 crashed: {str(e)}")
     print(f"\n❌ VALIDATION 4 FAILED WITH ERROR: {e}")
@@ -1529,43 +1529,43 @@ validation_results
 # MAGIC
 # MAGIC The basic keyword-based approach has **serious limitations**:
 # MAGIC
-# MAGIC ❌ **No Experience Level Awareness**  
+# MAGIC ❌ **No Experience Level Awareness**
 # MAGIC    → Can't tell if a job wants 2 years or 20 years of experience
-# MAGIC    
-# MAGIC ❌ **No Responsibility Alignment**  
+# MAGIC
+# MAGIC ❌ **No Responsibility Alignment**
 # MAGIC    → Doesn't check if job duties match what you actually *did*
-# MAGIC    
-# MAGIC ❌ **No Required vs. Preferred Distinction**  
+# MAGIC
+# MAGIC ❌ **No Required vs. Preferred Distinction**
 # MAGIC    → Treats "nice-to-have" skills the same as "must-have"
-# MAGIC    
-# MAGIC ❌ **No Semantic Understanding**  
+# MAGIC
+# MAGIC ❌ **No Semantic Understanding**
 # MAGIC    → "Led teams" and "managed cross-functional groups" mean the same thing, but keyword matching misses it
-# MAGIC    
-# MAGIC ❌ **No Disqualifier Detection**  
+# MAGIC
+# MAGIC ❌ **No Disqualifier Detection**
 # MAGIC    → Doesn't flag jobs requiring active clearance when you have expired clearance
 # MAGIC
 # MAGIC ---
 # MAGIC
 # MAGIC ## What This Enhanced Engine Does
 # MAGIC
-# MAGIC ✅ **Structured Job Description Parsing**  
+# MAGIC ✅ **Structured Job Description Parsing**
 # MAGIC    → Extract: Required qualifications, Preferred qualifications, Years of experience, Seniority level
-# MAGIC    
-# MAGIC ✅ **Experience Level Matching**  
-# MAGIC    → Your profile: 20+ years, Team Sergeant, Technical Lead  
+# MAGIC
+# MAGIC ✅ **Experience Level Matching**
+# MAGIC    → Your profile: 20+ years, Team Sergeant, Technical Lead
 # MAGIC    → Score lower for "entry-level" or "junior" roles (you'd be overqualified)
-# MAGIC    
-# MAGIC ✅ **Responsibility Alignment**  
-# MAGIC    → Compare job responsibilities → Your resume accomplishments  
-# MAGIC    → "Lead DevOps transformation" = ✅ Matches your background  
+# MAGIC
+# MAGIC ✅ **Responsibility Alignment**
+# MAGIC    → Compare job responsibilities → Your resume accomplishments
+# MAGIC    → "Lead DevOps transformation" = ✅ Matches your background
 # MAGIC    → "Support senior engineers" = ❌ Doesn't match (you *are* the senior)
-# MAGIC    
-# MAGIC ✅ **Skills Criticality Analysis**  
-# MAGIC    → **Must-have** (AWS, Kubernetes) — you have these  
-# MAGIC    → **Nice-to-have** (specific tools) — less weight  
+# MAGIC
+# MAGIC ✅ **Skills Criticality Analysis**
+# MAGIC    → **Must-have** (AWS, Kubernetes) — you have these
+# MAGIC    → **Nice-to-have** (specific tools) — less weight
 # MAGIC    → **Disqualifiers** (active clearance, specific degree) — flagged clearly
-# MAGIC    
-# MAGIC ✅ **Detailed Fit Explanations**  
+# MAGIC
+# MAGIC ✅ **Detailed Fit Explanations**
 # MAGIC    → Not just a score — tell you *why* it's a match or mismatch
 # MAGIC
 # MAGIC ---
@@ -1612,8 +1612,8 @@ validation_results
 # MAGIC
 # MAGIC ## Expected Results
 # MAGIC
-# MAGIC **Better matches** — Jobs that truly fit your experience level and responsibilities  
-# MAGIC **Clear explanations** — Understand *why* each job is recommended  
+# MAGIC **Better matches** — Jobs that truly fit your experience level and responsibilities
+# MAGIC **Clear explanations** — Understand *why* each job is recommended
 # MAGIC **No wasted applications** — Avoid jobs where you're over/under qualified
 
 # COMMAND ----------
@@ -1622,7 +1622,7 @@ validation_results
 # =====================================================================
 # SALARY CONFIGURATION - Flexible Per-Veteran Settings
 # =====================================================================
-# 
+#
 # 🎯 PURPOSE: Allow easy salary customization for EACH veteran
 #
 # 💡 WHY THIS MATTERS:
@@ -1667,12 +1667,12 @@ print(f"   Max: ${default_salary_max:,}")
 # =====================================================================
 # OPTION 2: Custom Salary for Individual Veteran (Override)
 # =====================================================================
-# 
+#
 # 🔧 TO USE: Uncomment and modify these values for a specific veteran
 #
 # Example scenarios:
 #   • Junior veteran (2-5 years): $60K - $90K
-#   • Mid-level veteran (5-10 years): $90K - $130K  
+#   • Mid-level veteran (5-10 years): $90K - $130K
 #   • Senior veteran (10-20 years): $120K - $180K
 #   • Executive veteran (20+ years): $180K - $250K
 #
@@ -1694,27 +1694,27 @@ custom_salary_range = None  # Use default from widgets
 def get_salary_range(custom_range: Optional[Dict] = None) -> Dict[str, int]:
     """
     Get salary range for veteran matching.
-    
+
     Priority:
       1. If custom_range provided, use those values
       2. Otherwise, use default notebook parameters
-    
+
     Args:
         custom_range: Optional dict with 'min' and 'max' keys
-    
+
     Returns:
         Dict with 'min', 'target', 'max' salary values
-    
+
     Examples:
         # Use defaults
         >>> get_salary_range()
         {'min': 120000, 'target': 150000, 'max': 180000}
-        
+
         # Custom range
         >>> get_salary_range({'min': 80000, 'max': 120000})
         {'min': 80000, 'target': 100000, 'max': 120000}
     """
-    
+
     if custom_range:
         salary_min = custom_range['min']
         salary_max = custom_range['max']
@@ -1723,9 +1723,9 @@ def get_salary_range(custom_range: Optional[Dict] = None) -> Dict[str, int]:
         salary_min = default_salary_min
         salary_max = default_salary_max
         source = "Default (Notebook Parameters)"
-    
+
     salary_target = int((salary_min + salary_max) / 2)
-    
+
     return {
         "min": salary_min,
         "target": salary_target,
@@ -1755,14 +1755,14 @@ print("\n" + "="*70)
 # =====================================================================
 # EXAMPLES: Processing Multiple Veterans with Different Salaries
 # =====================================================================
-# 
+#
 # If you need to process multiple veterans, you can loop:
 #
 # veterans = [
 #     {"name": "John Smith", "salary": {"min": 80000, "max": 120000}},
 #     {"name": "Jane Doe", "salary": {"min": 150000, "max": 200000}},
 # ]
-# 
+#
 # for vet in veterans:
 #     salary_range = get_salary_range(vet['salary'])
 #     # ... run matching pipeline with this salary range ...
@@ -1775,7 +1775,7 @@ print("\n" + "="*70)
 # =====================================================================
 # FLEXIBLE JOB SCRAPER - Automatically scrape jobs for veteran's location
 # =====================================================================
-# 
+#
 # 🎯 PURPOSE: Make pipeline flexible for ANY veteran + location
 #
 # This cell:
@@ -1798,52 +1798,52 @@ print("="*70)
 def scrape_jobs_for_location(city, state, max_results=100):
     """
     Scrape jobs from Adzuna API for specified location.
-    
+
     Args:
         city: Target city (e.g., 'Houston', 'Greenville')
         state: Target state (e.g., 'TX', 'SC')
         max_results: Maximum number of jobs to fetch
-    
+
     Returns:
         List of job dictionaries
     """
-    
+
     # =====================================================================
     # SECURE CREDENTIAL MANAGEMENT - Databricks Secret Scopes
     # =====================================================================
-    # 
+    #
     # ✅ PRODUCTION APPROACH: Fetch from secret scope at runtime
     # ❌ NEVER hardcode credentials in notebooks
-    # 
+    #
     # Setup (run once):
     #   1. databricks secrets create-scope for-your-service
     #   2. databricks secrets put-secret for-your-service adzuna_app_id --string-value "<your-id>"
     #   3. databricks secrets put-secret for-your-service adzuna_app_key --string-value "<your-key>"
-    # 
+    #
     # See: /Users/whall4.wh@gmail.com/00_Secret_Management_Setup
     # =====================================================================
-    
+
     try:
         # Fetch credentials from secret scope (PRODUCTION)
         ADZUNA_APP_ID = dbutils.secrets.get(scope="for-your-service", key="adzuna_app_id")
         ADZUNA_APP_KEY = dbutils.secrets.get(scope="for-your-service", key="adzuna_app_key")
-        
+
         if not ADZUNA_APP_ID or not ADZUNA_APP_KEY:
             raise ValueError("Secrets are empty - check secret scope setup")
-        
+
         print(f"   🔐 Using secure credentials from secret scope")
-    
+
     except Exception as e:
         # FALLBACK: Hardcoded credentials (DEV ONLY - remove in production!)
         print(f"   ⚠️ WARNING: Failed to fetch secrets: {str(e)}")
         print(f"   ⚠️ Falling back to hardcoded credentials (DEV ONLY)")
         print(f"   ⚠️ See /Users/whall4.wh@gmail.com/00_Secret_Management_Setup for setup guide")
-        
+
         ADZUNA_APP_ID = "ea966e18"
         ADZUNA_APP_KEY = os.getenv("ADZUNA_APP_KEY", "")
-    
+
     location_query = f"{city}, {state}"
-    
+
     # Job keywords relevant to veteran profiles
     keywords = [
         "cloud engineer",
@@ -1853,9 +1853,9 @@ def scrape_jobs_for_location(city, state, max_results=100):
         "site reliability engineer",
         "platform engineer"
     ]
-    
+
     all_jobs = []
-    
+
     for keyword in keywords:
         try:
             url = "https://api.adzuna.com/v1/api/jobs/us/search/1"
@@ -1867,12 +1867,12 @@ def scrape_jobs_for_location(city, state, max_results=100):
                 "where": location_query,
                 "content-type": "application/json"
             }
-            
+
             response = requests.get(url, params=params)
-            
+
             if response.status_code == 200:
                 data = response.json()
-                
+
                 for result in data.get('results', []):
                     job = {
                         "job_id": result.get('id'),
@@ -1900,18 +1900,18 @@ def scrape_jobs_for_location(city, state, max_results=100):
                         "scraped_at": datetime.utcnow().isoformat(),
                         "scrape_date": datetime.utcnow().strftime('%Y-%m-%d')
                     }
-                    
+
                     # Deduplicate by job_id
                     if not any(j['job_id'] == job['job_id'] for j in all_jobs):
                         all_jobs.append(job)
-                
+
                 print(f"   ✅ {keyword}: {len(data.get('results', []))} jobs")
             else:
                 print(f"   ⚠️ {keyword}: API error {response.status_code}")
-        
+
         except Exception as e:
             print(f"   ❌ {keyword}: {str(e)}")
-    
+
     return all_jobs
 
 # Get location from veteran profile (target search location, NOT resume location)
@@ -1932,7 +1932,7 @@ print(f"   Total jobs scraped: {len(scraped_jobs)}")
 if len(scraped_jobs) > 0:
     # Convert to Spark DataFrame
     from pyspark.sql.types import *
-    
+
     # Define schema matching Bronze table
     schema = StructType([
         StructField("job_id", StringType(), True),
@@ -1960,30 +1960,30 @@ if len(scraped_jobs) > 0:
         StructField("scraped_at", StringType(), True),
         StructField("scrape_date", StringType(), True)
     ])
-    
+
     jobs_df = spark.createDataFrame(scraped_jobs, schema)
-    
+
     # Add ingestion timestamp
     jobs_df = jobs_df.withColumn("ingestion_timestamp", current_timestamp())
-    
+
     # Write to APPLICANT-SPECIFIC table (prevents cross-contamination)
     # Clean applicant_id for table name (replace hyphens/spaces with underscores)
     clean_id = applicant_params['applicant_id'].replace('-', '_').replace(' ', '_')
     table_name = f"workspace.fys_bronze.job_postings_{clean_id}"
-    
+
     print(f"\n💾 Writing to applicant-specific table: {table_name}")
     print(f"   🔄 Fresh data for run: {applicant_run_id}")
-    
+
     # Drop existing table for this applicant (ensures fresh scrape)
     spark.sql(f"DROP TABLE IF EXISTS {table_name}")
-    
+
     jobs_df.write \
         .format("delta") \
         .mode("overwrite") \
         .saveAsTable(table_name)
-    
+
     print(f"   ✅ {len(scraped_jobs)} jobs written to {table_name}")
-    
+
     # Store table name for downstream cells
     applicant_jobs_table = table_name
     print(f"\n" + "="*70)
@@ -2066,7 +2066,7 @@ else:
 # MAGIC         "location": "Greenville, SC"
 # MAGIC     },
 # MAGIC     {
-# MAGIC         "name": "Sarah Johnson (Senior Architect)", 
+# MAGIC         "name": "Sarah Johnson (Senior Architect)",
 # MAGIC         "salary": {"min": 150000, "max": 210000},
 # MAGIC         "location": "Greenville, SC"
 # MAGIC     },
@@ -2082,16 +2082,16 @@ else:
 # MAGIC     print(f"\n{'='*70}")
 # MAGIC     print(f"Processing: {vet['name']}")
 # MAGIC     print(f"{'='*70}")
-# MAGIC     
+# MAGIC
 # MAGIC     # Set salary for this veteran
 # MAGIC     veteran_salary_range = get_salary_range(vet['salary'])
-# MAGIC     
+# MAGIC
 # MAGIC     # Load their profile (would customize this for each veteran)
 # MAGIC     # ... build veteran_profile dict with their specific details ...
-# MAGIC     
+# MAGIC
 # MAGIC     # Run matching pipeline
 # MAGIC     # ... (all the existing matching code) ...
-# MAGIC     
+# MAGIC
 # MAGIC     # Generate report
 # MAGIC     print(f"\u2705 Matches found for {vet['name']}")
 # MAGIC ```
@@ -2170,10 +2170,10 @@ else:
 # =====================================================================
 # DYNAMIC VETERAN PROFILE - Built from Applicant Parameters
 # =====================================================================
-# 
+#
 # 🔄 NOW USES: applicant_params from parameter ingestion cell
 # ❌ OLD WAY: Hardcoded veteran_profile dictionary
-# 
+#
 # This profile is constructed dynamically for EACH applicant from:
 #   - Intake form submission (Job mode)
 #   - Notebook parameters (Interactive mode)
@@ -2223,7 +2223,7 @@ print(f"   Clearance: {clearance_status}")
 # =====================================================================
 # Build Dynamic Veteran Profile
 # =====================================================================
-# 
+#
 # This replaces the old hardcoded veteran_profile with a dynamic version
 # that adapts to EACH applicant's parameters.
 # =====================================================================
@@ -2231,29 +2231,29 @@ print(f"   Clearance: {clearance_status}")
 veteran_profile = {
     "name": applicant_params['applicant_name'],
     "applicant_id": applicant_params['applicant_id'],
-    
+
     "location": {
         "target_city": "Greenville",
         "target_state": "SC"
     },
-    
+
     "experience_summary": {
         "total_years": experience_years,
         "seniority_level": seniority_level
     },
-    
+
     "clearance": {
         "status": clearance_status
     },
-    
+
     "target_roles": target_roles,
-    
+
     "salary_requirements": {
         "min": applicant_params['salary_min'],
         "target": int((applicant_params['salary_min'] + applicant_params['salary_max']) / 2),
         "max": applicant_params['salary_max']
     },
-    
+
     # Resume text (if provided) for embedding generation
     "resume_text": applicant_params.get('resume_text')
 }
@@ -2294,7 +2294,7 @@ print(f"📦 From table: {table_name}")
 
 try:
     jobs_df = spark.sql(f"""
-        SELECT 
+        SELECT
             job_id,
             title,
             company,
@@ -2309,32 +2309,32 @@ try:
             url
         FROM {table_name}
     """)
-    
+
     # Convert to pandas for easier text processing
     jobs_pdf = jobs_df.toPandas()
-    
+
     print(f"\n✅ Loaded {len(jobs_pdf)} jobs from Bronze table")
     print(f"   📍 Location: {target_city}, {target_state}")
     print(f"   💼 Sources: {jobs_pdf['source'].unique().tolist()}")
-    
+
     if len(jobs_pdf) > 0:
         print(f"\n📊 Data Quality:")
         print(f"   • Jobs with descriptions: {jobs_pdf['description'].notna().sum()}")
         print(f"   • Jobs with salary data: {jobs_pdf['salary_min'].notna().sum()}")
         print(f"   • Jobs with requirements: {jobs_pdf['requirements'].notna().sum()}")
-        
+
         print(f"\n💰 Salary Range: ${jobs_pdf['salary_min'].min():,.0f} - ${jobs_pdf['salary_max'].max():,.0f}")
-        
+
         print(f"\n🏢 Top Companies:")
         company_counts = jobs_pdf['company'].value_counts().head(5)
         for company, count in company_counts.items():
             if pd.notna(company):
                 print(f"   • {company}: {count} jobs")
-    
+
     print("\n" + "="*70)
     print("✅ DATA LOADED - Ready for enhanced matching")
     print("="*70)
-    
+
 except Exception as e:
     print(f"\n❌ Error loading data: {e}")
     print("\nMake sure you've run the job scraper notebook first to populate the Bronze table.")
@@ -2355,7 +2355,7 @@ print("="*70)
 def parse_job_description(title, description):
     """
     Extract structured information from job title and description.
-    
+
     Returns dict with:
         - years_experience: int or None
         - seniority_level: 'junior'|'mid'|'senior'|'unknown'
@@ -2367,9 +2367,9 @@ def parse_job_description(title, description):
         description = ""
     if not isinstance(title, str):
         title = ""
-    
+
     job_text = f"{title} {description}".lower()
-    
+
     parsed = {
         'years_experience': None,
         'seniority_level': 'unknown',
@@ -2377,7 +2377,7 @@ def parse_job_description(title, description):
         'clearance_type': None,
         'leadership_indicators': []
     }
-    
+
     # 1. Extract years of experience
     exp_patterns = [
         r'(\d+)\+?\s*years?\s+(?:of\s+)?experience',
@@ -2385,13 +2385,13 @@ def parse_job_description(title, description):
         r'experience\s*:\s*(\d+)\+?\s*years?',
         r'minimum\s+of\s+(\d+)\s+years?',
     ]
-    
+
     for pattern in exp_patterns:
         match = re.search(pattern, job_text)
         if match:
             parsed['years_experience'] = int(match.group(1))
             break
-    
+
     # 2. Detect seniority level from title/description
     if any(word in job_text for word in ['entry level', 'entry-level', 'junior', 'associate', 'jr.']):
         parsed['seniority_level'] = 'junior'
@@ -2408,7 +2408,7 @@ def parse_job_description(title, description):
                 parsed['seniority_level'] = 'mid'
             else:
                 parsed['seniority_level'] = 'senior'
-    
+
     # 3. Check for clearance requirements
     clearance_phrases = [
         ('active secret', 'Active Secret'),
@@ -2422,29 +2422,29 @@ def parse_job_description(title, description):
         ('must have clearance', 'Any Active'),
         ('active clearance', 'Any Active')
     ]
-    
+
     for phrase, clearance_type in clearance_phrases:
         if phrase in job_text:
             parsed['clearance_required'] = True
             parsed['clearance_type'] = clearance_type
             break
-    
+
     # "Ability to obtain" is not a hard requirement
     if 'ability to obtain' in job_text and 'clearance' in job_text:
         parsed['clearance_required'] = False
         parsed['clearance_type'] = 'Obtainable'
-    
+
     # 4. Detect leadership indicators
     leadership_phrases = [
         'lead team', 'manage team', 'team lead', 'team leader', 'manage engineers',
         'mentor', 'coach', 'direct reports', 'supervise', 'manage projects',
         'technical leadership', 'cross-functional', 'stakeholder management'
     ]
-    
+
     for phrase in leadership_phrases:
         if phrase in job_text:
             parsed['leadership_indicators'].append(phrase)
-    
+
     return parsed
 
 # Parse all jobs
@@ -2455,25 +2455,25 @@ if len(jobs_pdf) > 0:
         lambda row: parse_job_description(row['title'], row['description']),
         axis=1
     )
-    
+
     # Extract parsed fields
     jobs_pdf['years_required'] = jobs_pdf['parsed'].apply(lambda x: x['years_experience'])
     jobs_pdf['seniority_level'] = jobs_pdf['parsed'].apply(lambda x: x['seniority_level'])
     jobs_pdf['clearance_required'] = jobs_pdf['parsed'].apply(lambda x: x['clearance_required'])
     jobs_pdf['clearance_type'] = jobs_pdf['parsed'].apply(lambda x: x['clearance_type'])
     jobs_pdf['leadership_count'] = jobs_pdf['parsed'].apply(lambda x: len(x['leadership_indicators']))
-    
+
     print("✅ Parsing complete!\n")
     print(f"📊 Seniority Distribution:")
     print(jobs_pdf['seniority_level'].value_counts().to_dict())
-    
+
     print(f"\n🔐 Clearance Requirements:")
     print(f"   • Jobs requiring active clearance: {jobs_pdf['clearance_required'].sum()}")
     print(f"   • Jobs NOT requiring clearance: {(~jobs_pdf['clearance_required']).sum()}")
-    
+
     print(f"\n👔 Leadership Roles:")
     print(f"   • Jobs with leadership indicators: {(jobs_pdf['leadership_count'] > 0).sum()}")
-    
+
     # Show sample parsed job
     sample = jobs_pdf[jobs_pdf['seniority_level'] == 'senior'].head(1)
     if len(sample) > 0:
@@ -2501,7 +2501,7 @@ print("="*70)
 def calculate_enhanced_score(job_row):
     """
     Multi-dimensional scoring (0-100):
-    
+
     1. Technical Skills Match (30 pts)
     2. Experience Level Fit (25 pts)
     3. Responsibility Alignment (25 pts)
@@ -2511,53 +2511,53 @@ def calculate_enhanced_score(job_row):
     score = 0
     reasons = []
     concerns = []
-    
+
     job_text = f"{job_row['title']} {job_row['description'] or ''}".lower()
-    
+
     # 1. TECHNICAL SKILLS MATCH (30 points)
     skills_score = 0
     matched_skills = []
-    
+
     # Expert skills (4 points each, max 20)
     for skill in veteran_profile['technical_skills']['expert']:
         if skill.lower() in job_text:
             skills_score += 4
             matched_skills.append(skill)
-    
+
     # Proficient skills (2 points each, max 10)
     for skill in veteran_profile['technical_skills']['proficient']:
         if skill.lower() in job_text:
             skills_score += 2
             matched_skills.append(skill)
-    
+
     skills_score = min(skills_score, 30)  # Cap at 30
     score += skills_score
-    
+
     if len(matched_skills) > 0:
         reasons.append(f"{len(matched_skills)} technical skills matched: {', '.join(matched_skills[:5])}")
-    
+
     # 2. EXPERIENCE LEVEL FIT (25 points)
     exp_score = 0
     veteran_years = veteran_profile['experience_summary']['total_years']
     veteran_seniority = veteran_profile['experience_summary']['seniority_level']
     job_seniority = job_row['seniority_level']
     job_years = job_row['years_required']
-    
+
     # Perfect match: senior veteran + senior job
     if veteran_seniority == 'senior' and job_seniority == 'senior':
         exp_score = 25
         reasons.append("Perfect seniority match: Senior-level role for senior professional")
-    
+
     # Good match: senior veteran + mid-level job (acceptable)
     elif veteran_seniority == 'senior' and job_seniority == 'mid':
         exp_score = 15
         concerns.append("⚠️ Mid-level role - you may be overqualified")
-    
+
     # Poor match: senior veteran + junior job
     elif veteran_seniority == 'senior' and job_seniority == 'junior':
         exp_score = 5
         concerns.append("❌ Junior role - significantly below your experience level")
-    
+
     # Unknown seniority: infer from years required
     elif job_seniority == 'unknown':
         if job_years:
@@ -2572,41 +2572,41 @@ def calculate_enhanced_score(job_row):
                 concerns.append(f"❌ Requires only {job_years}+ years - below your {veteran_years} years")
         else:
             exp_score = 15  # Benefit of doubt
-    
+
     score += exp_score
-    
+
     # 3. RESPONSIBILITY ALIGNMENT (25 points)
     resp_score = 0
-    
+
     # Leadership alignment
     if job_row['leadership_count'] > 0:
         resp_score += 12
         reasons.append(f"Leadership role with {job_row['leadership_count']} leadership indicators")
-    
+
     # Check for architecture/design keywords
     architecture_keywords = ['architect', 'design', 'infrastructure', 'platform', 'system design']
     arch_matches = sum(1 for kw in architecture_keywords if kw in job_text)
     if arch_matches > 0:
         resp_score += 8
         reasons.append(f"Architecture/design responsibilities (matches your background)")
-    
+
     # Check for data/analytics keywords (your intelligence background)
     data_keywords = ['data', 'analytics', 'intelligence', 'insights', 'reporting']
     data_matches = sum(1 for kw in data_keywords if kw in job_text)
     if data_matches >= 2:
         resp_score += 5
         reasons.append("Data/analytics focus (leverages intelligence background)")
-    
+
     resp_score = min(resp_score, 25)  # Cap at 25
     score += resp_score
-    
+
     # 4. SALARY MATCH (15 points)
     salary_score = 0
     job_min = job_row['salary_min']
     job_max = job_row['salary_max']
     target_min = veteran_profile['salary_requirements']['min']
     target_max = veteran_profile['salary_requirements']['max']
-    
+
     if pd.notna(job_min) and pd.notna(job_max):
         # Check overlap with target range
         if job_max >= target_min and job_min <= target_max:
@@ -2621,19 +2621,19 @@ def calculate_enhanced_score(job_row):
             # Partial overlap
             salary_score = 10
             reasons.append(f"Salary ${job_min:,.0f}-${job_max:,.0f} partially overlaps your range")
-    
+
     score += salary_score
-    
+
     # 5. DISQUALIFIER CHECK (5 bonus points if no disqualifiers)
     disqualifier_score = 5  # Start with full points, deduct for issues
-    
+
     # Active clearance requirement (you have expired)
     if job_row['clearance_required']:
         disqualifier_score = 0
         concerns.append(f"❌ Requires {job_row['clearance_type']} (you have expired TS/SCI)")
-    
+
     score += disqualifier_score
-    
+
     return {
         'total_score': min(score, 100),
         'component_scores': {
@@ -2656,7 +2656,7 @@ if len(jobs_pdf) > 0:
         lambda row: calculate_enhanced_score(row),
         axis=1
     )
-    
+
     # Extract scores and details
     jobs_pdf['match_score'] = jobs_pdf['enhanced_score'].apply(lambda x: x['total_score'])
     jobs_pdf['skills_score'] = jobs_pdf['enhanced_score'].apply(lambda x: x['component_scores']['skills'])
@@ -2665,17 +2665,17 @@ if len(jobs_pdf) > 0:
     jobs_pdf['salary_score'] = jobs_pdf['enhanced_score'].apply(lambda x: x['component_scores']['salary'])
     jobs_pdf['match_reasons'] = jobs_pdf['enhanced_score'].apply(lambda x: x['reasons'])
     jobs_pdf['match_concerns'] = jobs_pdf['enhanced_score'].apply(lambda x: x['concerns'])
-    
+
     # Sort by score
     jobs_pdf_sorted = jobs_pdf.sort_values('match_score', ascending=False)
-    
+
     print("✅ Scoring complete!\n")
     print(f"📊 Score Distribution:")
     print(f"   • Excellent matches (80-100): {(jobs_pdf['match_score'] >= 80).sum()}")
     print(f"   • Good matches (60-79): {((jobs_pdf['match_score'] >= 60) & (jobs_pdf['match_score'] < 80)).sum()}")
     print(f"   • Fair matches (40-59): {((jobs_pdf['match_score'] >= 40) & (jobs_pdf['match_score'] < 60)).sum()}")
     print(f"   • Poor matches (<40): {(jobs_pdf['match_score'] < 40).sum()}")
-    
+
     print(f"\n🏆 Top Score: {jobs_pdf_sorted.iloc[0]['match_score']:.1f}/100")
     print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
 
@@ -2707,17 +2707,17 @@ print(f"💰 Salary Target: ${salary_min:,} - ${salary_max:,}\n")
 
 if len(jobs_pdf_sorted) > 0:
     top_10 = jobs_pdf_sorted.head(10)
-    
+
     for rank, (idx, job) in enumerate(top_10.iterrows(), 1):
         print("\n\n" + "#"*70)
         print(f"RANK #{rank} - MATCH SCORE: {job['match_score']:.1f}/100")
         print("#"*70)
-        
+
         print(f"\n💼 JOB TITLE: {job['title']}")
         print(f"🏯 COMPANY: {job['company']}")
         print(f"📍 LOCATION: {job['city']}, {job['state']}")
         print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
-        
+
         # Component scores breakdown
         print(f"\n📊 SCORE BREAKDOWN:")
         print(f"   • Technical Skills: {job['skills_score']:.0f}/30 pts")
@@ -2725,36 +2725,36 @@ if len(jobs_pdf_sorted) > 0:
         print(f"   • Responsibilities: {job['resp_score']:.0f}/25 pts")
         print(f"   • Salary Match: {job['salary_score']:.0f}/15 pts")
         print(f"   • No Disqualifiers: {job['enhanced_score']['component_scores']['disqualifiers']:.0f}/5 pts")
-        
+
         # Match strengths
         if job['match_reasons']:
             print(f"\n✅ MATCH STRENGTHS:")
             for reason in job['match_reasons']:
                 print(f"   • {reason}")
-        
+
         # Concerns
         if job['match_concerns']:
             print(f"\n⚠️ POTENTIAL CONCERNS:")
             for concern in job['match_concerns']:
                 print(f"   • {concern}")
-        
+
         # Parsed job details
         print(f"\n📑 JOB DETAILS:")
         print(f"   • Seniority Level: {job['seniority_level'].upper()}")
         print(f"   • Years Required: {job['years_required'] or 'Not specified'}")
         print(f"   • Leadership Role: {'Yes' if job['leadership_count'] > 0 else 'No'} ({job['leadership_count']} indicators)")
         print(f"   • Clearance Required: {'Yes - ' + job['clearance_type'] if job['clearance_required'] else 'No'}")
-        
+
         # Application URL
         print(f"\n🔗 APPLICATION URL:")
         print(f"   {job['url']}")
-        
+
         # Description preview
         if pd.notna(job['description']):
             desc_preview = job['description'][:250].replace('\n', ' ')
             print(f"\n📝 DESCRIPTION PREVIEW:")
             print(f"   {desc_preview}...")
-        
+
         # Recommendation
         print(f"\n💡 RECOMMENDATION:")
         if job['match_score'] >= 70:
@@ -2768,38 +2768,38 @@ if len(jobs_pdf_sorted) > 0:
     print("\n\n" + "="*70)
     print("📊 MATCHING SUMMARY")
     print("="*70)
-    
+
     print(f"\n📋 Total Jobs Evaluated: {len(jobs_pdf)}")
     print(f"🎯 Top Score: {jobs_pdf_sorted.iloc[0]['match_score']:.1f}/100")
     print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
     print(f"👍 Jobs scoring 60+: {(jobs_pdf['match_score'] >= 60).sum()}")
     print(f"⚠️ Jobs requiring active clearance: {jobs_pdf['clearance_required'].sum()}")
-    
+
     print(f"\n🏆 KEY TAKEAWAYS:")
-    
+
     strong_matches = jobs_pdf[jobs_pdf['match_score'] >= 70]
     if len(strong_matches) > 0:
         print(f"   • {len(strong_matches)} strong matches (70+ score) worth applying to")
-    
+
     senior_matches = jobs_pdf[(jobs_pdf['seniority_level'] == 'senior') & (jobs_pdf['match_score'] >= 50)]
     if len(senior_matches) > 0:
         print(f"   • {len(senior_matches)} senior-level roles match your experience")
-    
+
     overqualified = jobs_pdf[(jobs_pdf['seniority_level'] == 'junior') | (jobs_pdf['seniority_level'] == 'mid')]
     if len(overqualified) > 0:
         print(f"   • {len(overqualified)} jobs may be below your experience level")
-    
+
     clearance_issues = jobs_pdf[jobs_pdf['clearance_required']]
     if len(clearance_issues) > 0:
         print(f"   ⚠️ {len(clearance_issues)} jobs require active clearance (you have expired TS/SCI)")
-    
+
     print(f"\n💡 NEXT STEPS:")
     print(f"   1. Review top 5-10 matches in detail")
     print(f"   2. Tailor your resume to highlight matching skills")
     print(f"   3. Prepare to explain your For Your Service project (shows current technical work)")
     print(f"   4. Emphasize 10+ years Palantir/i2 experience for data roles")
     print(f"   5. Highlight 18 years former TS/SCI for defense/government contractors")
-    
+
 else:
     print("\n❌ No jobs to display")
 
@@ -2876,16 +2876,16 @@ print("="*70)
 # MAGIC
 # MAGIC ## Why This Matters
 # MAGIC
-# MAGIC ✅ **Semantic Understanding**  
-# MAGIC    "Led cross-functional teams" ≈ "Managed distributed workgroups" (embeddings capture this)  
-# MAGIC    
-# MAGIC ✅ **Probability vs. Score**  
-# MAGIC    "72% chance of success" is more actionable than "61/100 match score"  
-# MAGIC    
-# MAGIC ✅ **Explainable AI**  
-# MAGIC    Show *why* probability is 72% and *what actions* increase it to 85%  
-# MAGIC    
-# MAGIC ✅ **Veteran-Specific Intelligence**  
+# MAGIC ✅ **Semantic Understanding**
+# MAGIC    "Led cross-functional teams" ≈ "Managed distributed workgroups" (embeddings capture this)
+# MAGIC
+# MAGIC ✅ **Probability vs. Score**
+# MAGIC    "72% chance of success" is more actionable than "61/100 match score"
+# MAGIC
+# MAGIC ✅ **Explainable AI**
+# MAGIC    Show *why* probability is 72% and *what actions* increase it to 85%
+# MAGIC
+# MAGIC ✅ **Veteran-Specific Intelligence**
 # MAGIC    Flag companies with veteran hiring programs and provide direct contact info
 
 # COMMAND ----------
@@ -2927,9 +2927,9 @@ print("✅ Model loaded!\n")
 # =====================================================================
 # 1. DYNAMIC VETERAN PROFILE TEXT - From Applicant Parameters
 # =====================================================================
-# 
+#
 # 🔄 NEW APPROACH: Generate veteran text dynamically per applicant
-# 
+#
 # Priority:
 #   1. Use resume_text if provided (most accurate)
 #   2. Otherwise, construct from applicant parameters
@@ -2938,7 +2938,7 @@ print("✅ Model loaded!\n")
 if veteran_profile.get('resume_text'):
     # OPTION A: User provided full resume text
     print("📄 Using provided resume text for embeddings")
-    
+
     veteran_text = f"""
 {applicant_params['applicant_name']} - Professional Profile
 
@@ -2954,7 +2954,7 @@ Resume:
 else:
     # OPTION B: Construct from parameters (fallback when no resume)
     print("⚠️ No resume provided - constructing profile from parameters")
-    
+
     # Determine experience descriptor
     if experience_years < 3:
         exp_desc = "Entry-level professional"
@@ -2964,7 +2964,7 @@ else:
         exp_desc = f"Senior professional with {experience_years} years experience"
     else:
         exp_desc = f"Executive-level leader with {experience_years}+ years experience"
-    
+
     # Build text from available parameters
     veteran_text = f"""
 {applicant_params['applicant_name']} - {exp_desc}
@@ -3001,7 +3001,7 @@ for _, job in jobs_pdf.iterrows():
     Company: {job['company']}
     Location: {job['city']}, {job['state']}
     Salary: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}
-    
+
     Description:
     {job['description'] or 'No description available'}
     """
@@ -3032,12 +3032,12 @@ print("="*70)
 def calculate_match_score(row):
     """
     Calculate initial screening match score (0-100).
-    
+
     THIS IS NOT A REAL PROBABILITY OF GETTING THE JOB!
-    
+
     This score helps prioritize which jobs to apply to first.
     Many factors affect actual hiring (culture fit, other candidates, etc.)
-    
+
     Weights:
     - Semantic Similarity: 30% (neural network matching) - REDUCED from 40%
     - Experience Alignment: 30% (seniority match) - INCREASED
@@ -3045,40 +3045,40 @@ def calculate_match_score(row):
     - Clearance Compatibility: 10% (security clearance)
     - Location Match: 5% (already filtered for Greenville)
     """
-    
+
     # 1. SEMANTIC SIMILARITY (40 points) - Core neural network match
     job_emb = np.array(row['embedding']).reshape(1, -1)
     vet_emb = np.array(row['veteran_embedding']).reshape(1, -1)
     semantic_score = cosine_similarity(vet_emb, job_emb)[0][0]
-    
+
     # Convert cosine similarity (0-1) to points (0-30)
     # REDUCED weight - neural network is less reliable without training data
     # Cosine similarity of 0.7+ is excellent, 0.5-0.7 is good
     semantic_points = semantic_score * 30
-    
+
     # 2. EXPERIENCE ALIGNMENT (30 points) - ADAPTIVE based on applicant
-    # 
+    #
     # 🔄 DYNAMIC: Scoring adapts to applicant's seniority level
-    # 
+    #
     # For junior applicants (< 3 years):
     #   - Junior roles = perfect match
     #   - Mid roles = acceptable
     #   - Senior roles = underqualified
-    # 
+    #
     # For senior applicants (10-15 years):
     #   - Senior roles = perfect match
     #   - Mid roles = acceptable
     #   - Junior roles = overqualified
-    # 
+    #
     # For executive applicants (15+ years):
     #   - Executive roles = perfect match
     #   - Senior roles = acceptable
     #   - Mid/Junior = overqualified
     # =====================================================================
-    
+
     applicant_seniority = veteran_profile['experience_summary']['seniority_level']
     job_seniority = row['seniority_level']
-    
+
     # Experience alignment scoring matrix
     exp_matrix = {
         'junior': {
@@ -3110,16 +3110,16 @@ def calculate_match_score(row):
             'unknown': 15    # Uncertain
         }
     }
-    
+
     exp_points = exp_matrix.get(applicant_seniority, {}).get(job_seniority, 15)
-    
+
     # 3. SALARY MATCH (25 points) - Uses applicant parameters dynamically
     salary_points = 0
     if pd.notna(row['salary_min']) and pd.notna(row['salary_max']):
         # 🔄 DYNAMIC: Use salary from applicant_params (not hardcoded)
         target_min = veteran_profile['salary_requirements']['min']
         target_max = veteran_profile['salary_requirements']['max']
-        
+
         if row['salary_max'] >= target_min and row['salary_min'] <= target_max:
             # Full overlap
             salary_points = 25
@@ -3131,26 +3131,26 @@ def calculate_match_score(row):
             salary_points = 6
     else:
         salary_points = 12  # No data, assume neutral
-    
+
     # 4. CLEARANCE COMPATIBILITY (10 points)
     clearance_points = 10  # Default: no clearance required
     if row['clearance_required']:
         # Active clearance required but veteran has expired
         clearance_points = 0
-    
+
     # 5. LOCATION MATCH (5 points) - Already filtered for Greenville, SC
     location_points = 5
-    
+
     # Total match score
     total_score = semantic_points + exp_points + salary_points + clearance_points + location_points
-    
+
     # Data quality score (how much data we have for this job)
     data_quality = 100
     if pd.isna(row['description']) or len(str(row['description'])) < 100:
         data_quality = 50  # Low quality if description is poor
     if row['salary_min'] is None:
         data_quality -= 20
-    
+
     return {
         'match_score': min(total_score, 100),
         'data_quality': data_quality,
@@ -3190,7 +3190,7 @@ if len(jobs_pdf) > 0:
     print(f"   • Good matches (60-74): {((jobs_pdf['match_score'] >= 60) & (jobs_pdf['match_score'] < 75)).sum()}")
     print(f"   • Fair matches (45-59): {((jobs_pdf['match_score'] >= 45) & (jobs_pdf['match_score'] < 60)).sum()}")
     print(f"   • Weak matches (<45): {(jobs_pdf['match_score'] < 45).sum()}")
-    
+
     print(f"\n🎯 Top Match Score: {jobs_tensor_sorted.iloc[0]['match_score']:.1f}/100")
     print(f"📊 Median Score: {jobs_pdf['match_score'].median():.1f}/100")
 else:
@@ -3252,7 +3252,7 @@ for rank in range(min(5, len(jobs_tensor_sorted))):
     job = jobs_tensor_sorted.iloc[rank]
     weights = job['component_weights']
     score = job['match_score']
-    
+
     # Determine recommendation based on score
     if score >= 70:
         action = "✅ APPLY NOW - Strong Match!"
@@ -3266,7 +3266,7 @@ for rank in range(min(5, len(jobs_tensor_sorted))):
     else:
         action = "⚠️  REVIEW - Lower Match"
         priority = "LOW PRIORITY"
-    
+
     print(f"\n{'─'*80}")
     print(f"MATCH #{rank+1} - {priority} (Score: {score:.0f}/100)")
     print(f"{'─'*80}")
@@ -3275,9 +3275,9 @@ for rank in range(min(5, len(jobs_tensor_sorted))):
     print(f"Location: {job['city']}, {job['state']}")
     print(f"Salary Range: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
     print(f"Experience Level: {job['seniority_level'].title()}")
-    
+
     print(f"\n{action}")
-    
+
     # Why this match?
     print(f"\nWhy This Match?")
     if weights['semantic'] >= 12:
@@ -3288,7 +3288,7 @@ for rank in range(min(5, len(jobs_tensor_sorted))):
         print(f"  • Your experience level matches reasonably well")
     if weights['salary'] >= 20:
         print(f"  • Salary meets your requirements")
-    
+
     # Application link
     if pd.notna(job.get('url')):
         print(f"\nApply Here: {job['url']}")
@@ -3301,10 +3301,10 @@ if 'resume_analysis' in globals():
     print(f"\n" + "="*80)
     print("                    YOUR RESUME FEEDBACK")
     print("="*80)
-    
+
     analysis = resume_analysis
     score = analysis['quality_score']
-    
+
     # Visual score indicator
     if score >= 85:
         score_visual = "⭐⭐⭐⭐⭐ EXCELLENT"
@@ -3318,11 +3318,11 @@ if 'resume_analysis' in globals():
     else:
         score_visual = "⭐⭐ NEEDS WORK"
         score_msg = "Your resume needs significant improvements to stand out."
-    
+
     print(f"\nResume Quality Score: {score}/100")
     print(f"{score_visual}")
     print(f"\n{score_msg}")
-    
+
     if analysis['years_exp_detected']:
         print(f"\nWhat We Found in Your Resume:")
         print(f"  • Experience: {analysis['years_exp_detected']} years")
@@ -3330,7 +3330,7 @@ if 'resume_analysis' in globals():
         if analysis['location_detected']:
             print(f"  • Location: {analysis['location_detected']}")
         print(f"  • Technical Skills: {analysis['skills_count']} identified")
-    
+
     if analysis['recommendations']:
         print(f"\n" + "─"*80)
         print(f"HOW TO IMPROVE YOUR RESUME")
@@ -3338,7 +3338,7 @@ if 'resume_analysis' in globals():
         print(f"\nMaking these {len(analysis['recommendations'])} change(s) will help you get more interviews:\n")
         for i, rec in enumerate(analysis['recommendations'], 1):
             print(f"{i}. {rec}")
-        
+
         print(f"\nWhy These Changes Matter:")
         print(f"  ✓ AI systems (like this one) will match you better")
         print(f"  ✓ Hiring managers can quickly see your qualifications")
@@ -3514,10 +3514,10 @@ story.append(Spacer(1, 0.3*inch))
 if 'resume_analysis' in globals():
     story.append(Paragraph("RESUME QUALITY ASSESSMENT", heading_style))
     story.append(Spacer(1, 0.1*inch))
-    
+
     analysis = resume_analysis
     score = analysis['quality_score']
-    
+
     # Score interpretation
     if score >= 85:
         score_status = "⭐⭐⭐⭐⭐ EXCELLENT"
@@ -3531,17 +3531,17 @@ if 'resume_analysis' in globals():
     else:
         score_status = "⭐⭐ NEEDS WORK"
         score_color = colors.HexColor('#d84315')
-    
+
     story.append(Paragraph(f"<b>Score:</b> {score}/100 - {score_status}", normal_style))
     story.append(Spacer(1, 0.1*inch))
-    
+
     if analysis['recommendations']:
         story.append(Paragraph("<b>Recommendations to Improve Your Resume:</b>", subheading_style))
         for i, rec in enumerate(analysis['recommendations'], 1):
             story.append(Paragraph(f"{i}. {rec}", normal_style))
     else:
         story.append(Paragraph("✅ Your resume is well-structured with no major issues!", normal_style))
-    
+
     story.append(Spacer(1, 0.2*inch))
 
 # =====================================================================
@@ -3555,7 +3555,7 @@ story.append(Spacer(1, 0.1*inch))
 for rank in range(min(10, len(jobs_tensor_sorted))):
     job = jobs_tensor_sorted.iloc[rank]
     score = job['match_score']
-    
+
     # Determine priority
     if score >= 70:
         priority = "HIGH PRIORITY"
@@ -3569,10 +3569,10 @@ for rank in range(min(10, len(jobs_tensor_sorted))):
     else:
         priority = "LOW PRIORITY"
         priority_color = colors.grey
-    
+
     # Match header
     story.append(Paragraph(f"<b>MATCH #{rank+1} - {priority} (Score: {score:.0f}/100)</b>", subheading_style))
-    
+
     # Job details
     job_data = [
         ['Position', job['title']],
@@ -3581,10 +3581,10 @@ for rank in range(min(10, len(jobs_tensor_sorted))):
         ['Salary', f"${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}"],
         ['Experience Level', job['seniority_level'].title()],
     ]
-    
+
     if pd.notna(job.get('url')):
         job_data.append(['Apply Here', job['url'][:60] + '...' if len(job['url']) > 60 else job['url']])
-    
+
     job_table = Table(job_data, colWidths=[1.5*inch, 4.5*inch])
     job_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f5f5f5')),
@@ -3596,10 +3596,10 @@ for rank in range(min(10, len(jobs_tensor_sorted))):
         ('TOPPADDING', (0, 0), (-1, -1), 6),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.grey)
     ]))
-    
+
     story.append(job_table)
     story.append(Spacer(1, 0.2*inch))
-    
+
     # Page break every 3 jobs
     if (rank + 1) % 3 == 0 and rank < min(10, len(jobs_tensor_sorted)) - 1:
         story.append(PageBreak())
@@ -3710,12 +3710,12 @@ def get_veteran_program_info(company_name):
     # Exact match first
     if company_name in VETERAN_FRIENDLY_COMPANIES:
         return VETERAN_FRIENDLY_COMPANIES[company_name]
-    
+
     # Fuzzy match (partial company name)
     for known_company, info in VETERAN_FRIENDLY_COMPANIES.items():
         if known_company.lower() in company_name.lower() or company_name.lower() in known_company.lower():
             return info
-    
+
     return None
 
 # Add veteran program info to all jobs
@@ -3760,7 +3760,7 @@ def generate_recommendations(job_row):
     """
     recommendations = []
     prob = job_row['success_probability']
-    
+
     # Primary recommendation based on probability
     if prob >= 70:
         recommendations.append("✅ APPLY IMMEDIATELY - High probability of success")
@@ -3770,34 +3770,34 @@ def generate_recommendations(job_row):
         recommendations.append("⚠️ FAIR MATCH - Consider if other factors align")
     else:
         recommendations.append("❌ LOW PROBABILITY - Focus on higher-probability opportunities")
-    
+
     # Semantic similarity insights
     if job_row['semantic_similarity'] < 0.35:
         recommendations.append("📝 Resume tip: Emphasize transferable skills from military experience")
     elif job_row['semantic_similarity'] > 0.45:
         recommendations.append("👍 Strong semantic match - Your background aligns well with this role")
-    
+
     # Experience level guidance
     if job_row['seniority_level'] == 'junior':
         recommendations.append("⚠️ Junior role - You may be significantly overqualified")
     elif job_row['seniority_level'] == 'senior':
         recommendations.append("✅ Seniority match - Role appropriate for your 28 years of experience")
-    
+
     # Salary guidance
     if pd.notna(job_row['salary_max']):
         if job_row['salary_max'] < 120000:
             recommendations.append(f"💰 Negotiate: Max salary ${job_row['salary_max']:,.0f} is below your $120K minimum")
         elif job_row['salary_max'] >= 150000:
             recommendations.append(f"💰 Excellent compensation: Up to ${job_row['salary_max']:,.0f}")
-    
+
     # Clearance guidance
     if job_row['clearance_required']:
         recommendations.append("⚠️ Active clearance required - Highlight your 18 years of former TS/SCI experience and willingness to reinstate")
-    
+
     # Veteran program
     if job_row['is_veteran_friendly']:
         recommendations.append("🎖️ VETERAN-FRIENDLY COMPANY - Contact their veteran hiring program (details below)")
-    
+
     return recommendations
 
 # Add recommendations to all jobs
@@ -3808,14 +3808,14 @@ for rank, (idx, job) in enumerate(jobs_tensor_sorted.head(10).iterrows(), 1):
     print("\n\n" + "#"*70)
     print(f"RANK #{rank} - SUCCESS PROBABILITY: {job['success_probability']:.1f}% (±{job['confidence']}% confidence)")
     print("#"*70)
-    
+
     print(f"\n💼 JOB: {job['title']}")
     print(f"🏯 COMPANY: {job['company']}")
     if job['is_veteran_friendly']:
         print(f"🎖️ VETERAN-FRIENDLY: YES")
     print(f"📍 LOCATION: {job['city']}, {job['state']}")
     print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
-    
+
     # Probability breakdown
     weights = job['tensor_result']['component_weights']
     print(f"\n🧠 NEURAL NETWORK ANALYSIS:")
@@ -3824,12 +3824,12 @@ for rank, (idx, job) in enumerate(jobs_tensor_sorted.head(10).iterrows(), 1):
     print(f"   • Salary Alignment: {weights['salary']:.1f}/20 pts")
     print(f"   • Clearance Compatible: {weights['clearance']:.1f}/10 pts")
     print(f"   • Location Match: {weights['location']:.1f}/5 pts")
-    
+
     # Actionable recommendations
     print(f"\n🎯 RECOMMENDED ACTIONS:")
     for i, rec in enumerate(job['recommendations'], 1):
         print(f"   {i}. {rec}")
-    
+
     # Veteran program contact info (if available)
     if job['is_veteran_friendly'] and job['veteran_program']:
         vp = job['veteran_program']
@@ -3842,7 +3842,7 @@ for rank, (idx, job) in enumerate(jobs_tensor_sorted.head(10).iterrows(), 1):
             print(f"   • Phone: {vp['contact_phone']}")
         print(f"   • Website: {vp['website']}")
         print(f"   • Benefits: {', '.join(vp['benefits'])}")
-    
+
     # Application URL
     print(f"\n🔗 APPLY: {job['url']}")
 
@@ -3912,34 +3912,34 @@ for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
     print("\n" + "#"*70)
     print(f"RANK #{rank} - MATCH SCORE: {job['match_score']:.0f}/100")
     print("#"*70)
-    
+
     print(f"\n💼 JOB TITLE: {job['title']}")
     print(f"🏯 COMPANY: {job['company']}")
     print(f"📍 LOCATION: {job['location_display']}")
     print(f"💰 SALARY: ${job['salary_min']:,.0f} - ${job['salary_max']:,.0f}")
-    
+
     print(f"\n📊 DETAILED ANALYSIS:")
     print(f"   • Overall Match Score: {job['match_score']:.0f}/100")
     print(f"   • Skills Alignment: {job['component_weights']['semantic']:.0f}/30 pts")
     print(f"   • Experience Fit: {job['component_weights']['experience']:.0f}/30 pts")
     print(f"   • Salary Match: {job['component_weights']['salary']:.0f}/25 pts")
     print(f"   • Data Quality: {'High' if job['data_quality'] >= 70 else 'Medium' if job['data_quality'] >= 50 else 'Fair'}")
-    
+
     print(f"\n✅ MATCH STRENGTHS:")
     for reason in job['match_reasons']:
         print(f"   • {reason}")
-    
+
     if len(job['match_concerns']) > 0:
         print(f"\n⚠️ POTENTIAL CONCERNS:")
         for concern in job['match_concerns']:
             print(f"   • {concern}")
-    
+
     print(f"\n📑 JOB DETAILS:")
     print(f"   • Seniority Level: {job['seniority_level'].upper()}")
     print(f"   • Years Required: {job['years_required'] or 'Not specified'}")
     print(f"   • Leadership Role: {'Yes' if job['leadership_count'] > 0 else 'No'} ({job['leadership_count']} indicators)")
     print(f"   • Clearance Required: {'Yes - ' + str(job['clearance_type']) if job['clearance_required'] else 'No'}")
-    
+
     # Actionable recommendations
     print(f"\n💡 REALISTIC ASSESSMENT:")
     if job['match_score'] >= 75:
@@ -3962,7 +3962,7 @@ for rank, (idx, job) in enumerate(top_10_tensor.iterrows(), 1):
         print(f"   🔴 WEAK MATCH - Not recommended unless desperate")
         print(f"   • Significant mismatches present")
         print(f"   ⚠️  Low chance of success compared to better-fit opportunities")
-    
+
     print(f"\n🔗 APPLICATION URL:")
     print(f"   {job['url']}")
 
@@ -4023,7 +4023,7 @@ print("="*70)
 
 # Export top 10 matches to CSV
 columns_to_export = [
-    'job_id', 'title', 'company', 'location_display', 
+    'job_id', 'title', 'company', 'location_display',
     'salary_min', 'salary_max', 'match_score',
     'skills_score', 'exp_score', 'salary_score',
     'seniority_level', 'clearance_required', 'url'
@@ -4140,9 +4140,9 @@ top_10 = jobs_tensor_sorted.head(10)
 # Build comprehensive results report
 results_md = f"""# 🎯 For Your Service - Job Matching Results
 
-**Test Run:** {timestamp}  
-**Candidate:** William Free Hall  
-**Location:** Greenville, SC  
+**Test Run:** {timestamp}
+**Candidate:** William Free Hall
+**Location:** Greenville, SC
 **Algorithm:** Siamese Neural Network + Multi-Dimensional Scoring
 
 ---
@@ -4178,12 +4178,12 @@ for rank, (idx, job) in enumerate(top_10.iterrows(), 1):
 """
     for reason in job['match_reasons']:
         results_md += f"* {reason}\n"
-    
+
     if len(job['match_concerns']) > 0:
         results_md += f"\n**Potential Concerns:**\n"
         for concern in job['match_concerns']:
             results_md += f"* {concern}\n"
-    
+
     results_md += f"\n**Application URL:** {job['url']}\n"
     results_md += "\n---\n"
 
@@ -4243,7 +4243,7 @@ Success probability calculated from weighted factors:
 ## 🎖️ Veteran-Friendly Employers Detected
 
 * **Schneider Electric** - Veterans at Schneider Electric program
-* **BorgWarner** - Military Hiring Initiative  
+* **BorgWarner** - Military Hiring Initiative
 * **Honeywell Aerospace** - Veterans Network
 
 ---
@@ -4258,7 +4258,7 @@ Success probability calculated from weighted factors:
 
 ---
 
-*Generated by For Your Service Platform - AI-Powered Veteran Job Matching*  
+*Generated by For Your Service Platform - AI-Powered Veteran Job Matching*
 *Partnered with 7 Eagle Group*
 """
 
