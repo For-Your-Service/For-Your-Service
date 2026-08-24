@@ -271,3 +271,4 @@
 - Commit 271: `feat(telemetry): refine distributed pipeline subcomponent #271`
 - Commit 272: `perf(spark): refine distributed pipeline subcomponent #272`
 - Commit 273: `refactor(etl): refine distributed pipeline subcomponent #273`
+- Commit 274: `chore(embeddings): refine distributed pipeline subcomponent #274`
