@@ -391,3 +391,4 @@
 - Commit 391: `perf(spark): refine distributed pipeline subcomponent #391`
 - Commit 392: `refactor(etl): refine distributed pipeline subcomponent #392`
 - Commit 393: `chore(embeddings): refine distributed pipeline subcomponent #393`
+- Commit 394: `style(matcher): refine distributed pipeline subcomponent #394`
