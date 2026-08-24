@@ -209,3 +209,4 @@
 - Commit 209: `chore(scrub): remove corrupted terminal artifacts and temporary files`
 - Commit 210: `refactor(scrub): eliminate redundant root error dumps and cleanup scratch notes`
 - Commit 211: `style(formatting): strip trailing whitespace across all source and test modules`
+- Commit 212: `style(formatting): normalize newline and end-of-file formatting across json and yaml configs`
