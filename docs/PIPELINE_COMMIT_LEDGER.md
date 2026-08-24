@@ -221,3 +221,4 @@
 - Commit 221: `docs(lakehouse): refine distributed pipeline subcomponent #221`
 - Commit 222: `feat(telemetry): refine distributed pipeline subcomponent #222`
 - Commit 223: `perf(spark): refine distributed pipeline subcomponent #223`
+- Commit 224: `refactor(etl): refine distributed pipeline subcomponent #224`
