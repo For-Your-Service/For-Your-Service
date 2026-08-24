@@ -1,0 +1,13 @@
+# Matching engine configuration
+
+bi_encoder:
+  model: sentence-transformers/all-mpnet-base-v2
+  batch_size: 32
+  
+cross_encoder:
+  model: cross-encoder/ms-marco-MiniLM-L-6-v2
+  
+pipeline:
+  stage1_top_k: 50
+  stage2_rerank_k: 10
+  min_score_threshold: 0.5

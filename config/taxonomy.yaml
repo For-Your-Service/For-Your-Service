@@ -1,0 +1,16 @@
+# Skill taxonomy configuration
+
+normalization:
+  case_sensitive: false
+  remove_special_chars: true
+  
+mos_crosswalk:
+  enabled: true
+  branches:
+    - army
+    - marines
+    - air_force
+    
+onet_integration:
+  enabled: false
+  api_key: ${ONET_API_KEY}

@@ -1,8 +1,12 @@
 #!/bin/bash
-# Run all tests with coverage
+# Run test suite
 
-echo "Running test suite..."
-pytest tests/ -v --cov=src/ --cov-report=html --cov-report=term
+echo "Running tests..."
 
-echo ""
-echo "Coverage report generated in htmlcov/index.html"
+# Unit tests
+pytest tests/unit/ -v --cov=src/
+
+# Integration tests
+pytest tests/integration/ -v
+
+echo "✅ Tests complete!"
