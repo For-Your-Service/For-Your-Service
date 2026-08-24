@@ -295,3 +295,4 @@
 - Commit 295: `chore(embeddings): refine distributed pipeline subcomponent #295`
 - Commit 296: `style(matcher): refine distributed pipeline subcomponent #296`
 - Commit 297: `test(orchestrator): refine distributed pipeline subcomponent #297`
+- Commit 298: `docs(lakehouse): refine distributed pipeline subcomponent #298`
