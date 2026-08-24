@@ -1,19 +1,14 @@
 """
 Resume Parsing Module
-
-Converts unstructured resumes (PDF/DOCX) into normalized, structured data
-for vector embedding generation.
 """
 
-from .parser import ResumeParser
-from .extractors import SkillExtractor, ExperienceExtractor, EducationExtractor
+from .skill_extractor import SkillExtractor
+from .text_extraction import TextExtractor
 from .models import ParsedResume, WorkExperience, Education, Skill
 
 __all__ = [
-    'ResumeParser',
     'SkillExtractor',
-    'ExperienceExtractor', 
-    'EducationExtractor',
+    'TextExtractor',
     'ParsedResume',
     'WorkExperience',
     'Education',
