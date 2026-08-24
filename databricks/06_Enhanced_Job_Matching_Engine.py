@@ -2897,7 +2897,7 @@ print("="*70)
 print("📦 Installing Sentence Transformers Library")
 print("="*70)
 
-%pip install -q sentence-transformers
+# %pip install -q sentence-transformers
 
 print("\n✅ Installation complete!")
 print("\n🧠 Model: all-MiniLM-L6-v2")
@@ -3366,7 +3366,7 @@ print("="*80 + "\n")
 
 # DBTITLE 1,Install PDF Library
 # Install reportlab for PDF generation
-%pip install reportlab --quiet
+# %pip install reportlab --quiet
 
 # COMMAND ----------
 
