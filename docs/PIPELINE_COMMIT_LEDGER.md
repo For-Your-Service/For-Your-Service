@@ -214,3 +214,4 @@
 - Commit 214: `refactor(imports): clean up unused imports and types in matching and ranking pipeline`
 - Commit 215: `refactor(imports): clean up unused variables and dead references in spark modules`
 - Commit 216: `perf(spark): refine distributed pipeline subcomponent #216`
+- Commit 217: `refactor(etl): refine distributed pipeline subcomponent #217`
