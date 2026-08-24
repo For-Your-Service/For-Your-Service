@@ -212,3 +212,4 @@
 - Commit 212: `style(formatting): normalize newline and end-of-file formatting across json and yaml configs`
 - Commit 213: `refactor(imports): clean up unused module imports in ingestion and api clients`
 - Commit 214: `refactor(imports): clean up unused imports and types in matching and ranking pipeline`
+- Commit 215: `refactor(imports): clean up unused variables and dead references in spark modules`
