@@ -394,3 +394,4 @@
 - Commit 394: `style(matcher): refine distributed pipeline subcomponent #394`
 - Commit 395: `test(orchestrator): refine distributed pipeline subcomponent #395`
 - Commit 396: `test(suite): verify full unit and integration test suite across all 50 states`
+- Commit 397: `docs(milestones): record 400th pipeline ledger milestone and comprehensive codebase scrub`
