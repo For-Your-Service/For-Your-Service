@@ -340,3 +340,4 @@
 - Commit 340: `docs(lakehouse): refine distributed pipeline subcomponent #340`
 - Commit 341: `feat(telemetry): refine distributed pipeline subcomponent #341`
 - Commit 342: `perf(spark): refine distributed pipeline subcomponent #342`
+- Commit 343: `refactor(etl): refine distributed pipeline subcomponent #343`
