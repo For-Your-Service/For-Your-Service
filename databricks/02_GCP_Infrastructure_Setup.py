@@ -2,8 +2,8 @@
 # DBTITLE 1,requirements.txt - Dependencies
 # Save as: veteran-intake-function/requirements.txt
 
-functions-framework==3.*
-google-cloud-storage==2.10.0
+# functions-framework==3.*
+# google-cloud-storage==2.10.0
 
 # COMMAND ----------
 

@@ -204,3 +204,4 @@
 - Commit 204: `refactor(etl): refine distributed pipeline subcomponent #204`
 - Commit 205: `chore(embeddings): refine distributed pipeline subcomponent #205`
 - Commit 206: `fix(notebooks): comment unescaped pip magic commands in API_Key_Testing_Framework`
+- Commit 207: `fix(databricks): comment raw dependency declarations in GCP setup notebook`
