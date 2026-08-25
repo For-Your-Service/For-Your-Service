@@ -426,3 +426,4 @@
 - Commit 426: `feat(helm): implement volume mounts for sentence-transformer HuggingFace cache`
 - Commit 427: `feat(helm): add ephemeral model cache volume configuration to values.yaml`
 - Commit 428: `feat(helm): implement priority class template for high-priority matching jobs`
+- Commit 429: `feat(helm): add graceful termination lifecycle hooks to deployment template`
