@@ -449,3 +449,4 @@
 - Commit 449: `feat(istio): implement EnvoyFilter for automated gzip compression on API payloads`
 - Commit 450: `feat(istio): add EnvoyFilter template to Helm chart`
 - Commit 451: `feat(istio): add envoyFilter configuration to values.yaml`
+- Commit 452: `feat(istio): implement RequestAuthentication for JWT verification on API routes`
