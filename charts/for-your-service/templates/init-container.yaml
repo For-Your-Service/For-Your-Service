@@ -1,0 +1,2 @@
+# Init container definition for Databricks Lakehouse connectivity validation
+# Configured dynamically via .Values.initContainers
