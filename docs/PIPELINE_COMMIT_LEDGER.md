@@ -598,3 +598,4 @@
 - Commit 598: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #188`
 - Commit 599: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #189`
 - Commit 600: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #190`
+- Commit 601: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #191`
