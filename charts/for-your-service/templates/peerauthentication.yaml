@@ -1,0 +1,11 @@
+{{- if and .Values.istio.enabled .Values.istio.mtls.enabled }}
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: {{ include "for-your-service.fullname" . }}-strict-mtls
+  labels:
+    {{- include "for-your-service.labels" . | nindent 4 }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode | default "STRICT" }}
+{{- end }}
