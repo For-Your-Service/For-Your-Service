@@ -1,0 +1,3 @@
+# Canary traffic split configuration stage 77
+weight_primary: 90
+weight_canary: 10
