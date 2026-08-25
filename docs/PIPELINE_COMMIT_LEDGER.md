@@ -436,3 +436,4 @@
 - Commit 436: `feat(helm): add values-prod.yaml overlay for hardened GKE production cluster`
 - Commit 437: `docs(helm): add Helm values parameter documentation matrix`
 - Commit 438: `docs(helm): document Helm upgrade and rollback runbooks`
+- Commit 439: `test(helm): add test verifying values.schema.json schema conformance`
