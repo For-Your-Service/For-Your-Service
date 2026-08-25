@@ -454,3 +454,4 @@
 - Commit 454: `feat(istio): add sidecar resource limits tuning annotations to Helm templates`
 - Commit 455: `feat(istio): implement PeerAuthentication STRICT mode verification manifest`
 - Commit 456: `feat(istio): implement NetworkPolicy isolating default namespace mesh traffic`
+- Commit 457: `feat(istio): add networkPolicy configuration to Helm chart values`

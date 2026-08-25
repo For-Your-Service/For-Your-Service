@@ -172,3 +172,6 @@ lifecycle:
 
 envoyFilter:
   enabled: false
+
+networkPolicy:
+  enabled: true
