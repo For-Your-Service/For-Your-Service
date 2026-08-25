@@ -704,3 +704,4 @@
 - Commit 704: `docs(mesh): document enterprise service mesh architecture component #294`
 - Commit 705: `docs(mesh): document enterprise service mesh architecture component #295`
 - Commit 706: `docs(mesh): document enterprise service mesh architecture component #296`
+- Commit 707: `docs(mesh): document enterprise service mesh architecture component #297`
