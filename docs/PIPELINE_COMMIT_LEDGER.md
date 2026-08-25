@@ -430,3 +430,4 @@
 - Commit 430: `feat(helm): add lifecycle preStop configuration to values.yaml`
 - Commit 431: `feat(helm): implement multi-service subchart for Streamlit frontend`
 - Commit 432: `feat(helm): implement multi-service subchart for FastAPI matching engine`
+- Commit 433: `feat(helm): implement multi-service subchart for PySpark ETL ingestion worker`
