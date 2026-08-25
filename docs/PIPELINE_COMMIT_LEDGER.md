@@ -409,3 +409,4 @@
 - Commit 409: `test(helm-istio): add pytest suite validating chart syntax, CRDs, and mTLS configs`
 - Commit 410: `docs(roadmap): finalize helm_istio_implementation.md checklist and repository documentation`
 - Commit 411: `feat(helm): define JSONSchema schema validation for values.yaml parameters`
+- Commit 412: `feat(helm): implement PodDisruptionBudget template for high-availability workloads`
