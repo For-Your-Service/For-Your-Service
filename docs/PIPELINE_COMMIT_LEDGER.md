@@ -521,3 +521,4 @@
 - Commit 521: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #111`
 - Commit 522: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #112`
 - Commit 523: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #113`
+- Commit 524: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #114`
