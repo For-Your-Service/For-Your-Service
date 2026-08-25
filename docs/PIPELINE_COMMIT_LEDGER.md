@@ -465,3 +465,4 @@
 - Commit 465: `feat(istio): implement WorkloadEntry for Databricks Serverless driver node`
 - Commit 466: `docs(istio): publish Zero-Trust mTLS Security Architecture Whitepaper`
 - Commit 467: `docs(istio): publish Istio AuthorizationPolicy and RBAC Guide`
+- Commit 468: `docs(istio): document Egress Gateway whitelisting and compliance audit steps`
