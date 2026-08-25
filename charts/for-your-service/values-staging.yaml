@@ -1,0 +1,6 @@
+replicaCount: 2
+image:
+  tag: "staging"
+istio:
+  mtls:
+    mode: STRICT
