@@ -461,3 +461,4 @@
 - Commit 461: `feat(istio): implement egress traffic audit policy for secret leakage prevention`
 - Commit 462: `feat(istio): implement mutual TLS health check port bypass rule`
 - Commit 463: `feat(istio): implement sidecar proxy concurrency setting optimization`
+- Commit 464: `feat(istio): implement Istio WorkloadGroup for external Databricks VM mesh peering`
