@@ -444,3 +444,4 @@
 - Commit 444: `feat(istio): implement Egress Gateway manifest for external API call auditing`
 - Commit 445: `feat(istio): implement ServiceEntry for USAJOBS federal API endpoint`
 - Commit 446: `feat(istio): implement ServiceEntry for JSearch RapidAPI external endpoint`
+- Commit 447: `feat(istio): implement ServiceEntry for Databricks Lakehouse SQL Serverless endpoint`
