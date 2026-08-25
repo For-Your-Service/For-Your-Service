@@ -443,3 +443,4 @@
 - Commit 443: `feat(istio): add standalone authorization policies in deployment/kubernetes/istio`
 - Commit 444: `feat(istio): implement Egress Gateway manifest for external API call auditing`
 - Commit 445: `feat(istio): implement ServiceEntry for USAJOBS federal API endpoint`
+- Commit 446: `feat(istio): implement ServiceEntry for JSearch RapidAPI external endpoint`
