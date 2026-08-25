@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "for-your-service.fullname" . }}-config
+  labels:
+    {{- include "for-your-service.labels" . | nindent 4 }}
+data:
+  ENVIRONMENT: {{ .Values.env.ENVIRONMENT | default "production" | quote }}
+  LOG_LEVEL: {{ .Values.env.LOG_LEVEL | default "INFO" | quote }}
+  STREAMLIT_SERVER_PORT: {{ .Values.env.STREAMLIT_SERVER_PORT | default "8501" | quote }}
+  STREAMLIT_SERVER_ADDRESS: {{ .Values.env.STREAMLIT_SERVER_ADDRESS | default "0.0.0.0" | quote }}
+  STREAMLIT_SERVER_HEADLESS: {{ .Values.env.STREAMLIT_SERVER_HEADLESS | default "true" | quote }}
