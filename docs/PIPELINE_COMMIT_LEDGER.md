@@ -453,3 +453,4 @@
 - Commit 453: `feat(istio): implement WasmPlugin template for custom veteran profile data sanitization`
 - Commit 454: `feat(istio): add sidecar resource limits tuning annotations to Helm templates`
 - Commit 455: `feat(istio): implement PeerAuthentication STRICT mode verification manifest`
+- Commit 456: `feat(istio): implement NetworkPolicy isolating default namespace mesh traffic`
