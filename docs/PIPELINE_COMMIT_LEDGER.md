@@ -452,3 +452,4 @@
 - Commit 452: `feat(istio): implement RequestAuthentication for JWT verification on API routes`
 - Commit 453: `feat(istio): implement WasmPlugin template for custom veteran profile data sanitization`
 - Commit 454: `feat(istio): add sidecar resource limits tuning annotations to Helm templates`
+- Commit 455: `feat(istio): implement PeerAuthentication STRICT mode verification manifest`
