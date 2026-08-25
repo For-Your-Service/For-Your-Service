@@ -467,3 +467,4 @@
 - Commit 467: `docs(istio): publish Istio AuthorizationPolicy and RBAC Guide`
 - Commit 468: `docs(istio): document Egress Gateway whitelisting and compliance audit steps`
 - Commit 469: `test(istio): add test verifying all ServiceEntries contain valid FQDNs`
+- Commit 470: `test(istio): add test verifying STRICT mTLS in all PeerAuthentication resources`
