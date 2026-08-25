@@ -440,3 +440,4 @@
 - Commit 440: `test(helm): add test verifying template rendering across dev, staging, prod`
 - Commit 441: `feat(istio): implement Istio AuthorizationPolicy for public health endpoints`
 - Commit 442: `feat(istio): implement Istio AuthorizationPolicy for internal API microservices`
+- Commit 443: `feat(istio): add standalone authorization policies in deployment/kubernetes/istio`
