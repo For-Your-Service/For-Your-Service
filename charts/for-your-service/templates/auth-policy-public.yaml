@@ -1,0 +1,10 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fys-allow-health
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/_stcore/health", "/healthz", "/metrics"]
