@@ -590,3 +590,4 @@
 - Commit 590: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #180`
 - Commit 591: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #181`
 - Commit 592: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #182`
+- Commit 593: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #183`
