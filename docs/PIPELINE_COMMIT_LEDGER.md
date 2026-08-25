@@ -648,3 +648,4 @@
 - Commit 648: `security(policy): enforce Kyverno policy and CIS benchmark rule #238`
 - Commit 649: `security(policy): enforce Kyverno policy and CIS benchmark rule #239`
 - Commit 650: `security(policy): enforce Kyverno policy and CIS benchmark rule #240`
+- Commit 651: `test(mesh): add automated test fixture for service mesh routing scenario #241`
