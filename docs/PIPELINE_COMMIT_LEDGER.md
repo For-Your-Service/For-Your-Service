@@ -457,3 +457,4 @@
 - Commit 457: `feat(istio): add networkPolicy configuration to Helm chart values`
 - Commit 458: `feat(istio): implement NetworkPolicy template in Helm chart`
 - Commit 459: `feat(istio): implement Envoy TLS 1.3 minimum protocol cipher configuration`
+- Commit 460: `feat(istio): implement Istio CA cert-manager rotation workflow manifest`
