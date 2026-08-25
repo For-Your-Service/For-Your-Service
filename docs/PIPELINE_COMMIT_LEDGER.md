@@ -558,3 +558,4 @@
 - Commit 558: `feat(crosswalk): configure military branch MOS microservice mesh route #148`
 - Commit 559: `feat(crosswalk): configure military branch MOS microservice mesh route #149`
 - Commit 560: `feat(crosswalk): configure military branch MOS microservice mesh route #150`
+- Commit 561: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #151`
