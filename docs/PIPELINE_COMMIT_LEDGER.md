@@ -470,3 +470,4 @@
 - Commit 470: `test(istio): add test verifying STRICT mTLS in all PeerAuthentication resources`
 - Commit 471: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #61`
 - Commit 472: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #62`
+- Commit 473: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #63`
