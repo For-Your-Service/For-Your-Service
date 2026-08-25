@@ -620,3 +620,4 @@
 - Commit 620: `perf(mesh): tune Envoy proxy buffer pooling and circuit breaker parameter #210`
 - Commit 621: `security(policy): enforce Kyverno policy and CIS benchmark rule #211`
 - Commit 622: `security(policy): enforce Kyverno policy and CIS benchmark rule #212`
+- Commit 623: `security(policy): enforce Kyverno policy and CIS benchmark rule #213`
