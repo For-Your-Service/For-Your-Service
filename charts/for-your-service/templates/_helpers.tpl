@@ -61,3 +61,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Custom annotations helper
+*/}}
+{{- define "for-your-service.annotations" -}}
+{{- with .Values.customAnnotations }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
