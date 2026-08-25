@@ -1,0 +1,110 @@
+name: Helm & Istio Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+      - 'deployment/kubernetes/**'
+      - '.github/workflows/deploy-helm-istio.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+      - 'deployment/kubernetes/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - prototyping
+          - production
+      dry_run:
+        description: 'Perform dry-run without applying changes'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  lint-and-validate:
+    name: Lint & Validate Helm Chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: 'v3.14.0'
+
+      - name: Lint Helm Chart
+        run: |
+          helm lint charts/for-your-service
+
+      - name: Render Templates Test
+        run: |
+          helm template fys-test charts/for-your-service \
+            --set env.ENVIRONMENT=production \
+            --set istio.enabled=true \
+            --debug
+
+  deploy-helm-istio:
+    name: Deploy Helm & Istio Service Mesh
+    needs: [lint-and-validate]
+    if: github.ref == 'refs/heads/main' || inputs.dry_run == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: 'v3.14.0'
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'v1.29.0'
+
+      - name: Authenticate to GKE Cluster
+        if: ${{ !inputs.dry_run }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
+          GKE_ZONE: ${{ secrets.GKE_ZONE }}
+        run: |
+          if [ -n "$GCP_SA_KEY" ]; then
+            echo "$GCP_SA_KEY" | base64 -d > /tmp/gcp-key.json
+            gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+            gcloud container clusters get-credentials "$GKE_CLUSTER_NAME" --zone "$GKE_ZONE"
+          else
+            echo "Skipping GKE auth in dry-run or unconfigured CI environment."
+          fi
+
+      - name: Enable Namespace Istio Injection
+        if: ${{ !inputs.dry_run && secrets.GCP_SA_KEY != '' }}
+        run: |
+          kubectl label namespace default istio-injection=enabled --overwrite || true
+
+      - name: Deploy via Helm Upgrade --Install
+        run: |
+          DRY_RUN_FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
+          
+          helm upgrade --install for-your-service ./charts/for-your-service \
+            --namespace default \
+            --create-namespace \
+            --set image.tag="latest" \
+            --set istio.enabled=true \
+            --set istio.mtls.mode=STRICT \
+            --atomic \
+            --timeout 5m $DRY_RUN_FLAG
