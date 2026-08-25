@@ -627,3 +627,4 @@
 - Commit 627: `security(policy): enforce Kyverno policy and CIS benchmark rule #217`
 - Commit 628: `security(policy): enforce Kyverno policy and CIS benchmark rule #218`
 - Commit 629: `security(policy): enforce Kyverno policy and CIS benchmark rule #219`
+- Commit 630: `security(policy): enforce Kyverno policy and CIS benchmark rule #220`
