@@ -73,14 +73,16 @@ This project includes comprehensive documentation totaling **1,015+ lines** acro
 
 ## 🗂️ Complete File Listing
 
-### Core Documentation (4 files, 1,015+ lines)
+### Core Documentation & Architecture (6 files)
 
-| File | Lines | Purpose | Audience |
-|------|-------|---------|----------|
-| [README.md](../README.md) | 280 | Project landing page | Everyone |
-| [docs/ARCHITECTURE.md](ARCHITECTURE.md) | 390 | Technical deep-dive | Developers |
-| [docs/DEPLOYMENT_STRATEGY.md](DEPLOYMENT_STRATEGY.md) | 345 | Business justification | Leadership + Devs |
-| [DEPLOYMENT_STATUS.md](../DEPLOYMENT_STATUS.md) | 167 | Current status | Operations |
+| File | Purpose | Audience |
+|------|---------|----------|
+| [README.md](../README.md) | Project landing page & quick orientation | Everyone |
+| [helm_istio_implementation.md](../helm_istio_implementation.md) | Helm & Istio integration checklist and execution roadmap | DevOps / SRE |
+| [docs/HELM_ISTIO_ARCHITECTURE.md](HELM_ISTIO_ARCHITECTURE.md) | Enterprise Helm & Istio Zero-Trust service mesh spec | Engineers & DevOps |
+| [docs/KUBERNETES_DEPLOYMENT.md](KUBERNETES_DEPLOYMENT.md) | Kubernetes production deployment & Istio routing guide | Operations |
+| [docs/ARCHITECTURE.md](ARCHITECTURE.md) | Technical architecture & medallion lakehouse | Developers |
+| [docs/DEPLOYMENT_STRATEGY.md](DEPLOYMENT_STRATEGY.md) | Infrastructure cost and architecture decisions | Leadership + Devs |
 
 ### Setup & Configuration (3 files, 574 lines)
 
@@ -90,14 +92,15 @@ This project includes comprehensive documentation totaling **1,015+ lines** acro
 | [setup/02_Generate_Databricks_Token.md](../setup/02_Generate_Databricks_Token.md) | 84 | Token generation guide |
 | [setup/03_Test_API.py](../setup/03_Test_API.py) | 236 | API testing suite |
 
-### Deployment Files (4 files, 308 lines)
+### Deployment & Packaging (5 files)
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| [huggingface/app.py](../huggingface/app.py) | 262 | FastAPI backend |
-| [huggingface/Dockerfile](../huggingface/Dockerfile) | 15 | Docker container definition |
-| [huggingface/requirements.txt](../huggingface/requirements.txt) | 5 | Python dependencies |
-| [huggingface/README.md](../huggingface/README.md) | 26 | Deployment instructions |
+| File | Purpose |
+|------|---------|
+| [charts/for-your-service/](../charts/for-your-service/) | Parameterized Helm chart for Kubernetes & Istio Service Mesh |
+| [.github/workflows/deploy-helm-istio.yml](../.github/workflows/deploy-helm-istio.yml) | Automated CI/CD for Helm linting, template rendering, and deployment |
+| [deployment/kubernetes/istio/](../deployment/kubernetes/istio/) | Standalone Istio Gateway, VirtualService, and mTLS manifests |
+| [huggingface/app.py](../huggingface/app.py) | FastAPI backend |
+| [huggingface/Dockerfile](../huggingface/Dockerfile) | Docker container definition |
 
 ---
 

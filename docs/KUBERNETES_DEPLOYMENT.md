@@ -1,83 +1,136 @@
-# Kubernetes Deployment (Production Option)
+# Enterprise Kubernetes Deployment Guide
 
 ## Overview
 
-For production workloads requiring:
-- Custom domains
-- Higher throughput
-- Advanced monitoring
-- Private deployment
+*For Your Service* supports enterprise-grade microservice deployments leveraging **Helm** for modular workload packaging and **Istio** for Zero-Trust Service Mesh security, mutual TLS (mTLS), and intelligent traffic management.
 
-## Architecture
+---
+
+## Architecture: Enterprise Service Mesh
 
 ```
-┌─────────────────┐
-│   Ingress       │
-│   (NGINX)       │
-└────────┬────────┘
-         │
-    ┌────▼────┐
-    │ Service │
-    └────┬────┘
-         │
-    ┌────▼────────────┐
-    │  Deployment     │
-    │  (3 replicas)   │
-    │                 │
-    │  FastAPI Pod x3 │
-    └─────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    Istio Ingress Gateway                    │
+│                 (Edge Ingress on Port 80/443)               │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Istio VirtualService                     │
+│               (Intelligent / Canary Routing)                │
+└──────────────┬──────────────────────────────┬───────────────┘
+               │ (90% Traffic)                │ (10% Traffic)
+               ▼                              ▼
+┌──────────────────────────────┐ ┌──────────────────────────────┐
+│  Streamlit Frontend / API v1 │ │ Streamlit Frontend / API v2  │
+│  ┌────────────────────────┐  │ │  ┌────────────────────────┐  │
+│  │   Envoy Sidecar Proxy  │  │ │  │   Envoy Sidecar Proxy  │  │
+│  └───────────┬────────────┘  │ │  └───────────┬────────────┘  │
+│              ▼               │ │              ▼               │
+│  ┌────────────────────────┐  │ │  ┌────────────────────────┐  │
+│  │   Workload Application │  │ │  │   Workload Application │  │
+│  └────────────────────────┘  │ │  └────────────────────────┘  │
+└──────────────────────────────┘ └──────────────────────────────┘
+               ▲                              ▲
+               └──────────────┬───────────────┘
+                              │
+               [ Strict Mutual TLS: mTLS STRICT ]
+               (PeerAuthentication Zero-Trust Mesh)
 ```
 
-## GKE Configuration
+---
 
-### Cluster Setup
+## 1. Modular Helm Chart Packaging
+
+Instead of managing raw manifests, use the parameterized Helm chart in `charts/for-your-service`:
+
+### Structure
+```
+charts/for-your-service/
+├── Chart.yaml                  # Chart metadata & versioning
+├── values.yaml                 # Configurable defaults
+├── .helmignore                 # Packaging filters
+└── templates/                  # Parameterized Kubernetes & Istio templates
+    ├── _helpers.tpl            # Template helper macros
+    ├── deployment.yaml         # Multi-replica workload deployment
+    ├── service.yaml            # ClusterIP service
+    ├── gateway.yaml            # Istio Ingress Gateway
+    ├── virtualservice.yaml     # Istio VirtualService (Canary routing)
+    ├── peerauthentication.yaml # Zero-Trust Strict mTLS
+    ├── destinationrule.yaml    # Istio DestinationRule
+    ├── serviceaccount.yaml     # RBAC Workload identity
+    ├── configmap.yaml          # Environment config
+    └── hpa.yaml                # Horizontal Pod Autoscaler
+```
+
+### Installation & Atomic Upgrades
 ```bash
-gcloud container clusters create fys-cluster \
-  --zone us-east1-b \
-  --num-nodes 3 \
-  --machine-type n1-standard-2 \
-  --enable-autoscaling \
-  --min-nodes 2 \
-  --max-nodes 5
+# Validate chart
+helm lint charts/for-your-service
+
+# Deploy or Upgrade with automated rollback on failure
+helm upgrade --install for-your-service ./charts/for-your-service \
+  --namespace default \
+  --create-namespace \
+  --set image.tag="latest" \
+  --set istio.enabled=true \
+  --atomic \
+  --timeout 5m
 ```
 
-### Deployment YAML
+---
+
+## 2. Zero-Trust Security with Istio Service Mesh
+
+### Automatic Sidecar Injection
+Enable automatic Envoy proxy injection across your target namespace:
+```bash
+kubectl label namespace default istio-injection=enabled --overwrite
+```
+
+### Strict mTLS PeerAuthentication
+Enforce cryptographically verified mutual TLS across all microservice pods:
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
 metadata:
-  name: fys-api
+  name: default
+  namespace: default
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: fys-api
-  template:
-    metadata:
-      labels:
-        app: fys-api
-    spec:
-      containers:
-      - name: api
-        image: gcr.io/7eaglegroup/for-your-service:latest
-        ports:
-        - containerPort: 8000
-        env:
-        - name: DATABRICKS_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: fys-secrets
-              key: databricks-token
+  mtls:
+    mode: STRICT
 ```
 
-## Cost Estimate
-- GKE cluster: $95/month
-- Load balancer: $18/month
-- Storage: $5/month
-- **Total: ~$120/month**
+---
 
-## When to Use
-- >1000 requests/day
-- Custom domain required
-- Advanced monitoring needs
-- Multi-region deployment
+## 3. Ingress Traffic & Canary Deployments
+
+Manage ingress traffic via Istio Gateway and VirtualService:
+
+```yaml
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: for-your-service-route
+spec:
+  hosts:
+  - "foryourservice.internal"
+  gateways:
+  - for-your-service-gateway
+  http:
+  - route:
+    - destination:
+        host: streamlit-frontend.default.svc.cluster.local
+        port:
+          number: 8501
+```
+
+For gradual rollouts, configure weighted routing (e.g. 90% v1 / 10% v2) using `deployment/kubernetes/istio/canary-virtualservice.yaml`.
+
+---
+
+## 4. GitHub Actions CI/CD Automation
+
+Continuous deployment is managed via [`.github/workflows/deploy-helm-istio.yml`](file:///.github/workflows/deploy-helm-istio.yml):
+- Automated `helm lint` and template dry-run validation on every PR.
+- Atomic `helm upgrade --install` deployment on merge to `main`.
