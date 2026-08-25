@@ -169,3 +169,6 @@ lifecycle:
   preStop:
     exec:
       command: ["/bin/sleep", "15"]
+
+envoyFilter:
+  enabled: false

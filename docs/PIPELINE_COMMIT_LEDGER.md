@@ -448,3 +448,4 @@
 - Commit 448: `feat(istio): implement EnvoyFilter for strict HTTP security headers (HSTS, CSP)`
 - Commit 449: `feat(istio): implement EnvoyFilter for automated gzip compression on API payloads`
 - Commit 450: `feat(istio): add EnvoyFilter template to Helm chart`
+- Commit 451: `feat(istio): add envoyFilter configuration to values.yaml`
