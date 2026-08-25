@@ -455,3 +455,4 @@
 - Commit 455: `feat(istio): implement PeerAuthentication STRICT mode verification manifest`
 - Commit 456: `feat(istio): implement NetworkPolicy isolating default namespace mesh traffic`
 - Commit 457: `feat(istio): add networkPolicy configuration to Helm chart values`
+- Commit 458: `feat(istio): implement NetworkPolicy template in Helm chart`
