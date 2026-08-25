@@ -1,0 +1,18 @@
+apiVersion: v2
+name: for-your-service
+description: Enterprise Helm Chart for For Your Service SaaS & Data Pipeline Microservices (Streamlit UI, FastAPI Matching Engine, Istio Service Mesh)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - kubernetes
+  - helm
+  - istio
+  - service-mesh
+  - zero-trust
+  - veteran-careers
+  - streamlit
+  - pyspark
+maintainers:
+  - name: 7Eagle Group & Engineering Team
+    email: contact@7eaglegroup.com

@@ -1,0 +1,28 @@
+# Patterns to ignore when packaging Helm chart.
+.DS_Store
+# Common VCS dirs
+.git/
+.gitignore
+.bzr/
+.bzrignore
+.hg/
+.hgignore
+.svn/
+# Common backup files
+*.bak
+*.swp
+*.orig
+*~
+# Various IDEs
+.project
+.idea/
+.vscode/
+*.tmproj
+.classpath
+# PySpark / Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+venv/

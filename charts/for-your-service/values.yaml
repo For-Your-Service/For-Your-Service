@@ -1,0 +1,142 @@
+# Default values for for-your-service.
+# Enterprise-grade microservice configuration with Istio Service Mesh integration.
+
+replicaCount: 2
+
+image:
+  repository: gcr.io/7eaglegroup/for-your-service
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "for-your-service-sa"
+
+podAnnotations:
+  sidecar.istio.io/inject: "true"
+  sidecar.istio.io/proxyCPU: "100m"
+  sidecar.istio.io/proxyMemory: "128Mi"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  fsGroup: 10001
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8501
+  protocol: TCP
+
+# Istio Service Mesh Configuration
+istio:
+  enabled: true
+  mtls:
+    enabled: true
+    mode: STRICT # Zero-Trust strict mTLS across pods
+  gateway:
+    enabled: true
+    name: for-your-service-gateway
+    host: "foryourservice.internal"
+    port: 80
+    protocol: HTTP
+    tls:
+      enabled: false
+      mode: PASSTHROUGH
+  virtualService:
+    enabled: true
+    name: for-your-service-route
+    hosts:
+      - "foryourservice.internal"
+    gateways:
+      - for-your-service-gateway
+    canary:
+      enabled: false
+      weightPrimary: 90
+      weightCanary: 10
+      canaryHost: streamlit-frontend-canary
+  destinationRule:
+    enabled: true
+    name: for-your-service-destination
+    host: "streamlit-frontend.default.svc.cluster.local"
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: ROUND_ROBIN
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: foryourservice.internal
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: 80
+
+env:
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "INFO"
+  PORT: "8501"
+  STREAMLIT_SERVER_PORT: "8501"
+  STREAMLIT_SERVER_ADDRESS: "0.0.0.0"
+  STREAMLIT_SERVER_HEADLESS: "true"
+
+secretEnv:
+  secretName: "fys-secrets"
+  keys:
+    - DATABRICKS_HOST
+    - DATABRICKS_TOKEN
+    - RAPIDAPI_KEY
+    - USAJOBS_API_KEY
+
+livenessProbe:
+  httpGet:
+    path: /_stcore/health
+    port: 8501
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /_stcore/health
+    port: 8501
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 2
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
