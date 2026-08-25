@@ -410,3 +410,4 @@
 - Commit 410: `docs(roadmap): finalize helm_istio_implementation.md checklist and repository documentation`
 - Commit 411: `feat(helm): define JSONSchema schema validation for values.yaml parameters`
 - Commit 412: `feat(helm): implement PodDisruptionBudget template for high-availability workloads`
+- Commit 413: `feat(helm): add default podDisruptionBudget configuration to values.yaml`
