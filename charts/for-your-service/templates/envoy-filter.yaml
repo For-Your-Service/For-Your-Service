@@ -1,0 +1,10 @@
+{{- if .Values.envoyFilter.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: {{ include "for-your-service.fullname" . }}-headers
+spec:
+  workloadSelector:
+    labels:
+      {{- include "for-your-service.selectorLabels" . | nindent 6 }}
+{{- end }}
