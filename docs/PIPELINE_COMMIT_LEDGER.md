@@ -530,3 +530,4 @@
 - Commit 530: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #120`
 - Commit 531: `feat(crosswalk): configure military branch MOS microservice mesh route #121`
 - Commit 532: `feat(crosswalk): configure military branch MOS microservice mesh route #122`
+- Commit 533: `feat(crosswalk): configure military branch MOS microservice mesh route #123`
