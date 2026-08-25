@@ -423,3 +423,4 @@
 - Commit 423: `feat(helm): add custom annotations helper macro in _helpers.tpl`
 - Commit 424: `feat(helm): add pod startup probes configuration for heavy ML model initialization`
 - Commit 425: `feat(helm): parameterize startup probe in values.yaml`
+- Commit 426: `feat(helm): implement volume mounts for sentence-transformer HuggingFace cache`
