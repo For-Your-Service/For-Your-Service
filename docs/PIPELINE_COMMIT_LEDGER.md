@@ -417,3 +417,4 @@
 - Commit 417: `feat(helm): implement topology spread constraints for multi-zone resilience`
 - Commit 418: `feat(helm): add sealed secrets support for gitops credential workflows`
 - Commit 419: `feat(helm): add resource quota definition for namespace cost governance`
+- Commit 420: `feat(helm): add resourceQuota block to values.yaml`

@@ -148,3 +148,6 @@ podDisruptionBudget:
 externalSecrets:
   enabled: false
   secretStore: gcp-secret-manager
+
+resourceQuota:
+  enabled: false
