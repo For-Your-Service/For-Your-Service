@@ -422,3 +422,4 @@
 - Commit 422: `feat(helm): add limitRange parameters to values.yaml`
 - Commit 423: `feat(helm): add custom annotations helper macro in _helpers.tpl`
 - Commit 424: `feat(helm): add pod startup probes configuration for heavy ML model initialization`
+- Commit 425: `feat(helm): parameterize startup probe in values.yaml`

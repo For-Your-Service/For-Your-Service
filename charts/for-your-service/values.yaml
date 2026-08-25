@@ -154,3 +154,8 @@ resourceQuota:
 
 limitRange:
   enabled: false
+
+startupProbe:
+  enabled: true
+  failureThreshold: 30
+  periodSeconds: 10
