@@ -446,3 +446,4 @@
 - Commit 446: `feat(istio): implement ServiceEntry for JSearch RapidAPI external endpoint`
 - Commit 447: `feat(istio): implement ServiceEntry for Databricks Lakehouse SQL Serverless endpoint`
 - Commit 448: `feat(istio): implement EnvoyFilter for strict HTTP security headers (HSTS, CSP)`
+- Commit 449: `feat(istio): implement EnvoyFilter for automated gzip compression on API payloads`
