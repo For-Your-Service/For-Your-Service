@@ -151,3 +151,6 @@ externalSecrets:
 
 resourceQuota:
   enabled: false
+
+limitRange:
+  enabled: false

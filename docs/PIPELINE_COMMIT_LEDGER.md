@@ -419,3 +419,4 @@
 - Commit 419: `feat(helm): add resource quota definition for namespace cost governance`
 - Commit 420: `feat(helm): add resourceQuota block to values.yaml`
 - Commit 421: `feat(helm): implement limit-range template for default container requests`
+- Commit 422: `feat(helm): add limitRange parameters to values.yaml`
