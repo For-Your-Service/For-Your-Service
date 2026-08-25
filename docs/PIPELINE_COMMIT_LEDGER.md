@@ -434,3 +434,4 @@
 - Commit 434: `feat(helm): add values-dev.yaml overlay for rapid local prototyping`
 - Commit 435: `feat(helm): add values-staging.yaml overlay for integration test cluster`
 - Commit 436: `feat(helm): add values-prod.yaml overlay for hardened GKE production cluster`
+- Commit 437: `docs(helm): add Helm values parameter documentation matrix`
