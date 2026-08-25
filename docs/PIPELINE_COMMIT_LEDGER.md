@@ -710,3 +710,4 @@
 - Commit 710: `docs(mesh): document enterprise service mesh architecture component #300`
 - Commit 711: `docs(mesh): document enterprise service mesh architecture component #301`
 - Commit 712: `docs(mesh): document enterprise service mesh architecture component #302`
+- Commit 713: `docs(mesh): document enterprise service mesh architecture component #303`
