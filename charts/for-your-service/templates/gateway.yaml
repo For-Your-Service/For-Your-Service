@@ -1,0 +1,23 @@
+{{- if and .Values.istio.enabled .Values.istio.gateway.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ .Values.istio.gateway.name | default (printf "%s-gateway" (include "for-your-service.fullname" .)) }}
+  labels:
+    {{- include "for-your-service.labels" . | nindent 4 }}
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: {{ .Values.istio.gateway.port | default 80 }}
+        name: http
+        protocol: {{ .Values.istio.gateway.protocol | default "HTTP" }}
+      hosts:
+        - {{ .Values.istio.gateway.host | default "*" | quote }}
+      {{- if .Values.istio.gateway.tls.enabled }}
+      tls:
+        mode: {{ .Values.istio.gateway.tls.mode | default "SIMPLE" }}
+        credentialName: {{ .Values.istio.gateway.tls.credentialName | default "fys-tls-cert" }}
+      {{- end }}
+{{- end }}
