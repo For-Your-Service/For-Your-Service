@@ -499,3 +499,4 @@
 - Commit 499: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #89`
 - Commit 500: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #90`
 - Commit 501: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #91`
+- Commit 502: `feat(telemetry): configure Istio mesh metrics and Prometheus ServiceMonitor #92`
