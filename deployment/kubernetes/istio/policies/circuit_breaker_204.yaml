@@ -1,0 +1,2 @@
+# Circuit breaker resilience spec #204
+max_connections: 1120
