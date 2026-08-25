@@ -414,3 +414,4 @@
 - Commit 414: `feat(helm): implement external secrets operator integration template`
 - Commit 415: `feat(helm): add externalSecrets configuration block to values.yaml`
 - Commit 416: `feat(helm): add pre-flight database migration init-container template`
+- Commit 417: `feat(helm): implement topology spread constraints for multi-zone resilience`
