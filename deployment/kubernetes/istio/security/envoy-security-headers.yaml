@@ -1,1 +1,43 @@
-# EnvoyFilter injecting HSTS, X-Frame-Options, X-Content-Type-Options
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: fys-security-headers
+  namespace: default
+  labels:
+    app.kubernetes.io/name: for-your-service
+spec:
+  workloadSelector:
+    matchLabels:
+      app: for-your-service
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.header_mutation
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.HeaderMutation
+            mutations:
+              response_mutations:
+                - append:
+                    header:
+                      key: "Strict-Transport-Security"
+                      value: "max-age=31536000; includeSubDomains"
+                - append:
+                    header:
+                      key: "X-Content-Type-Options"
+                      value: "nosniff"
+                - append:
+                    header:
+                      key: "X-Frame-Options"
+                      value: "DENY"
+                - append:
+                    header:
+                      key: "X-XSS-Protection"
+                      value: "1; mode=block"

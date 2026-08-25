@@ -1,4 +1,0 @@
-frontend:
-  replicaCount: 2
-  port: 8501
-  serviceType: ClusterIP

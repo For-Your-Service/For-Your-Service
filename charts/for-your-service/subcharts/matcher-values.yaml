@@ -1,4 +1,0 @@
-matcher:
-  replicaCount: 3
-  port: 8000
-  serviceType: ClusterIP

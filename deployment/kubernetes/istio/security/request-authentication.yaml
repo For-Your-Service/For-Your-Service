@@ -1,1 +1,15 @@
-# RequestAuthentication resource verifying OAuth2 / OIDC JWT tokens
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: fys-jwt-auth
+  namespace: default
+  labels:
+    app.kubernetes.io/name: for-your-service
+spec:
+  selector:
+    matchLabels:
+      app: for-your-service
+  jwtRules:
+    - issuer: "https://accounts.google.com"
+      jwksUri: "https://www.googleapis.com/oauth2/v3/certs"
+      forwardOriginalToken: true

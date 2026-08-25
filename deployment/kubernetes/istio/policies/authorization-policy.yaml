@@ -1,1 +1,29 @@
-# Standalone AuthorizationPolicy for zero-trust API access
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fys-zero-trust-rbac
+  namespace: default
+  labels:
+    app.kubernetes.io/name: for-your-service
+    app.kubernetes.io/part-of: for-your-service
+spec:
+  selector:
+    matchLabels:
+      app: for-your-service
+  action: ALLOW
+  rules:
+    # Rule 1: Allow public health checks and metrics from any source
+    - to:
+        - operation:
+            paths:
+              - "/_stcore/health"
+              - "/healthz"
+              - "/metrics"
+    # Rule 2: Allow internal microservice traffic authenticated via SPIFFE service account
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/default/sa/for-your-service-sa"
+      to:
+        - operation:
+            methods: ["GET", "POST"]
