@@ -433,3 +433,4 @@
 - Commit 433: `feat(helm): implement multi-service subchart for PySpark ETL ingestion worker`
 - Commit 434: `feat(helm): add values-dev.yaml overlay for rapid local prototyping`
 - Commit 435: `feat(helm): add values-staging.yaml overlay for integration test cluster`
+- Commit 436: `feat(helm): add values-prod.yaml overlay for hardened GKE production cluster`
