@@ -144,3 +144,7 @@ affinity: {}
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
+
+externalSecrets:
+  enabled: false
+  secretStore: gcp-secret-manager
