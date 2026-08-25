@@ -45,6 +45,7 @@ The military gives you elite operational experience. Civilian tech applications 
 
 ## 🎯 Key Features
 
+- **Modular Helm & Istio Service Mesh:** Enterprise-grade Helm chart (`charts/for-your-service`) with Istio Zero-Trust strict mTLS, Ingress Gateway, and Canary traffic splitting.
 - **Apache Spark & Delta Lake Medallion Engine:** Distributed Bronze-to-Silver MOS cleaning, Gold 384-dimensional vector embedding generation (`@pandas_udf`), and batch matrix matching.
 - **Modular Microservices Suite:** 4 optimized Docker containers (`portal`, `api`, `ingestor`, `spark-runner`) published to GitHub Container Registry (`ghcr.io`).
 - **Streamlit Web Interface:** Production-ready veteran intake portal with real-time job matching across all 6 military branches.
@@ -54,7 +55,7 @@ The military gives you elite operational experience. Civilian tech applications 
 - **AI Resume Parsing:** 100% free, local resume parsing (`pypdf`, `python-docx`) extracting technical, combat, and leadership competencies.
 - **MOS Crosswalk:** Maps military specialties (Army MOS, Navy Ratings, Air Force AFSC) to civilian career tracks.
 - **Regional Focus:** Greenville-Anderson MSA (expandable across national defense corridors).
-- **Serverless Cloud Deployment:** Hosted on **Databricks Apps** (`fys-matching-app`) and **Hugging Face Spaces**.
+- **Serverless & Kubernetes Cloud Deployment:** Hosted on **Databricks Apps** (`fys-matching-app`), **Hugging Face Spaces**, and **GKE / Kubernetes with Istio Service Mesh**.
 
 ---
 
@@ -142,6 +143,12 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for details.
 
 ```
 For-Your-Service/
+├── charts/             # Parameterized Helm charts (Istio mesh, deployments, services)
+│   └── for-your-service/
+├── deployment/         # Production deployment manifests & Istio CRDs
+│   ├── kubernetes/     # Raw manifests and Istio Gateway / VirtualService configs
+│   ├── docker/         # Docker Compose multi-service definitions
+│   └── huggingface/    # Hugging Face deployment artifacts
 ├── app/                # Streamlit Web Application & Databricks App spec
 │   ├── app.py          # Main portal application
 │   ├── app.yaml        # Databricks App proxy & environment configuration
@@ -154,7 +161,7 @@ For-Your-Service/
 ├── notebooks/          # Databricks notebooks
 ├── docs/               # Comprehensive documentation & daily notes
 ├── scripts/            # Deployment and utility automation scripts
-├── tests/              # Full unit & integration test suite (126 tests)
+├── tests/              # Full unit & integration test suite
 ├── config/             # Deployment configurations & schemas
 ├── terraform/          # Multi-cloud IaC (AWS, GCP, Databricks, Hugging Face)
 └── huggingface/        # Hugging Face Spaces deployment
@@ -165,11 +172,12 @@ For-Your-Service/
 ## 🔧 Technology Stack
 
 - **Frontend & App:** Streamlit (1.62+), Uvicorn, FastAPI
+- **Packaging & Mesh:** Helm v3, Istio Service Mesh (Zero-Trust mTLS, Ingress Gateway, Canary)
 - **Data Platform:** Databricks (Unity Catalog `workspace.fys_*` + Serverless Compute)
-- **Hosting:** Databricks Apps (`fys-matching-app`), Hugging Face Spaces, Streamlit Community Cloud
+- **Hosting:** Databricks Apps (`fys-matching-app`), Hugging Face Spaces, Streamlit Community Cloud, GKE
 - **Job Feeds:** USAJOBS API, JSearch, Adzuna
 - **ML / AI:** sentence-transformers (`all-MiniLM-L6-v2`), PyTorch
-- **Testing:** pytest (126 passed tests)
+- **Testing:** pytest
 
 ---
 
@@ -189,11 +197,13 @@ Cost per veteran matched: **$0.14-0.24**
 
 ## 📚 Documentation
 
+- [Helm & Istio Implementation Checklist](helm_istio_implementation.md) - Step-by-step roadmap & zero-trust verification
+- [Enterprise Helm & Istio Architecture](docs/HELM_ISTIO_ARCHITECTURE.md) - Deep-dive into service mesh & traffic engineering
+- [Kubernetes & Istio Deployment Guide](docs/KUBERNETES_DEPLOYMENT.md) - GKE cluster setup & Canary routing
 - [System & Application Health Dashboard](docs/SYSTEM_HEALTH.md) - Automated twice-daily system & application health metrics
 - [Daily Notes August 20, 2026](DAILY_NOTES_2026_08_20.md) - Databricks Apps hosting, live metrics & USAJOBS ingestion
 - [Daily Notes August 13, 2026](DAILY_NOTES_2026_08_13.md) - AWS IAM security architecture & Terraform IaC
 - [Streamlit Portal Guide](docs/STREAMLIT_GUIDE.md) - Comprehensive portal guide & rank crosswalks
-- [API Quickstart](docs/API_QUICKSTART.md) - 15-minute setup
 - [Multi-Cloud Terraform Guide](terraform/README.md) - Automated IaC across AWS, GCP, Databricks & HF
 - [Terraform Architecture Whitepaper](docs/TERRAFORM_ARCHITECTURE.md) - Multi-cloud blueprint
 - [Zero-Downtime Migration Guide](docs/ZERO_DOWNTIME_MIGRATION.md) - Non-destructive adoption runbook

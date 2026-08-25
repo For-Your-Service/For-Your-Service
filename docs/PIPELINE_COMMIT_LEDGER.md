@@ -398,3 +398,13 @@
 - Commit 398: `chore(release): bump package build configuration and verify manifest integrity`
 - Commit 399: `ci(verification): validate GitHub Actions CI matrix for multi-stage microservices`
 - Commit 400: `feat(release): achieve 400th pipeline milestone with full codebase scrub and verification`
+- Commit 401: `feat(helm): initialize for-your-service modular Helm chart and values.yaml`
+- Commit 402: `feat(helm): implement Kubernetes deployment, service, configmap, and HPA templates`
+- Commit 403: `feat(istio): implement Istio Ingress Gateway template for edge routing`
+- Commit 404: `feat(istio): configure VirtualService with weighted canary traffic splitting (90/10)`
+- Commit 405: `feat(istio): enforce Zero-Trust PeerAuthentication strict mTLS encryption`
+- Commit 406: `feat(istio): add DestinationRule with ISTIO_MUTUAL TLS policy and version subsets`
+- Commit 407: `ci(helm): add GitHub Actions workflow for Helm linting, dry-run, and automated deployment`
+- Commit 408: `docs(mesh): publish Helm & Istio architecture specification and migration guide`
+- Commit 409: `test(helm-istio): add pytest suite validating chart syntax, CRDs, and mTLS configs`
+- Commit 410: `docs(roadmap): finalize helm_istio_implementation.md checklist and repository documentation`
