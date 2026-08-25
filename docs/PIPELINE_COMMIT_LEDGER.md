@@ -488,3 +488,4 @@
 - Commit 488: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #78`
 - Commit 489: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #79`
 - Commit 490: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #80`
+- Commit 491: `feat(traffic): optimize Istio VirtualService canary traffic splitting strategy #81`
