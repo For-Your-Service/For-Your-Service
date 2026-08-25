@@ -164,3 +164,8 @@ modelCache:
   enabled: true
   size: 5Gi
   storageClass: standard
+
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sleep", "15"]
