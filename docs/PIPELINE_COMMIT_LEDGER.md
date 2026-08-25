@@ -684,3 +684,4 @@
 - Commit 684: `docs(mesh): document enterprise service mesh architecture component #274`
 - Commit 685: `docs(mesh): document enterprise service mesh architecture component #275`
 - Commit 686: `docs(mesh): document enterprise service mesh architecture component #276`
+- Commit 687: `docs(mesh): document enterprise service mesh architecture component #277`
