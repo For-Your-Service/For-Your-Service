@@ -1,0 +1,39 @@
+{{- if and .Values.istio.enabled .Values.istio.virtualService.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.istio.virtualService.name | default (printf "%s-route" (include "for-your-service.fullname" .)) }}
+  labels:
+    {{- include "for-your-service.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.istio.virtualService.hosts }}
+    - {{ . | quote }}
+    {{- end }}
+  gateways:
+    {{- range .Values.istio.virtualService.gateways }}
+    - {{ . | quote }}
+    {{- end }}
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        {{- if .Values.istio.virtualService.canary.enabled }}
+        - destination:
+            host: {{ include "for-your-service.fullname" . }}.{{ .Release.Namespace | default "default" }}.svc.cluster.local
+            port:
+              number: {{ .Values.service.targetPort }}
+          weight: {{ .Values.istio.virtualService.canary.weightPrimary | default 90 }}
+        - destination:
+            host: {{ .Values.istio.virtualService.canary.canaryHost | default (printf "%s-canary" (include "for-your-service.fullname" .)) }}.{{ .Release.Namespace | default "default" }}.svc.cluster.local
+            port:
+              number: {{ .Values.service.targetPort }}
+          weight: {{ .Values.istio.virtualService.canary.weightCanary | default 10 }}
+        {{- else }}
+        - destination:
+            host: {{ include "for-your-service.fullname" . }}.{{ .Release.Namespace | default "default" }}.svc.cluster.local
+            port:
+              number: {{ .Values.service.targetPort }}
+        {{- end }}
+{{- end }}
