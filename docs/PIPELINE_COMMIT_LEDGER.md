@@ -462,3 +462,4 @@
 - Commit 462: `feat(istio): implement mutual TLS health check port bypass rule`
 - Commit 463: `feat(istio): implement sidecar proxy concurrency setting optimization`
 - Commit 464: `feat(istio): implement Istio WorkloadGroup for external Databricks VM mesh peering`
+- Commit 465: `feat(istio): implement WorkloadEntry for Databricks Serverless driver node`
