@@ -439,3 +439,4 @@
 - Commit 439: `test(helm): add test verifying values.schema.json schema conformance`
 - Commit 440: `test(helm): add test verifying template rendering across dev, staging, prod`
 - Commit 441: `feat(istio): implement Istio AuthorizationPolicy for public health endpoints`
+- Commit 442: `feat(istio): implement Istio AuthorizationPolicy for internal API microservices`
