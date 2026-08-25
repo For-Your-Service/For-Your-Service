@@ -1,0 +1,2 @@
+# Istio Telemetry custom metrics definition #94
+metric_name: veteran_match_latency_94
