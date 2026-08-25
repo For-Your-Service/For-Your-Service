@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: streamlit-frontend-destination
+  namespace: default
+  labels:
+    app.kubernetes.io/name: for-your-service
+    app.kubernetes.io/part-of: for-your-service
+spec:
+  host: streamlit-frontend.default.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    loadBalancer:
+      simple: ROUND_ROBIN
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2

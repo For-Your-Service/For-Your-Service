@@ -1,0 +1,15 @@
+{{- if and .Values.istio.enabled .Values.istio.destinationRule.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ .Values.istio.destinationRule.name | default (printf "%s-destination" (include "for-your-service.fullname" .)) }}
+  labels:
+    {{- include "for-your-service.labels" . | nindent 4 }}
+spec:
+  host: {{ .Values.istio.destinationRule.host | default (printf "%s.%s.svc.cluster.local" (include "for-your-service.fullname" .) (.Release.Namespace | default "default")) }}
+  trafficPolicy:
+    tls:
+      mode: {{ .Values.istio.destinationRule.trafficPolicy.tls.mode | default "ISTIO_MUTUAL" }}
+    loadBalancer:
+      simple: {{ .Values.istio.destinationRule.trafficPolicy.loadBalancer.simple | default "ROUND_ROBIN" }}
+{{- end }}
