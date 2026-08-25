@@ -579,3 +579,4 @@
 - Commit 579: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #169`
 - Commit 580: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #170`
 - Commit 581: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #171`
+- Commit 582: `ci(gitops): enhance Helm packaging automation and multi-cluster overlay #172`
