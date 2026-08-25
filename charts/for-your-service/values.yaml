@@ -159,3 +159,8 @@ startupProbe:
   enabled: true
   failureThreshold: 30
   periodSeconds: 10
+
+modelCache:
+  enabled: true
+  size: 5Gi
+  storageClass: standard
