@@ -415,3 +415,4 @@
 - Commit 415: `feat(helm): add externalSecrets configuration block to values.yaml`
 - Commit 416: `feat(helm): add pre-flight database migration init-container template`
 - Commit 417: `feat(helm): implement topology spread constraints for multi-zone resilience`
+- Commit 418: `feat(helm): add sealed secrets support for gitops credential workflows`
