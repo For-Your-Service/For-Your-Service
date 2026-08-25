@@ -464,3 +464,4 @@
 - Commit 464: `feat(istio): implement Istio WorkloadGroup for external Databricks VM mesh peering`
 - Commit 465: `feat(istio): implement WorkloadEntry for Databricks Serverless driver node`
 - Commit 466: `docs(istio): publish Zero-Trust mTLS Security Architecture Whitepaper`
+- Commit 467: `docs(istio): publish Istio AuthorizationPolicy and RBAC Guide`
