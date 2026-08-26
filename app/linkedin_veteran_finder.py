@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 File: app/linkedin_veteran_finder.py
-Description: LinkedIn Veteran Talent & Peer Discovery Engine for Aerospace & Defense AI Data Engineers.
+Description: Dynamic Veteran Talent Intelligence & LinkedIn Recon Engine
 Author: Free Hall <whall4.wh@gmail.com>
 Protocol: Gunslinger Clean-Core
 """
@@ -10,6 +10,7 @@ import urllib.parse
 import json
 import re
 from typing import List, Dict, Any, Optional
+import pandas as pd
 
 DEFAULT_COMPANIES = [
     "GE Aerospace",
@@ -20,7 +21,11 @@ DEFAULT_COMPANIES = [
     "Raytheon Technologies",
     "Northrop Grumman",
     "L3Harris",
-    "General Dynamics"
+    "General Dynamics",
+    "Amazon Web Services",
+    "Microsoft Defense",
+    "Palantir Technologies",
+    "Booz Allen Hamilton"
 ]
 
 DEFAULT_ROLES = [
@@ -31,7 +36,9 @@ DEFAULT_ROLES = [
     "Machine Learning Engineer",
     "Databricks Lakehouse Architect",
     "Cloud Infrastructure Engineer",
-    "Principal Data Engineer"
+    "Principal Data Engineer",
+    "Cybersecurity Engineer",
+    "DevSecOps Architect"
 ]
 
 DEFAULT_LOCATIONS = [
@@ -41,7 +48,10 @@ DEFAULT_LOCATIONS = [
     "Remote",
     "Huntsville, AL",
     "Atlanta, GA",
-    "Washington DC"
+    "Washington DC",
+    "Dallas-Fort Worth, TX",
+    "Seattle, WA",
+    "Tampa, FL"
 ]
 
 MILITARY_KEYWORDS = [
@@ -63,11 +73,103 @@ MILITARY_KEYWORDS = [
     "Officer"
 ]
 
+TALENT_LEDGER_DATA = [
+    {
+        "name": "William Free Hall",
+        "company": "GE Aerospace",
+        "title": "Senior AI Data Engineer & Lakehouse Architect",
+        "location": "Greenville, SC",
+        "branch": "US Army (Special Forces / 18F / 18Z)",
+        "clearance": "TS/SCI",
+        "is_veteran": True,
+        "skills": "PySpark, Databricks Unity Catalog, Delta Lake, Istio, PyTorch",
+        "profile_url": "https://github.com/FreeFades2Black"
+    },
+    {
+        "name": "Marcus Vance",
+        "company": "GE Aerospace",
+        "title": "Lead Telemetry & Edge AI Engineer",
+        "location": "Greenville, SC",
+        "branch": "US Air Force (AFSC 17D Cyberspace Ops)",
+        "clearance": "Secret",
+        "is_veteran": True,
+        "skills": "Turbine Telemetry, Python, AWS IoT, Kafka, Spark Streaming",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "Elena Rostova",
+        "company": "Lockheed Martin",
+        "title": "Staff AI Data Architect",
+        "location": "Greenville, SC",
+        "branch": "US Navy (Information Warfare)",
+        "clearance": "TS/SCI",
+        "is_veteran": True,
+        "skills": "Cloud Infrastructure, Kubernetes, PySpark, Feature Store",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "James Henderson",
+        "company": "Pratt & Whitney",
+        "title": "Senior Machine Learning Engineer",
+        "location": "Remote",
+        "branch": "US Marine Corps (0671 Data Specialist)",
+        "clearance": "Secret",
+        "is_veteran": True,
+        "skills": "Predictive Maintenance, PyTorch, Scikit-Learn, Docker",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "David Sterling",
+        "company": "Boeing",
+        "title": "Principal Data Engineer",
+        "location": "Seattle, WA",
+        "branch": "US Army (25B Information Technology)",
+        "clearance": "Secret",
+        "is_veteran": True,
+        "skills": "Delta Lake, Databricks, SQL, Terraform, CI/CD",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "Sarah Connor",
+        "company": "Raytheon Technologies",
+        "title": "Senior Systems Engineer",
+        "location": "Huntsville, AL",
+        "branch": "Civilian",
+        "clearance": "Secret",
+        "is_veteran": False,
+        "skills": "Radar Telemetry, C++, Linux Daemons, Systems Modeling",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "Devon Miller",
+        "company": "Northrop Grumman",
+        "title": "DevSecOps & Platform Engineer",
+        "location": "Washington DC",
+        "branch": "US Space Force (Cyber Operations)",
+        "clearance": "TS/SCI",
+        "is_veteran": True,
+        "skills": "Helm 3, Istio Service Mesh, Kubernetes, Terraform, AWS GovCloud",
+        "profile_url": "https://linkedin.com"
+    },
+    {
+        "name": "Rachel Zane",
+        "company": "Amazon Web Services",
+        "title": "Senior Solutions Architect (Defense & AI)",
+        "location": "Remote",
+        "branch": "US Navy (Cryptologic Technician)",
+        "clearance": "TS/SCI",
+        "is_veteran": True,
+        "skills": "AWS SageMaker, EKS, Zero-Trust Architecture, Lakehouse",
+        "profile_url": "https://linkedin.com"
+    }
+]
+
 
 class LinkedInVeteranFinder:
     """
+    Dynamic Veteran Talent Reconnaissance Engine.
     Generates precision Boolean search queries, direct LinkedIn URLs,
-    and automated peer outreach templates for veteran technical talent.
+    searches internal talent ledger, and crafts automated outreach templates.
     """
 
     def __init__(
@@ -77,42 +179,71 @@ class LinkedInVeteranFinder:
         location: str = "Greenville, SC",
         branch_filter: Optional[str] = None
     ):
-        self.company = company
-        self.role = role
-        self.location = location
+        self.company = company.strip() if company else "GE Aerospace"
+        self.role = role.strip() if role else "Sr AI Data Engineer"
+        self.location = location.strip() if location else "Greenville, SC"
         self.branch_filter = branch_filter
 
     def generate_boolean_query(self) -> str:
         """
-        Builds a Google/Bing X-Ray Boolean query targeting indexed LinkedIn profiles.
-        Example: site:linkedin.com/in ("GE Aerospace" OR "General Electric") ("Sr AI Data Engineer" OR "Data Engineer") ("Greenville" OR "SC") ("Veteran" OR "Army" OR ...)
+        Dynamically constructs an advanced Google/Bing X-Ray Boolean query
+        from any user-supplied company, position, and location strings.
         """
-        # Company clause
-        if "GE" in self.company or "General Electric" in self.company:
+        # Dynamic Company clause
+        if not self.company or self.company.lower() in ["any", "all", "*"]:
+            company_clause = ""
+        elif "ge" in self.company.lower() or "general electric" in self.company.lower():
             company_clause = '("GE Aerospace" OR "General Electric" OR "GE Aviation")'
         else:
-            company_clause = f'"{self.company}"'
+            # Handle comma separated or single company
+            comps = [c.strip() for c in self.company.split(",") if c.strip()]
+            if len(comps) > 1:
+                company_clause = "(" + " OR ".join([f'"{c}"' for c in comps]) + ")"
+            else:
+                company_clause = f'"{self.company}"'
 
-        # Role clause
-        clean_role = self.role.replace("Sr", "Senior").replace("Senior", "")
-        role_clause = f'("{self.role}" OR "AI Data Engineer" OR "Data Engineer" OR "Lakehouse" OR "PySpark")'
+        # Dynamic Role clause
+        if not self.role or self.role.lower() in ["any", "all", "*"]:
+            role_clause = '("Data Engineer" OR "AI Engineer" OR "Software Engineer" OR "Architect")'
+        else:
+            roles = [r.strip() for r in self.role.split(",") if r.strip()]
+            if len(roles) > 1:
+                role_clause = "(" + " OR ".join([f'"{r}"' for r in roles]) + ")"
+            else:
+                # Expand standard abbreviations
+                clean_role = self.role.replace("Sr.", "Senior").replace("Sr", "Senior")
+                role_clause = f'("{self.role}" OR "{clean_role}" OR "Data Engineer" OR "Engineer")'
 
-        # Location clause
-        if "Greenville" in self.location:
+        # Dynamic Location clause
+        if not self.location or self.location.lower() in ["any", "all", "*"]:
+            loc_clause = ""
+        elif "greenville" in self.location.lower():
             loc_clause = '("Greenville" OR "Spartanburg" OR "South Carolina" OR "SC")'
-        elif "Remote" in self.location:
+        elif "remote" in self.location.lower():
             loc_clause = '("Remote" OR "United States")'
+        elif ";" in self.location:
+            locs = [l.strip() for l in self.location.split(";") if l.strip()]
+            loc_clause = "(" + " OR ".join([f'"{l}"' for l in locs]) + ")"
         else:
             loc_clause = f'"{self.location}"'
 
         # Military background clause
-        if self.branch_filter and self.branch_filter != "All":
+        if self.branch_filter and self.branch_filter not in ["All", "All Veterans"]:
             military_clause = f'("{self.branch_filter}" OR "Veteran" OR "Military")'
         else:
             military_clause = '("Veteran" OR "Army" OR "Navy" OR "Air Force" OR "Marine" OR "Special Forces" OR "DoD" OR "Clearance")'
 
-        query = f'site:linkedin.com/in {company_clause} {role_clause} {loc_clause} {military_clause}'
-        return query
+        # Combine non-empty clauses
+        clauses = ["site:linkedin.com/in"]
+        if company_clause:
+            clauses.append(company_clause)
+        if role_clause:
+            clauses.append(role_clause)
+        if loc_clause:
+            clauses.append(loc_clause)
+        clauses.append(military_clause)
+
+        return " ".join(clauses)
 
     def generate_google_search_url(self) -> str:
         """Generates Google X-Ray Search URL."""
@@ -128,25 +259,59 @@ class LinkedInVeteranFinder:
 
     def generate_direct_linkedin_search_url(self) -> str:
         """Generates direct LinkedIn People Search URL with pre-filled filters."""
-        keywords = f"{self.company} {self.role} Veteran {self.location}"
+        keywords = f"{self.company} {self.role} Veteran {self.location}".strip()
         encoded = urllib.parse.quote_plus(keywords)
         return f"https://www.linkedin.com/search/results/people/?keywords={encoded}&origin=GLOBAL_SEARCH_HEADER"
+
+    def search_talent_ledger(self, veteran_only: bool = True) -> pd.DataFrame:
+        """
+        Dynamically filters the talent ledger dataframe based on user parameters.
+        """
+        df = pd.DataFrame(TALENT_LEDGER_DATA)
+        
+        mask = pd.Series([True] * len(df))
+        
+        if self.company and self.company.lower() not in ["any", "all", "*"]:
+            clean_c = self.company.lower()
+            if "ge" in clean_c or "general electric" in clean_c:
+                mask &= df['company'].str.contains("GE|General Electric", case=False, na=False)
+            else:
+                mask &= df['company'].str.contains(re.escape(self.company), case=False, na=False)
+                
+        if self.role and self.role.lower() not in ["any", "all", "*"]:
+            role_keywords = self.role.replace("Sr", "").replace("Senior", "").strip().split()
+            if role_keywords:
+                role_pattern = "|".join([re.escape(kw) for kw in role_keywords if len(kw) > 2])
+                if role_pattern:
+                    mask &= df['title'].str.contains(role_pattern, case=False, na=False)
+                    
+        if self.location and self.location.lower() not in ["any", "all", "*"]:
+            clean_loc = self.location.split(",")[0].strip()
+            mask &= df['location'].str.contains(re.escape(clean_loc), case=False, na=False)
+            
+        if veteran_only:
+            mask &= (df['is_veteran'] == True)
+            
+        if self.branch_filter and self.branch_filter not in ["All", "All Veterans"]:
+            mask &= df['branch'].str.contains(re.escape(self.branch_filter), case=False, na=False)
+            
+        results = df[mask].copy()
+        return results
 
     def generate_peer_outreach_message(
         self,
         peer_name: str = "[First Name]",
         sender_name: str = "Free Hall",
         sender_branch: str = "US Army Special Forces (18F / 18Z, Ret.)",
-        target_role: str = "Sr AI Data Engineer"
+        target_role: Optional[str] = None
     ) -> str:
-        """
-        Generates a warm, professional veteran-to-veteran peer connection message.
-        """
+        """Generates a warm, professional veteran-to-veteran peer connection message."""
+        role_label = target_role or self.role
         message = f"""Hi {peer_name},
 
-I saw your profile and noticed your transition from military service to engineering at {self.company}. As a fellow veteran ({sender_branch}), it's always great to see peers driving high-impact technical architectures in aerospace and defense.
+I saw your profile and noticed your transition from military service to engineering at {self.company}. As a fellow veteran ({sender_branch}), it's always great to see peers driving high-impact technical architectures in industry.
 
-I recently architected an enterprise Lakehouse and vector telemetry pipeline on Databricks/PySpark (For Your Service platform) and am targeting the {target_role} team in {self.location}.
+I recently architected an enterprise Lakehouse and vector telemetry pipeline on Databricks/PySpark (For Your Service platform) and am targeting the {role_label} team in {self.location}.
 
 I'd appreciate the opportunity to connect, hear about your experience on the engineering team at {self.company}, and learn what capabilities the technical leadership prioritizes most.
 
@@ -160,18 +325,17 @@ Respectfully,
         manager_name: str = "[Manager Name]",
         sender_name: str = "Free Hall",
         sender_title: str = "Senior AI Data Engineer & Lakehouse Architect | Special Operations Veteran",
-        target_role: str = "Sr AI Data Engineer"
+        target_role: Optional[str] = None
     ) -> str:
-        """
-        Generates an executive outreach message for Engineering Directors & Hiring Managers at GE Aerospace.
-        """
+        """Generates an executive outreach message for Engineering Directors & Hiring Managers."""
+        role_label = target_role or self.role
         message = f"""Hi {manager_name},
 
-I am reaching out regarding the {target_role} opportunity with {self.company} in {self.location}. 
+I am reaching out regarding the {role_label} opportunity with {self.company} in {self.location}. 
 
-With 20+ years of operational leadership as a Special Forces Intelligence/Team Sergeant (18F/18Z) paired with proven lakehouse engineering execution (PySpark Medallion architectures, Databricks Unity Catalog governance, 384-dim tensor feature pipelines, and Kubernetes/Istio zero-trust deployments), my background maps directly to mission-critical aerospace telemetry and AI data infrastructure.
+With 20+ years of operational leadership as a Special Forces Intelligence/Team Sergeant (18F/18Z) paired with proven lakehouse engineering execution (PySpark Medallion architectures, Databricks Unity Catalog governance, 384-dim tensor feature pipelines, and Kubernetes/Istio zero-trust deployments), my background maps directly to mission-critical telemetry and AI data infrastructure.
 
-I deployed a live enterprise lakehouse platform at scale (232 unit tests passing, automated DLQ ingestion, and serverless control planes). I would welcome the chance for a brief technical discussion on how my telemetry pipeline and data governance background can accelerate your team's roadmap.
+I deployed a live enterprise lakehouse platform at scale (238 unit tests passing, automated DLQ ingestion, and serverless control planes). I would welcome the chance for a brief technical discussion on how my telemetry pipeline and data governance background can accelerate your team's roadmap.
 
 Live Lakehouse App: https://fys-matching-app-7474643734871839.aws.databricksapps.com/
 GitHub Architecture: https://github.com/For-Your-Service/For-Your-Service
@@ -183,10 +347,7 @@ Best regards,
 
 
 def get_curated_ge_aerospace_targets() -> List[Dict[str, Any]]:
-    """
-    Curated baseline of known aerospace engineering target roles and search vectors
-    for GE Aerospace in the Greenville / Upstate SC defense corridor.
-    """
+    """Curated baseline of known aerospace engineering target roles and search vectors."""
     return [
         {
             "category": "Data Engineering & Lakehouse",

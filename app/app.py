@@ -1238,19 +1238,19 @@ if nav_selection == "📋 Veteran Intake & Match":
         * **Implementation:** Streamlit-based interface hosted natively on Databricks Apps providing real-time visibility into pipeline throughput, data freshness decay curves, and model telemetry for technical stakeholders.
         """)
 
-    with st.expander("🎯 LinkedIn Veteran & Aerospace AI Talent Finder (GE Aerospace • Greenville, SC)", expanded=False):
+    with st.expander("🛡️ Dynamic Veteran Talent Recon Grid & LinkedIn X-Ray Engine", expanded=False):
         st.markdown("""
-        ### 🔍 Find Military Veterans in Aerospace & AI Data Engineering
-        Generate targeted **Google X-Ray Boolean queries** and direct **LinkedIn Search URLs** to connect with military veterans working at **GE Aerospace** and defense primes in the Greenville, SC corridor.
+        ### 🔍 Dynamic Personnel Reconnaissance & X-Ray Search Launcher
+        Enter **any company, position, and location** to instantly filter military veteran profiles from our talent ledger and generate targeted **Google/DuckDuckGo Boolean X-Ray search vectors** for live LinkedIn profiles.
         """)
         
         li_col1, li_col2, li_col3 = st.columns(3)
         with li_col1:
-            li_company = st.selectbox("Target Company", ["GE Aerospace", "Lockheed Martin", "Boeing", "Pratt & Whitney", "Raytheon", "Northrop Grumman"], index=0, key="li_comp")
+            li_company = st.text_input("Target Company / Organization", value="GE Aerospace", help="e.g. GE Aerospace, Lockheed Martin, AWS, SpaceX", key="li_dyn_comp")
         with li_col2:
-            li_role = st.selectbox("Target Role", ["Sr AI Data Engineer", "Senior AI Data Engineer", "Machine Learning Engineer", "Lakehouse Architect", "Cloud Infrastructure Architect"], index=0, key="li_role")
+            li_role = st.text_input("Target Position / Role", value="Sr AI Data Engineer", help="e.g. Sr AI Data Engineer, Cloud Architect, Systems Engineer", key="li_dyn_role")
         with li_col3:
-            li_loc = st.selectbox("Location", ["Greenville, SC", "South Carolina", "Remote", "Huntsville, AL", "Atlanta, GA"], index=0, key="li_loc")
+            li_loc = st.text_input("Target Location / Region", value="Greenville, SC", help="e.g. Greenville, SC, Huntsville, AL, Remote", key="li_dyn_loc")
             
         if LinkedInVeteranFinder:
             finder_inst = LinkedInVeteranFinder(company=li_company, role=li_role, location=li_loc)
@@ -1258,25 +1258,36 @@ if nav_selection == "📋 Veteran Intake & Match":
             g_url = finder_inst.generate_google_search_url()
             d_url = finder_inst.generate_duckduckgo_url()
             l_url = finder_inst.generate_direct_linkedin_search_url()
+            ledger_matches = finder_inst.search_talent_ledger(veteran_only=True)
             
-            st.code(b_query, language="text")
+            recon_tab1, recon_tab2, recon_tab3 = st.tabs(["🛰️ Personnel Recon Results", "📡 Live Web X-Ray Search", "💬 Warm Outreach Generator"])
             
-            b_col1, b_col2, b_col3 = st.columns(3)
-            with b_col1:
-                st.link_button("🚀 Launch Google X-Ray Search", g_url, use_container_width=True)
-            with b_col2:
-                st.link_button("🦆 Launch DuckDuckGo X-Ray", d_url, use_container_width=True)
-            with b_col3:
-                st.link_button("🔗 Direct LinkedIn Search", l_url, use_container_width=True)
-                
-            st.markdown("#### 💬 1-Click Peer & Executive Outreach Templates")
-            out_tab1, out_tab2 = st.tabs(["Veteran Peer-to-Peer Message", "Hiring Manager Executive Outreach"])
-            with out_tab1:
+            with recon_tab1:
+                st.markdown(f"**Acquired Targets in Talent Ledger ({len(ledger_matches)} found):**")
+                if not ledger_matches.empty:
+                    st.dataframe(ledger_matches[['name', 'company', 'title', 'location', 'branch', 'clearance', 'skills']], use_container_width=True)
+                else:
+                    st.info(f"No internal ledger matches for '{li_company}' / '{li_role}' / '{li_loc}'. Use the Live Web X-Ray tab to search external LinkedIn profiles!")
+                    
+            with recon_tab2:
+                st.markdown("**Formulated Boolean X-Ray Query (Public Indexed Profiles):**")
+                st.code(b_query, language="text")
+                b_col1, b_col2, b_col3 = st.columns(3)
+                with b_col1:
+                    st.link_button("🚀 Launch Google X-Ray", g_url, use_container_width=True)
+                with b_col2:
+                    st.link_button("🦆 Launch DuckDuckGo X-Ray", d_url, use_container_width=True)
+                with b_col3:
+                    st.link_button("🔗 Direct LinkedIn Search", l_url, use_container_width=True)
+                    
+            with recon_tab3:
                 p_msg = finder_inst.generate_peer_outreach_message(peer_name="Alex", sender_name="Free Hall", sender_branch="US Army Special Forces (18F / 18Z, Ret.)", target_role=li_role)
-                st.text_area("Peer Outreach Message", value=p_msg, height=180, key="li_peer_msg")
-            with out_tab2:
                 m_msg = finder_inst.generate_hiring_manager_outreach_message(manager_name="Hiring Team Lead", sender_name="Free Hall", target_role=li_role)
-                st.text_area("Executive Outreach Message", value=m_msg, height=180, key="li_mgr_msg")
+                out_tab1, out_tab2 = st.tabs(["Veteran Peer-to-Peer Message", "Hiring Manager Executive Outreach"])
+                with out_tab1:
+                    st.text_area("Peer Outreach Message (Ready to Copy)", value=p_msg, height=160, key="li_peer_msg_dyn")
+                with out_tab2:
+                    st.text_area("Executive Outreach Message (Ready to Copy)", value=m_msg, height=160, key="li_mgr_msg_dyn")
 
     # Mobile & Quick Demo Selector (Accessible on all screens)
     with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):
