@@ -14,27 +14,29 @@
 ---
 
 ## 02. EXECUTIVE SUMMARY
-Principal Cloud & AI Architect, DevSecOps Lead, and Technical Lead with a career defined by elite military operations and enterprise multi-cloud transformation. Veteran Green Beret with over 20 years of experience transitioning high-stakes operational leadership into architecting secure, resilient multi-cloud environments and neural network pipelines across AWS, Azure, GCP, Databricks, and GitHub Enterprise. Bridges deep technical execution, zero-trust security baselines, identity management, and executive-level strategy—from briefing senior leadership on cybersecurity risk posture to mentoring engineering teams through automated CI/CD pipelines. Expert in Databricks Lakehouse architecture, PySpark analytics, Unity Catalog governance, and Policy-as-Code. Seeking to bring command-level leadership, DataOps automation, and AI/ML platform mastery to Molina Healthcare as Senior Architect, Information Systems.
+Principal Cloud & AI Data Architect, DevSecOps Lead, and Technical Lead with a career defined by elite military operations and enterprise multi-cloud transformation. Veteran Green Beret with over 20 years of experience transitioning high-stakes operational leadership into architecting secure, resilient lakehouse environments and neural network pipelines across AWS, GCP, Azure, Databricks, and Kubernetes. Bridges deep technical execution in high-throughput PySpark data ingestion, vector/tensor feature stores, zero-trust security baselines, and automated CI/CD pipelines with executive-level strategy. Expert in Databricks Lakehouse architecture, PySpark analytics, Unity Catalog governance, and Policy-as-Code. Seeking to bring mission-critical data engineering mastery, distributed telemetry pipelines, and AI/ML platform leadership to **GE Aerospace as Senior AI Data Engineer**.
 
 ---
 
 ## 03. CORE COMPETENCIES & TECHNICAL STACK
-* **Databricks & AI Platform Architecture:** Databricks Lakehouse, Delta Lake, Unity Catalog, Medallion Architecture (Bronze/Silver/Gold), Databricks SQL, PySpark, Hugging Face, Neural Network Fine-Tuning, Vector Embeddings & Search.
-* **Multi-Cloud & Zero-Trust Security:** AWS, Azure, GCP, GitHub Enterprise, IAM Boundary Controls, Multi-Tenant Isolation, Identity Management & Governance, Policy-as-Code, Secret Management, Identity Federation.
-* **DevSecOps & Infrastructure as Code:** Terraform, Ansible, Docker, Kubernetes (GKE, AKS), Helm, GitHub Actions, Jenkins, GitLab CI, Zero-Downtime CI/CD Pipelines, Blast Radius Reduction.
-* **Data Engineering & Cybersecurity Analytics:** Distributed Data Pipelines, REST API Ingestion, Vector Databases, Palantir, i2 Analyst's Notebook, PyTorch, Scikit-Learn, Pandas, Python, SQL.
-* **Executive Leadership & Operations:** Command-Level Executive Briefings (General Officer Level), Risk Mitigation & ROI Alignment, Cybersecurity Incident Response, Cross-Functional Mentorship, Team Room Culture, Veteran Advocacy.
+* **Databricks & AI Platform Architecture:** Databricks Lakehouse, Delta Lake, Unity Catalog, Medallion Architecture (Bronze/Silver/Gold), Databricks SQL, PySpark, Distributed Pandas UDFs, Hugging Face, Neural Network Fine-Tuning, Vector Embeddings & Vector Search Indexing.
+* **Telemetry, Streaming & Ingestion Engineering:** Auto Loader, Structured Streaming, Change Data Feed (CDC), Fault-Tolerant Dead Letter Queues (DLQ), High-Throughput Schema Enforcement, Unstructured Data Parsing.
+* **Multi-Cloud & Zero-Trust Security:** AWS, GCP, Azure, IAM Boundary Controls, Multi-Tenant Isolation, Identity Federation, Policy-as-Code, ITAR/CUI Compliance, Secret Management.
+* **DevSecOps & Cloud-Native Microservices:** Terraform IaC, Docker, Kubernetes (GKE, EKS), Helm 3, Istio Service Mesh (Strict mTLS), GitHub Actions CI/CD, Automated Rollbacks.
+* **Data Science & ML-Adjacent Feature Stores:** Vector Databases, PyTorch, Sentence-Transformers, Scikit-Learn, Pandas, NumPy, Python, SQL, REST APIs, Streamlit Control Planes.
+* **Executive Leadership & Operations:** Command-Level Executive Briefings (General Officer Level), Risk Mitigation & ROI Alignment, Cross-Functional Team Leadership, High-Stakes Decision Support.
 
 ---
 
 ## 04. PROFESSIONAL EXPERIENCE LOG
 
 ### PRINCIPAL CLOUD & AI ARCHITECT | TECHNICAL LEAD (2024 – Present)
-**For Your Service (Veteran Advocacy Platform) | GitHub Enterprise / Remote**
-* **Databricks Lakehouse & Governance:** Architected an open-source, multi-tier Data Lakehouse (Bronze/Silver/Gold) on Databricks using Unity Catalog for automated RBAC governance, secret management, and fine-grained multi-tenant access control.
-* **AI/ML & Neural Pipeline Execution:** Engineered PySpark ETL pipelines ingesting live market API feeds. Built and fine-tuned a Siamese twin-tower neural network utilizing 384-dimensional vector embeddings, Hugging Face models, and vector search for high-precision semantic matching.
-* **Zero-Trust Security & GCP IAM Controls:** Provisioned Google Cloud Identity controls and IAM boundary rules strictly through Terraform IaC, establishing zero-trust baselines, policy-as-code, and reducing platform blast radius.
-* **DevSecOps & Deployment Strategy:** Embedded automated security scanning into GitHub Actions CI/CD workflows, designing a modular deployment path spanning a /mo prototyping tier to automated production scaling on GKE.
+**For Your Service (Enterprise AI Platform) | GitHub Enterprise / Remote**
+* **Mission-Critical Telemetry & PySpark Medallion Ingestion:** Architected a fault-tolerant, high-throughput Medallion Lakehouse on Databricks using PySpark and Delta Lake. Engineered automated Auto Loader ingestion pipelines parsing complex, semi-structured operational payloads with Change Data Feed (CDC) tracking and Dead Letter Queue (DLQ) quarantine.
+* **Enterprise Data Governance & Lineage (Unity Catalog):** Enforced fine-grained RBAC/ABAC and automated column-level data lineage across Bronze, Silver, and Gold tiers using Databricks Unity Catalog, guaranteeing compliance with strict defense and aerospace data security standards.
+* **AI/ML Feature Store & Distributed Tensor Matching:** Engineered distributed vector embedding pipelines using PySpark `@pandas_udf` to generate normalized 384-dimensional dense tensors. Built a high-performance vector-matching and cosine similarity engine feeding real-time AI inference models.
+* **Operational Control Plane & Telemetry Dashboards:** Built and deployed an interactive, serverless operational control plane on Databricks Apps using Streamlit, delivering real-time pipeline telemetry, model output tracking, and decision support for technical stakeholders.
+* **Zero-Trust Cloud Infrastructure & Istio Mesh:** Provisioned multi-cloud infrastructure across AWS (S3, KMS, IAM) and GCP via Terraform IaC, deploying containerized microservices on Kubernetes using Helm 3 and Istio Service Mesh with strict mTLS and canary routing (90/10 split).
 
 ### CLOUD ENGINEER & DEVOPS ANALYST (2022 – 2024)
 **ConocoPhillips | Houston, TX / Remote**

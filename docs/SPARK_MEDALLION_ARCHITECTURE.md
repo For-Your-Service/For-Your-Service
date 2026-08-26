@@ -78,3 +78,15 @@ gold_df = result["gold_df"]
 matches_df = result["matches_df"]
 metrics = result["metrics"]
 ```
+
+---
+
+## ✈️ Industrial & Aerospace Telemetry Equivalence
+
+| Medallion Layer | Defense Transition Pipeline | Industrial / Aerospace Telemetry Systems |
+| :--- | :--- | :--- |
+| **Bronze (Raw Ingest)** | Multi-source job postings, resumes, JSON payloads | Continuous sensor telemetry, engine vibration streams, maintenance logs |
+| **Silver (Cleaned)** | HTML sanitized, MOS normalized, clearance tagged | Calibrated sensor time-series, unit-standardized vibration, anomaly flagged |
+| **Gold (Feature Vectors)** | 384-dimensional dense semantic embeddings (`@pandas_udf`) | High-dimensional vibration FFT vectors, operational regime feature stores |
+| **Inference & Matching** | Cosine dot-product similarity matrix | Sensor pattern clustering, component wear prediction, time-to-failure models |
+| **Governance** | Unity Catalog RBAC/ABAC, lineage, ITAR/CUI | Unity Catalog FAA/DoD data lineage, tamper-evident telemetry auditability |
