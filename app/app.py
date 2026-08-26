@@ -1281,13 +1281,22 @@ if nav_selection == "📋 Veteran Intake & Match":
                     st.link_button("🔗 Direct LinkedIn Search", l_url, use_container_width=True)
                     
             with recon_tab3:
+                patch_note = finder_inst.generate_shared_patch_connection_note(peer_name="[Name]", company_name=li_company, location_name=li_loc)
                 p_msg = finder_inst.generate_peer_outreach_message(peer_name="Alex", sender_name="Free Hall", sender_branch="US Army Special Forces (18F / 18Z, Ret.)", target_role=li_role)
                 m_msg = finder_inst.generate_hiring_manager_outreach_message(manager_name="Hiring Team Lead", sender_name="Free Hall", target_role=li_role)
-                out_tab1, out_tab2 = st.tabs(["Veteran Peer-to-Peer Message", "Hiring Manager Executive Outreach"])
+                
+                out_tab0, out_tab1, out_tab2 = st.tabs([
+                    "🎖️ The Shared Patch (< 300 Chars)",
+                    "🤝 Full Veteran Peer Message",
+                    "👔 Hiring Manager Direct Outreach"
+                ])
+                with out_tab0:
+                    st.markdown("**High-Impact Connection Note (Flash the Patch):**")
+                    st.text_area("Connection Request (< 300 chars, ready to paste into LinkedIn)", value=patch_note, height=110, key="li_patch_msg_dyn")
                 with out_tab1:
-                    st.text_area("Peer Outreach Message (Ready to Copy)", value=p_msg, height=160, key="li_peer_msg_dyn")
+                    st.text_area("Peer Outreach Message", value=p_msg, height=160, key="li_peer_msg_dyn")
                 with out_tab2:
-                    st.text_area("Executive Outreach Message (Ready to Copy)", value=m_msg, height=160, key="li_mgr_msg_dyn")
+                    st.text_area("Executive Outreach Message", value=m_msg, height=160, key="li_mgr_msg_dyn")
 
     # Mobile & Quick Demo Selector (Accessible on all screens)
     with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):

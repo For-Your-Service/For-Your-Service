@@ -25,16 +25,17 @@ def test_boolean_query_generation_ge_aerospace():
     assert "GE Aerospace" in query
     assert "Greenville" in query
     assert "Veteran" in query or "Army" in query
-    assert "Data Engineer" in query or "Sr AI Data Engineer" in query
+    assert "Data" in query or "Engineer" in query
 
 
 def test_dynamic_arbitrary_inputs_boolean_query():
-    # Test arbitrary user inputs
+    # Test arbitrary user inputs with custom priority
     finder = LinkedInVeteranFinder(
         company="Lockheed Martin, Boeing",
         role="DevSecOps Architect, Kubernetes Lead",
-        location="Huntsville, AL, Dallas, TX",
-        branch_filter="US Air Force"
+        location="Huntsville, AL; Dallas, TX",
+        branch_filter="US Air Force",
+        veteran_priority=False
     )
     query = finder.generate_boolean_query()
     
@@ -75,6 +76,18 @@ def test_search_talent_ledger_filtering():
     results_lm = finder_lm.search_talent_ledger(veteran_only=True)
     assert not results_lm.empty
     assert any("Lockheed Martin" in c for c in results_lm['company'])
+
+
+def test_generate_shared_patch_connection_note():
+    finder = LinkedInVeteranFinder(company="GE Aerospace", role="Sr AI Data Engineer", location="Greenville, SC")
+    note = finder.generate_shared_patch_connection_note(peer_name="David")
+    
+    assert "Hi David," in note
+    assert "GE Aerospace" in note
+    assert "Greenville" in note
+    assert "Special Forces Green Beret" in note
+    assert "10 minutes" in note
+    assert len(note) < 350
 
 
 def test_peer_outreach_message():
