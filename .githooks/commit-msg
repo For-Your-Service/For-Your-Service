@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""
+Conventional Commits Git Hook (commit-msg)
+Enforces standardized commit message format:
+  <type>(<scope>): <subject>
+
+Examples:
+  feat(pipeline): add delta lake partitioning to ingestion step
+  fix(auth): handle token expiration gracefully
+  docs(architecture): add telemetry specification
+  refactor(parser): optimize PySpark dataframe operations
+  ci(actions): add automated telemetry sync schedule
+  test(matching): add unit tests for vector similarity engine
+"""
+
+import sys
+import re
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+CONVENTIONAL_PATTERN = re.compile(
+    r"^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)"
+    r"(\([a-zA-Z0-9_\-\./]+\))?"
+    r"(!)?:\s.+$",
+    re.MULTILINE
+)
+
+def main():
+    commit_msg_filepath = sys.argv[1]
+    
+    with open(commit_msg_filepath, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    
+    # Filter out git comment lines starting with #
+    content_lines = [l.strip() for l in lines if not l.strip().startswith("#") and l.strip()]
+    
+    if not content_lines:
+        print("\n[ERROR] Empty commit message.\n")
+        sys.exit(1)
+        
+    first_line = content_lines[0]
+    
+    # Allow automated merge commits, release tags, or skip-ci messages
+    if first_line.startswith("Merge ") or first_line.startswith("Release ") or "Initial commit" in first_line:
+        sys.exit(0)
+        
+    if not CONVENTIONAL_PATTERN.match(first_line):
+        print("\n" + "="*70)
+        print("[FAIL] CONVENTIONAL COMMITS VALIDATION FAILED")
+        print("="*70)
+        print(f"Your commit message was:\n  \"{first_line}\"\n")
+        print("Commit messages must follow the Conventional Commits format:")
+        print("  <type>(<optional scope>): <description>\n")
+        print("Allowed Types:")
+        print("  feat     - A new feature or capability")
+        print("  fix      - A bug fix")
+        print("  docs     - Documentation changes")
+        print("  style    - Code style/formatting (no code change)")
+        print("  refactor - Code refactoring (neither bug fix nor feature)")
+        print("  perf     - Performance optimization")
+        print("  test     - Adding or updating tests")
+        print("  build    - Build system or dependency updates")
+        print("  ci       - CI/CD workflows and automation")
+        print("  chore    - Maintenance tasks and auxiliary tooling")
+        print("  revert   - Reverting a previous commit\n")
+        print("Examples:")
+        print("  feat(pipeline): add delta lake partitioning to ingestion step")
+        print("  fix(auth): handle token expiration gracefully")
+        print("  docs(arch): add telemetry specification")
+        print("="*70 + "\n")
+        sys.exit(1)
+
+    print("[PASS] Conventional commit message validated.")
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
