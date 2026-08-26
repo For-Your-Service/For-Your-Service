@@ -1214,6 +1214,34 @@ if nav_selection == "📋 Veteran Intake & Match":
         | Tracking your application pipeline is messy | Unified pipeline tracking through Databricks and a local dashboard |
         """)
 
+    with st.expander("✈️ Industrial & Aerospace AI Data Engineering Blueprint (GE Aerospace Architecture Alignment)", expanded=False):
+        st.markdown("""
+        ### Mapping Lakehouse Architecture to Industrial-Scale Aerospace Systems
+
+        To demonstrate readiness for industrial-scale systems (heavy telemetry, fault-tolerant ingestion, strict data governance, and high-stakes decision support), the **For Your Service** platform maps directly to aerospace engineering demands:
+
+        #### 1. Frame Ingestion as "Mission-Critical Telemetry"
+        * **The Industrial/Aerospace Angle:** Aerospace operations deal with massive, continuous streams of structured and unstructured telemetry data from engines, sensors, and maintenance logs where failure or data loss is not an option.
+        * **The Platform Implementation:** Highlights how our data ingestion pipelines handle complex candidate profiles and mapping data. Reframes our PySpark data ingestion layer as a high-throughput, fault-tolerant telemetry processing pipeline capable of parsing messy operational payloads reliably at scale.
+
+        #### 2. Showcase Unity Catalog as Enterprise Data Governance
+        * **The Industrial/Aerospace Angle:** Large defense and aerospace contractors operate under stringent data governance, security compliance, and access-control standards.
+        * **The Platform Implementation:** Emphasizes our use of Databricks Unity Catalog. Enforces strict metadata management, fine-grained access control (RBAC/ABAC), and data lineage—crucial capabilities when managing sensitive assets or engineering metrics across multi-cloud environments.
+
+        #### 3. Emphasize the Tensor-Matching Engine as AI/ML Feature Engineering
+        * **The Industrial/Aerospace Angle:** A Senior AI Data Engineer builds the infrastructure that feeds machine learning models, predictive maintenance algorithms, or AI inference engines.
+        * **The Platform Implementation:** Positions the tensor-matching engine not just as a lookup tool, but as a feature engineering and vector-matching pipeline. Transforms raw ingested data into 384-dimensional vectorized representations and feature stores to drive intelligent matching—directly analogous to predicting component wear or optimizing supply chains.
+
+        #### 4. Connect Streamlit to Operational Dashboards
+        * **The Industrial/Aerospace Angle:** Engineering and leadership teams need real-time operational visibility into data health, model outputs, and pipeline performance without wading through raw logs.
+        * **The Platform Implementation:** Demonstrates the ability to rapidly prototype and deliver interactive, user-facing control planes and data observability dashboards for technical stakeholders.
+
+        ---
+
+        > **Executive Portfolio Summary:**  
+        > *For Your Service — Architected and deployed an enterprise-grade data pipeline and vector-matching engine using PySpark, Databricks, and Unity Catalog. Designed to ingest disparate operational data, enforce strict metadata governance, and feed real-time tensor matching applications visualized via Streamlit. Demonstrates core competencies in scalable data engineering, ML-adjacent feature pipelines, and resilient cloud storage integration.*
+        """)
+
     # Mobile & Quick Demo Selector (Accessible on all screens)
     with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):
         m_col1, m_col2, m_col3, m_col4 = st.columns(4)
