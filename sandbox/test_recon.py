@@ -15,7 +15,7 @@ SANDBOX_DIR = os.path.dirname(__file__)
 if SANDBOX_DIR not in sys.path:
     sys.path.insert(0, SANDBOX_DIR)
 
-from recon_app import load_sandbox_ledger, generate_sandbox_boolean_query
+from recon_app import load_sandbox_ledger, generate_sandbox_boolean_query, generate_shared_patch_template
 
 
 def test_load_sandbox_ledger_exists_and_populated():
@@ -69,7 +69,7 @@ def test_veteran_only_enforcement():
     assert df[mask_vet].empty
 
 
-def test_generate_sandbox_boolean_query():
+def test_generate_sandbox_boolean_query_ge_aerospace():
     query = generate_sandbox_boolean_query(
         company="GE Aerospace",
         role="Sr AI Data Engineer",
@@ -81,3 +81,19 @@ def test_generate_sandbox_boolean_query():
     assert "GE Aerospace" in query
     assert "Greenville" in query
     assert "US Army" in query or "Veteran" in query
+    assert "Engineer" in query or "Data" in query
+
+
+def test_generate_shared_patch_template():
+    note = generate_shared_patch_template(
+        name="Alex",
+        company="GE Aerospace",
+        location="Greenville, SC"
+    )
+    
+    assert "Hi Alex," in note
+    assert "GE Aerospace" in note
+    assert "Greenville" in note
+    assert "Special Forces Green Beret" in note
+    assert "10 minutes" in note
+    assert len(note) < 350
