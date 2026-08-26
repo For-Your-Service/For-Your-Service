@@ -1,10 +1,8 @@
-from typing import Dict
-
 """
 Extract and normalize skills from job descriptions
 """
 
-from typing import List
+from typing import List, Dict
 import re
 import logging
 
