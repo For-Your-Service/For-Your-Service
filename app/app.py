@@ -37,6 +37,7 @@ try:
     from geo_database import CITY_COORDINATES, lookup_city_coordinates
     from pdf_generator import generate_veteran_transition_pdf
     from defense_contractor_fetcher import fetch_defense_contractor_jobs
+    from linkedin_veteran_finder import LinkedInVeteranFinder, get_curated_ge_aerospace_targets
 except ImportError:
     from app.mos_data import MOS_DATABASE, BRANCH_RANKS, lookup_mos, get_mos_choices_by_branch
     from app.sample_data import SAMPLE_JOBS, DEMO_VETERAN_PROFILES, load_cached_scraped_jobs
@@ -44,6 +45,7 @@ except ImportError:
     from app.geo_database import CITY_COORDINATES, lookup_city_coordinates
     from app.pdf_generator import generate_veteran_transition_pdf
     from app.defense_contractor_fetcher import fetch_defense_contractor_jobs
+    from app.linkedin_veteran_finder import LinkedInVeteranFinder, get_curated_ge_aerospace_targets
 
 # Check for Databricks / PySpark compute availability safely
 SPARK_AVAILABLE = False
@@ -1235,6 +1237,46 @@ if nav_selection == "📋 Veteran Intake & Match":
         #### 4. Operational Observability Control Plane
         * **Implementation:** Streamlit-based interface hosted natively on Databricks Apps providing real-time visibility into pipeline throughput, data freshness decay curves, and model telemetry for technical stakeholders.
         """)
+
+    with st.expander("🎯 LinkedIn Veteran & Aerospace AI Talent Finder (GE Aerospace • Greenville, SC)", expanded=False):
+        st.markdown("""
+        ### 🔍 Find Military Veterans in Aerospace & AI Data Engineering
+        Generate targeted **Google X-Ray Boolean queries** and direct **LinkedIn Search URLs** to connect with military veterans working at **GE Aerospace** and defense primes in the Greenville, SC corridor.
+        """)
+        
+        li_col1, li_col2, li_col3 = st.columns(3)
+        with li_col1:
+            li_company = st.selectbox("Target Company", ["GE Aerospace", "Lockheed Martin", "Boeing", "Pratt & Whitney", "Raytheon", "Northrop Grumman"], index=0, key="li_comp")
+        with li_col2:
+            li_role = st.selectbox("Target Role", ["Sr AI Data Engineer", "Senior AI Data Engineer", "Machine Learning Engineer", "Lakehouse Architect", "Cloud Infrastructure Architect"], index=0, key="li_role")
+        with li_col3:
+            li_loc = st.selectbox("Location", ["Greenville, SC", "South Carolina", "Remote", "Huntsville, AL", "Atlanta, GA"], index=0, key="li_loc")
+            
+        if LinkedInVeteranFinder:
+            finder_inst = LinkedInVeteranFinder(company=li_company, role=li_role, location=li_loc)
+            b_query = finder_inst.generate_boolean_query()
+            g_url = finder_inst.generate_google_search_url()
+            d_url = finder_inst.generate_duckduckgo_url()
+            l_url = finder_inst.generate_direct_linkedin_search_url()
+            
+            st.code(b_query, language="text")
+            
+            b_col1, b_col2, b_col3 = st.columns(3)
+            with b_col1:
+                st.link_button("🚀 Launch Google X-Ray Search", g_url, use_container_width=True)
+            with b_col2:
+                st.link_button("🦆 Launch DuckDuckGo X-Ray", d_url, use_container_width=True)
+            with b_col3:
+                st.link_button("🔗 Direct LinkedIn Search", l_url, use_container_width=True)
+                
+            st.markdown("#### 💬 1-Click Peer & Executive Outreach Templates")
+            out_tab1, out_tab2 = st.tabs(["Veteran Peer-to-Peer Message", "Hiring Manager Executive Outreach"])
+            with out_tab1:
+                p_msg = finder_inst.generate_peer_outreach_message(peer_name="Alex", sender_name="Free Hall", sender_branch="US Army Special Forces (18F / 18Z, Ret.)", target_role=li_role)
+                st.text_area("Peer Outreach Message", value=p_msg, height=180, key="li_peer_msg")
+            with out_tab2:
+                m_msg = finder_inst.generate_hiring_manager_outreach_message(manager_name="Hiring Team Lead", sender_name="Free Hall", target_role=li_role)
+                st.text_area("Executive Outreach Message", value=m_msg, height=180, key="li_mgr_msg")
 
     # Mobile & Quick Demo Selector (Accessible on all screens)
     with st.expander("⚡ 1-Click Fast Demo Profiles (Tap to auto-fill for testing)"):
