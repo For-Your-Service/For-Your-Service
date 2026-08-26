@@ -33,17 +33,17 @@ The military gives you elite operational experience. Civilian tech applications 
 
 ---
 
-## ✈️ Industrial & Aerospace AI Data Engineering Blueprint
-> **Executive Portfolio Summary:**  
-> *Architected and deployed an enterprise-grade data pipeline and vector-matching engine using **PySpark**, **Databricks Lakehouse**, and **Unity Catalog**. Designed to ingest disparate operational telemetry data, enforce strict metadata governance, and feed real-time tensor matching applications visualized via **Streamlit** control planes. Demonstrates core competencies in scalable data engineering, ML-adjacent feature pipelines, and resilient cloud storage integration.*
+## ⚙️ Distributed Lakehouse & Telemetry Architecture
+> **Architecture Summary:**  
+> *Architected and deployed an enterprise-grade lakehouse data pipeline and vector-matching engine using **PySpark**, **Databricks Lakehouse**, and **Unity Catalog**. Ingests high-throughput operational payloads, enforces strict metadata governance and automated column-level lineage, and feeds real-time tensor matching applications visualized via **Streamlit** control planes.*
 
-📖 **Full Blueprint:** [GE Aerospace AI Data Engineering Architecture Mapping](docs/GE_AEROSPACE_AI_DATA_ENGINEERING_MAPPING.md)
+📖 **Architecture Specification:** [Distributed Telemetry & Feature Engineering Pipeline](docs/architecture/data-pipeline-spec.md)
 
-| Aerospace Demands | For Your Service Lakehouse Implementation |
+| Architectural Requirement | Lakehouse Implementation |
 | :--- | :--- |
-| **Mission-Critical Telemetry Ingestion** | High-throughput PySpark Auto Loader & CDC ingestion with Dead Letter Queue (DLQ) fault tolerance |
-| **Enterprise Data Governance & Lineage** | Databricks Unity Catalog RBAC/ABAC, automated column-level lineage, and ITAR/CUI compliance |
-| **AI/ML Feature Store & Tensor Pipelines** | Distributed PySpark `@pandas_udf` batch inference, 384-dim normalized tensors, and similarity scoring |
+| **Fault-Tolerant Telemetry Ingestion** | High-throughput PySpark Auto Loader & CDC ingestion with Dead Letter Queue (DLQ) fault tolerance |
+| **Enterprise Governance & Lineage** | Databricks Unity Catalog RBAC/ABAC, automated column-level lineage, and multi-cloud IAM boundaries |
+| **ML Feature Store & Vector Pipelines** | Distributed PySpark `@pandas_udf` batch inference, 384-dim normalized tensors, and similarity scoring |
 | **Operational Control Planes & Observability** | Interactive Streamlit telemetry dashboards deployed serverless on Databricks Apps |
 | **Zero-Trust Cloud Microservices** | Kubernetes Helm 3 chart + Istio Service Mesh (Strict mTLS, Ingress Gateway, Canary 90/10) |
 
