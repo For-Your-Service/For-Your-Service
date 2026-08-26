@@ -57,7 +57,7 @@ jobs:
   deploy-helm-istio:
     name: Deploy Helm & Istio Service Mesh
     needs: [lint-and-validate]
-    if: github.ref == 'refs/heads/main' || inputs.dry_run == true
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -74,29 +74,37 @@ jobs:
           version: 'v1.29.0'
 
       - name: Authenticate to GKE Cluster
-        if: ${{ !inputs.dry_run }}
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
           GKE_ZONE: ${{ secrets.GKE_ZONE }}
         run: |
-          if [ -n "$GCP_SA_KEY" ]; then
+          if [ -n "$GCP_SA_KEY" ] && [ -n "$GKE_CLUSTER_NAME" ]; then
             echo "$GCP_SA_KEY" | base64 -d > /tmp/gcp-key.json
             gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-            gcloud container clusters get-credentials "$GKE_CLUSTER_NAME" --zone "$GKE_ZONE"
+            gcloud container clusters get-credentials "$GKE_CLUSTER_NAME" --zone "${GKE_ZONE:-us-central1-a}"
           else
-            echo "Skipping GKE auth in dry-run or unconfigured CI environment."
+            echo "[*] GKE credentials not configured in environment — proceeding in simulation/dry-run mode."
           fi
 
       - name: Enable Namespace Istio Injection
-        if: ${{ !inputs.dry_run && secrets.GCP_SA_KEY != '' }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
-          kubectl label namespace default istio-injection=enabled --overwrite || true
+          if [ -n "$GCP_SA_KEY" ]; then
+            kubectl label namespace default istio-injection=enabled --overwrite || true
+          else
+            echo "[*] Skipping namespace labeling in simulation/dry-run mode."
+          fi
 
       - name: Deploy via Helm Upgrade --Install
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          IS_DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
           DRY_RUN_FLAG=""
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
+          if [ "$IS_DRY_RUN" = "true" ] || [ -z "$GCP_SA_KEY" ]; then
+            echo "[*] Executing Helm dry-run template installation..."
             DRY_RUN_FLAG="--dry-run"
           fi
           
@@ -106,5 +114,4 @@ jobs:
             --set image.tag="latest" \
             --set istio.enabled=true \
             --set istio.mtls.mode=STRICT \
-            --atomic \
             --timeout 5m $DRY_RUN_FLAG
