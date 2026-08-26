@@ -28,6 +28,24 @@ def test_boolean_query_generation_ge_aerospace():
     assert "Data Engineer" in query or "Sr AI Data Engineer" in query
 
 
+def test_dynamic_arbitrary_inputs_boolean_query():
+    # Test arbitrary user inputs
+    finder = LinkedInVeteranFinder(
+        company="Lockheed Martin, Boeing",
+        role="DevSecOps Architect, Kubernetes Lead",
+        location="Huntsville, AL, Dallas, TX",
+        branch_filter="US Air Force"
+    )
+    query = finder.generate_boolean_query()
+    
+    assert "site:linkedin.com/in" in query
+    assert "Lockheed Martin" in query
+    assert "Boeing" in query
+    assert "DevSecOps Architect" in query
+    assert "Huntsville, AL" in query
+    assert "US Air Force" in query
+
+
 def test_search_urls_generation():
     finder = LinkedInVeteranFinder(
         company="GE Aerospace",
@@ -42,6 +60,21 @@ def test_search_urls_generation():
     assert ddg_url.startswith("https://duckduckgo.com/?q=")
     assert li_url.startswith("https://www.linkedin.com/search/results/people/?keywords=")
     assert "GE+Aerospace" in google_url or "GE%20Aerospace" in google_url or "GE" in google_url
+
+
+def test_search_talent_ledger_filtering():
+    # Search for GE Aerospace veterans
+    finder_ge = LinkedInVeteranFinder(company="GE Aerospace", role="Data Engineer", location="Greenville, SC")
+    results_ge = finder_ge.search_talent_ledger(veteran_only=True)
+    assert not results_ge.empty
+    assert any("William Free Hall" in name for name in results_ge['name'])
+    assert all(results_ge['is_veteran'] == True)
+    
+    # Search for Lockheed Martin veterans
+    finder_lm = LinkedInVeteranFinder(company="Lockheed Martin", role="", location="")
+    results_lm = finder_lm.search_talent_ledger(veteran_only=True)
+    assert not results_lm.empty
+    assert any("Lockheed Martin" in c for c in results_lm['company'])
 
 
 def test_peer_outreach_message():
