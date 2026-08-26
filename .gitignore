@@ -141,6 +141,6 @@ terraform.rc
 # Terraform outputs
 outputs.json
 
-# Sandbox and temporary executables
-sandbox/
+# Temporary executables and caches
 *.exe
+
