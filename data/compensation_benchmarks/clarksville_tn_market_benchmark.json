@@ -1,0 +1,20 @@
+{
+  "market_id": "clarksville_tn",
+  "market_name": "Fort Campbell Air Assault & Aviation Hub",
+  "state": "TN",
+  "cost_of_living_index": 1.03,
+  "median_cleared_base_salary": 116000,
+  "clearance_differentials": {
+    "Secret": 116000,
+    "Top_Secret": 136880,
+    "TS_SCI": 153120,
+    "Full_Scope_Poly": 171680
+  },
+  "top_defense_employers": [
+    "101st Airborne",
+    "160th SOAR",
+    "DynCorp Maintenance"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
