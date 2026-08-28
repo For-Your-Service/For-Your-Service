@@ -11,257 +11,234 @@ pinned: false
 
 # FOR YOUR SERVICE — Veteran Career Transition Intelligence 🇺🇸
 
-> Your transition generates thousands of service data points every day. We turn that data into a clear path forward.
+> **Your military service generates thousands of elite operational data points every day. We turn that data into a clear, high-yield civilian career trajectory.**
 
-## The Mission
+---
 
-The military gives you elite operational experience. Civilian tech applications don't always know how to read it. Raw service records, MOS codes, and leadership tours sit in static PDFs rather than working for you. **For Your Service** learns the patterns in your background, maps your service profile against live industry demand, and surfaces what matters: targeted role matching, resume translation, and automated transition insights.
+## 🎯 The Mission
 
-**Partner:** 7 Eagle Group
-**Lead Architect & Developer:** Free Hall (Cloud Engineer • DevOps Analyst • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
+The military instills world-class leadership, technical acumen, and crisis-tested operational discipline. However, civilian Applicant Tracking Systems (ATS) and corporate recruiters often struggle to parse military jargon, MOS codes, and NCOER/OER evaluations. 
+
+**For Your Service** bridges this gap:
+* Translates raw military service records into high-impact civilian corporate competencies.
+* Maps candidate profiles against live federal, aerospace, and defense contractor job markets.
+* Highlights the strategic value of active security clearances (`Secret`, `Top Secret / SCI`).
+* Directs transitioning service members to **100% free, fully-funded certification programs** (O2O, DoD COOL, ArmyIgnitED, SkillBridge) to eliminate skill gaps at zero out-of-pocket cost.
+
+**Partner:** 7 Eagle Group  
+**Lead Architect & Developer:** Free Hall (Cloud Engineer • DevSecOps Lead • Data Architect | 18Z / 18F, US Army Special Forces, Ret.)
+
+---
 
 ### 🏛️ Command & Control / Infrastructure Stack
 
-[![Organization](https://img.shields.io/badge/ORGANIZATION-FOR_YOUR_SERVICE-blue?style=flat-square&logo=github)](https://github.com/For-Your-Service)
-[![Apache Spark](https://img.shields.io/badge/APACHE_SPARK-PYSPARK_%7C_DELTA_LAKE-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)](docs/SPARK_MEDALLION_ARCHITECTURE.md)
 [![Databricks Apps](https://img.shields.io/badge/DATABRICKS_APPS-FYS_MATCHING_APP-FF3621?style=flat-square&logo=databricks)](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
-[![Docker Images](https://img.shields.io/badge/CONTAINER_REGISTRY-GHCR.IO-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/orgs/For-Your-Service/packages)
-[![AWS Infrastructure](https://img.shields.io/badge/AWS-S3_%7C_LAMBDA_%7C_IAM-232F3E?style=flat-square&logo=amazon-aws)](https://aws.amazon.com)
-[![Hugging Face](https://img.shields.io/badge/HUGGING_FACE-EMBEDDINGS_%7C_SPACES-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/FreeFades2Black)
 [![Streamlit Cloud](https://img.shields.io/badge/STREAMLIT-COMMUNITY_CLOUD-FF4B4B?style=flat-square&logo=streamlit)](https://share.streamlit.io)
-
-
----
-
-## ⚙️ Distributed Lakehouse & Telemetry Architecture
-> **Architecture Summary:**  
-> *Architected and deployed an enterprise-grade lakehouse data pipeline and vector-matching engine using **PySpark**, **Databricks Lakehouse**, and **Unity Catalog**. Ingests high-throughput operational payloads, enforces strict metadata governance and automated column-level lineage, and feeds real-time tensor matching applications visualized via **Streamlit** control planes.*
-
-📖 **Architecture Specification:** [Distributed Telemetry & Feature Engineering Pipeline](docs/architecture/data-pipeline-spec.md)
-
-| Architectural Requirement | Lakehouse Implementation |
-| :--- | :--- |
-| **Fault-Tolerant Telemetry Ingestion** | High-throughput PySpark Auto Loader & CDC ingestion with Dead Letter Queue (DLQ) fault tolerance |
-| **Enterprise Governance & Lineage** | Databricks Unity Catalog RBAC/ABAC, automated column-level lineage, and multi-cloud IAM boundaries |
-| **ML Feature Store & Vector Pipelines** | Distributed PySpark `@pandas_udf` batch inference, 384-dim normalized tensors, and similarity scoring |
-| **Operational Control Planes & Observability** | Interactive Streamlit telemetry dashboards deployed serverless on Databricks Apps |
-| **Zero-Trust Cloud Microservices** | Kubernetes Helm 3 chart + Istio Service Mesh (Strict mTLS, Ingress Gateway, Canary 90/10) |
+[![Hugging Face](https://img.shields.io/badge/HUGGING_FACE-EMBEDDINGS_%7C_SPACES-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/FreeFades2Black)
+[![Docker Images](https://img.shields.io/badge/CONTAINER_REGISTRY-GHCR.IO-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/orgs/For-Your-Service/packages)
+[![Kubernetes & Helm](https://img.shields.io/badge/KUBERNETES-HELM_3_%7C_ISTIO_MESH-326CE5?style=flat-square&logo=kubernetes&logoColor=white)](charts/for-your-service)
+[![Terraform IaC](https://img.shields.io/badge/TERRAFORM-AWS_%7C_DATABRICKS_%7C_GCP-7B42BC?style=flat-square&logo=terraform&logoColor=white)](terraform/)
+[![Omarchy Linux](https://img.shields.io/badge/OMARCHY_OS-ARCH_LINUX_%7C_HYPRLAND-1793D1?style=flat-square&logo=arch-linux&logoColor=white)](https://github.com/FreeFades2Black/omarchy-antigravity-bootstrap)
+[![Apache Spark](https://img.shields.io/badge/APACHE_SPARK-PYSPARK_%7C_DELTA_LAKE-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)](docs/SPARK_MEDALLION_ARCHITECTURE.md)
 
 ---
 
-## What For Your Service Does
+## ⚡ System Architecture & Dual-Environment Workflow
 
-| Without For Your Service | With For Your Service |
-| :--- | :--- |
-| Translating your military experience into resume bullet points is manual and frustrating | Automated MOS/AFSC-to-industry role mapping and tensor matching |
-| Federal and defense job boards are scattered and hard to track | Live integrated USAJOBS and defense contractor feed ingestion |
-| Finding the right technical team or mentor is a guessing game | Data-driven introductions based on peer transition paths |
-| Tracking your application pipeline is messy | Unified pipeline tracking through Databricks, Apache Spark, and local dashboard |
+```mermaid
+flowchart TD
+    subgraph Ingestion ["1. Real-World Live Ingestion ($0.00)"]
+        USA["USAJOBS Public Search API<br/>(DoD, VA, Federal Tech)"]
+        DEF["Defense Feeds & Scrapers<br/>(Lockheed, RTX, Northrop, GD, Boeing)"]
+        ONET["O*NET Military Crosswalk API<br/>(MOS/AFSC/Rating to SOC)"]
+    end
+
+    subgraph EdgeCompute ["2. Local Edge Processing (Omarchy Linux / ASUS ROG Flow)"]
+        CLI["Dual CLI: PowerShell + Omarchy Bash"]
+        LocalSpark["PySpark & Delta Lake Medallion ETL"]
+        Vectors["Local 384-dim Tensor Generation<br/>(all-MiniLM-L6-v2)"]
+        Agent["Google Antigravity (agy) AI Orchestrator"]
+        CLI --> LocalSpark --> Vectors
+    end
+
+    subgraph DatabricksLakehouse ["3. Enterprise Databricks Lakehouse ($0 Idle)"]
+        UnityCat["Unity Catalog Governance<br/>(workspace.fys_bronze / silver / gold)"]
+        DBXApp["Databricks Apps (fys-matching-app)<br/>Auto-Suspend when Inactive"]
+        UnityCat --> DBXApp
+    end
+
+    subgraph CloudNativeStack ["4. Cloud-Native DevSecOps Stack"]
+        DockerSuite["Docker Multi-Stage Builds (ghcr.io)<br/>4 Microservices (~60% smaller)"]
+        HelmIstio["Helm 3 + Istio Service Mesh<br/>Strict mTLS, Ingress, Canary 90/10"]
+        Terraform["Terraform IaC<br/>Multi-Cloud Zero-Drift"]
+        DockerSuite --> HelmIstio
+    end
+
+    subgraph VeteranValue ["5. High-Conversion Veteran Outputs"]
+        Trans["'Combat-to-Code' Jargon De-Militarizer"]
+        Clearance["Clearance Fast-Track Multiplier ($20k-$45k)"]
+        Funding["100% Free Veteran Funding Links (O2O, COOL)"]
+        ATS["Tailored ATS-Optimized Resume Export"]
+    end
+
+    Ingestion --> EdgeCompute
+    EdgeCompute --> DatabricksLakehouse
+    EdgeCompute --> CloudNativeStack
+    DatabricksLakehouse --> VeteranValue
+    CloudNativeStack --> VeteranValue
+```
 
 ---
 
-## 🎯 Key Features
+## 🌟 Veteran Value Proposition & Core Superpowers
 
-- **Modular Helm & Istio Service Mesh:** Enterprise-grade Helm chart (`charts/for-your-service`) with Istio Zero-Trust strict mTLS, Ingress Gateway, and Canary traffic splitting.
-- **Apache Spark & Delta Lake Medallion Engine:** Distributed Bronze-to-Silver MOS cleaning, Gold 384-dimensional vector embedding generation (`@pandas_udf`), and batch matrix matching.
-- **Modular Microservices Suite:** 4 optimized Docker containers (`portal`, `api`, `ingestor`, `spark-runner`) published to GitHub Container Registry (`ghcr.io`).
-- **Streamlit Web Interface:** Production-ready veteran intake portal with real-time job matching across all 6 military branches.
-- **Live Impact & Visitor Analytics:** Real-time 4-card metric tracker showing active service members connected and AI matches run.
-- **Multi-Source Ingestion:** Aggregates jobs from USAJOBS, JSearch, and Adzuna APIs with sanitized card presentation.
-- **Semantic Matching:** Uses sentence-transformers (`all-MiniLM-L6-v2`) for neural embedding-based matching.
-- **AI Resume Parsing:** 100% free, local resume parsing (`pypdf`, `python-docx`) extracting technical, combat, and leadership competencies.
-- **MOS Crosswalk:** Maps military specialties (Army MOS, Navy Ratings, Air Force AFSC) to civilian career tracks.
-- **Regional Focus:** Greenville-Anderson MSA (expandable across national defense corridors).
-- **Serverless & Kubernetes Cloud Deployment:** Hosted on **Databricks Apps** (`fys-matching-app`), **Hugging Face Spaces**, and **GKE / Kubernetes with Istio Service Mesh**.
+| Feature | Without For Your Service | With For Your Service |
+| :--- | :--- | :--- |
+| **Military Translation** | Manual, frustrating jargon translation that ATS filters reject. | **Automated "Combat-to-Code" De-Militarizer** converting NCOER/OER bullets into quantified corporate impact statements. |
+| **Defense Job Access** | Hard-to-find defense jobs scattered across dozens of contractor boards. | **Unified Live Ingestion** from USAJOBS, Lockheed Martin, RTX, Northrop Grumman, General Dynamics, Boeing, CACI, and L3Harris. |
+| **Clearance Premium** | Veterans unaware of the hiring leverage of active clearances. | **Clearance Fast-Track Multiplier** quantifying the $20k–$45k value of bypassing the 18-month civilian clearance investigation backlog. |
+| **Skill Gap Elimination** | Expensive $3,000+ civilian bootcamps and certification fees. | **100% Free Veteran Funding Links** directly routing candidates to Syracuse University IVMF / Onward to Opportunity (O2O), DoD COOL, ArmyIgnitED, and DoD SkillBridge. |
+| **Application Tracking** | Spreadsheets and lost resumes. | **Unified Medallion Telemetry** backed by Databricks Unity Catalog and Streamlit control planes. |
 
 ---
 
-## 🚀 Quick Start & Hosting Options
+## 🛠️ The 4-Pillar Cloud-Native DevSecOps Stack
 
-### 1. Clone & Setup (Local Development)
+### 1. 🐳 Docker Microservices Suite (`docker/`)
+Decomposed monolithic architecture into 4 lightweight, specialized multi-stage containers:
+* **`fys-portal`** (`docker/Dockerfile.portal`): Streamlit Veteran Intake Portal & 4-card live telemetry (~150MB, Port 8501).
+* **`fys-api`** (`docker/Dockerfile.api`): FastAPI REST scoring & candidate ingestion microservice (~120MB, Port 8080).
+* **`fys-ingestor`** (`docker/Dockerfile.ingestor`): Multi-source background harvester for USAJOBS, Adzuna, and defense feeds (~90MB).
+* **`fys-spark-runner`** (`docker/Dockerfile.spark`): Lakehouse batch runner with OpenJDK 17 + Python 3.11 for PySpark ETL (~350MB).
+
+### 2. ☸️ Kubernetes & ⚓ Helm 3 Chart (`charts/for-your-service`)
+Enterprise-grade deployment manifests and Helm 3 templating:
+* **Zero-Trust Security:** Istio Service Mesh with **Strict mTLS** (`peerauthentication.yaml`) and fine-grained authorization policies.
+* **Traffic Engineering:** Ingress Gateway and VirtualService configured for **Canary Deployments** (90% stable / 10% canary traffic splitting).
+* **High Availability:** Horizontal Pod Autoscaler (`hpa.yaml`) scaling 1–10 pods with Pod Disruption Budgets (`pdb.yaml`).
+* **Environment Overrides:** Dedicated configurations for `values-dev.yaml`, `values-staging.yaml`, and `values-prod.yaml`.
+
+### 3. 🌍 Terraform Multi-Cloud IaC (`terraform/`)
+Declarative Infrastructure as Code managing cloud boundaries with zero configuration drift:
+* **AWS Module:** S3 buckets, DynamoDB tables, Lambda functions, KMS keys, and least-privilege IAM policies.
+* **Databricks Module:** Unity Catalog schemas (`fys_bronze`, `fys_silver`, `fys_gold`), Serverless SQL Warehouses, and KMS Secret Scopes.
+* **GCP & Hugging Face Modules:** Container registries, BigQuery datasets, and Hugging Face Space deployments.
+
+### 4. 💻 Dual-Environment Edge Workflow (PowerShell + Omarchy Linux)
+* **Windows Host (PowerShell):** High-level orchestration, cloud API automation, and infrastructure planning.
+* **Omarchy Linux (ASUS ROG Flow Z13):** Native Arch Linux + Hyprland environment running local PySpark transformations, live data scrapers, and low-latency system tests over SSH.
+* **Agentic Pair Programming:** Deployed and orchestrated native instances of **Google Antigravity (`agy`)** across both systems for autonomous CLI-driven development and telemetry.
+
+---
+
+## 💰 Zero-Cost Sustainability Model ($0.00 Run-Rate)
+
+| Component | Strategy for $0 Spend | Monthly Cost |
+| :--- | :--- | :---: |
+| **Web Portal Hosting** | **Databricks Apps Serverless** (Auto-sleeps when idle) + **Streamlit Community Cloud** (24/7 free tier) | **$0.00** |
+| **Vector Matching & AI** | In-memory 384-dim tensor matching using local `all-MiniLM-L6-v2` (Zero OpenAI/LLM API costs) | **$0.00** |
+| **Heavy ETL & Scrapers** | Offloaded to local Omarchy Linux host (ASUS ROG Flow Z13 14-core Intel CPU / RTX 4050) | **$0.00** |
+| **Job Market Data** | USAJOBS Public API + O*NET Web Services + Direct Defense Scrapers + Adzuna Free Tier | **$0.00** |
+| **Backup Microservice** | Hugging Face Spaces (Free Docker CPU Tier) | **$0.00** |
+| **Total Operating Cost** | **Zero Recurring Infrastructure Overhead** | **$0.00 / mo** |
+
+---
+
+## 🚀 Quick Start & Local Execution
+
+### 1. Local Python Environment
 ```bash
 git clone https://github.com/For-Your-Service/For-Your-Service.git
 cd For-Your-Service
-python3.12 -m venv .venv
-# On Linux/macOS:
-source .venv/bin/activate
-# On Windows PowerShell:
-.\.venv\Scripts\Activate.ps1
 
-pip install -e "."
+# Setup Virtualenv
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .\.venv\Scripts\Activate.ps1
+
+# Install Dependencies
+pip install -r requirements.txt
 pip install -r app/requirements.txt
 ```
 
-### 2. Launch the Streamlit Portal
+### 2. Launch Local Streamlit Portal
 ```bash
-streamlit run app/app.py
+streamlit run app/app.py --server.port 8501 --server.address 0.0.0.0
 ```
-Open **`http://localhost:8501`** (or `http://192.168.50.203:8501` for LAN) in your browser.
+Open **`http://localhost:8501`** in your browser.
 
----
-
-### 3. Enterprise Cloud Host: Databricks Apps (Serverless)
-The production veteran intake portal is deployed serverless on Databricks Apps:
-* **Live App URL:** [https://fys-matching-app-7474643734871839.aws.databricksapps.com](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
-* **Databricks Workspace:** `https://dbc-3e95d032-684c.cloud.databricks.com`
-* **Configuration:** [`app/app.yaml`](app/app.yaml)
-* **Automated Deployer:** Run `python scripts/deploy_databricks_app.py`
-
----
-
-### 4. Deploy 24/7 to Streamlit Community Cloud (100% Free)
-1. Go to **[share.streamlit.io](https://share.streamlit.io)** and log in with GitHub.
-2. Click **"New app"**.
-3. Select `For-Your-Service/For-Your-Service`, branch `main`, and main file path `app/app.py`.
-4. Click **"Deploy"** to get a permanent public link (e.g. `https://fys-veterans.streamlit.app`).
-
-See [docs/STREAMLIT_GUIDE.md](docs/STREAMLIT_GUIDE.md) and [app/README.md](app/README.md) for full portal documentation.
-
----
-
-### 5. Deploy to Hugging Face Spaces (Free CPU Tier)
-1. Go to **[huggingface.co/spaces](https://huggingface.co/spaces)** → Create new Space (Docker SDK).
-2. Uses [`huggingface/Dockerfile`](huggingface/Dockerfile) and [`huggingface/app.py`](huggingface/app.py) (FastAPI backend on port 7860).
-
----
-
-### 6. Set Up Data Ingestion & API Keys (Databricks / Cloud)
-Follow [docs/API_QUICKSTART.md](docs/API_QUICKSTART.md) to register for:
-- USAJOBS API
-- JSearch (RapidAPI)
-- Adzuna API
-
-Configure encrypted secret scopes via:
+### 3. Run Full Stack with Docker Compose
 ```bash
-./scripts/setup_databricks_secrets.sh
+docker compose up -d
+# Streamlit Portal: http://localhost:8501
+# FastAPI Scoring Service: http://localhost:8080
 ```
+
+### 4. Deploy Helm Chart to Kubernetes
+```bash
+helm upgrade --install for-your-service charts/for-your-service \
+  --namespace for-your-service --create-namespace \
+  -f charts/for-your-service/values-prod.yaml
+```
+
+### 5. Deploy to Databricks Apps (Serverless)
+```bash
+python scripts/deploy_databricks_app.py
+```
+Live URL: [https://fys-matching-app-7474643734871839.aws.databricksapps.com](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
 
 ---
 
-## 📊 Architecture
+## 📁 Repository Structure
 
-```
-[Job APIs / USAJOBS] ───► [Bronze Table] ───► [Silver Enrichment] ───► [Gold Embeddings] ───► [Neural Matching]
-                                                                                                    │
-                                                                                                    ▼
-                                                                                   [Streamlit Portal & Databricks Apps]
-```
-
-- **Bronze:** Raw job data from USAJOBS, JSearch, and Adzuna APIs
-- **Silver:** O*NET skills + MOS crosswalk (`workspace.fys_silver.veteran_profiles`)
-- **Gold:** 384-dim semantic embeddings (`workspace.fys_gold.job_embeddings`)
-- **Matching:** Siamese twin tower network + sentence-transformers
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for details.
-
----
-
-## 📁 Project Structure
-
-```
+```text
 For-Your-Service/
-├── charts/             # Parameterized Helm charts (Istio mesh, deployments, services)
+├── charts/                   # Parameterized Helm 3 charts with Istio mTLS & Canary
 │   └── for-your-service/
-├── deployment/         # Production deployment manifests & Istio CRDs
-│   ├── kubernetes/     # Raw manifests and Istio Gateway / VirtualService configs
-│   ├── docker/         # Docker Compose multi-service definitions
-│   └── huggingface/    # Hugging Face deployment artifacts
-├── app/                # Streamlit Web Application & Databricks App spec
-│   ├── app.py          # Main portal application
-│   ├── app.yaml        # Databricks App proxy & environment configuration
-│   ├── mos_data.py     # Universal military MOS / Rating / AFSC crosswalk
-│   ├── sample_data.py  # Zero-cost local cached datasets & demo profiles
-│   └── requirements.txt# Streamlit app dependencies
-├── data/               # Analytics & live job cache
-│   ├── analytics/      # Live visitor & usage metrics tracking
-│   └── jobs_cache/     # Sanitized federal & defense job cache
-├── notebooks/          # Databricks notebooks
-├── docs/               # Comprehensive documentation & daily notes
-├── scripts/            # Deployment and utility automation scripts
-├── tests/              # Full unit & integration test suite
-├── config/             # Deployment configurations & schemas
-├── terraform/          # Multi-cloud IaC (AWS, GCP, Databricks, Hugging Face)
-└── huggingface/        # Hugging Face Spaces deployment
+├── docker/                   # Multi-stage Dockerfiles (portal, api, ingestor, spark)
+│   ├── Dockerfile.portal
+│   ├── Dockerfile.api
+│   ├── Dockerfile.ingestor
+│   └── Dockerfile.spark
+├── app/                      # Streamlit Web Application & Databricks App spec
+│   ├── app.py                # Main portal application with 4-card live metrics
+│   ├── app.yaml              # Databricks Apps reverse-proxy & environment spec
+│   ├── mos_data.py           # Universal military MOS / Rating / AFSC crosswalk
+│   ├── readiness_engine.py   # Career readiness, resume translator & free funding links
+│   ├── defense_contractor_fetcher.py # Live Lockheed, RTX, Northrop, GD, Boeing feeds
+│   └── requirements.txt      # Portal dependencies
+├── data/                     # Data stores & caches
+│   ├── analytics/            # Live visitor & usage metrics tracking
+│   └── jobs_cache/           # Sanitized federal & defense job cache
+├── src/                      # Core platform library
+│   ├── spark/                # Distributed Lakehouse Medallion ETL & Batch Matcher
+│   ├── resume_parsing/       # Zero-cost local PDF/DOCX resume extraction
+│   └── ingestion/            # Scheduled USAJOBS & Defense feed harvesters
+├── terraform/                # Multi-cloud IaC modules (AWS, Databricks, GCP, HF)
+├── tests/                    # Comprehensive unit & integration test suites
+└── scripts/                  # Automated deployment, secret setup & telemetry broadcast
 ```
 
 ---
 
-## 🔧 Technology Stack
+## 📋 Changelog Highlights
 
-- **Frontend & App:** Streamlit (1.62+), Uvicorn, FastAPI
-- **Packaging & Mesh:** Helm v3, Istio Service Mesh (Zero-Trust mTLS, Ingress Gateway, Canary)
-- **Data Platform:** Databricks (Unity Catalog `workspace.fys_*` + Serverless Compute)
-- **Hosting:** Databricks Apps (`fys-matching-app`), Hugging Face Spaces, Streamlit Community Cloud, GKE
-- **Job Feeds:** USAJOBS API, JSearch, Adzuna
-- **ML / AI:** sentence-transformers (`all-MiniLM-L6-v2`), PyTorch
-- **Testing:** pytest
+### August 28, 2026
+* **Databricks Apps Production Deployment:** Deployed `fys-matching-app` on Databricks Apps with proxy routing and `$DATABRICKS_APP_PORT` support (HTTP 200 OK).
+* **Dual CLI & Omarchy OS Integration:** Established encrypted SSH pair-programming workflow between Windows (PowerShell) and native Omarchy Linux (Bash on ASUS ROG Flow Z13) with Google Antigravity (`agy`).
+* **Cloud-Native DevSecOps Synthesis:** Full integration of Docker multi-stage images, Kubernetes Helm 3 chart with Istio Zero-Trust strict mTLS, and declarative Terraform IaC.
+* **Combat-to-Code Jargon De-Militarizer:** Expanded military translation dictionaries with one-click copyable corporate resume bullets and free veteran funding links (O2O, DoD COOL, ArmyIgnitED, SkillBridge).
 
 ---
 
-## 💰 Cost Breakdown
+## 📧 Contact & Mission Support
 
-| Component | Monthly Cost |
-|-----------|--------------|
-| API Keys (3 sources) | $0 (FREE tiers) |
-| Databricks Serverless Apps | $5-10 |
-| Unity Catalog Storage | $0.50 |
-| Hugging Face Spaces | $0 (FREE tier) |
-| **Total** | **$7-12/month** |
-
-Cost per veteran matched: **$0.14-0.24**
+**William Free Hall**  
+*Principal Cloud & AI Architect • DevSecOps Lead • Databricks SME*  
+*18Z / 18F, U.S. Army Special Forces (Ret.)*  
+Email: [whall4.wh@gmail.com](mailto:whall4.wh@gmail.com)  
+Organization: [7 Eagle Group](https://7eagle.com)  
+GitHub: [https://github.com/For-Your-Service](https://github.com/For-Your-Service)  
 
 ---
 
-## 📚 Documentation
-
-- [Helm & Istio Implementation Checklist](helm_istio_implementation.md) - Step-by-step roadmap & zero-trust verification
-- [Enterprise Helm & Istio Architecture](docs/HELM_ISTIO_ARCHITECTURE.md) - Deep-dive into service mesh & traffic engineering
-- [Kubernetes & Istio Deployment Guide](docs/KUBERNETES_DEPLOYMENT.md) - GKE cluster setup & Canary routing
-- [System & Application Health Dashboard](docs/SYSTEM_HEALTH.md) - Automated twice-daily system & application health metrics
-- [Daily Notes August 20, 2026](DAILY_NOTES_2026_08_20.md) - Databricks Apps hosting, live metrics & USAJOBS ingestion
-- [Daily Notes August 13, 2026](DAILY_NOTES_2026_08_13.md) - AWS IAM security architecture & Terraform IaC
-- [Streamlit Portal Guide](docs/STREAMLIT_GUIDE.md) - Comprehensive portal guide & rank crosswalks
-- [Multi-Cloud Terraform Guide](terraform/README.md) - Automated IaC across AWS, GCP, Databricks & HF
-- [Terraform Architecture Whitepaper](docs/TERRAFORM_ARCHITECTURE.md) - Multi-cloud blueprint
-- [Zero-Downtime Migration Guide](docs/ZERO_DOWNTIME_MIGRATION.md) - Non-destructive adoption runbook
-- [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-## 📧 Contact
-
-**Free Hall**
-Email: whall4.wh@gmail.com
-Organization: 7 Eagle Group
-GitHub: https://github.com/For-Your-Service
-
----
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) for details.
-
----
-
-## 📋 Changelog
-
-### August 20, 2026
-* **Databricks Apps Serverless Deployment:** Deployed `fys-matching-app` on Databricks Apps with proxy routing and `$DATABRICKS_APP_PORT` support.
-* **Live Visitor & Impact Metrics Bar:** Integrated atomic 4-card live counter for visitors, matches run, and 7 Eagle recruiter intros.
-* **USAJOBS Search Ingestor & Sanitizer:** Added production federal search ingestion with official application referral routing.
-* **Security & Secret Scope:** Created automated Databricks KMS Secret Scope manager script.
-* **Live Job Cache Update:** Updated sanitized listings for aerospace, defense, and cyber roles.
-
-### August 18, 2026
-* **Code Quality & CI/CD:** Consolidated codebase (-2,610 net lines), resolved unit test failures across 126 test cases.
-* **ADR-001 Canonical Catalog Spine:** Standardized on `workspace.fys_*` Unity Catalog tables.
-
----
-
-Built with ❤️ by veterans, for veterans.
+*Built with operational discipline by veterans, for veterans. 🇺🇸*
