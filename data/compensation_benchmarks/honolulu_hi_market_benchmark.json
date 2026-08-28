@@ -1,0 +1,20 @@
+{
+  "market_id": "honolulu_hi",
+  "market_name": "Indo-Pacific Command Strategic Defense Hub",
+  "state": "HI",
+  "cost_of_living_index": 1.35,
+  "median_cleared_base_salary": 162000,
+  "clearance_differentials": {
+    "Secret": 162000,
+    "Top_Secret": 191160,
+    "TS_SCI": 213840,
+    "Full_Scope_Poly": 239760
+  },
+  "top_defense_employers": [
+    "INDOPACOM",
+    "Pearl Harbor Shipyard",
+    "Booz Allen Hawaii"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
