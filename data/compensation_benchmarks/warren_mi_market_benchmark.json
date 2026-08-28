@@ -1,0 +1,20 @@
+{
+  "market_id": "warren_mi",
+  "market_name": "Detroit Arsenal Ground Vehicle Systems Hub",
+  "state": "MI",
+  "cost_of_living_index": 1.12,
+  "median_cleared_base_salary": 134000,
+  "clearance_differentials": {
+    "Secret": 134000,
+    "Top_Secret": 158120,
+    "TS_SCI": 176880,
+    "Full_Scope_Poly": 198320
+  },
+  "top_defense_employers": [
+    "GVSC",
+    "General Dynamics Land Systems HQ",
+    "BAE Combat"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
