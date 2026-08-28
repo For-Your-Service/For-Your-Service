@@ -1,0 +1,19 @@
+{
+  "market_id": "philadelphia_pa",
+  "market_name": "Philadelphia Naval Ship Systems Hub",
+  "state": "PA",
+  "cost_of_living_index": 1.16,
+  "median_cleared_base_salary": 136000,
+  "clearance_differentials": {
+    "Secret": 136000,
+    "Top_Secret": 160480,
+    "TS_SCI": 179520,
+    "Full_Scope_Poly": 201280
+  },
+  "top_defense_employers": [
+    "NSWC Philadelphia",
+    "Boeing Rotorcraft Ridley Park"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
