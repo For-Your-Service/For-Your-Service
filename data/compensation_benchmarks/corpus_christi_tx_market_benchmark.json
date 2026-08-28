@@ -1,0 +1,19 @@
+{
+  "market_id": "corpus_christi_tx",
+  "market_name": "Corpus Christi Army Depot Rotary Repair",
+  "state": "TX",
+  "cost_of_living_index": 1.04,
+  "median_cleared_base_salary": 116000,
+  "clearance_differentials": {
+    "Secret": 116000,
+    "Top_Secret": 136880,
+    "TS_SCI": 153120,
+    "Full_Scope_Poly": 171680
+  },
+  "top_defense_employers": [
+    "CCAD Helicopter Overhaul",
+    "Boeing Sustainment"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
