@@ -1,0 +1,21 @@
+{
+  "market_id": "reston_va",
+  "market_name": "Northern Virginia Intel & Cloud Alley",
+  "state": "VA",
+  "cost_of_living_index": 1.35,
+  "median_cleared_base_salary": 165000,
+  "clearance_differentials": {
+    "Secret": 165000,
+    "Top_Secret": 194700,
+    "TS_SCI": 217800,
+    "Full_Scope_Poly": 244200
+  },
+  "top_defense_employers": [
+    "AWS Defense",
+    "Microsoft Federal",
+    "Leidos",
+    "GDIT"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
