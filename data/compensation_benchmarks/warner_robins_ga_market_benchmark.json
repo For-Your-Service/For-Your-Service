@@ -1,0 +1,20 @@
+{
+  "market_id": "warner_robins_ga",
+  "market_name": "Robins AFB Air Logistics Complex",
+  "state": "GA",
+  "cost_of_living_index": 1.02,
+  "median_cleared_base_salary": 115000,
+  "clearance_differentials": {
+    "Secret": 115000,
+    "Top_Secret": 135700,
+    "TS_SCI": 151800,
+    "Full_Scope_Poly": 170200
+  },
+  "top_defense_employers": [
+    "WR-ALC",
+    "Boeing Sustainment",
+    "Mercer Engineering"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
