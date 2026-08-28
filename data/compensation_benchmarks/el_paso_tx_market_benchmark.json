@@ -1,0 +1,19 @@
+{
+  "market_id": "el_paso_tx",
+  "market_name": "Fort Bliss Air Defense & Joint Logistics",
+  "state": "TX",
+  "cost_of_living_index": 1.03,
+  "median_cleared_base_salary": 115000,
+  "clearance_differentials": {
+    "Secret": 115000,
+    "Top_Secret": 135700,
+    "TS_SCI": 151800,
+    "Full_Scope_Poly": 170200
+  },
+  "top_defense_employers": [
+    "Joint Task Force North",
+    "Raytheon Border Systems"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
