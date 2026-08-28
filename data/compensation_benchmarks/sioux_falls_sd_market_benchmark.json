@@ -1,0 +1,20 @@
+{
+  "market_id": "sioux_falls_sd",
+  "market_name": "Midwest Cyber & Defense Gateway",
+  "state": "SD",
+  "cost_of_living_index": 1.02,
+  "median_cleared_base_salary": 114000,
+  "clearance_differentials": {
+    "Secret": 114000,
+    "Top_Secret": 134520,
+    "TS_SCI": 150480,
+    "Full_Scope_Poly": 168720
+  },
+  "top_defense_employers": [
+    "196th MEB",
+    "Dakota State Cyber Lab",
+    "Raven Industries"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
