@@ -1,0 +1,21 @@
+{
+  "market_id": "boston_ma",
+  "market_name": "Boston Route 128 Defense Tech Corridor",
+  "state": "MA",
+  "cost_of_living_index": 1.32,
+  "median_cleared_base_salary": 160000,
+  "clearance_differentials": {
+    "Secret": 160000,
+    "Top_Secret": 188800,
+    "TS_SCI": 211200,
+    "Full_Scope_Poly": 236800
+  },
+  "top_defense_employers": [
+    "MIT Lincoln Lab",
+    "Raytheon BBN",
+    "Hanscom C4ISR",
+    "Draper"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
