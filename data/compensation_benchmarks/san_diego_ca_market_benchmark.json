@@ -1,0 +1,20 @@
+{
+  "market_id": "san_diego_ca",
+  "market_name": "San Diego Maritime & Autonomous Systems",
+  "state": "CA",
+  "cost_of_living_index": 1.32,
+  "median_cleared_base_salary": 155000,
+  "clearance_differentials": {
+    "Secret": 155000,
+    "Top_Secret": 182900,
+    "TS_SCI": 204600,
+    "Full_Scope_Poly": 229400
+  },
+  "top_defense_employers": [
+    "General Atomics",
+    "NAVWAR",
+    "BAE Systems"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
