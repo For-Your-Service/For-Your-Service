@@ -1,0 +1,21 @@
+{
+  "market_id": "tampa_fl",
+  "market_name": "Tampa Bay MacDill Defense Corridor",
+  "state": "FL",
+  "cost_of_living_index": 1.1,
+  "median_cleared_base_salary": 128000,
+  "clearance_differentials": {
+    "Secret": 128000,
+    "Top_Secret": 151040,
+    "TS_SCI": 168960,
+    "Full_Scope_Poly": 189440
+  },
+  "top_defense_employers": [
+    "SOCOM",
+    "CENTCOM",
+    "Jabil Defense",
+    "CAE"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
