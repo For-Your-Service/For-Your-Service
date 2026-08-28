@@ -1,0 +1,21 @@
+{
+  "market_id": "san_antonio_tx",
+  "market_name": "San Antonio Cyber City USA",
+  "state": "TX",
+  "cost_of_living_index": 1.08,
+  "median_cleared_base_salary": 125000,
+  "clearance_differentials": {
+    "Secret": 125000,
+    "Top_Secret": 147500,
+    "TS_SCI": 165000,
+    "Full_Scope_Poly": 185000
+  },
+  "top_defense_employers": [
+    "USAA",
+    "Booz Allen",
+    "CACI",
+    "16th Air Force"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
