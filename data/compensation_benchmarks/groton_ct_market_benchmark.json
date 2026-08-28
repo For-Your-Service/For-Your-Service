@@ -1,0 +1,19 @@
+{
+  "market_id": "groton_ct",
+  "market_name": "Groton Submarine & Naval Reactor Cluster",
+  "state": "CT",
+  "cost_of_living_index": 1.18,
+  "median_cleared_base_salary": 142000,
+  "clearance_differentials": {
+    "Secret": 142000,
+    "Top_Secret": 167560,
+    "TS_SCI": 187440,
+    "Full_Scope_Poly": 210160
+  },
+  "top_defense_employers": [
+    "General Dynamics Electric Boat",
+    "Submarine Base New London"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
