@@ -1,0 +1,20 @@
+{
+  "market_id": "colorado_springs_co",
+  "market_name": "Colorado Springs Space Corridor",
+  "state": "CO",
+  "cost_of_living_index": 1.18,
+  "median_cleared_base_salary": 140000,
+  "clearance_differentials": {
+    "Secret": 140000,
+    "Top_Secret": 165200,
+    "TS_SCI": 184800,
+    "Full_Scope_Poly": 207200
+  },
+  "top_defense_employers": [
+    "Northrop Grumman",
+    "Lockheed Space",
+    "L3Harris"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
