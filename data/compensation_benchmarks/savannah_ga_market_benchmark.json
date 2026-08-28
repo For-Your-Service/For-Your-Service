@@ -1,0 +1,20 @@
+{
+  "market_id": "savannah_ga",
+  "market_name": "Savannah Special Ops & Aviation Corridor",
+  "state": "GA",
+  "cost_of_living_index": 1.06,
+  "median_cleared_base_salary": 120000,
+  "clearance_differentials": {
+    "Secret": 120000,
+    "Top_Secret": 141600,
+    "TS_SCI": 158400,
+    "Full_Scope_Poly": 177600
+  },
+  "top_defense_employers": [
+    "Hunter AAF",
+    "Gulfstream Defense",
+    "General Dynamics Land"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
