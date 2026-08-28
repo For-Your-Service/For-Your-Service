@@ -1,0 +1,20 @@
+{
+  "market_id": "norfolk_va",
+  "market_name": "Hampton Roads Naval Fleet Command",
+  "state": "VA",
+  "cost_of_living_index": 1.12,
+  "median_cleared_base_salary": 130000,
+  "clearance_differentials": {
+    "Secret": 130000,
+    "Top_Secret": 153400,
+    "TS_SCI": 171600,
+    "Full_Scope_Poly": 192400
+  },
+  "top_defense_employers": [
+    "Fleet Forces",
+    "Huntington Ingalls",
+    "General Dynamics NASSCO"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
