@@ -1,0 +1,19 @@
+{
+  "market_id": "lawton_ok",
+  "market_name": "Fort Sill Fires Center of Excellence",
+  "state": "OK",
+  "cost_of_living_index": 1.01,
+  "median_cleared_base_salary": 110000,
+  "clearance_differentials": {
+    "Secret": 110000,
+    "Top_Secret": 129800,
+    "TS_SCI": 145200,
+    "Full_Scope_Poly": 162800
+  },
+  "top_defense_employers": [
+    "Fires Center of Excellence",
+    "Raytheon Artillery Tech"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
