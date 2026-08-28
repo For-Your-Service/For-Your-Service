@@ -1,0 +1,20 @@
+{
+  "market_id": "el_segundo_ca",
+  "market_name": "El Segundo Space Systems Corridor",
+  "state": "CA",
+  "cost_of_living_index": 1.38,
+  "median_cleared_base_salary": 170000,
+  "clearance_differentials": {
+    "Secret": 170000,
+    "Top_Secret": 200600,
+    "TS_SCI": 224400,
+    "Full_Scope_Poly": 251600
+  },
+  "top_defense_employers": [
+    "Space Systems Command",
+    "Aerospace Corp",
+    "Raytheon Space"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
