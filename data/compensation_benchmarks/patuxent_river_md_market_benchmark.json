@@ -1,0 +1,21 @@
+{
+  "market_id": "patuxent_river_md",
+  "market_name": "Patuxent River Naval Aviation Hub",
+  "state": "MD",
+  "cost_of_living_index": 1.22,
+  "median_cleared_base_salary": 145000,
+  "clearance_differentials": {
+    "Secret": 145000,
+    "Top_Secret": 171100,
+    "TS_SCI": 191400,
+    "Full_Scope_Poly": 214600
+  },
+  "top_defense_employers": [
+    "NAVAIR",
+    "Lockheed Rotary",
+    "Wyle",
+    "KBR"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
