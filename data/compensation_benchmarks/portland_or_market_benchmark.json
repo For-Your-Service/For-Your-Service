@@ -1,0 +1,20 @@
+{
+  "market_id": "portland_or",
+  "market_name": "Columbia River Maritime Defense Tech",
+  "state": "OR",
+  "cost_of_living_index": 1.18,
+  "median_cleared_base_salary": 138000,
+  "clearance_differentials": {
+    "Secret": 138000,
+    "Top_Secret": 162840,
+    "TS_SCI": 182160,
+    "Full_Scope_Poly": 204240
+  },
+  "top_defense_employers": [
+    "USCG Sector Columbia",
+    "Vigor Marine",
+    "FLIR Systems"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
