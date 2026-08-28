@@ -1,0 +1,20 @@
+{
+  "market_id": "knoxville_tn",
+  "market_name": "Knoxville Nuclear & Advanced Materials",
+  "state": "TN",
+  "cost_of_living_index": 1.06,
+  "median_cleared_base_salary": 124000,
+  "clearance_differentials": {
+    "Secret": 124000,
+    "Top_Secret": 146320,
+    "TS_SCI": 163680,
+    "Full_Scope_Poly": 183520
+  },
+  "top_defense_employers": [
+    "TVA Nuclear",
+    "Oak Ridge Science",
+    "Babcock & Wilcox"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
