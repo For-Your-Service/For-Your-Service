@@ -1,0 +1,19 @@
+{
+  "market_id": "salt_lake_city_ut",
+  "market_name": "Salt Lake Hill AFB Strategic Defense",
+  "state": "UT",
+  "cost_of_living_index": 1.12,
+  "median_cleared_base_salary": 132000,
+  "clearance_differentials": {
+    "Secret": 132000,
+    "Top_Secret": 155760,
+    "TS_SCI": 174240,
+    "Full_Scope_Poly": 195360
+  },
+  "top_defense_employers": [
+    "Northrop Grumman Sentinel",
+    "L3Harris Comm"
+  ],
+  "active_veteran_intake_priority": "Tier 1 High Priority",
+  "last_verified_timestamp": "2026-08-27T21:45:00Z"
+}
