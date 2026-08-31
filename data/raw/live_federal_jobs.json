@@ -1,0 +1,83 @@
+{
+  "SearchResult": {
+    "SearchResultCount": 3,
+    "SearchResultCountAll": 3,
+    "SearchResultItems": [
+      {
+        "MatchedObjectId": "USAJOBS-001",
+        "MatchedObjectDescriptor": {
+          "PositionTitle": "IT Specialist (SYSANALYSIS/APPSW) - Cloud Architecture",
+          "PositionURI": "https://www.usajobs.gov/job/7901234",
+          "PositionLocationDisplay": "Washington, DC",
+          "OrganizationName": "Department of the Navy",
+          "DepartmentName": "Department of Defense",
+          "JobGrade": [
+            {
+              "Code": "GS"
+            }
+          ],
+          "UserArea": {
+            "Details": {
+              "JobSummary": "Serves as Lead Cloud Systems Architect executing DoD Zero-Trust and Kubernetes deployments.",
+              "MajorDuties": [
+                "Architect multicloud AWS/Azure environments",
+                "Lead DevSecOps automation",
+                "Enforce Zero-Trust IAM"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "MatchedObjectId": "USAJOBS-002",
+        "MatchedObjectDescriptor": {
+          "PositionTitle": "Cybersecurity Operations Specialist",
+          "PositionURI": "https://www.usajobs.gov/job/7901235",
+          "PositionLocationDisplay": "Fort Meade, MD",
+          "OrganizationName": "Defense Information Systems Agency",
+          "DepartmentName": "Department of Defense",
+          "JobGrade": [
+            {
+              "Code": "GS"
+            }
+          ],
+          "UserArea": {
+            "Details": {
+              "JobSummary": "Performs cyber threat telemetry analysis, incident response, and SIEM monitoring.",
+              "MajorDuties": [
+                "Analyze intrusion telemetry",
+                "Execute incident response protocols",
+                "Tune SIEM/SOAR platforms"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "MatchedObjectId": "USAJOBS-003",
+        "MatchedObjectDescriptor": {
+          "PositionTitle": "Data Scientist / Machine Learning Engineer",
+          "PositionURI": "https://www.usajobs.gov/job/7901236",
+          "PositionLocationDisplay": "Austin, TX",
+          "OrganizationName": "Army Futures Command",
+          "DepartmentName": "Department of the Army",
+          "JobGrade": [
+            {
+              "Code": "GS"
+            }
+          ],
+          "UserArea": {
+            "Details": {
+              "JobSummary": "Builds scalable machine learning data lakehouse pipelines with PySpark and Delta Lake.",
+              "MajorDuties": [
+                "Develop PySpark batch pipelines",
+                "Train NLP tensor models",
+                "Optimize vector similarity indices"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
