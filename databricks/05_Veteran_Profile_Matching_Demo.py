@@ -1,3 +1,9 @@
+"""
+05_Veteran_Profile_Matching_Demo.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,🎖️ Veteran Profile Matching Demo
 # MAGIC %md

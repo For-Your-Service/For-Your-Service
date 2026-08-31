@@ -1,3 +1,9 @@
+"""
+03_delta_exporter.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # COMMAND ----------
 # MAGIC %md

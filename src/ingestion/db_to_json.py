@@ -1,3 +1,9 @@
+"""
+db_to_json.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Import the built-in json module to handle serialization of Python dictionaries to JSON strings and files.
 import json
 

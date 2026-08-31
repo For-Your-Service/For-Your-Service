@@ -1,3 +1,9 @@
+"""
+06_Enhanced_Job_Matching_Engine.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # /// script
 # [tool.databricks.environment]

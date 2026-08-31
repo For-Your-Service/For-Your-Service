@@ -1,3 +1,9 @@
+"""
+04_Job_Market_Data_Sources.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,Job Market Data Ingestion Architecture
 # MAGIC %md

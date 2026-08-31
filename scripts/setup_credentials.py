@@ -1,3 +1,9 @@
+"""
+setup_credentials.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 
 # Secure Credential Setup Script
 # Run this to store API credentials in Databricks Secrets

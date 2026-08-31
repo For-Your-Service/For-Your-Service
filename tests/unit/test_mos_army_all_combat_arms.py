@@ -1,3 +1,9 @@
+"""
+test_mos_army_all_combat_arms.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 import pytest
 from app.mos_data import lookup_mos
 

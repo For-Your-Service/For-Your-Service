@@ -1,3 +1,9 @@
+"""
+00_Export_To_GitHub.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,Summary: Files Created
 import os

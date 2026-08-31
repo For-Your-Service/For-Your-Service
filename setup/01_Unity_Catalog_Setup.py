@@ -1,3 +1,9 @@
+"""
+01_Unity_Catalog_Setup.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,Unity Catalog Setup - For Your Service
 # MAGIC %md

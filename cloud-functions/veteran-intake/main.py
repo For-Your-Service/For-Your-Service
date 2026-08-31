@@ -1,3 +1,9 @@
+"""
+main.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Cloud Function: Veteran Intake PII Anonymization
 # Receives veteran profile JSON, anonymizes PII, stores to GCS
 

@@ -1,3 +1,9 @@
+"""
+ingest_bronze.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Import SparkSession from pyspark.sql to initialize our distributed processing engine context.
 from pyspark.sql import SparkSession
 

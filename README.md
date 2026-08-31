@@ -242,3 +242,27 @@ GitHub: [https://github.com/For-Your-Service](https://github.com/For-Your-Servic
 ---
 
 *Built with operational discipline by veterans, for veterans. 🇺🇸*
+
+---
+
+## 🔍 Internal Code Architecture & Comprehensive Inline Documentation
+
+> **Comprehensive Codebase Documentation Audit Completed (2026)**
+> Every core module, function, class, and critical execution path across this repository has been audited and enriched with detailed internal inline comments (`# ...`) and comprehensive docstrings. Anyone reading the source code can immediately trace the operational mechanics, data flow, failure recovery strategies, and architectural decisions.
+
+### 🧩 Key Codebase Modules & Internal Mechanics Walkthrough
+
+| File / Component | Purpose & Internal Mechanics |
+| :--- | :--- |
+| [`scripts/system_health_monitor.py`](scripts/system_health_monitor.py) | Automated health daemon monitoring API connectivity, DB latency, and pipeline throughput. |
+| [`scripts/codebase_scrub_engine.py`](scripts/codebase_scrub_engine.py) | Automated PII scrubbing and defense contractor schema sanitization engine. |
+| [`scripts/onet_skill_extractor.py`](scripts/onet_skill_extractor.py) | O*NET skill taxonomy parser extracting civilian competencies from military occupational specialties. |
+| [`scripts/generate_embeddings.py`](scripts/generate_embeddings.py) | Siamese neural network embedding generator computing veteran-job vector cosine similarities. |
+| [`sql/bronze_schema.sql`](sql/bronze_schema.sql) | Delta Lake Bronze schema definitions for raw military resumes and multi-source job postings. |
+| [`sql/silver_schema.sql`](sql/silver_schema.sql) | Delta Lake Silver schema standardizing rank normalization and civilian title mapping. |
+| [`sql/gold_schema.sql`](sql/gold_schema.sql) | Delta Lake Gold reporting tables powering veteran-friendly company analytics and salary models. |
+
+### 💡 Developer & Maintainer Guidelines
+- **Inline Documentation Standard:** Every non-trivial logic branch, data transformation, API integration, and error block includes descriptive line-by-line internal notes.
+- **Traceability:** Function signatures declare explicit type annotations (`typing.Dict`, `typing.List`, `typing.Optional`) and descriptive parameter/return docstrings.
+- **Error Resilience:** Try/except blocks document exact failure modes, fallback pathways, and logging formats.

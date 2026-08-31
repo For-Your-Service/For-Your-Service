@@ -1,3 +1,9 @@
+"""
+08_Glassdoor_AI_Pipeline_Architecture.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,🏗️ For Your Service - Glassdoor AI Assistant Architecture
 # MAGIC %md

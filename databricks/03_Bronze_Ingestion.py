@@ -1,3 +1,9 @@
+"""
+03_Bronze_Ingestion.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Databricks notebook source
 # DBTITLE 1,Ingest from GCS using Auto Loader
 from pyspark.sql.functions import current_timestamp, input_file_name

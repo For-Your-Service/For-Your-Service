@@ -1,3 +1,9 @@
+"""
+aggregate_gold.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Import SparkSession to initialize the distributed processing context.
 from pyspark.sql import SparkSession
 

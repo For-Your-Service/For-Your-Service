@@ -1,3 +1,9 @@
+"""
+transform_silver.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 # Import SparkSession to manage the distributed DataFrame runtime environment.
 from pyspark.sql import SparkSession
 

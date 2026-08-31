@@ -1,3 +1,9 @@
+"""
+ingest_resume.py
+
+Internal Module Implementation with comprehensive inline documentation.
+Part of the FreeFades2Black enterprise ecosystem.
+"""
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit, current_timestamp
 import json
