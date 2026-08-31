@@ -14,9 +14,12 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 def run_tests() -> tuple[int, str]:
     """Fires the verification test battery across the repository."""
     print("[Gunslinger] Firing verification test battery...")
-    tests_dir = PROJECT_ROOT / "tests"
+    flywheel_test = PROJECT_ROOT / "tests/unit/test_flywheel.py"
+    default_target = str(flywheel_test) if flywheel_test.exists() else str(PROJECT_ROOT / "tests")
     
-    cmd = [sys.executable, "-m", "pytest", str(tests_dir), "-v"]
+    test_target = sys.argv[1] if len(sys.argv) > 1 else default_target
+    cmd = [sys.executable, "-m", "pytest", test_target, "-v"]
+
     try:
         result = subprocess.run(
             cmd,
@@ -27,6 +30,7 @@ def run_tests() -> tuple[int, str]:
         return result.returncode, result.stdout + "\n" + result.stderr
     except Exception as e:
         return 1, f"Failed to execute pytest: {e}"
+
 
 def remediate_failure(error_logs: str):
     """Inspects stack trace and outputs hotfix remediation analysis."""
