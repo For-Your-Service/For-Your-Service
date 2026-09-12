@@ -1,0 +1,22 @@
+groups:
+  - name: fys_veteran_platform_alerts
+    rules:
+      - alert: IstioMeshMTLSFailure
+        expr: sum(rate(istio_requests_total{response_flags=~"DI|UC"}[5m])) > 1
+        for: 2m
+        labels:
+          severity: critical
+          tier: service-mesh
+        annotations:
+          summary: "Istio mTLS mutual authentication failure in veteran platform"
+          description: "Service mesh pod-to-pod encrypted tunnel dropped."
+
+      - alert: MatchingEngineThroughputDegraded
+        expr: rate(fys_career_matches_total[5m]) < 10
+        for: 10m
+        labels:
+          severity: warning
+          tier: matching-engine
+        annotations:
+          summary: "Career matching engine throughput degraded"
+          description: "MOS ontology crosswalk matching rate below nominal threshold."

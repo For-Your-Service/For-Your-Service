@@ -1,0 +1,70 @@
+{
+  "title": "For-Your-Service Veteran Platform Observability",
+  "schemaVersion": 38,
+  "panels": [
+    {
+      "title": "Twin-Tower Embedding Inference Latency (p95)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(fys_embedding_duration_seconds_bucket[5m]))",
+          "legendFormat": "p95 Latency (s)"
+        }
+      ]
+    },
+    {
+      "title": "MOS-to-Civilian Matching Success (%)",
+      "type": "gauge",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "avg(fys_match_success_ratio) * 100",
+          "legendFormat": "% Matched"
+        }
+      ]
+    },
+    {
+      "title": "Istio Service Mesh mTLS Handshake Success (%)",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(istio_requests_total{response_code!=\"503\"}[5m])) / sum(rate(istio_requests_total[5m])) * 100",
+          "legendFormat": "% Healthy"
+        }
+      ]
+    },
+    {
+      "title": "Databricks Unity Catalog Active Sessions",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "databricks_unity_catalog_active_connections",
+          "legendFormat": "Unity Catalog Connections"
+        }
+      ]
+    }
+  ]
+}
