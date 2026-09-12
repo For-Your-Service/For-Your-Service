@@ -1,6 +1,5 @@
 ---
 title: For Your Service
-emoji: 🇺🇸
 colorFrom: blue
 colorTo: red
 sdk: streamlit
@@ -9,15 +8,15 @@ app_file: app/app.py
 pinned: false
 ---
 
-# FOR YOUR SERVICE — Veteran Career Transition Intelligence 🇺🇸
+# FOR YOUR SERVICE — Veteran Career Transition Intelligence
 
-> **Your military service generates thousands of elite operational data points every day. We turn that data into a clear, high-yield civilian career trajectory.**
+> **Your military service generates thousands of operational data points every day. We turn that data into a clear, high-yield civilian career trajectory.**
 
 ---
 
-## 🎯 The Mission
+## Mission Overview
 
-The military instills world-class leadership, technical acumen, and crisis-tested operational discipline. However, civilian Applicant Tracking Systems (ATS) and corporate recruiters often struggle to parse military jargon, MOS codes, and NCOER/OER evaluations. 
+The military instills leadership, technical acumen, and crisis-tested operational discipline. However, civilian Applicant Tracking Systems (ATS) and corporate recruiters often struggle to parse military jargon, MOS codes, and NCOER/OER evaluations. 
 
 **For Your Service** bridges this gap:
 * Translates raw military service records into high-impact civilian corporate competencies.
@@ -30,7 +29,7 @@ The military instills world-class leadership, technical acumen, and crisis-teste
 
 ---
 
-### 🏛️ Command & Control / Infrastructure Stack
+### Infrastructure Stack
 
 [![Databricks Apps](https://img.shields.io/badge/DATABRICKS_APPS-FYS_MATCHING_APP-FF3621?style=flat-square&logo=databricks)](https://fys-matching-app-7474643734871839.aws.databricksapps.com)
 [![Streamlit Cloud](https://img.shields.io/badge/STREAMLIT-COMMUNITY_CLOUD-FF4B4B?style=flat-square&logo=streamlit)](https://share.streamlit.io)
@@ -43,7 +42,7 @@ The military instills world-class leadership, technical acumen, and crisis-teste
 
 ---
 
-## ⚡ System Architecture & Dual-Environment Workflow
+## System Architecture & Workflow
 
 ```mermaid
 flowchart TD
@@ -90,7 +89,7 @@ flowchart TD
 
 ---
 
-## 🌟 Veteran Value Proposition & Core Superpowers
+## Veteran Value Proposition
 
 | Feature | Without For Your Service | With For Your Service |
 | :--- | :--- | :--- |
@@ -102,36 +101,90 @@ flowchart TD
 
 ---
 
-## 🛠️ The 4-Pillar Cloud-Native DevSecOps Stack
+## Verified Test Execution
 
-### 1. 🐳 Docker Microservices Suite (`docker/`)
-Decomposed monolithic architecture into 4 lightweight, specialized multi-stage containers:
-* **`fys-portal`** (`docker/Dockerfile.portal`): Streamlit Veteran Intake Portal & 4-card live telemetry (~150MB, Port 8501).
+Automated test suite verifying field validators, deduplication algorithms, location & salary normalizers, Greenville MSA regional filtering, and Helm/Istio strict mTLS manifests:
+
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.11.0, pytest-9.1.1, pluggy-1.6.0 -- C:\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\FreeF\projects\For-Your-Service
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: anyio-4.14.2
+collecting ... collected 22 items
+
+tests/test_validators.py::test_validate_mos PASSED                       [  4%]
+tests/test_validators.py::test_validate_email PASSED                     [  9%]
+tests/test_validators.py::test_validate_onet_code PASSED                 [ 13%]
+tests/test_deduplication.py::test_exact_duplicate_detection PASSED       [ 18%]
+tests/test_deduplication.py::test_similar_job_detection PASSED           [ 22%]
+tests/test_deduplication.py::test_dedup_across_sources PASSED            [ 27%]
+tests/test_normalization.py::test_salary_normalization PASSED            [ 31%]
+tests/test_normalization.py::test_location_normalization PASSED          [ 36%]
+tests/test_normalization.py::test_date_normalization PASSED              [ 40%]
+tests/test_normalization.py::test_job_id_generation PASSED               [ 45%]
+tests/test_regional_filtering.py::test_greenville_msa_center PASSED      [ 50%]
+tests/test_regional_filtering.py::test_radius_filtering PASSED           [ 54%]
+tests/test_regional_filtering.py::test_excluded_cities PASSED            [ 59%]
+tests/test_helm_istio_manifests.py::test_chart_yaml_exists_and_valid PASSED [ 63%]
+tests/test_helm_istio_manifests.py::test_values_yaml_exists_and_valid PASSED [ 68%]
+tests/test_helm_istio_manifests.py::test_helm_templates_exist PASSED     [ 72%]
+tests/test_helm_istio_manifests.py::test_standalone_istio_manifests_valid PASSED [ 77%]
+tests/test_helm_istio_manifests.py::test_peer_authentication_strict_mode PASSED [ 81%]
+tests/test_helm_istio_manifests.py::test_virtual_service_routing_configuration PASSED [ 86%]
+tests/test_helm_istio_manifests.py::test_canary_virtual_service_traffic_splitting PASSED [ 90%]
+tests/test_helm_istio_manifests.py::test_implementation_checklist_doc_exists PASSED [ 95%]
+tests/test_sanitized_pipeline.py::test_pipeline_sanity PASSED            [100%]
+
+============================= 22 passed in 0.30s ==============================
+```
+
+---
+
+## Operational Architecture & Edge Cases
+
+### 1. Cross-Branch Military MOS / Rating / AFSC Crosswalk Discrepancies
+Military specialties vary widely by branch: Army MOS (e.g. `18Z`, `25B`), Navy Ratings (e.g. `IT`, `ET`), and Air Force AFSC (e.g. `1D7X1`, `3D0X2`). Standard regex validators often fail on branch-specific alphanumeric formats or alphanumeric suffixes. The normalizer verifies against an O*NET military crosswalk index and handles branches gracefully without discarding non-standard ratings.
+
+### 2. Multi-Source Job Deduplication & Canonical ID Fingerprinting
+Federal and defense job openings are simultaneously listed on USAJOBS, defense contractor careers portals (Workday, BrassRing), and aggregators (Adzuna) with slightly modified titles and salary notations. The deduplication engine creates a SHA-256 fingerprint from sanitized title, normalized employer name, and geocoded lat/long coordinates, preventing identical roles from skewing match rankings.
+
+### 3. Istio Canary Weight Drift & mTLS Strict PeerAuthentication
+During progressive rollouts of the matching scoring service, 90/10 Canary traffic splitting must enforce `mTLS: STRICT` across both revisions. If a new canary pod spins up without Istio sidecar injection, unauthenticated cluster traffic is immediately dropped. The Helm chart includes pre-install hooks verifying namespace sidecar injection tags.
+
+---
+
+## Cloud-Native DevSecOps Stack
+
+### 1. Docker Microservices Suite (`docker/`)
+Decomposed architecture into 4 lightweight multi-stage containers:
+* **`fys-portal`** (`docker/Dockerfile.portal`): Streamlit Veteran Intake Portal & live telemetry (~150MB, Port 8501).
 * **`fys-api`** (`docker/Dockerfile.api`): FastAPI REST scoring & candidate ingestion microservice (~120MB, Port 8080).
 * **`fys-ingestor`** (`docker/Dockerfile.ingestor`): Multi-source background harvester for USAJOBS, Adzuna, and defense feeds (~90MB).
 * **`fys-spark-runner`** (`docker/Dockerfile.spark`): Lakehouse batch runner with OpenJDK 17 + Python 3.11 for PySpark ETL (~350MB).
 
-### 2. ☸️ Kubernetes & ⚓ Helm 3 Chart (`charts/for-your-service`)
-Enterprise-grade deployment manifests and Helm 3 templating:
+### 2. Kubernetes & Helm 3 Chart (`charts/for-your-service`)
+Deployment manifests and Helm 3 templating:
 * **Zero-Trust Security:** Istio Service Mesh with **Strict mTLS** (`peerauthentication.yaml`) and fine-grained authorization policies.
 * **Traffic Engineering:** Ingress Gateway and VirtualService configured for **Canary Deployments** (90% stable / 10% canary traffic splitting).
 * **High Availability:** Horizontal Pod Autoscaler (`hpa.yaml`) scaling 1–10 pods with Pod Disruption Budgets (`pdb.yaml`).
 * **Environment Overrides:** Dedicated configurations for `values-dev.yaml`, `values-staging.yaml`, and `values-prod.yaml`.
 
-### 3. 🌍 Terraform Multi-Cloud IaC (`terraform/`)
+### 3. Terraform Multi-Cloud IaC (`terraform/`)
 Declarative Infrastructure as Code managing cloud boundaries with zero configuration drift:
 * **AWS Module:** S3 buckets, DynamoDB tables, Lambda functions, KMS keys, and least-privilege IAM policies.
 * **Databricks Module:** Unity Catalog schemas (`fys_bronze`, `fys_silver`, `fys_gold`), Serverless SQL Warehouses, and KMS Secret Scopes.
 * **GCP & Hugging Face Modules:** Container registries, BigQuery datasets, and Hugging Face Space deployments.
 
-### 4. 💻 Dual-Environment Edge Workflow (PowerShell + Omarchy Linux)
+### 4. Dual-Environment Edge Workflow (PowerShell + Omarchy Linux)
 * **Windows Host (PowerShell):** High-level orchestration, cloud API automation, and infrastructure planning.
 * **Omarchy Linux (ASUS ROG Flow Z13):** Native Arch Linux + Hyprland environment running local PySpark transformations, live data scrapers, and low-latency system tests over SSH.
 * **Agentic Pair Programming:** Deployed and orchestrated native instances of **Google Antigravity (`agy`)** across both systems for autonomous CLI-driven development and telemetry.
 
 ---
 
-## 💰 Zero-Cost Sustainability Model ($0.00 Run-Rate)
+## Cost Optimization & Resource Tiering
 
 | Component | Strategy for $0 Spend | Monthly Cost |
 | :--- | :--- | :---: |
