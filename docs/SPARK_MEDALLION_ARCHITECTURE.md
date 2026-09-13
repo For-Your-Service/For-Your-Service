@@ -36,7 +36,9 @@ flowchart LR
         M4["Top-K Ranked Recommendations"]
     end
 
-    Bronze --> Silver --> Gold --> Matching
+    B1 & B2 & B3 & B4 --> S1
+    S4 --> G1
+    G3 --> M2
 ```
 
 ---

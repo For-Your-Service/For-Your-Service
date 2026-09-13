@@ -80,11 +80,11 @@ flowchart TD
         ATS["Tailored ATS-Optimized Resume Export"]
     end
 
-    Ingestion --> EdgeCompute
-    EdgeCompute --> DatabricksLakehouse
-    EdgeCompute --> CloudNativeStack
-    DatabricksLakehouse --> VeteranValue
-    CloudNativeStack --> VeteranValue
+    USA & DEF & ONET --> CLI
+    Vectors --> UnityCat
+    Vectors --> DockerSuite
+    DBXApp --> Trans & Clearance
+    HelmIstio --> Funding & ATS
 ```
 
 ---
