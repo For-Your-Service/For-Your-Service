@@ -10,6 +10,7 @@ on:
 jobs:
   black-check:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Repository

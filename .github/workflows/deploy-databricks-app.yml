@@ -13,6 +13,7 @@ jobs:
   deploy-to-databricks:
     name: Sync Code & Deploy Databricks App
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Repository
