@@ -20,6 +20,7 @@ jobs:
   health-check:
     name: Run Twice-Daily Health Check & Report
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Repository
